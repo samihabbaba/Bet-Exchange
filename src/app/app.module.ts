@@ -12,6 +12,10 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +34,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FontAwesomeModule,
     ReactiveFormsModule,
     FormsModule,
-
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],
