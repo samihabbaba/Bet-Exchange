@@ -16,51 +16,58 @@
         </div>
       </div>
 
-      <div class="main-item">
+      <div class="main-item" *ngFor="let event of this.dataService.events">
         <fa-icon [icon]="fontAwesomeIcons.exit" class="main-icon"></fa-icon>
         <div class="date-time">
-          <div class="time">10:00</div>
-          <div class="date">17/05</div>
+          <div class="time">{{event.event.openDate| date: "h:mm"}}</div>
+          <div class="date">{{event.event.openDate| date: "dd/MM"}}</div>
         </div>
         <div class="teams">
-          <div class="first-team">Bercelona</div>
-          <div class="score">1 - 1</div>
-          <div class="second-team">Cloudsoft</div>
-          <div class="match-time">47'</div>
+          <div class="first-team">{{this.sharedService.returnTeamNameFromEvent(event.event.name)}}</div>
+          <div class="score">{{this.sharedService.returnEventScore(event.timeline.score)}}</div>
+          <div class="second-team">{{this.sharedService.returnTeamNameFromEvent(event.event.name, false)}}</div>
+          <div class="match-time">{{event.timeline.elapsedRegularTime}}'</div>
         </div>
         <div class="odds">
           <div class="odds-1">
             <div class="red-square">
-              <div class="bold">1.00</div>
-              <div class="normal">100$</div>
+              <div class="bold">{{this.sharedService.returnHighestBet(event.markets[0].runners[0].exchange.availableToBack).price}}</div>
+              <div class="normal">{{this.sharedService.returnHighestBet(event.markets[0].runners[0].exchange.availableToBack).size}}</div>
             </div>
             <div class="blue-square">
-              <div class="bold">123</div>
-              <div class="normal">123</div>
+              <div class="bold">{{this.sharedService.returnHighestBet(event.markets[0].runners[0].exchange.availableToLay).price}}</div>
+              <div class="normal">{{this.sharedService.returnHighestBet(event.markets[0].runners[0].exchange.availableToLay).price}}</div>
             </div>
           </div>
           <div class="odds-x">
             <div class="red-square">
-              <div class="bold">1.00</div>
-              <div class="normal">100$</div>
+              <div class="bold">{{this.sharedService.returnHighestBet(event.markets[0].runners[1].exchange.availableToBack).price}}</div>
+              <div class="normal">{{this.sharedService.returnHighestBet(event.markets[0].runners[1].exchange.availableToBack).size}}</div>
             </div>
             <div class="blue-square">
-              <div class="bold">123</div>
-              <div class="normal">123</div>
+              <div class="bold">{{this.sharedService.returnHighestBet(event.markets[0].runners[1].exchange.availableToLay).price}}</div>
+              <div class="normal">{{this.sharedService.returnHighestBet(event.markets[0].runners[1].exchange.availableToLay).price}}</div>
             </div>
           </div>
           <div class="odds-2">
             <div class="red-square">
-              <div class="bold">1.00</div>
-              <div class="normal">100$</div>
+              <div class="bold">{{this.sharedService.returnHighestBet(event.markets[0].runners[2].exchange.availableToBack).price}}</div>
+              <div class="normal">{{this.sharedService.returnHighestBet(event.markets[0].runners[2].exchange.availableToBack).size}}</div>
             </div>
             <div class="blue-square">
-              <div class="bold">123</div>
-              <div class="normal">123</div>
+              <div class="bold">{{this.sharedService.returnHighestBet(event.markets[0].runners[2].exchange.availableToLay).price}}</div>
+              <div class="normal">{{this.sharedService.returnHighestBet(event.markets[0].runners[2].exchange.availableToLay).price}}</div>
             </div>
           </div>
         </div>
       </div>
+
+
+
+
+
+
+
       <div class="main-item">
         <fa-icon [icon]="fontAwesomeIcons.exit" class="main-icon"></fa-icon>
         <div class="date-time">
