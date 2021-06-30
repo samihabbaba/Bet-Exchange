@@ -17,6 +17,18 @@ export class DataService {
   constructor(private http: HttpClient) { }
 
   
+  ////////////////////////////////
+  ////// sports Controller //////
+  ///////////////////////////////
+
+  
+  getSports(){
+    return this.http.get<any>(`${this.baseUrl}sports`,  {
+      headers: this.httpOptions.headers,
+    });
+  }
+
+
   /////////////////////////////////////
   ////// BettingRules Controller //////
   ////////////////////////////////////
@@ -68,7 +80,7 @@ export class DataService {
   
   // GET​/leagues
   getLeagues​(pars:any){
-    return this.http.get<any>(`${this.baseUrl}leagues​?PageNo=${pars.PageNo?pars.PageNo:''}&PageSize=${pars.PageSize?pars.PageSize:''}&SortBy=${pars.SortBy?pars.SortBy:''}&SortingType=${pars.SortingType?pars.SortingType:''}`,  {
+    return this.http.get<any>(`${this.baseUrl}leagues​?PageNo=${pars.PageNo?pars.PageNo:''}&PageSize=${pars.PageSize?pars.PageSize:''}&SortBy=${pars.SortBy?pars.SortBy:''}&SortingType=${pars.SortingType?pars.SortingType:''}&regionCode=${pars.regionCode?pars.regionCode:''}&SportId=${pars.SportId?pars.SportId:''}`,  {
       headers: this.httpOptions.headers,
     });
   }
@@ -127,7 +139,7 @@ export class DataService {
   
 
   getRegions​(pars:any){
-    return this.http.get<any>(`${this.baseUrl}/regions?PageNo=${pars.PageNo?pars.PageNo:''}&PageSize=${pars.PageSize?pars.PageSize:''}&SortBy=${pars.SortBy?pars.SortBy:''}&SortingType=${pars.SortingType?pars.SortingType:''}`,  {
+    return this.http.get<any>(`${this.baseUrl}/regions?PageNo=${pars.PageNo?pars.PageNo:''}&PageSize=${pars.PageSize?pars.PageSize:''}&SortBy=${pars.SortBy?pars.SortBy:''}&SortingType=${pars.SortingType?pars.SortingType:''}&SportId=${pars.SportId?pars.SportId:''}`,  {
       headers: this.httpOptions.headers,
     });
   }
@@ -151,7 +163,6 @@ export class DataService {
       observe: 'response',
     });
   }
-
 
 
   //////////////////////////////////
