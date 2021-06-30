@@ -8,6 +8,9 @@ import { MainContentComponent } from './components/layout/main-content/main-cont
 import { MenuComponent } from './components/layout/menu/menu.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BetSlipComponent } from './components/layout/bet-slip/bet-slip.component';
+import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,8 +19,16 @@ import { BetSlipComponent } from './components/layout/bet-slip/bet-slip.componen
     MainContentComponent,
     MenuComponent,
     BetSlipComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FontAwesomeModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FontAwesomeModule,
+    ReactiveFormsModule,
+    FormsModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
