@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { fadeMenuDropdown } from 'src/app/animations/animation';
 import {
   MenuHeader,
   MenuItem,
@@ -9,6 +10,7 @@ import {
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
+  animations: [fadeMenuDropdown()]
 })
 export class MenuComponent implements OnInit {
   menu: MenuHeader[] = [

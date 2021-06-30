@@ -22,6 +22,7 @@
         (click)="handleMenuItemClick(child)"
         [ngClass]="{ active: child.active }"
         *ngIf="header.active"
+        [@fadeMenuDropdown]
       >
         <span class="menu-subItem-label" [ngClass]="{ active: child.active }">
           {{ child.name }}
@@ -35,6 +36,7 @@
           class="menu-grandChild"
           (click)="handleGrandChildClick(child)"
           *ngIf="child.active && header.active"
+          [@fadeMenuDropdown]
         >
           <span
             class="menu-subItem-label"

@@ -11,6 +11,7 @@ import { BetSlipComponent } from './components/layout/bet-slip/bet-slip.componen
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,10 +25,12 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FontAwesomeModule,
     ReactiveFormsModule,
     FormsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent],
