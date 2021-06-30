@@ -16,7 +16,7 @@
         </div>
       </div>
 
-      <div class="main-item" *ngFor="let event of this.dataService.events">
+      <div class="main-item" *ngFor="let event of this.dataService.events" (click)="goToEventDetails('1')">
         <fa-icon [icon]="fontAwesomeIcons.exit" class="main-icon"></fa-icon>
         <div class="date-time">
           <div class="time">{{event.event.openDate| date: "h:mm"}}</div>
@@ -28,7 +28,7 @@
           <div class="second-team">{{this.sharedService.returnTeamNameFromEvent(event.event.name, false)}}</div>
           <div class="match-time">{{event.timeline.elapsedRegularTime}}'</div>
         </div>
-        <div class="odds">
+        <div class="odds" (click)="$event.stopPropagation()">
           <div class="odds-1">
             <div class="red-square">
               <div class="bold">{{this.sharedService.returnHighestBet(event.markets[0].runners[0].exchange.availableToBack).price}}</div>

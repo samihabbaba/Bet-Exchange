@@ -13,6 +13,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { EventDetailsComponent } from './components/event-details/event-details.component';
 
 
 
@@ -26,6 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
     BetSlipComponent,
     LoginComponent,
     RegisterComponent,
+    EventDetailsComponent,
   ],
   imports: [
     BrowserModule,

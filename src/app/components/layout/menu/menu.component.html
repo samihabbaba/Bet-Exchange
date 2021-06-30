@@ -10,7 +10,11 @@
       (click)="handleMenuHeaderClick(header)"
       [ngClass]="{ active: header.active }"
     >
-      <i [ngClass]="{ active: header.active }" class="menu-item-icon" [class]="header.icon"></i
+      <i
+        [ngClass]="{ active: header.active }"
+        class="menu-item-icon"
+        [class]="header.icon"
+      ></i
       >{{ header.name }}
       <div class="arrow-area" [ngClass]="{ active: header.active }">
         <i class="item-arrow fas fa-chevron-down"></i>
