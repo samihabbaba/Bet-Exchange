@@ -1,0 +1,550 @@
+/* Global Styles */
+
+:root {
+  --primary: #f2aa4c;
+  --secondary: #101820;
+  --darker-primary: #db9942;
+  --darker-seconday: #1d2a38;
+  --darker-white: #eef1f1;
+  --temp-grey: rgb(173, 173, 173);
+  --light-red: #fac9d1;
+  --dark-red: #f694aa;
+  --light-blue: #a6d8ff;
+  --dark-blue: #61a8dd;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+app-root {
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.icon-wrapper {
+  align-self: stretch;
+  display: grid;
+  align-items: center;
+}
+
+html {
+  height: 100%;
+  font-size: 62.5%;
+  color: var(--secondary);
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+  height: 100%;
+}
+
+.container {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: 1fr;
+  grid-template-rows: 60px 27px 1fr;
+  grid-template-areas:
+    "main-header"
+    "sub-header"
+    "main-content";
+  background-color: var(--darker-white);
+}
+
+.main-content {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  grid-area: main-content;
+}
+
+.main-header {
+  grid-area: main-header;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--primary);
+}
+
+.sub-header {
+  grid-area: sub-header;
+}
+
+.menu {
+  grid-area: menu;
+}
+
+.main {
+  grid-area: main;
+}
+
+.bets {
+  grid-area: bets;
+}
+
+.container > * {
+  width: 100%;
+  height: 100%;
+}
+
+/* Header Styles */
+
+.header {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  height: 100%;
+  width: 80%;
+  background-color: var(--orange);
+}
+
+.header > .logo {
+  width: 250px;
+  height: auto;
+  margin-right: 30px;
+  cursor: pointer;
+}
+
+.header > .header-menu {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.header-menu-item {
+  padding: 5px 10px 5px 10px;
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  cursor: pointer;
+}
+
+.header-menu-item:hover {
+  background-color: var(--darker-primary);
+  font-weight: 600;
+}
+
+.header-menu-item-text {
+  padding: 5px;
+}
+
+.header-menu-item-text.active {
+  border-bottom: 3px solid black;
+  font-weight: 600;
+}
+/* Sub header styles */
+
+.sub-header {
+  width: 100%;
+  height: 100%;
+  background-color: var(--secondary);
+  display: flex;
+  color: azure;
+  padding-left: 20px;
+  align-items: center;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.sub-header-item {
+  padding: 0 10px 0 10px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.sub-header-item:hover {
+  background-color: var(--darker-seconday);
+}
+
+/* Menu styles */
+
+.menu {
+  width: 100%;
+  height: 100%;
+  font-size: 1.2rem;
+  max-height: 100%;
+  position: relative;
+  overflow-y: hidden;
+}
+
+.menu-view {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+.menu-view:last-child {
+  border-bottom: 1px solid rgb(173, 173, 173);
+}
+
+.menu-header {
+  background-color: var(--secondary);
+  color: white;
+  font-weight: 600;
+  padding: 10px;
+  outline: 1px solid var(--secondary);
+  border-radius: 3px;
+}
+
+.menu-sub-header {
+  padding: 8px 12px 8px 12px;
+  background-color: var(--darker-white);
+  border: 1px solid rgb(173, 173, 173);
+  border-bottom: none;
+}
+
+.menu-item {
+  height: 100%;
+  padding: 10px 10px 10px 20px;
+  color: rgb(46, 146, 209);
+  background-color: white;
+  border-collapse: collapse;
+  border: 1px solid rgb(173, 173, 173);
+  border-bottom: none;
+  width: 100%;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background-color: var(--darker-white);
+}
+
+/* main Styles */
+.main {
+  width: 100%;
+  height: 100%;
+  font-size: 1.4rem;
+}
+
+.main-view {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.main-header-view {
+  background-color: var(--secondary);
+  color: white;
+  font-weight: 600;
+  padding: 10px;
+  outline: 1px solid var(--secondary);
+  border-radius: 3px;
+}
+
+.main-sport {
+  background-color: var(--darker-white);
+  color: black;
+  font-weight: 500;
+  padding: 6px;
+  outline: 1px solid var(--temp-grey);
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.odds-label {
+  margin-left: auto;
+  width: 450px;
+  display: flex;
+  justify-content: space-evenly;
+  align-self: flex-end;
+  padding-left: 100px;
+}
+
+.odds-label > * {
+  flex-basis: 100%;
+  text-align: center;
+  margin-right: 5px;
+}
+
+.odds {
+  display: flex;
+  margin-left: auto;
+  width: 450px;
+  justify-content: space-evenly;
+  padding-left: 100px;
+}
+
+.odds > * {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.red-square,
+.blue-square {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  margin-right: 5px;
+  flex-direction: column;
+}
+
+.red-square {
+  margin-right: 2px;
+}
+
+.bold {
+  font-weight: 700;
+  padding-bottom: 5px;
+}
+
+.normal {
+  font-size: 1.2rem;
+}
+
+.red-square {
+  background-color: var(--light-red);
+}
+
+.red-square:hover {
+  background-color: var(--dark-red);
+}
+
+.blue-square {
+  background-color: var(--light-blue);
+}
+
+.blue-square:hover {
+  background-color: var(--dark-blue);
+}
+
+.main-item {
+  padding: 0px 6px 0px 20px;
+  color: var(--secondary);
+  background-color: white;
+  outline: 1px solid rgb(173, 173, 173);
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  height: 100%;
+  min-height: 45px;
+  flex-basis: 100%;
+}
+
+.main-icon {
+  padding-right: 15px;
+  display: grid;
+  align-items: center;
+}
+
+.date-time {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.teams {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  padding-left: 10px;
+  font-weight: 800;
+}
+
+.first-team,
+.second-team,
+.score,
+.match-time {
+  padding: 0px 5px 0px 5px;
+}
+
+.score,
+.match-time {
+  font-style: italic;
+}
+
+.score {
+  color: green;
+  white-space: nowrap;
+}
+
+.main-item:hover {
+  background-color: var(--darker-white);
+}
+
+/* Bets styles */
+
+.bets {
+  width: 100%;
+  height: 100%;
+  font-size: 1.4rem;
+}
+
+.bet-view {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-size: 1.2rem;
+}
+
+.bet-header {
+  background-color: var(--secondary);
+  color: white;
+  font-weight: 600;
+  padding: 10px;
+  outline: 1px solid var(--secondary);
+  border-radius: 3px;
+  font-size: 1.4rem;
+}
+
+/* bets styles */
+
+.lay-section,
+.lay-items,
+.back-section,
+.back-items {
+  width: 100%;
+  display: flex;
+}
+
+.lay-section,
+.back-section {
+  flex-direction: column;
+}
+
+.inner-back-header,
+.inner-lay-header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: var(--dark-blue);
+  padding: 5px;
+}
+
+.inner-lay-header {
+  background-color: var(--dark-red);
+}
+
+.inner-back-header > *,
+.inner-lay-header > * {
+  width: 100%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.back-header-title,
+.lay-header-title {
+  font-weight: 600;
+}
+
+.back-header-other,
+.lay-header-other {
+  margin-left: auto;
+  margin-right: 9px;
+  display: flex;
+  justify-content: center;
+  max-width: 50%;
+}
+
+.back-header-other > *,
+.lay-header-other > * {
+  width: 33%;
+  text-align: center;
+}
+
+.back-items,
+.lay-items {
+  flex-direction: column;
+  background-color: var(--light-blue);
+  height: 100%;
+}
+
+.lay-items {
+  background-color: var(--light-red);
+}
+
+.back-item,
+.lay-item {
+  padding: 0px 10px 0px 10px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  display: flex;
+}
+
+.bet-team-name {
+  font-weight: bold;
+  display: grid;
+  align-items: center;
+}
+
+.clickable {
+  cursor: pointer;
+  height: 100%;
+}
+
+.back-items-other,
+.lay-items-other {
+  margin-left: auto;
+  display: flex;
+  justify-content: center;
+  max-width: 50%;
+}
+
+.back-items-other > *,
+.lay-items-other > * {
+  width: 33%;
+  text-align: center;
+}
+
+input {
+  width: 100%;
+}
+
+.bet-odds-input,
+.bet-stake-input,
+.bet-profit-output {
+  padding-right: 3px;
+  display: grid;
+  align-items: center;
+}
+
+/* This part Makes the
+left and right 
+columns (nav and bets) 
+Disappear when the screen 
+is smaller */
+
+/* @media (max-width: 1307px) {
+  .menu {
+    display: none;
+  }
+
+  #inner-container{
+    grid-template-columns:  10px 1fr 10px 300px;
+    grid-template-areas: ". main . bets";
+  }
+}
+
+@media (max-width: 1108px) {
+  .bets {
+    display: none;
+  }
+
+  #inner-container{
+    grid-template-columns:  10px 1fr 10px;
+    grid-template-areas: ". main .";
+  }
+}
+ */
