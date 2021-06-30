@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: 'http://193.140.43.71:8080/',
+  hubUrl: 'http://localhost:5000/livehub'
 };
 
 /*
