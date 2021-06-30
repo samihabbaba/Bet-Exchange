@@ -1,0 +1,17 @@
+<section class="login-page">
+  <div class="login-page-left-side"></div>
+  <div class="login-page-right-side">
+    <form class="login-page-form" [formGroup]="loginForm">
+      <fieldset>
+        <div class="logo"></div>
+        <input type="text" placeholder="LOGIN" formControlName="username" />
+        <input
+          type="password"
+          placeholder="PASSWORD"
+          formControlName="password"
+        />
+        <button class="login-btn">LOGIN</button>
+      </fieldset>
+    </form>
+  </div>
+</section>

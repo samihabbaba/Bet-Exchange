@@ -2,15 +2,20 @@
 
 :root {
   --primary: #f2aa4c;
+  --primary-light: #ffcd22;
   --secondary: #101820;
   --darker-primary: #db9942;
-  --darker-seconday: #1d2a38;
+  --darker-secondary: #1d2a38;
   --darker-white: #eef1f1;
   --temp-grey: rgb(173, 173, 173);
   --light-red: #fac9d1;
   --dark-red: #f694aa;
   --light-blue: #a6d8ff;
   --dark-blue: #61a8dd;
+  --white: #ffffff;
+  --black: #000;
+  --linear-silver: linear-gradient(#e1e1e1, silver);
+  --linear-black: linear-gradient(#404040, #353535);
 }
 
 * {
@@ -92,6 +97,133 @@ body {
   height: 100%;
 }
 
+
+
+/* Login Component Styles*/
+
+@media screen and (max-width: 600px) {
+  .login-page-left-side {
+    display: none !important;
+  }
+
+
+  .login-page-right-side {
+    padding-left: 50px !important;
+    flex-basis: 100% !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  .login-page-form {
+    width: 100% !important;
+    min-width: 200px !important;
+    max-width: 380px !important;
+  }
+
+  fieldset {
+    .logo {
+      width: 100% !important;
+    }
+
+    input , .login-btn {
+      margin-bottom: 1rem !important;
+      font-size: 1rem !important;
+    }
+
+  }
+}
+.login-page {
+  height: 100vh;
+  width: 100vw;
+  background-color: #f9f9f9;
+  background-image: url("./assets/images/login-page-bg.png");
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none !important;
+  text-decoration: none;
+
+}
+
+.login-page-left-side {
+  background-image: url("./assets/images/login-vvd.png");
+  background-position: right;
+  background-size: cover;
+  flex-basis: 50%;
+  position: relative;
+}
+
+.login-page-right-side {
+  padding-left: 165px;
+  padding-right: 50px;
+  display: flex;
+  align-items: center;
+  flex-basis: 50%;
+  position: relative;
+}
+
+.login-page-form {
+  width: 380px;
+  margin: 0;
+  padding: 0;
+  border-style: none;
+
+  fieldset {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    border-style: none;
+    .logo {
+      margin-bottom: 1rem;
+      height: 60px;
+      width: 70%;
+      background-image: url("./assets/images/cloudExchange.png");
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      position: relative;
+    }
+    input {
+      width: 100%;
+      background-color: white;
+      padding: 8px 15px;
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+      line-height: 1.5rem;
+      border: none;
+      box-shadow: 0 6px 10px 0 rgb(0 0 0 / 10%);
+      outline: none !important;
+      box-sizing: border-box;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+
+    .login-btn {
+      padding: 8px 15px;
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+      line-height: 1.5rem;
+      border: none;
+      border-radius: 0.75rem;
+      box-shadow: 0 6px 10px 0 rgb(0 0 0 / 10%);
+      margin-left: auto;
+      background-color: var(--primary-light);
+      box-sizing: border-box;
+      outline: none !important;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
+}
+
+/* End of Login Component Styles*/
+
+
+
 /* Header Styles */
 
 .header {
@@ -99,7 +231,7 @@ body {
   align-items: center;
   font-size: 1.5rem;
   height: 100%;
-  width: 80%;
+  width: 85%;
   background-color: var(--orange);
 }
 
@@ -140,6 +272,60 @@ body {
   border-bottom: 3px solid black;
   font-weight: 600;
 }
+
+.login-and-language {
+  width: 25%;
+  display: flex;
+  justify-content: flex-end;
+  max-height: 25px;
+  white-space: nowrap;
+
+  .login-btn {
+    flex: 1;
+    height: 24px;
+    color: var(--black);
+    font-weight: 700;
+    text-decoration: none;
+    background: var(--linear-silver);
+    box-sizing: border-box;
+    cursor: pointer;
+    -webkit-font-smoothing: antialiased;
+    outline: 0;
+    user-select: none;
+    border: none;
+
+    &:hover {
+      background: var(--temp-grey);
+    }
+  }
+
+  .join-now-btn {
+    height: 24px;
+    flex: 1;
+    margin-left: 4px;
+    color: var(--white);
+    font-weight: 700;
+    text-decoration: none;
+    background: var(--linear-black);
+    box-sizing: border-box;
+    cursor: pointer;
+    -webkit-font-smoothing: antialiased;
+    outline: 0;
+    user-select: none;
+    border: none;
+
+    &:hover {
+      background: var(--black);
+    }
+  }
+
+  .languages {
+    height: 24px;
+    flex: 1;
+    margin-left: 4px;
+  }
+}
+
 /* Sub header styles */
 
 .sub-header {
@@ -163,7 +349,7 @@ body {
 }
 
 .sub-header-item:hover {
-  background-color: var(--darker-seconday);
+  background-color: var(--darker-secondary);
 }
 
 /* Menu styles */
@@ -521,9 +707,9 @@ input {
 }
 
 /* This part Makes the
-left and right 
-columns (nav and bets) 
-Disappear when the screen 
+left and right
+columns (nav and bets)
+Disappear when the screen
 is smaller */
 
 /* @media (max-width: 1307px) {
