@@ -12,6 +12,7 @@
   --dark-red: #f694aa;
   --light-blue: #a6d8ff;
   --dark-blue: #61a8dd;
+  --high-blue:rgb(46, 146, 209);
   --white: #ffffff;
   --black: #000;
   --linear-silver: linear-gradient(#e1e1e1, silver);
@@ -97,15 +98,12 @@ body {
   height: 100%;
 }
 
-
-
 /* Login Component Styles*/
 
 @media screen and (max-width: 600px) {
   .login-page-left-side {
     display: none !important;
   }
-
 
   .login-page-right-side {
     padding-left: 50px !important;
@@ -125,11 +123,11 @@ body {
       width: 100% !important;
     }
 
-    input , .login-btn {
+    input,
+    .login-btn {
       margin-bottom: 1rem !important;
       font-size: 1rem !important;
     }
-
   }
 }
 .login-page {
@@ -145,7 +143,6 @@ body {
   box-sizing: border-box;
   outline: none !important;
   text-decoration: none;
-
 }
 
 .login-page-left-side {
@@ -221,8 +218,6 @@ body {
 }
 
 /* End of Login Component Styles*/
-
-
 
 /* Header Styles */
 
@@ -387,6 +382,10 @@ body {
   border-radius: 3px;
 }
 
+.menu-item-icon {
+  margin-right: 4px;
+}
+
 .menu-sub-header {
   padding: 8px 12px 8px 12px;
   background-color: var(--darker-white);
@@ -397,17 +396,85 @@ body {
 .menu-item {
   height: 100%;
   padding: 10px 10px 10px 20px;
+  color: var(--high-blue);
+  background-color: white;
+  border-collapse: collapse;
+  border: 1px solid rgb(173, 173, 173);
+  // border-bottom: none;
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  user-select: none;
+
+  &:hover {
+    background-color: var(--darker-white);
+  }
+
+  &.active {
+    font-weight: 700;
+  }
+}
+
+.item-arrow {
+  color: var(--dark-blue);
+}
+
+.arrow-area {
+  margin-left: auto;
+  &.active .item-arrow {
+    transform: rotate(180deg);
+    transition: transform 0.15s linear;
+    color: var(--high-blue);
+  }
+}
+
+.menu-subItem {
+  height: 100%;
+  padding: 8px 10px 8px 25px;
+  color: var(--high-blue);
+  background-color: white;
+  border-collapse: collapse;
+  border: 1px solid rgb(173, 173, 173);
+  border-top: none;
+  width: 100%;
+  cursor: pointer;
+  &:hover, &.active  {
+    background-color: var(--darker-white);
+  }
+}
+
+
+.menu-subItem-label {
+  display: flex;
+}
+
+.child-item-arrow {
+  color: var(--dark-blue);
+}
+
+.child-arrow-area {
+  margin-left: auto;
+  &.active .child-item-arrow {
+    transform: rotate(180deg);
+    transition: transform 0.15s linear;
+    color: var(--high-blue);
+  }
+}
+
+.menu-grandChild {
+  height: 90%;
+  padding: 8px 10px 8px 30px;
   color: rgb(46, 146, 209);
   background-color: white;
   border-collapse: collapse;
   border: 1px solid rgb(173, 173, 173);
-  border-bottom: none;
+  border-top: none;
   width: 100%;
   cursor: pointer;
-}
 
-.menu-item:hover {
-  background-color: var(--darker-white);
+  &:hover {
+    background-color: var(--darker-white);
+  }
 }
 
 /* main Styles */

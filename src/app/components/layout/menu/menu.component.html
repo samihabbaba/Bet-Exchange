@@ -4,29 +4,46 @@
   <div class="menu-item">Champions League</div>
   <div class="menu-item">Syrian League</div>
   <div class="menu-sub-header">Top Regions</div>
-  <div class="menu-item">Aleppo</div>
-  <div class="menu-item">Europe</div>
-  <div class="menu-item">Famagusta</div>
-  <div class="menu-item">Aleppo</div>
-  <div class="menu-item">Europe</div>
-  <div class="menu-item">Famagusta</div>
-  <div class="menu-item">Aleppo</div>
-  <div class="menu-item">Europe</div>
-  <div class="menu-item">Famagusta</div>
-  <div class="menu-item">Aleppo</div>
-  <div class="menu-item">Europe</div>
-  <div class="menu-item">Famagusta</div>
-  <div class="menu-item">Aleppo</div>
-  <div class="menu-item">Europe</div>
-  <div class="menu-item">Famagusta</div>
-  <div class="menu-item">Aleppo</div>
-  <div class="menu-item">Europe</div>
-  <div class="menu-item">Famagusta</div>
-  <div class="menu-item">Aleppo</div>
-  <div class="menu-item">Europe</div>
-  <div class="menu-item">Famagusta</div>
-  <div class="menu-item">Aleppo</div>
-  <div class="menu-item">Europe</div>
-  <div class="menu-item">Famagusta</div>
-
+  <div class="menu-item-container" *ngFor="let header of menu">
+    <div
+      class="menu-item"
+      (click)="handleMenuHeaderClick(header)"
+      [ngClass]="{ active: header.active }"
+    >
+      <i [ngClass]="{ active: header.active }" class="menu-item-icon" [class]="header.icon"></i
+      >{{ header.name }}
+      <div class="arrow-area" [ngClass]="{ active: header.active }">
+        <i class="item-arrow fas fa-chevron-down"></i>
+      </div>
+    </div>
+    <div *ngFor="let child of header.children">
+      <div
+        class="menu-subItem"
+        (click)="handleMenuItemClick(child)"
+        [ngClass]="{ active: child.active }"
+        *ngIf="header.active"
+      >
+        <span class="menu-subItem-label" [ngClass]="{ active: child.active }">
+          {{ child.name }}
+          <div class="child-arrow-area" [ngClass]="{ active: child.active }">
+            <i class="child-item-arrow fas fa-chevron-down"></i>
+          </div>
+        </span>
+      </div>
+      <div *ngFor="let grandChild of child.children">
+        <div
+          class="menu-grandChild"
+          (click)="handleGrandChildClick(child)"
+          *ngIf="child.active && header.active"
+        >
+          <span
+            class="menu-subItem-label"
+            [ngClass]="{ active: grandChild.active }"
+          >
+            {{ grandChild.name }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
