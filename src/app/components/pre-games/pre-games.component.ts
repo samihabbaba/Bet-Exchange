@@ -18,7 +18,12 @@ export class PreGamesComponent implements OnInit {
     private layoutService: LayoutService
   ) {}
 
-  ngOnInit(): void {}
+  games:any = [];
+  ngOnInit(): void {
+    this.dataService.selectedEvents.subscribe(resp => {
+      this.games = resp;
+    })
+  }
 
   fontAwesomeIcons = {
     footBall: faFutbol,

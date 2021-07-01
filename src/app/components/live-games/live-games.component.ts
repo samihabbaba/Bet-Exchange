@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faFutbol, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { LayoutService } from 'src/app/services/layout.service';
 import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
@@ -10,15 +11,25 @@ import { SharedFunctionsService } from 'src/app/services/shared-functions.servic
   templateUrl: './live-games.component.html',
   styleUrls: ['./live-games.component.css'],
 })
-export class LiveGamesComponent implements OnInit {
+export class LiveGamesComponent implements OnInit, OnDestroy {
   constructor(
     public dataService: DataService,
     public sharedService: SharedFunctionsService,
     private router: Router,
     private layoutService: LayoutService
   ) {}
+  games:any = [];
+  subscription?: Subscription 
 
-  ngOnInit(): void {}
+  ngOnDestroy(): void {
+    // this.subscription.unsubscribe()
+  }
+
+  ngOnInit(): void {
+    this.subscription = this.dataService.selectedEvents.subscribe(resp => {
+      this.games = resp;
+    })
+  }
 
   fontAwesomeIcons = {
     footBall: faFutbol,

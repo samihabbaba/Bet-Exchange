@@ -14,7 +14,7 @@
 
 <div
   class="main-item"
-  *ngFor="let event of this.dataService.events"
+  *ngFor="let event of this.games"
   (click)="goToEventDetails()"
 >
   <fa-icon [icon]="fontAwesomeIcons.exit" class="main-icon"></fa-icon>
