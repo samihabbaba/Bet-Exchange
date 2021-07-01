@@ -20,7 +20,8 @@ export class HeaderComponent implements OnInit {
   }
 
   displayPreGames() {
-    this.layoutService.displayPreGames();
+    // this.layoutService.displayPreGames();
+    this.dataService.loadPreGamesFromHeader();
   }
 
   displayLiveGames() {

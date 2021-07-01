@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class LayoutService {
   mainContentDisplayType = new BehaviorSubject<string>('pre');
+  MainLoading = new BehaviorSubject<boolean>(false);
 
   constructor() {}
 
@@ -20,4 +21,17 @@ export class LayoutService {
   displayGameDetails() {
     this.mainContentDisplayType.next('details');
   }
+
+  isMainLoading(){
+    return this.MainLoading.value;
+  }
+
+  startMainLoading(){
+    this.MainLoading.next(true);
+  }
+
+  stopMainLoading(){
+    this.MainLoading.next(false);
+  }
+
 }

@@ -41,10 +41,20 @@ export class SharedFunctionsService {
   }
 
   getBackObj(obj:any,index:number){
-    return obj.markets[0].runners[index].exchange.availableToBack;
+  try{
+      return obj.markets[0].runners[index].exchange.availableToBack;
+    }
+    catch(ex){
+      return null
+    }  
   }
 
   getLayObj(obj:any,index:number){
-    return obj.markets[0].runners[index].exchange.availableToLay;
-}
+    try{
+      return obj.markets[0].runners[index].exchange.availableToLay;
+    }
+    catch(ex){
+      return null
+    }  
+  }
 }
