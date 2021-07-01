@@ -22,6 +22,10 @@ export class LayoutService {
     this.mainContentDisplayType.next('details');
   }
 
+  getHeaderValue(){
+    return this.mainContentDisplayType.value;
+  }
+
   isMainLoading(){
     return this.MainLoading.value;
   }

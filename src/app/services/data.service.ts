@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { finalize, map } from "rxjs/operators";
 import { BehaviorSubject } from 'rxjs';
 import { LayoutService } from './layout.service';
+import { LiveFeedService } from './live-feed.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,18 @@ export class DataService {
   selectedEvents = this.events.asObservable();
 
   baseUrl = environment.apiUrl;
-  constructor(private http: HttpClient, private layoutService:LayoutService) {
+  constructor(private http: HttpClient, private layoutService:LayoutService
+    ,public liveFeed:LiveFeedService
+    ) {
+
+    this.liveFeed.selectedEvents.subscribe(resp => {
+      this.handleLiveFeed(resp);
+    });
     
+    this.liveFeed.selectedEventDetail.subscribe(resp => {
+      this.handleGameDetailFeed(resp);
+    });
+
    }
 
   
@@ -215,6 +226,8 @@ export class DataService {
   ////// matches requests   //////
   ////////////////////////////////
 
+  ////// live part 
+
   loadLiveGames(){
 
     if(this.layoutService.isMainLoading()){
@@ -233,12 +246,29 @@ export class DataService {
     )).subscribe(resp => {
     this.layoutService.displayLiveGames();
       this.events.next(resp.body);
+      this.liveFeed.startLiveUpdate();
     }, error=>{
       this.events.next([]);
       // add error message here
     })
   }
 
+  handleLiveFeed(games:any){
+    debugger
+    if(this.layoutService.getHeaderValue() !== 'live'){
+      return
+    }
+    this.events.next(games);
+
+  }
+
+  handleGameDetailFeed(game:any){
+
+  }
+
+
+  ////// pre part 
+  
   loadPreGames(leagueId:number, regionId:string){
     
     if(this.layoutService.isMainLoading()){
@@ -280,7 +310,7 @@ export class DataService {
     this.getUpcoming({
       PageNo:1,
       PageSize:15,
-      SortBy:'Time',
+      SortBy:'event.openDate',
       SortingType:1
     }).pipe(
       finalize( () =>       this.layoutService.stopMainLoading()

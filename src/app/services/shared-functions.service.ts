@@ -20,10 +20,18 @@ export class SharedFunctionsService {
     }
   }
 
-  returnEventScore(score:any){
-    let homeScore = score.home.score;
-    let awayScore = score.away.score;
-    return homeScore + ' - ' + awayScore;
+  returnEventScore(event:any){
+    if(!event  || !event.timeline || !event.timeline.score){
+      return " vs ";
+    }
+    try{
+      let homeScore =  event.timeline.score.home.score;
+      let awayScore =  event.timeline.score.away.score;
+      return homeScore + ' - ' + awayScore;
+    }
+    catch (ex){
+      return " vs "
+    }
   }
 
   returnHighestBet(bets:any){

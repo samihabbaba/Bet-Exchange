@@ -27,12 +27,12 @@
       {{ this.sharedService.returnTeamNameFromEvent(event.event.name) }}
     </div>
     <div class="score">
-      {{ this.sharedService.returnEventScore(event.timeline.score) }}
+      {{ this.sharedService.returnEventScore(event) }}
     </div>
     <div class="second-team">
       {{ this.sharedService.returnTeamNameFromEvent(event.event.name, false) }}
     </div>
-    <div class="match-time">{{ event.timeline.elapsedRegularTime }}'</div>
+    <div class="match-time" *ngIf="event.timeline">{{ event.timeline?.elapsedRegularTime }}'</div>
   </div>
   <div class="odds" (click)="$event.stopPropagation()">
  

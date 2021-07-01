@@ -6,7 +6,9 @@ export const environment = {
   production: false,
   apiKey: "39e7311b3a0a4b25882a4811afed53fc",   // for the socket/signlaR
   apiUrl: 'https://socket.vebobet.xyz/',
-  hubUrl: 'https://socket.vebobet.xyz/hubs/datafeed'
+  // apiUrl: 'http://193.140.43.71:8080/',
+  signalrEndpoint: 'https://socket.vebobet.xyz/hubs/datafeed'
+  // signalrEndpoint: 'http://193.140.43.71:8080/hubs/datafeed'
 };
 
 /*
