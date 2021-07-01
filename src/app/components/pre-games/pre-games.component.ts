@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { faFutbol, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faFutbol, faLock, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { LayoutService } from 'src/app/services/layout.service';
@@ -26,6 +26,7 @@ export class PreGamesComponent implements OnInit,OnDestroy {
   fontAwesomeIcons = {
     footBall: faFutbol,
     exit: faTimes,
+    lock: faLock
   };
   
   games:any = [];
