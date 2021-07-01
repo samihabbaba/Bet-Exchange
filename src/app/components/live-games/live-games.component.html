@@ -27,12 +27,12 @@
       {{ this.sharedService.returnTeamNameFromEvent(event.event.name) }}
     </div>
     <div class="score">
-      {{ this.sharedService.returnEventScore(event.timeline.score) }}
+      {{ this.sharedService.returnEventScore(event) }}
     </div>
     <div class="second-team">
       {{ this.sharedService.returnTeamNameFromEvent(event.event.name, false) }}
     </div>
-    <div class="match-time">{{ event.timeline.elapsedRegularTime }}'</div>
+    <div class="match-time" *ngIf="event.timeline">{{ event.timeline?.elapsedRegularTime }}'</div>
   </div>
   <div class="odds" (click)="$event.stopPropagation()">
  
@@ -95,24 +95,24 @@
       <div class="red-square">
         <div class="bold">
           <ng-container 
-          *ngIf="this.sharedService.returnHighestBet(this.sharedService.getBackObj(event,0)) !== null"
+          *ngIf="this.sharedService.returnHighestBet(this.sharedService.getBackObj(event,1)) !== null"
           >
-            {{ this.sharedService.returnHighestBet( this.sharedService.getBackObj(event,0) ).price }}
+            {{ this.sharedService.returnHighestBet( this.sharedService.getBackObj(event,1) ).price }}
           </ng-container>
 
-          <fa-icon *ngIf="this.sharedService.returnHighestBet(this.sharedService.getBackObj(event,0)) === null" [icon]="fontAwesomeIcons.lock"></fa-icon>
+          <fa-icon *ngIf="this.sharedService.returnHighestBet(this.sharedService.getBackObj(event,1)) === null" [icon]="fontAwesomeIcons.lock"></fa-icon>
 
 
         </div>
         <div class="normal">
 
           <ng-container 
-          *ngIf="this.sharedService.returnHighestBet(this.sharedService.getBackObj(event,0)) !== null"
+          *ngIf="this.sharedService.returnHighestBet(this.sharedService.getBackObj(event,1)) !== null"
           >
-            {{ this.sharedService.returnHighestBet( this.sharedService.getBackObj(event,0) ).size }}
+            {{ this.sharedService.returnHighestBet( this.sharedService.getBackObj(event,1) ).size }}
           </ng-container>
 
-          <fa-icon *ngIf="this.sharedService.returnHighestBet(this.sharedService.getBackObj(event,0)) === null" [icon]="fontAwesomeIcons.lock"></fa-icon>
+          <fa-icon *ngIf="this.sharedService.returnHighestBet(this.sharedService.getBackObj(event,1)) === null" [icon]="fontAwesomeIcons.lock"></fa-icon>
 
         </div>
       </div>
@@ -148,24 +148,24 @@
       <div class="red-square">
         <div class="bold">
           <ng-container 
-          *ngIf="this.sharedService.returnHighestBet(this.sharedService.getBackObj(event,0)) !== null"
+          *ngIf="this.sharedService.returnHighestBet(this.sharedService.getBackObj(event,2)) !== null"
           >
-            {{ this.sharedService.returnHighestBet( this.sharedService.getBackObj(event,0) ).price }}
+            {{ this.sharedService.returnHighestBet( this.sharedService.getBackObj(event,2) ).price }}
           </ng-container>
 
-          <fa-icon *ngIf="this.sharedService.returnHighestBet(this.sharedService.getBackObj(event,0)) === null" [icon]="fontAwesomeIcons.lock"></fa-icon>
+          <fa-icon *ngIf="this.sharedService.returnHighestBet(this.sharedService.getBackObj(event,2)) === null" [icon]="fontAwesomeIcons.lock"></fa-icon>
 
 
         </div>
         <div class="normal">
 
           <ng-container 
-          *ngIf="this.sharedService.returnHighestBet(this.sharedService.getBackObj(event,0)) !== null"
+          *ngIf="this.sharedService.returnHighestBet(this.sharedService.getBackObj(event,2)) !== null"
           >
-            {{ this.sharedService.returnHighestBet( this.sharedService.getBackObj(event,0) ).size }}
+            {{ this.sharedService.returnHighestBet( this.sharedService.getBackObj(event,2) ).size }}
           </ng-container>
 
-          <fa-icon *ngIf="this.sharedService.returnHighestBet(this.sharedService.getBackObj(event,0)) === null" [icon]="fontAwesomeIcons.lock"></fa-icon>
+          <fa-icon *ngIf="this.sharedService.returnHighestBet(this.sharedService.getBackObj(event,2)) === null" [icon]="fontAwesomeIcons.lock"></fa-icon>
 
         </div>
       </div>

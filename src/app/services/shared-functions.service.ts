@@ -20,10 +20,18 @@ export class SharedFunctionsService {
     }
   }
 
-  returnEventScore(score:any){
-    let homeScore = score.home.score;
-    let awayScore = score.away.score;
-    return homeScore + ' - ' + awayScore;
+  returnEventScore(event:any){
+    if(!event  || !event.timeline || !event.timeline.score){
+      return " vs ";
+    }
+    try{
+      let homeScore =  event.timeline.score.home.score;
+      let awayScore =  event.timeline.score.away.score;
+      return homeScore + ' - ' + awayScore;
+    }
+    catch (ex){
+      return " vs "
+    }
   }
 
   returnHighestBet(bets:any){
@@ -41,10 +49,20 @@ export class SharedFunctionsService {
   }
 
   getBackObj(obj:any,index:number){
-    return obj.markets[0].runners[index].exchange.availableToBack;
+  try{
+      return obj.markets[0].runners[index].exchange.availableToBack;
+    }
+    catch(ex){
+      return null
+    }  
   }
 
   getLayObj(obj:any,index:number){
-    return obj.markets[0].runners[index].exchange.availableToLay;
-}
+    try{
+      return obj.markets[0].runners[index].exchange.availableToLay;
+    }
+    catch(ex){
+      return null
+    }  
+  }
 }
