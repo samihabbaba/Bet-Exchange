@@ -19,7 +19,13 @@ export class MainContentComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {}
+  games:any=[];
+
+  ngOnInit(): void {
+    this.dataService.selectedEvents.subscribe(resp => {
+      this.games = resp;
+    })
+  }
 
   fontAwesomeIcons = {
     footBall: faFutbol,

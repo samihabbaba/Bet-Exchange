@@ -104,7 +104,9 @@ export class MenuComponent implements OnInit {
       })
     }  }
 
-  handleGrandChildClick(item: MenuItemChildren) {}
+  handleGrandChildClick(item: MenuItemChildren) {
+    
+  }
 
 
 
