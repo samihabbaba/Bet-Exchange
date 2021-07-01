@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class LayoutService {
-  mainContentDisplayType = new BehaviorSubject<string>('pre');
+  mainContentDisplayType = new BehaviorSubject<string>('details');
 
   constructor() {}
 
