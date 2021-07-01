@@ -14,6 +14,10 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { EventDetailsComponent } from './components/event-details/event-details.component';
+import { LiveGamesComponent } from './components/live-games/live-games.component';
+import { PreGamesComponent } from './components/pre-games/pre-games.component';
+import { EventDetailsHeaderComponent } from './components/event-details/event-details-header/event-details-header.component';
+import { EventContentComponent } from './components/event-details/event-content/event-content.component';
 
 
 
@@ -28,6 +32,10 @@ import { EventDetailsComponent } from './components/event-details/event-details.
     LoginComponent,
     RegisterComponent,
     EventDetailsComponent,
+    LiveGamesComponent,
+    PreGamesComponent,
+    EventDetailsHeaderComponent,
+    EventContentComponent,
   ],
   imports: [
     BrowserModule,
