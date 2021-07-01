@@ -5,9 +5,8 @@ import { LoginComponent } from './auth/login/login.component';
 import { EventDetailsComponent } from './components/event-details/event-details.component';
 
 const routes: Routes = [
-  { path: '', component: MainContentComponent },
+  // { path: '', component: MainContentComponent },
   { path: 'login', component: LoginComponent, outlet: 'auth' },
-  { path: 'event/:id', component: EventDetailsComponent },
 ];
 
 @NgModule({

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { faFutbol, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
+import { LayoutService } from 'src/app/services/layout.service';
 import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
 
 @Component({
@@ -13,20 +14,12 @@ import { SharedFunctionsService } from 'src/app/services/shared-functions.servic
   },
 })
 export class MainContentComponent implements OnInit {
+  @Input() viewType?: string;
+
   constructor(
     public dataService: DataService,
-    public sharedService: SharedFunctionsService,
-    private router: Router
+    public sharedService: SharedFunctionsService
   ) {}
 
   ngOnInit(): void {}
-
-  fontAwesomeIcons = {
-    footBall: faFutbol,
-    exit: faTimes,
-  };
-
-  goToEventDetails(id: string) {
-    this.router.navigate(['event/', id]);
-  }
 }

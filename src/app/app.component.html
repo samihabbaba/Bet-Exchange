@@ -1,7 +1,8 @@
 <div class="container" *ngIf="router.url != '/(auth:login)'">
-  <app-header class="main-header"></app-header>
-  <app-sub-header class="sub-header"></app-sub-header>
-  <router-outlet style="display: none"></router-outlet>
+  <app-header class="main-header" [viewType]="this.viewType"></app-header>
+  <app-sub-header class="sub-header"  [viewType]="this.viewType"></app-sub-header>
+  <app-main-content [viewType]="this.viewType"></app-main-content>
+  <!-- <router-outlet style="display: none"></router-outlet> -->
 </div>
 
 <router-outlet name="auth"></router-outlet>

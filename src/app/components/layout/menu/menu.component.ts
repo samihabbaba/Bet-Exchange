@@ -58,7 +58,7 @@ export class MenuComponent implements OnInit {
       item.children =[];
     } else{
       this.dataService.getAllRegions(item.id).subscribe(resp => {
-        
+
         for(let i = 0; i<resp.body.length; i++){
           item.children?.push({
             id:resp.body[i].regionCode,
@@ -79,15 +79,15 @@ export class MenuComponent implements OnInit {
   }
 
   handleMenuItemClick(item: MenuItem) {
-    debugger
+    // debugger
 
     if(item.active){
       item.active = !item.active;
       item.children =[];
     } else{
       this.dataService.getAllLeagues(item.id).subscribe(resp => {
-    debugger
-        
+    // debugger
+
         for(let i = 0; i<resp.body.length; i++){
           item.children?.push({
             id:resp.body[i].leagueId,
@@ -100,7 +100,7 @@ export class MenuComponent implements OnInit {
         item.active = !item.active;
 
       }, error =>{
-        debugger
+        // debugger
       })
     }  }
 

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LayoutService } from 'src/app/services/layout.service';
 
 @Component({
   selector: 'app-header',
@@ -7,11 +8,21 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  constructor(private router: Router) {}
+  @Input() viewType?: string;
+
+  constructor(private router: Router, private layoutService: LayoutService) {}
 
   ngOnInit(): void {}
 
   goToLoginPage() {
     this.router.navigateByUrl('(auth:login)');
+  }
+
+  displayPreGames() {
+    this.layoutService.displayPreGames();
+  }
+
+  displayLiveGames() {
+    this.layoutService.displayLiveGames();
   }
 }
