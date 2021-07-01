@@ -21,27 +21,29 @@ export class MenuComponent implements OnInit {
       id: 4,
       active: false,
       children: [
-        {
-          flag: '',
-          id:'EN',
-          name: 'England',
-          active: false,
-          children: [
-            {id:1, name: 'Premier League', active: false },
-            {id:1, name: 'ChampionShip', active: false },
-          ],
-        },
+        // {
+        //   flag: '',
+        //   id:'EN',
+        //   sportId:4,
+        //   name: 'England',
+        //   active: false,
+        //   children: [
+        //     {id:1,sportId:4, regionId:'BR', name: 'Premier League', active: false },
+        //     {id:1,sportId:4, regionId:'BR', name: 'ChampionShip', active: false },
+        //   ],
+        // },
 
-        {
-          flag: '',
-          id:'SP',
-          name: 'Spain',
-          active: false,
-          children: [
-            { id:1, name: 'La Liga', active: false },
-            { id:1, name: 'ChampionShip', active: false },
-          ],
-        },
+        // {
+        //   flag: '',
+        //   id:'SP',
+        //   sportId:4,
+        //   name: 'Spain',
+        //   active: false,
+        //   children: [
+        //     { id:1,sportId:4, regionId:'BR', name: 'La Liga', active: false },
+        //     { id:1,sportId:4, regionId:'BR', name: 'ChampionShip', active: false },
+        //   ],
+        // },
       ],
     },
   ];
@@ -56,11 +58,11 @@ export class MenuComponent implements OnInit {
       item.children =[];
     } else{
       this.dataService.getAllRegions(item.id).subscribe(resp => {
-    debugger
         
         for(let i = 0; i<resp.body.length; i++){
           item.children?.push({
             id:resp.body[i].regionCode,
+            sportId:item.id,
             name:resp.body[i].regionName,
             active: false,
             children : []
@@ -69,7 +71,7 @@ export class MenuComponent implements OnInit {
         item.active = !item.active;
 
       }, error =>{
-        debugger
+
       })
     }
 
@@ -77,8 +79,30 @@ export class MenuComponent implements OnInit {
   }
 
   handleMenuItemClick(item: MenuItem) {
-    item.active = !item.active;
-  }
+    debugger
+
+    if(item.active){
+      item.active = !item.active;
+      item.children =[];
+    } else{
+      this.dataService.getAllLeagues(item.id).subscribe(resp => {
+    debugger
+        
+        for(let i = 0; i<resp.body.length; i++){
+          item.children?.push({
+            id:resp.body[i].leagueId,
+            regionId:resp.body[i].regionCode,
+            sportId: item.sportId,
+            name:resp.body[i].leagueName,
+            active: false
+          })
+        }
+        item.active = !item.active;
+
+      }, error =>{
+        debugger
+      })
+    }  }
 
   handleGrandChildClick(item: MenuItemChildren) {}
 

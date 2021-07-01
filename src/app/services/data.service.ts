@@ -950,22 +950,22 @@ export class DataService {
   }
 
   // GET​/leagues
-  getAllLeagues​(){
-    return this.http.get<any>(`${this.baseUrl}leagues​/all`,  {
+  getAllLeagues​(regionCode:string){
+    return this.http.get<any>(`${this.baseUrl}leagues/all?regionCode=${regionCode?regionCode:''}`,  {
       headers: this.httpOptions.headers,
       observe: 'response',
       });
   }
 
   getLeagueById(id:any){
-    return this.http.get<any>(`${this.baseUrl}leagues​/${id}`, {
+    return this.http.get<any>(`${this.baseUrl}leagues/${id}`, {
       headers: this.httpOptions.headers,
       observe: 'response',
     });
   }
 
   updateLeague(obj:any){
-    return this.http.put<any>(`${this.baseUrl}leagues​/${obj.id}`, obj, {
+    return this.http.put<any>(`${this.baseUrl}leagues/${obj.id}`, obj, {
       headers: this.httpOptions.headers,
       observe: 'response',
     });
@@ -1065,51 +1065,31 @@ export class DataService {
 
 
   performLogIn(){
-     debugger
-     let loginURL = 'https://api.vebobet.com/';
+
+   let loginURL = 'https://api.vebobet.com/';
      let model = {
       username : "DiscTest",
       password : "Disc123!"
      }
 
      this.login(model).subscribe(resp=>{
-        debugger;
-        const user:any = resp.body;
+
+      const user:any = resp.body;
 
         localStorage.setItem("token", user.token);
 
      }, error=>{
-        debugger
+        
      })
-}
+   }
 
-login(model:any){
-   let loginURL = 'https://api.vebobet.com/api/v1/auth/login';
-   return this.http.post(loginURL, model, {
-      headers: this.httpOptions.headers,
-      observe: 'response',
-    });
-    
-   this.http.post(loginURL, model).pipe(
-      map((response: any) => {
-        const user = response;
-        debugger
-        if (user.token) {
-         //  this.decodedToken = this.jwtHelper.decodeToken(user.token);
-         //  const role = this.decodedToken.role;
-          
-         
-          localStorage.setItem("token", user.token);
-         //  this.logInSuccess = true;
-
-        }
-
-        if (!user.success) {
-         //  this.logInSuccess = false;
-        }
-      })
-    );
-}
+   login(model:any){
+      let loginURL = 'https://api.vebobet.com/api/v1/auth/login';
+      return this.http.post(loginURL, model, {
+         headers: this.httpOptions.headers,
+         observe: 'response',
+      });
+   }
 
 }
 
