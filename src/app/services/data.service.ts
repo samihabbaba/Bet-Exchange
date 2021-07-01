@@ -21,6 +21,12 @@ export class DataService {
   events = new BehaviorSubject<any>(null);
   selectedEvents = this.events.asObservable();
 
+  
+  eventDetails = new BehaviorSubject<any>(null);
+  selectedEventDetails = this.eventDetails.asObservable();
+
+  
+
   baseUrl = environment.apiUrl;
   constructor(private http: HttpClient, private layoutService:LayoutService
     ,public liveFeed:LiveFeedService
@@ -263,6 +269,12 @@ export class DataService {
   }
 
   handleGameDetailFeed(game:any){
+    
+    debugger
+    if(this.layoutService.getHeaderValue() !== 'details'){
+      return
+    }
+    this.eventDetails.next(game);
 
   }
 
@@ -325,7 +337,7 @@ export class DataService {
   }
 
   loadMarketsForGame(){
-     
+    
   }
 
   ////////////////////////////////////////
