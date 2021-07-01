@@ -4,7 +4,9 @@
     <div class="main-view">
       <app-pre-games *ngIf="viewType == 'pre'"></app-pre-games>
       <app-live-games *ngIf="viewType == 'live'"></app-live-games>
-      <app-event-details *ngIf="viewType == 'details'"></app-event-details>
+      <app-event-details
+        *ngIf="viewType == 'details'"
+      ></app-event-details>
     </div>
   </div>
   <app-bet-slip class="bets"></app-bet-slip>

@@ -260,7 +260,7 @@ export class DataService {
   }
 
   handleLiveFeed(games:any){
-    debugger
+    // debugger
     if(this.layoutService.getHeaderValue() !== 'live'){
       return
     }
@@ -270,7 +270,7 @@ export class DataService {
 
   handleGameDetailFeed(game:any){
 
-    debugger
+    // debugger
     if(this.layoutService.getHeaderValue() !== 'details'){
       return
     }

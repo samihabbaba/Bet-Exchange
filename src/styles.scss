@@ -30,6 +30,16 @@ app-root {
   box-sizing: border-box;
 }
 
+app-main-content {
+  background-color: var(--darker-white);
+  // overflow: hidden;
+}
+
+.main-content-wrapper {
+  overflow: auto;
+  height: calc(100vh - 107px);
+}
+
 .icon-wrapper {
   align-self: stretch;
   display: grid;
@@ -1018,7 +1028,7 @@ is smaller */
       .match-odds-sticky-header {
         background-color: var(--white);
         border-bottom: 1px solid var(--white);
-        position: sticky;
+        // position: sticky;
         top: 0;
         z-index: 11;
         letter-spacing: normal;
@@ -1596,6 +1606,7 @@ is smaller */
   word-spacing: normal;
   vertical-align: top;
   text-rendering: auto;
+  background: var(--white);
 }
 .mod-tabs {
   letter-spacing: normal;
@@ -2233,15 +2244,29 @@ is smaller */
 
 .mini-market-full-link {
   margin-top: 7px;
-    color: #1e1e1e;
-    font-size: 12px;
-    text-align: right;
-    text-decoration: none;
-    cursor: pointer;
-    display: block;
-    letter-spacing: normal;
-    word-spacing: normal;
-    text-rendering: auto;
+  color: #1e1e1e;
+  font-size: 12px;
+  text-align: right;
+  text-decoration: none;
+  cursor: pointer;
+  display: block;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-rendering: auto;
+  .icon {
+    margin-left: 3px;
+  }
+
+  &:hover span {
+    border-bottom: 1px solid var(--black);
+  }
+}
+
+@media screen and (max-width: 1220px) {
+  .mini-market-lay-runner,
+  .mini-market-back-runner {
+    width: 21% !important;
+  }
 }
 
 // .main-market {
