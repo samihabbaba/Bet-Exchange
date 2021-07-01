@@ -13,29 +13,257 @@
                 <div class="header-main-section-wrapper">
                   <div class="header-main-section">
                     <div class="header-going-in-play">
-                      <!-- An incon goes here -->
+                      <span class="label-icon"></span>
                       <span class="label">Going In-Play</span>
                     </div>
 
                     <div class="header-cash-out">
-                      <!-- An incon goes here -->
+                      <span class="label-icon"></span>
                       <span class="label">Cash Out</span>
                     </div>
 
                     <div class="header-rules">
                       <a>
-                        <!-- An incon goes here -->
+                        <span class="label-icon"></span>
                         <span class="label">Rules</span>
                       </a>
                     </div>
+                  </div>
+                </div>
+
+                <div class="header-secondary-section-wrapper">
+                  <div class="header-total-matched-wrapper">
+                    <div class="market-matched">
+                      <span class="label">Matched:</span>
+                      <span class="total-matched">GBP 271,782</span>
+                    </div>
+                    <button class="refresh-button">Refresh</button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
+        <table class="runners-header">
+          <thead>
+            <tr>
+              <th class="runner-name"><span>4 selections</span></th>
+              <th class="percentage"><span>110%</span></th>
+              <th class="back-all-btn">
+                <button><span>Back all</span></button>
+              </th>
+              <th class="lay-all-btn">
+                <button><span>Lay all</span></button>
+              </th>
+              <th class="percentage-2"><span>120%</span></th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+
+      <div class="runners-list-wrapper">
+        <div class="runner-list-component">
+          <div class="runners-container">
+            <div class="runners-list-container">
+              <table class="runners-list">
+                <tbody>
+                  <tr class="runner-line" *ngFor="let item of [0, 1, 2, 3]">
+                    <td class="new-runner-info">
+                      <div class="runner-info-container">
+                        <div class="market-info-container">
+                          <button class="market-graph"></button>
+                        </div>
+
+                        <div class="runner-info">
+                          <div class="default-name">
+                            <h3 class="runner-name">Belgium</h3>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+
+                    <td class="header-bet-buttons">
+                      <button class="back-runner">
+                        <div class="bet-runner">
+                          <span class="bet-btn-price">3.5</span>
+                          <span class="bet-btn-size">$8500</span>
+                        </div>
+                      </button>
+                    </td>
+                    <td class="header-bet-buttons">
+                      <button class="back-runner">
+                        <div class="bet-runner">
+                          <span class="bet-btn-price">3.5</span>
+                          <span class="bet-btn-size">$8500</span>
+                        </div>
+                      </button>
+                    </td>
+                    <td class="header-bet-buttons">
+                      <button class="back-runner blue">
+                        <div class="bet-runner">
+                          <span class="bet-btn-price">3.5</span>
+                          <span class="bet-btn-size">$8500</span>
+                        </div>
+                      </button>
+                    </td>
+
+                    <td class="header-bet-buttons">
+                      <button class="back-runner pink">
+                        <div class="bet-runner">
+                          <span class="bet-btn-price">3.5</span>
+                          <span class="bet-btn-size">$8500</span>
+                        </div>
+                      </button>
+                    </td>
+                    <td class="header-bet-buttons">
+                      <button class="back-runner">
+                        <div class="bet-runner">
+                          <span class="bet-btn-price">3.5</span>
+                          <span class="bet-btn-size">$8500</span>
+                        </div>
+                      </button>
+                    </td>
+                    <td class="header-bet-buttons">
+                      <button class="back-runner">
+                        <div class="bet-runner">
+                          <span class="bet-btn-price">3.5</span>
+                          <span class="bet-btn-size">$8500</span>
+                        </div>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
+</div>
+
+<div class="other-markets-container">
+  <div class="other-markets-header">
+    <span>Other Markets</span>
+  </div>
+
+  <div class="other-markets-tabs">
+    <section class="mod-tabs">
+      <ul class="tabs-container">
+        <li
+          [class]="item.class"
+          *ngFor="let item of tabItems"
+          [ngClass]="{ active: item.active }"
+          (click)="handleTabClick(item)"
+        >
+          <a class="tab-heading" *ngIf="!item.children"
+            ><h4 class="tab-label">{{ item.name }}</h4></a
+          >
+
+          <div class="tab-heading" *ngIf="item.children">
+            <div class="more-selection">
+              <h4>{{ item.name }}</h4>
+            </div>
+            <i class="tab-icon fas fa-angle-down"></i>
+          </div>
+          <ul class="more-dropdown" *ngIf="item.children && item.active">
+            <li
+              class="more-tab-item"
+              *ngFor="let child of item.children"
+              (click)="handleChildClick(item); $event.stopPropagation()"
+            >
+              <a class="item-link"
+                ><h4>{{ child.name }}</h4></a
+              >
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <div class="other-markets-tab-content">
+        <div class="column-left">
+          <div class="mini-market-container">
+            <div class="mini-market-header-container">
+              <div class="mini-market-header">
+                <div class="mini-market-header-section-wrapper">
+                  <div class="mini-market-name"><span>To Qualify</span></div>
+                  <div class="mini-market-buttons">
+                    <div class="going-to-play"><span></span></div>
+                    <div class="cashout"><span></span></div>
+                    <span class="market-rules"
+                      ><a>
+                        <span class="icon"></span>
+                        <span class="label">Rules</span></a
+                      ></span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <table class="mini-market-runners-header">
+                <thead>
+                  <tr>
+                    <th class="mini-market-runner-name">
+                      <span>Matched: GBP 15,319</span>
+                    </th>
+                    <th class="mini-market-back"><span>Back</span></th>
+                    <th class="mini-market-lay"><span>Lay</span></th>
+                  </tr>
+                </thead>
+              </table>
+
+              <div class="mini-market-runners-list">
+                <div class="mini-market-runners-list-container">
+                  <div class="mini-market-runners">
+                    <div class="mini-market-runners-wrapper">
+                      <table class="runners-table">
+                        <tbody>
+                          <tr class="runner-line" *ngFor="let item of [0,1,2]">
+                            <td class="new-runner">
+                              <div class="graph-container">
+                                <button></button>
+                              </div>
+                              <div class="name-container"><h3>Belgium</h3></div>
+                            </td>
+
+                            <td class="mini-market-back-runner">
+                              <button>
+                                <div>
+                                  <span class="size">2.32</span>
+                                  <span class="amount">£36</span>
+                                </div>
+                              </button>
+                            </td>
+
+
+
+                            <td class="mini-market-lay-runner">
+                              <button>
+                                <div>
+                                  <span class="size">2.32</span>
+                                  <span class="amount">£36</span>
+                                </div>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <a class="mini-market-full-link">View full market</a>
+
+
+
+            </div>
+          </div>
+        </div>
+        <div class="column-right"></div>
+      </div>
+    </section>
   </div>
 </div>
 <!-- End of Top Part -->

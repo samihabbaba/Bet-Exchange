@@ -289,7 +289,7 @@ export class DataService {
    //             "home":{
    //                "numberOfCornersSecondHalf":1,
    //                "penaltiesSequence":[
-                     
+
    //                ],
    //                "halfTimeScore":"2",
    //                "numberOfCorners":2,
@@ -309,7 +309,7 @@ export class DataService {
    //             "away":{
    //                "numberOfCornersSecondHalf":1,
    //                "penaltiesSequence":[
-                     
+
    //                ],
    //                "halfTimeScore":"1",
    //                "numberOfCorners":2,
@@ -550,7 +550,7 @@ export class DataService {
    //             "home":{
    //                "numberOfCornersSecondHalf":3,
    //                "penaltiesSequence":[
-                     
+
    //                ],
    //                "halfTimeScore":"2",
    //                "numberOfCorners":6,
@@ -570,7 +570,7 @@ export class DataService {
    //             "away":{
    //                "numberOfCornersSecondHalf":0,
    //                "penaltiesSequence":[
-                     
+
    //                ],
    //                "halfTimeScore":"3",
    //                "numberOfCorners":2,
@@ -826,7 +826,7 @@ export class DataService {
    //             "home":{
    //                "numberOfCornersSecondHalf":0,
    //                "penaltiesSequence":[
-                     
+
    //                ],
    //                "halfTimeScore":"",
    //                "numberOfCorners":0,
@@ -846,7 +846,7 @@ export class DataService {
    //             "away":{
    //                "numberOfCornersSecondHalf":0,
    //                "penaltiesSequence":[
-                     
+
    //                ],
    //                "halfTimeScore":"",
    //                "numberOfCorners":1,
@@ -878,15 +878,15 @@ export class DataService {
    //       "isDisabled":false
    //    }
    // ]
-   
+
    }
 
-  
+
   ////////////////////////////////
   ////// sports Controller //////
   ///////////////////////////////
 
-  
+
   getSports(){
     return this.http.get<any>(`${this.baseUrl}sports`,  {
       headers: this.httpOptions.headers,
@@ -944,7 +944,7 @@ export class DataService {
   ////////////////////////////////
   ////// League Controller //////
   ////////////////////////////////
-  
+
   // GET​/leagues
   getLeagues​(pars:any){
     return this.http.get<any>(`${this.baseUrl}leagues​?PageNo=${pars.PageNo?pars.PageNo:''}&PageSize=${pars.PageSize?pars.PageSize:''}&SortBy=${pars.SortBy?pars.SortBy:''}&SortingType=${pars.SortingType?pars.SortingType:''}&regionCode=${pars.regionCode?pars.regionCode:''}&SportId=${pars.SportId?pars.SportId:''}`,  {
@@ -1006,7 +1006,7 @@ export class DataService {
   ////////////////////////////////
   ////// Region Controller //////
   ///////////////////////////////
-  
+
 
   getRegions​(pars:any){
     return this.http.get<any>(`${this.baseUrl}regions?PageNo=${pars.PageNo?pars.PageNo:''}&PageSize=${pars.PageSize?pars.PageSize:''}&SortBy=${pars.SortBy?pars.SortBy:''}&SortingType=${pars.SortingType?pars.SortingType:''}&SportId=${pars.SportId?pars.SportId:''}`,  {
@@ -1070,6 +1070,7 @@ export class DataService {
     this.events.next([]);
     this.layoutService.displayLiveGames();
 
+
     this.getAllLive({}).subscribe(resp => {
       debugger
       this.events.next(resp.body);
@@ -1098,7 +1099,7 @@ export class DataService {
   }
 
   loadMarketsForGame(){
-     
+
   }
 
   ////////////////////////////////////////
@@ -1118,7 +1119,7 @@ export class DataService {
         localStorage.setItem("token", user.token);
 
      }, error=>{
-        
+
      })
    }
 
