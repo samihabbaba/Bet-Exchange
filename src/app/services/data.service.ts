@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -885,7 +886,8 @@ export class DataService {
   getSports(){
     return this.http.get<any>(`${this.baseUrl}sports`,  {
       headers: this.httpOptions.headers,
-    });
+      observe: 'response',
+       });
   }
 
 
@@ -897,7 +899,8 @@ export class DataService {
   getBettingRules(pars:any){
     return this.http.get<any>(`${this.baseUrl}bettingrules?PageNo=${pars.PageNo?pars.PageNo:''}&PageSize=${pars.PageSize?pars.PageSize:''}&SortBy=${pars.SortBy?pars.SortBy:''}&SortingType=${pars.SortingType?pars.SortingType:''}`,  {
       headers: this.httpOptions.headers,
-    });
+      observe: 'response',
+       });
   }
 
   // POST/bettingrules
@@ -942,14 +945,16 @@ export class DataService {
   getLeagues​(pars:any){
     return this.http.get<any>(`${this.baseUrl}leagues​?PageNo=${pars.PageNo?pars.PageNo:''}&PageSize=${pars.PageSize?pars.PageSize:''}&SortBy=${pars.SortBy?pars.SortBy:''}&SortingType=${pars.SortingType?pars.SortingType:''}&regionCode=${pars.regionCode?pars.regionCode:''}&SportId=${pars.SportId?pars.SportId:''}`,  {
       headers: this.httpOptions.headers,
-    });
+      observe: 'response',
+      });
   }
 
   // GET​/leagues
   getAllLeagues​(){
     return this.http.get<any>(`${this.baseUrl}leagues​/all`,  {
       headers: this.httpOptions.headers,
-    });
+      observe: 'response',
+      });
   }
 
   getLeagueById(id:any){
@@ -975,13 +980,15 @@ export class DataService {
   getLive​(pars:any){
     return this.http.get<any>(`${this.baseUrl}live?CountryCode=${pars.CountryCode?pars.CountryCode:''}&CompetitionId=${pars.CompetitionId?pars.CompetitionId:''}&IncludeDisabled=${pars.IncludeDisabled?pars.IncludeDisabled:''}&PageNo=${pars.PageNo?pars.PageNo:''}&PageSize=${pars.PageSize?pars.PageSize:''}&SortBy=${pars.SortBy?pars.SortBy:''}&SortingType=${pars.SortingType?pars.SortingType:''}`,  {
       headers: this.httpOptions.headers,
-    });
+      observe: 'response',
+     });
   }
 
   getAllLive​(pars:any){
     return this.http.get<any>(`${this.baseUrl}live?CountryCode=${pars.CountryCode?pars.CountryCode:''}&CompetitionId=${pars.CompetitionId?pars.CompetitionId:''}&IncludeDisabled=${pars.IncludeDisabled?pars.IncludeDisabled:''}`,  {
       headers: this.httpOptions.headers,
-    });
+      observe: 'response',
+     });
   }
 
   getLIveById(id:any){
@@ -999,26 +1006,28 @@ export class DataService {
   
 
   getRegions​(pars:any){
-    return this.http.get<any>(`${this.baseUrl}/regions?PageNo=${pars.PageNo?pars.PageNo:''}&PageSize=${pars.PageSize?pars.PageSize:''}&SortBy=${pars.SortBy?pars.SortBy:''}&SortingType=${pars.SortingType?pars.SortingType:''}&SportId=${pars.SportId?pars.SportId:''}`,  {
+    return this.http.get<any>(`${this.baseUrl}regions?PageNo=${pars.PageNo?pars.PageNo:''}&PageSize=${pars.PageSize?pars.PageSize:''}&SortBy=${pars.SortBy?pars.SortBy:''}&SortingType=${pars.SortingType?pars.SortingType:''}&SportId=${pars.SportId?pars.SportId:''}`,  {
       headers: this.httpOptions.headers,
-    });
+      observe: 'response',
+     });
   }
 
-  getAllRegions​​(){
-    return this.http.get<any>(`${this.baseUrl}/regions/all`,  {
+  getAllRegions​​(sportId:number){
+    return this.http.get<any>(`${this.baseUrl}regions/all`,  {
       headers: this.httpOptions.headers,
-    });
+      observe: 'response',
+     });
   }
 
   getRegionById(id:any){
-    return this.http.get<any>(`${this.baseUrl}/regions/${id}`, {
+    return this.http.get<any>(`${this.baseUrl}regions/${id}`, {
       headers: this.httpOptions.headers,
       observe: 'response',
     });
   }
 
   updateRegions(obj:any){
-    return this.http.put<any>(`${this.baseUrl}/regions/${obj.id}`, obj, {
+    return this.http.put<any>(`${this.baseUrl}regions/${obj.id}`, obj, {
       headers: this.httpOptions.headers,
       observe: 'response',
     });
@@ -1030,25 +1039,77 @@ export class DataService {
   ////////////////////////////////
 
   getUpcoming(pars:any){
-    return this.http.get<any>(`${this.baseUrl}//upcoming?PageNo=${pars.PageNo?pars.PageNo:''}&PageSize=${pars.PageSize?pars.PageSize:''}&SortBy=${pars.SortBy?pars.SortBy:''}&SortingType=${pars.SortingType?pars.SortingType:''}`,  {
+    return this.http.get<any>(`${this.baseUrl}upcoming?PageNo=${pars.PageNo?pars.PageNo:''}&PageSize=${pars.PageSize?pars.PageSize:''}&SortBy=${pars.SortBy?pars.SortBy:''}&SortingType=${pars.SortingType?pars.SortingType:''}`,  {
       headers: this.httpOptions.headers,
-    });
+      observe: 'response',    });
   }
 
   getAllUpcoming​​(){
-    return this.http.get<any>(`${this.baseUrl}//upcoming/all`,  {
+    return this.http.get<any>(`${this.baseUrl}upcoming/all`,  {
       headers: this.httpOptions.headers,
-    });
+      observe: 'response',    });
   }
 
   getUpcomingById(id:any){
-    return this.http.get<any>(`${this.baseUrl}//upcoming/${id}`, {
+    return this.http.get<any>(`${this.baseUrl}upcoming/${id}`, {
       headers: this.httpOptions.headers,
       observe: 'response',
     });
   }
 
 
+
+
+
+
+
+
+  performLogIn(){
+     debugger
+     let loginURL = 'https://api.vebobet.com/';
+     let model = {
+      username : "DiscTest",
+      password : "Disc123!"
+     }
+
+     this.login(model).subscribe(resp=>{
+        debugger;
+        const user:any = resp.body;
+
+        localStorage.setItem("token", user.token);
+
+     }, error=>{
+        debugger
+     })
+}
+
+login(model:any){
+   let loginURL = 'https://api.vebobet.com/api/v1/auth/login';
+   return this.http.post(loginURL, model, {
+      headers: this.httpOptions.headers,
+      observe: 'response',
+    });
+    
+   this.http.post(loginURL, model).pipe(
+      map((response: any) => {
+        const user = response;
+        debugger
+        if (user.token) {
+         //  this.decodedToken = this.jwtHelper.decodeToken(user.token);
+         //  const role = this.decodedToken.role;
+          
+         
+          localStorage.setItem("token", user.token);
+         //  this.logInSuccess = true;
+
+        }
+
+        if (!user.success) {
+         //  this.logInSuccess = false;
+        }
+      })
+    );
+}
 
 }
 

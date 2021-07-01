@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://193.140.43.71:8080/',
+  apiUrl: 'https://socket.vebobet.xyz/',
   hubUrl: 'http://localhost:5000/livehub'
 };
 
