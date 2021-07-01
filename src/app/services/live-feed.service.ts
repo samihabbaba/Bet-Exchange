@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HubConnectionBuilder, HubConnection } from "@microsoft/signalr";
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { threadId } from 'worker_threads';
 
 
 
