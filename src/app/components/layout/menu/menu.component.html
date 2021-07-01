@@ -38,7 +38,7 @@
       <div *ngFor="let grandChild of child.children">
         <div
           class="menu-grandChild"
-          (click)="handleGrandChildClick(child)"
+          (click)="handleGrandChildClick(grandChild)"
           *ngIf="child.active && header.active"
           [@fadeMenuDropdown]
         >

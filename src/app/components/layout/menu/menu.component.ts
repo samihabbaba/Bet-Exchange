@@ -5,6 +5,7 @@ import {
   MenuItem,
   MenuItemChildren,
 } from 'src/app/models/menu-item';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-menu',
@@ -17,37 +18,62 @@ export class MenuComponent implements OnInit {
     {
       icon: 'fas fa-futbol',
       name: 'Football',
+      id: 4,
       active: false,
       children: [
         {
           flag: '',
+          id:'EN',
           name: 'England',
           active: false,
           children: [
-            { name: 'Premier League', active: false },
-            { name: 'ChampionShip', active: false },
+            {id:1, name: 'Premier League', active: false },
+            {id:1, name: 'ChampionShip', active: false },
           ],
         },
 
         {
           flag: '',
+          id:'SP',
           name: 'Spain',
           active: false,
           children: [
-            { name: 'La Liga', active: false },
-            { name: 'ChampionShip', active: false },
+            { id:1, name: 'La Liga', active: false },
+            { id:1, name: 'ChampionShip', active: false },
           ],
         },
       ],
     },
   ];
 
-  constructor() {}
+  constructor(private dataService:DataService) {}
 
   ngOnInit(): void {}
 
-  handleMenuHeaderClick(item: MenuHeader) {
-    item.active = !item.active;
+  handleMenuHeaderClick(item: MenuHeader) { // sport clicked ( load regions )
+    if(item.active){
+      item.active = !item.active;
+      item.children =[];
+    } else{
+      this.dataService.getAllRegions(item.id).subscribe(resp => {
+    debugger
+        
+        for(let i = 0; i<resp.body.length; i++){
+          item.children?.push({
+            id:resp.body[i].regionCode,
+            name:resp.body[i].regionName,
+            active: false,
+            children : []
+          })
+        }
+        item.active = !item.active;
+
+      }, error =>{
+        debugger
+      })
+    }
+
+
   }
 
   handleMenuItemClick(item: MenuItem) {
@@ -55,4 +81,9 @@ export class MenuComponent implements OnInit {
   }
 
   handleGrandChildClick(item: MenuItemChildren) {}
+
+
+
+
+
 }
