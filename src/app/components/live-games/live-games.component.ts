@@ -17,24 +17,28 @@ export class LiveGamesComponent implements OnInit, OnDestroy {
     public sharedService: SharedFunctionsService,
     private router: Router,
     private layoutService: LayoutService
-  ) {}
-  games:any = [];
-  subscription?: Subscription 
-
-  ngOnDestroy(): void {
-    // this.subscription.unsubscribe()
-  }
-
-  ngOnInit(): void {
+  ) {
     this.subscription = this.dataService.selectedEvents.subscribe(resp => {
-      this.games = resp;
+    this.games = resp;
     })
   }
+  
+  games:any = [];
+  subscription: Subscription 
 
   fontAwesomeIcons = {
     footBall: faFutbol,
     exit: faTimes,
   };
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe()
+  }
+
+  ngOnInit(): void {
+    
+  }
+
 
   goToEventDetails() {
     this.layoutService.displayGameDetails();
