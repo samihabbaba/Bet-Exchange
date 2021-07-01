@@ -105,7 +105,7 @@ export class MenuComponent implements OnInit {
     }  }
 
   handleGrandChildClick(item: MenuItemChildren) {
-    
+    this.dataService.loadPreGames(item.id, item.regionId);
   }
 
 

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DataService } from 'src/app/services/data.service';
 import { LayoutService } from 'src/app/services/layout.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { LayoutService } from 'src/app/services/layout.service';
 export class HeaderComponent implements OnInit {
   @Input() viewType?: string;
 
-  constructor(private router: Router, private layoutService: LayoutService) {}
+  constructor(private router: Router, private layoutService: LayoutService, private dataService:DataService) {}
 
   ngOnInit(): void {}
 
@@ -23,6 +24,7 @@ export class HeaderComponent implements OnInit {
   }
 
   displayLiveGames() {
-    this.layoutService.displayLiveGames();
+    // this.layoutService.displayLiveGames();
+    this.dataService.loadLiveGames();
   }
 }

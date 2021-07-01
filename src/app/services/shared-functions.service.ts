@@ -27,13 +27,24 @@ export class SharedFunctionsService {
   }
 
   returnHighestBet(bets:any){
+    if(bets == null){
+      return null;
+    }
   let maxPrice =  Math.max.apply(Math, bets.map(function(o:any) { return o.price; }))
   let index = bets.findIndex((x:any) => x.price === maxPrice);
   if(index != -1){
     return bets[index];
   }
   else{
-    return {}
+    return null
   }
+  }
+
+  getBackObj(obj:any,index:number){
+    return obj.markets[0].runners[index].exchange.availableToBack;
+  }
+
+  getLayObj(obj:any,index:number){
+    return obj.markets[0].runners[index].exchange.availableToLay;
 }
 }

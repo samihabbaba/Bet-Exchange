@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { map } from "rxjs/operators";
 import { BehaviorSubject } from 'rxjs';
+import { LayoutService } from './layout.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class DataService {
   selectedEvents = this.events.asObservable();
 
   baseUrl = environment.apiUrl;
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private layoutService:LayoutService) {
 
    //  this.events = [
    //    {
@@ -981,14 +982,14 @@ export class DataService {
   /////////////////////////////
 
   getLive​(pars:any){
-    return this.http.get<any>(`${this.baseUrl}live?RegionCode=${pars.RegionCode?pars.RegionCode:''}&LeagueId=${pars.LeagueId?pars.LeagueId:''}&IncludeDisabled=${pars.IncludeDisabled?pars.IncludeDisabled:''}&PageNo=${pars.PageNo?pars.PageNo:''}&PageSize=${pars.PageSize?pars.PageSize:''}&SortBy=${pars.SortBy?pars.SortBy:''}&SortingType=${pars.SortingType?pars.SortingType:''}`,  {
+    return this.http.get<any>(`${this.baseUrl}live?RegionCode=${pars.RegionCode?pars.RegionCode:''}&LeagueId=${pars.LeagueId?pars.LeagueId:''}&IncludeDisabled=${pars.IncludeDisabled?pars.IncludeDisabled:false}&PageNo=${pars.PageNo?pars.PageNo:''}&PageSize=${pars.PageSize?pars.PageSize:''}&SortBy=${pars.SortBy?pars.SortBy:''}&SortingType=${pars.SortingType?pars.SortingType:''}`,  {
       headers: this.httpOptions.headers,
       observe: 'response',
      });
   }
 
   getAllLive​(pars:any){
-    return this.http.get<any>(`${this.baseUrl}live?RegionCode=${pars.RegionCode?pars.RegionCode:''}&LeagueId=${pars.LeagueId?pars.LeagueId:''}&IncludeDisabled=${pars.IncludeDisabled?pars.IncludeDisabled:''}`,  {
+    return this.http.get<any>(`${this.baseUrl}live/all?RegionCode=${pars.RegionCode?pars.RegionCode:''}&LeagueId=${pars.LeagueId?pars.LeagueId:''}&IncludeDisabled=${pars.IncludeDisabled?pars.IncludeDisabled:false}`,  {
       headers: this.httpOptions.headers,
       observe: 'response',
      });
@@ -1066,11 +1067,34 @@ export class DataService {
   ////////////////////////////////
 
   loadLiveGames(){
+    this.events.next([]);
+    this.layoutService.displayLiveGames();
 
+    this.getAllLive({}).subscribe(resp => {
+      debugger
+      this.events.next(resp.body);
+    }, error=>{
+      this.events.next([]);
+      // add error message here
+    })
   }
 
-  loadPreGames(leagueId:number){
+  loadPreGames(leagueId:number, regionId:string){
+    debugger
+    this.events.next([]);
+    this.layoutService.displayPreGames();
 
+    this.getAllUpcoming({
+      LeagueId:leagueId,
+      RegionCode:regionId
+    }).subscribe(resp =>{
+    debugger
+
+      this.events.next(resp.body);
+    }, error=>{
+      this.events.next([]);
+      // add error message here
+    })
   }
 
   loadMarketsForGame(){
