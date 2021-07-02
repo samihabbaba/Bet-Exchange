@@ -42,7 +42,7 @@
         </div>
         <!-- <div class="match-time">{{ event.timeline.elapsedRegularTime }}'</div> -->
       </div>
-      <div class="odds" (click)="$event.stopPropagation()">
+      <div class="odds-for-live" (click)="$event.stopPropagation()">
         <div class="odds-1">
           <div class="red-square">
             <div class="bold">
@@ -357,6 +357,5 @@
       </div>
     </div>
   </div>
-
 </div>
-  <app-no-event *ngIf="this.games?.length < 1"></app-no-event>
+<app-no-event *ngIf="this.games?.length < 1"></app-no-event>

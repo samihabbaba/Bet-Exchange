@@ -572,15 +572,22 @@ body {
   margin-left: auto;
   width: 350px;
   justify-content: space-evenly;
+}
+
+.odds-for-live {
+  display: flex;
+  margin-left: auto;
+  width: 350px;
+  justify-content: space-evenly;
   height: 100%;
 }
 
-.odds > * {
+.odds > *,
+.odds-for-live > * {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-
 }
 
 .red-square,
@@ -2334,12 +2341,10 @@ is smaller */
 
 /* End of event details styles*/
 
-
-
 /* No event component */
 .no-event-container {
   // background-color: var(--white);
-  background: url('assets/images/login-page-bg.png');
+  background: url("assets/images/login-page-bg.png");
   background-size: cover;
   color: var(--darker-secondary);
   font-size: 19px;
@@ -2352,6 +2357,5 @@ is smaller */
   align-items: center;
   justify-content: center;
 }
-
 
 /* End of no event component */
