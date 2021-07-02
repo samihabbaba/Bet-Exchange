@@ -1,14 +1,14 @@
-<div class="menu-view" [ngClass]="{ loading: menuLoading }">
+<div class="menu-view" [ngClass]="{ loading: menuLoading || isLoading }">
   <div class="menu-header">Top Selections</div>
   <div class="menu-sub-header">Top Competitions</div>
-  <div class="menu-item">Champions League</div>
-  <div class="menu-item">Syrian League</div>
+  <div class="menu-item"  [ngClass]="{ loading: menuLoading || isLoading }">Champions League</div>
+  <div class="menu-item"  [ngClass]="{ loading: menuLoading || isLoading }">Syrian League</div>
   <div class="menu-sub-header">Top Regions</div>
   <div class="menu-item-container" *ngFor="let header of menu">
     <div
       class="menu-item"
       (click)="handleMenuHeaderClick(header)"
-      [ngClass]="{ active: header.active,loading: menuLoading }"
+      [ngClass]="{ active: header.active,loading: menuLoading || isLoading }"
     >
       <i
         [ngClass]="{ active: header.active }"

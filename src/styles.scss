@@ -338,7 +338,7 @@ body {
   .join-now-btn {
     height: 24px;
     flex: 1;
-    margin-left: 4px;
+    margin-left: 6px;
     color: var(--white);
     font-weight: 700;
     text-decoration: none;
@@ -358,7 +358,46 @@ body {
   .languages {
     height: 24px;
     flex: 1;
-    margin-left: 4px;
+    margin-left: 6px;
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    &.active {
+      background: red;
+    }
+
+    .language-flag {
+
+      background-repeat: no-repeat;
+      width: 21px;
+      height: 9px;
+      display: inline-block;
+      background-image: url("assets/svgs/flag-bundle.svg") !important;
+      &.english {
+        background-position: -11px -134px;
+      }
+
+      &.turkish {
+        background-position: -63px -191px;
+      }
+    }
+
+    .language-dropdown-arrow {
+      background-image: url("assets/svgs/flag-bundle.svg") !important;
+      background-repeat: no-repeat;
+      background-position: -159px -69px;
+      display: inline-block;
+      width: 8px;
+      height: 4px;
+      vertical-align: top;
+      position: relative;
+      top: 6px;
+      cursor: pointer;
+      border-right: none !important;
+      outline: 0;
+      line-height: 1.4;
+      box-sizing: border-box;
+    }
   }
 }
 
@@ -486,7 +525,7 @@ body {
 
     .arrow-area .item-arrow {
       color: var(--temp-grey);
-    };
+    }
   }
 }
 
@@ -553,7 +592,8 @@ body {
   width: 100%;
   cursor: pointer;
 
-  &:hover, &.active {
+  &:hover,
+  &.active {
     background-color: var(--light-grey);
   }
 }
