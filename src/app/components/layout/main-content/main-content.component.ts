@@ -15,6 +15,7 @@ import { SharedFunctionsService } from 'src/app/services/shared-functions.servic
 })
 export class MainContentComponent implements OnInit {
   @Input() viewType?: string;
+  @Input() isLoading?: boolean;
 
   constructor(
     public dataService: DataService,

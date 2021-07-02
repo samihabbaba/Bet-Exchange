@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faFutbol, faLock, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
@@ -12,6 +12,8 @@ import { SharedFunctionsService } from 'src/app/services/shared-functions.servic
   styleUrls: ['./pre-games.component.css'],
 })
 export class PreGamesComponent implements OnInit,OnDestroy {
+  @Input() isLoading?: boolean;
+
   constructor(
     public dataService: DataService,
     public sharedService: SharedFunctionsService,
@@ -28,19 +30,19 @@ export class PreGamesComponent implements OnInit,OnDestroy {
     exit: faTimes,
     lock: faLock
   };
-  
+
   games:any = [];
-  subscription: Subscription 
+  subscription: Subscription
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe()
   }
 
   ngOnInit(): void {
-    
+
   }
 
-  
+
 
   goToEventDetails(eventId:any) {
     this.dataService.loadMarketsForGamePre(eventId);

@@ -1,7 +1,7 @@
 <div class="header">
   <img src="../../../../assets/images/cloudExchange.png" class="logo" />
   <div class="header-menu">
-    <div class="header-menu-item" (click)="displayPreGames()">
+    <div class="header-menu-item" [ngClass]="{loading: isLoading}" (click)="displayPreGames()">
       <div
         class="header-menu-item-text"
         [ngClass]="{ active: viewType == 'pre' }"
@@ -9,7 +9,7 @@
         Pre-games
       </div>
     </div>
-    <div class="header-menu-item" (click)="displayLiveGames()">
+    <div class="header-menu-item" [ngClass]="{loading: isLoading}" (click)="displayLiveGames()">
       <div
         class="header-menu-item-text"
         [ngClass]="{ active: viewType == 'live' }"
@@ -17,7 +17,7 @@
         In-play
       </div>
     </div>
-    <div class="header-menu-item">
+    <div class="header-menu-item" [ngClass]="{loading: isLoading}">
       <div class="header-menu-item-text">Other</div>
     </div>
   </div>

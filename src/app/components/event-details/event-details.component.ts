@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
@@ -7,6 +7,8 @@ import { DataService } from 'src/app/services/data.service';
   styleUrls: ['./event-details.component.css'],
 })
 export class EventDetailsComponent implements OnInit, OnDestroy {
+  @Input() isLoading?:boolean
+
   constructor(private dataService:DataService, ) {}
 
   ngOnDestroy(): void {

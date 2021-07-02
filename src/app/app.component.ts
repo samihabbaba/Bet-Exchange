@@ -11,6 +11,7 @@ import { LayoutService } from './services/layout.service';
 export class AppComponent implements OnInit {
   title = 'angular-exchange';
   viewType?: string;
+  isLoading?: boolean;
 
   constructor(
     public router: Router,
@@ -25,6 +26,11 @@ export class AppComponent implements OnInit {
   initializeSubscriptions() {
     this.layoutService.mainContentDisplayType.subscribe((value) => {
       this.viewType = value;
+    });
+
+    this.layoutService.MainLoading.subscribe((value) => {
+      console.log(value)
+      this.isLoading = value;
     });
   }
 }

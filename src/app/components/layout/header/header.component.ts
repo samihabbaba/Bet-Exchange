@@ -10,6 +10,7 @@ import { LayoutService } from 'src/app/services/layout.service';
 })
 export class HeaderComponent implements OnInit {
   @Input() viewType?: string;
+  @Input() isLoading?: boolean;
 
   constructor(private router: Router, private layoutService: LayoutService, private dataService:DataService) {}
 
