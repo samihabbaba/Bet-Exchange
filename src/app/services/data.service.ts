@@ -373,6 +373,9 @@ export class DataService {
     ))
     .subscribe(resp =>{
       this.layoutService.displayGameDetails();
+      console.log(resp.body)
+      console.log(resp.body.markets)
+
       this.eventDetails.next(resp.body);
     }, error=>{
       this.eventDetails.next([]);
