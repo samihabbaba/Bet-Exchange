@@ -7,9 +7,7 @@ import { DataService } from 'src/app/services/data.service';
   styleUrls: ['./event-details.component.css'],
 })
 export class EventDetailsComponent implements OnInit, OnDestroy {
-  @Input() isLoading?:boolean
-
-  constructor(private dataService:DataService, ) {}
+  constructor(private dataService: DataService) {}
 
   ngOnDestroy(): void {
     this.dataService.stopLiveEventListen();

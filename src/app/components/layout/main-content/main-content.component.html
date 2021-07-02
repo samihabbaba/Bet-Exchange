@@ -2,18 +2,13 @@
   <app-menu class="menu" [isLoading]="isLoading"> </app-menu>
   <div class="main">
     <div class="main-view">
-      <app-pre-games
-        *ngIf="viewType == 'pre'"
-        [isLoading]="this.isLoading"
-      ></app-pre-games>
-      <app-live-games
-        *ngIf="viewType == 'live'"
-        [isLoading]="this.isLoading"
-      ></app-live-games>
+      <app-pre-games *ngIf="viewType == 'pre' && !isLoading"></app-pre-games>
+      <app-live-games *ngIf="viewType == 'live' && !isLoading"></app-live-games>
       <app-event-details
-        *ngIf="viewType == 'details'"
-        [isLoading]="this.isLoading"
+        *ngIf="viewType == 'details' && !isLoading"
       ></app-event-details>
+
+      <app-loader *ngIf="isLoading"></app-loader>
     </div>
   </div>
   <app-bet-slip class="bets"></app-bet-slip>
