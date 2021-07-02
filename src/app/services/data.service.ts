@@ -276,7 +276,7 @@ export class DataService {
 
   }
 
-  loadMarketsForGameLive(eventId:any){
+  loadMarketsForGameLive(eventId:any, ignoreListen = false){
     if(this.layoutService.isMainLoading()){
       return;
     }else{
@@ -290,8 +290,10 @@ export class DataService {
     ))
     .subscribe(resp =>{
       this.layoutService.displayGameDetails();
-      this.eventDetails.next(resp.body);
-      this.liveFeed.listenToEvent(eventId);
+      this.eventDetails.next({...resp.body, isLive:true});
+      if(!ignoreListen){
+        this.liveFeed.listenToEvent(eventId);
+      }
     }, error=>{
       this.eventDetails.next([]);
       // add error message here
@@ -373,8 +375,6 @@ export class DataService {
     ))
     .subscribe(resp =>{
       this.layoutService.displayGameDetails();
-      console.log(resp.body)
-      console.log(resp.body.markets)
 
       this.eventDetails.next(resp.body);
     }, error=>{

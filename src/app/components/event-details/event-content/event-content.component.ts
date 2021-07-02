@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-event-content',
@@ -6,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./event-content.component.css'],
 })
 export class EventContentComponent implements OnInit {
-  @Input() event?= null;
+  @Input() event:any= null;
 
   tabItems: any[] = [
     {
@@ -45,9 +46,14 @@ export class EventContentComponent implements OnInit {
     },
   ];
 
-  constructor() {}
+  topMarket:any = null;
+  eventIsLive = false;
+
+  constructor(private dataService:DataService) {}
 
   ngOnInit(): void {
+    this.topMarket = this.event.markets[0];
+    this.eventIsLive = this.event.isLive;
   }
 
   handleTabClick(tab: any) {
@@ -72,4 +78,18 @@ export class EventContentComponent implements OnInit {
       }
     }
   }
+
+  setMarketAsTop(market:any){
+    this.topMarket = market;
+  }
+
+  refreshEvent(){
+    if(this.eventIsLive){
+      // we don't request ignore listen as true --> because when the loading start the onDestroy of details comp will cut the listen to event
+      this.dataService.loadMarketsForGameLive(this.event.event.eventId);
+    }else{
+      this.dataService.loadMarketsForGamePre(this.event.event.eventId);
+    }
+  }
+
 }

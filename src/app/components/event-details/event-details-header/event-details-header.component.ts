@@ -6,7 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./event-details-header.component.css']
 })
 export class EventDetailsHeaderComponent implements OnInit {
-  @Input() event?= null;
+  @Input() event:any= null;
 
   constructor() { }
 

@@ -7,7 +7,7 @@
       <div class="match-odds-sticky-header">
         <div class="header-container">
           <div class="header-wrapper">
-            <h2 class="header-text">Match Odds</h2>
+            <h2 class="header-text">{{topMarket?.description.marketName}}</h2>
             <div class="header-content-container">
               <div class="header-content">
                 <div class="header-main-section-wrapper">
@@ -35,9 +35,9 @@
                   <div class="header-total-matched-wrapper">
                     <div class="market-matched">
                       <span class="label">Matched:</span>
-                      <span class="total-matched">GBP 271,782</span>
+                      <span class="total-matched">GBP {{topMarket?.totalMatched}}</span>
                     </div>
-                    <button class="refresh-button">Refresh</button>
+                    <button class="refresh-button"(click)="this.refreshEvent()">Refresh</button>
                   </div>
                 </div>
               </div>
