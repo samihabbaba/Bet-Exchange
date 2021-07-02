@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-event-content',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./event-content.component.css'],
 })
 export class EventContentComponent implements OnInit {
+  @Input() event?= null;
+
   tabItems: any[] = [
     {
       name: 'Popular',
@@ -45,7 +47,8 @@ export class EventContentComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   handleTabClick(tab: any) {
     if (tab.children) {

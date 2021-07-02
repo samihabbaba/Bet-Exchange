@@ -1,4 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
@@ -7,10 +8,18 @@ import { DataService } from 'src/app/services/data.service';
   styleUrls: ['./event-details.component.css'],
 })
 export class EventDetailsComponent implements OnInit, OnDestroy {
-  constructor(private dataService: DataService) {}
+  game:any = [];
+  subscription: Subscription
 
+  constructor(private dataService: DataService) {
+    this.subscription = this.dataService.selectedEventDetails.subscribe(resp => {
+      this.game = resp;
+    })
+  }
+  
   ngOnDestroy(): void {
     this.dataService.stopLiveEventListen();
+    this.subscription.unsubscribe();
   }
 
   ngOnInit(): void {}
