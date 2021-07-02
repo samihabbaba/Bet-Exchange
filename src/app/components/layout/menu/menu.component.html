@@ -1,4 +1,4 @@
-<div class="menu-view" [ngClass]="{loading: isLoading}">
+<div class="menu-view" [ngClass]="{ loading: menuLoading }">
   <div class="menu-header">Top Selections</div>
   <div class="menu-sub-header">Top Competitions</div>
   <div class="menu-item">Champions League</div>
@@ -8,7 +8,7 @@
     <div
       class="menu-item"
       (click)="handleMenuHeaderClick(header)"
-      [ngClass]="{ active: header.active }"
+      [ngClass]="{ active: header.active,loading: menuLoading }"
     >
       <i
         [ngClass]="{ active: header.active }"
@@ -38,14 +38,12 @@
       <div *ngFor="let grandChild of child.children">
         <div
           class="menu-grandChild"
-          (click)="handleGrandChildClick(grandChild)"
+          (click)="handleGrandChildClick(child, grandChild)"
           *ngIf="child.active && header.active"
           [@fadeMenuDropdown]
+          [ngClass]="{ active: grandChild.active }"
         >
-          <span
-            class="menu-subItem-label"
-            [ngClass]="{ active: grandChild.active }"
-          >
+          <span class="menu-subItem-label">
             {{ grandChild.name }}
           </span>
         </div>

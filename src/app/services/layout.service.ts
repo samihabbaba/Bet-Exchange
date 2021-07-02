@@ -7,6 +7,8 @@ import { BehaviorSubject } from 'rxjs';
 export class LayoutService {
   mainContentDisplayType = new BehaviorSubject<string>('pre');
   MainLoading = new BehaviorSubject<boolean>(false);
+  menuLoading = new BehaviorSubject<boolean>(false);
+  closeMenuChild = new BehaviorSubject<string>('');
 
   constructor() {}
 
@@ -22,20 +24,35 @@ export class LayoutService {
     this.mainContentDisplayType.next('details');
   }
 
-  getHeaderValue(){
+  getHeaderValue() {
     return this.mainContentDisplayType.value;
   }
 
-  isMainLoading(){
+  isMainLoading() {
     return this.MainLoading.value;
   }
 
-  startMainLoading(){
+  startMainLoading() {
     this.MainLoading.next(true);
   }
 
-  stopMainLoading(){
+  stopMainLoading() {
     this.MainLoading.next(false);
   }
 
+  isMenuLoading() {
+    return this.menuLoading.value;
+  }
+
+  startMenuLoading() {
+    this.menuLoading.next(true);
+  }
+
+  stopMenuLoading() {
+    this.menuLoading.next(false);
+  }
+
+  closeMenuChilds() {
+    this.closeMenuChild.next('close');
+  }
 }

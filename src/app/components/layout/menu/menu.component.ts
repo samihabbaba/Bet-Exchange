@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { fadeMenuDropdown } from 'src/app/animations/animation';
 import {
@@ -17,6 +18,8 @@ import { LayoutService } from 'src/app/services/layout.service';
 })
 export class MenuComponent implements OnInit {
   @Input() isLoading?: boolean;
+  @Input() menuLoading?: boolean;
+  menuSubscriber?: Subscription;
 
   menu: MenuHeader[] = [
     {
@@ -56,7 +59,16 @@ export class MenuComponent implements OnInit {
     private layoutService: LayoutService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.layoutService.closeMenuChild.subscribe((value) => {
+      if (value == 'close') {
+        this.closeAllLeagues();
+      }
+    });
+  }
+  ngOnDestroy(): void {
+    this.menuSubscriber?.unsubscribe();
+  }
 
   handleMenuHeaderClick(item: MenuHeader) {
     // sport clicked ( load regions )
@@ -64,14 +76,14 @@ export class MenuComponent implements OnInit {
       item.active = !item.active;
       item.children = [];
     } else {
-      if (this.layoutService.isMainLoading()) {
+      if (this.layoutService.isMenuLoading()) {
         return;
       } else {
-        this.layoutService.startMainLoading();
+        this.layoutService.startMenuLoading();
       }
       this.dataService
         .getAllRegions(item.id)
-        .pipe(finalize(() => this.layoutService.stopMainLoading()))
+        .pipe(finalize(() => this.layoutService.stopMenuLoading()))
         .subscribe(
           (resp) => {
             for (let i = 0; i < resp.body.length; i++) {
@@ -97,14 +109,14 @@ export class MenuComponent implements OnInit {
       item.active = !item.active;
       item.children = [];
     } else {
-      if (this.layoutService.isMainLoading()) {
+      if (this.layoutService.isMenuLoading()) {
         return;
       } else {
-        this.layoutService.startMainLoading();
+        this.layoutService.startMenuLoading();
       }
       this.dataService
         .getAllLeagues(item.id)
-        .pipe(finalize(() => this.layoutService.stopMainLoading()))
+        .pipe(finalize(() => this.layoutService.stopMenuLoading()))
         .subscribe(
           (resp) => {
             // debugger
@@ -127,7 +139,45 @@ export class MenuComponent implements OnInit {
     }
   }
 
-  handleGrandChildClick(item: MenuItemChildren) {
-    this.dataService.loadPreGames(item.id, item.regionId);
+  handleGrandChildClick(child: MenuItem, grandchild: MenuItemChildren) {
+    if (!grandchild.active) {
+      this.setAllChildsToFalse(child);
+      grandchild.active = true;
+    }
+    this.dataService.loadPreGames(grandchild.id, grandchild.regionId);
+  }
+
+  setAllChildsToFalse(currentChild: MenuItem) {
+    for (let item of this.menu) {
+      if (item.children) {
+        for (let child of item.children) {
+          if (child !== currentChild) {
+            child.active = false;
+          }
+          if (child.children) {
+            for (let granchild of child.children) {
+              granchild.active = false;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  closeAllLeagues() {
+    for (let item of this.menu) {
+      if (item.active && item.children) {
+        for (let child of item.children) {
+          if (child.active) {
+            child.active = false;
+            if (child.children) {
+              for (let grandchild of child.children) {
+                grandchild.active = false;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

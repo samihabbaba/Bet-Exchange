@@ -1,5 +1,5 @@
 <div class="container" id="inner-container">
-  <app-menu class="menu" [isLoading]="isLoading"> </app-menu>
+  <app-menu class="menu" [isLoading]="isLoading" [menuLoading]="this.menuLoading"> </app-menu>
   <div class="main">
     <div class="main-view">
       <app-pre-games *ngIf="viewType == 'pre' && !isLoading"></app-pre-games>

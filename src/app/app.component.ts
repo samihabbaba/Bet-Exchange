@@ -12,6 +12,7 @@ export class AppComponent implements OnInit {
   title = 'angular-exchange';
   viewType?: string;
   isLoading?: boolean;
+  menuLoading?: boolean;
 
   constructor(
     public router: Router,
@@ -29,8 +30,11 @@ export class AppComponent implements OnInit {
     });
 
     this.layoutService.MainLoading.subscribe((value) => {
-      console.log(value)
       this.isLoading = value;
+    });
+
+    this.layoutService.menuLoading.subscribe((value) => {
+      this.menuLoading = value;
     });
   }
 }
