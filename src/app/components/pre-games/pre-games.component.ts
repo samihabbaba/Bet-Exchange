@@ -12,7 +12,6 @@ import { SharedFunctionsService } from 'src/app/services/shared-functions.servic
   styleUrls: ['./pre-games.component.css'],
 })
 export class PreGamesComponent implements OnInit,OnDestroy {
-  @Input() isLoading?: boolean;
 
   constructor(
     public dataService: DataService,

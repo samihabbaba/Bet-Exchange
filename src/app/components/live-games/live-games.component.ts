@@ -12,37 +12,33 @@ import { SharedFunctionsService } from 'src/app/services/shared-functions.servic
   styleUrls: ['./live-games.component.css'],
 })
 export class LiveGamesComponent implements OnInit, OnDestroy {
-  @Input() isLoading?: boolean;
-
   constructor(
     public dataService: DataService,
     public sharedService: SharedFunctionsService,
     private router: Router,
     private layoutService: LayoutService
   ) {
-    this.subscription = this.dataService.selectedEvents.subscribe(resp => {
-    this.games = resp;
-    })
+    this.subscription = this.dataService.selectedEvents.subscribe((resp) => {
+      this.games = resp;
+    });
   }
 
-  games:any = [];
-  subscription: Subscription
+  games: any = [];
+  subscription: Subscription;
 
   fontAwesomeIcons = {
     footBall: faFutbol,
     exit: faTimes,
-    lock: faLock
+    lock: faLock,
   };
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe()
+    this.subscription.unsubscribe();
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
 
-  }
-
-  goToEventDetails(eventId:any) {
+  goToEventDetails(eventId: any) {
     this.dataService.loadMarketsForGameLive(eventId);
     // this.layoutService.displayGameDetails();
   }
