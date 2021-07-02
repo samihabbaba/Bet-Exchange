@@ -40,7 +40,8 @@ export class LiveGamesComponent implements OnInit, OnDestroy {
     
   }
 
-  goToEventDetails() {
-    this.layoutService.displayGameDetails();
+  goToEventDetails(eventId:any) {
+    this.dataService.loadMarketsForGameLive(eventId);
+    // this.layoutService.displayGameDetails();
   }
 }

@@ -260,7 +260,6 @@ export class DataService {
   }
 
   handleLiveFeed(games:any){
-    debugger
     if(this.layoutService.getHeaderValue() !== 'live'){
       return
     }
@@ -270,7 +269,6 @@ export class DataService {
 
   handleGameDetailFeed(game:any){
     
-    debugger
     if(this.layoutService.getHeaderValue() !== 'details'){
       return
     }
@@ -278,6 +276,31 @@ export class DataService {
 
   }
 
+  loadMarketsForGameLive(eventId:any){
+    if(this.layoutService.isMainLoading()){
+      return;
+    }else{
+      this.layoutService.startMainLoading();
+    }
+    this.eventDetails.next([]);
+    this.layoutService.displayGameDetails();
+
+    this.getLIveById(eventId).pipe(
+      finalize( () =>       this.layoutService.stopMainLoading()
+    ))
+    .subscribe(resp =>{
+      this.layoutService.displayGameDetails();
+      this.eventDetails.next(resp.body);
+      this.liveFeed.listenToEvent(eventId);
+    }, error=>{
+      this.eventDetails.next([]);
+      // add error message here
+    })
+  }
+
+  stopLiveEventListen(){
+    this.liveFeed.removeEventListen();
+  }
 
   ////// pre part 
   
@@ -336,8 +359,25 @@ export class DataService {
     })
   }
 
-  loadMarketsForGame(){
-    
+  loadMarketsForGamePre(eventId:any){
+    if(this.layoutService.isMainLoading()){
+      return;
+    }else{
+      this.layoutService.startMainLoading();
+    }
+    this.eventDetails.next([]);
+    this.layoutService.displayGameDetails();
+
+    this.getUpcomingById(eventId).pipe(
+      finalize( () =>       this.layoutService.stopMainLoading()
+    ))
+    .subscribe(resp =>{
+      this.layoutService.displayGameDetails();
+      this.eventDetails.next(resp.body);
+    }, error=>{
+      this.eventDetails.next([]);
+      // add error message here
+    })
   }
 
   ////////////////////////////////////////

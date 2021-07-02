@@ -10,8 +10,7 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
   constructor(private dataService:DataService, ) {}
 
   ngOnDestroy(): void {
-    debugger
-    throw new Error('Method not implemented.');
+    this.dataService.stopLiveEventListen();
   }
 
   ngOnInit(): void {}

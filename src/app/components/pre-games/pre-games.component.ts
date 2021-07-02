@@ -42,7 +42,8 @@ export class PreGamesComponent implements OnInit,OnDestroy {
 
   
 
-  goToEventDetails() {
-    this.layoutService.displayGameDetails();
+  goToEventDetails(eventId:any) {
+    this.dataService.loadMarketsForGamePre(eventId);
+    // this.layoutService.displayGameDetails();
   }
 }
