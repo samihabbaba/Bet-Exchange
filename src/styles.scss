@@ -455,27 +455,43 @@ body {
 .menu-item {
   height: 100%;
   padding: 10px 10px 10px 20px;
-  color: var(--high-blue);
-  background-color: white;
+  color: var(--secondary);
+  background-color: var(--white);
   border-collapse: collapse;
-  border: 1px solid rgb(173, 173, 173);
+  border: 1px solid var(--temp-grey);
   // border-bottom: none;
   width: 100%;
   cursor: pointer;
   display: flex;
   user-select: none;
-
+  transition: background-color 0.2s, color 0.2s;
   &:hover {
-    background-color: var(--darker-white);
+    background-color: var(--secondary);
+    color: var(--white);
+
+    .arrow-area .item-arrow {
+      color: var(--white);
+    }
   }
 
   &.active {
     font-weight: 700;
+    background-color: var(--secondary);
+    color: var(--white);
+  }
+
+  &.loading {
+    color: var(--temp-grey);
+    background-color: var(--white);
+
+    .arrow-area .item-arrow {
+      color: var(--temp-grey);
+    };
   }
 }
 
 .item-arrow {
-  color: var(--dark-blue);
+  color: var(--secondary);
 }
 
 .arrow-area {
@@ -483,7 +499,7 @@ body {
   &.active .item-arrow {
     transform: rotate(180deg);
     transition: transform 0.15s linear;
-    color: var(--high-blue);
+    color: var(--white);
   }
 }
 
@@ -497,9 +513,15 @@ body {
   border-top: none;
   width: 100%;
   cursor: pointer;
+  transition: background-color 0.1s, color 0.1s, font-weight 0.1s;
   &:hover,
   &.active {
-    background-color: var(--darker-white);
+    background-color: var(--high-blue);
+    color: var(--white);
+    font-weight: 700;
+    .child-arrow-area .child-item-arrow {
+      color: var(--white);
+    }
   }
 }
 
@@ -516,7 +538,7 @@ body {
   &.active .child-item-arrow {
     transform: rotate(180deg);
     transition: transform 0.15s linear;
-    color: var(--high-blue);
+    color: var(--white);
   }
 }
 
@@ -531,8 +553,8 @@ body {
   width: 100%;
   cursor: pointer;
 
-  &:hover {
-    background-color: var(--darker-white);
+  &:hover, &.active {
+    background-color: var(--light-grey);
   }
 }
 
@@ -590,7 +612,6 @@ body {
   width: 350px;
   justify-content: space-evenly;
 }
-
 
 .odds > * {
   display: flex;
