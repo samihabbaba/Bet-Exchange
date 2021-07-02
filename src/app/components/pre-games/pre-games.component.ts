@@ -9,7 +9,7 @@ import { SharedFunctionsService } from 'src/app/services/shared-functions.servic
 @Component({
   selector: 'app-pre-games',
   templateUrl: './pre-games.component.html',
-  styleUrls: ['./pre-games.component.css'],
+  styleUrls: ['./pre-games.component.css']
 })
 export class PreGamesComponent implements OnInit,OnDestroy {
 

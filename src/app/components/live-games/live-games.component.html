@@ -1,4 +1,4 @@
-<div *ngIf="this.games.length >= 1">
+<div *ngIf="this.games?.length >= 1">
   <div class="main-header-view">Live Games</div>
   <div class="main-sport">
     <div class="sport-name">
@@ -355,4 +355,4 @@
   </div>
 </div>
 
-<app-no-event *ngIf="this.games.length < 1"></app-no-event>
+<app-no-event *ngIf="this.games?.length < 1"></app-no-event>
