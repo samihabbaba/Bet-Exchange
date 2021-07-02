@@ -35,7 +35,7 @@
                   <div class="header-total-matched-wrapper">
                     <div class="market-matched">
                       <span class="label">Matched:</span>
-                      <span class="total-matched">GBP {{topMarket?.totalMatched}}</span>
+                      <span class="total-matched">GBP {{this.sharedService.formatNumber( topMarket?.state.totalMatched )}}</span>
                     </div>
                     <button class="refresh-button"(click)="this.refreshEvent()">Refresh</button>
                   </div>
@@ -48,7 +48,7 @@
         <table class="runners-header">
           <thead>
             <tr>
-              <th class="runner-name"><span>4 selections</span></th>
+              <th class="runner-name"><span>{{topMarket.runners.length}} selections</span></th>
               <th class="percentage"><span>110%</span></th>
               <th class="back-all-btn">
                 <button><span>Back all</span></button>
@@ -68,7 +68,9 @@
             <div class="runners-list-container">
               <table class="runners-list">
                 <tbody>
-                  <tr class="runner-line" *ngFor="let item of [0, 1, 2, 3]">
+                  <tr class="runner-line" *ngFor="let item of topMarket.runners">
+
+                    <!-- selection name -->
                     <td class="new-runner-info">
                       <div class="runner-info-container">
                         <div class="market-info-container">
@@ -77,41 +79,37 @@
 
                         <div class="runner-info">
                           <div class="default-name">
-                            <h3 class="runner-name">Belgium</h3>
+                            <h3 class="runner-name">{{item.description.runnerName}}</h3>
                           </div>
                         </div>
                       </div>
                     </td>
 
-                    <td class="header-bet-buttons">
-                      <button class="back-runner">
+                    <!-- selection odds to back -->
+                    <td class="header-bet-buttons" *ngFor="let selection of [2,1,0]; let i = index">
+                      <button class="back-runner" [ngClass]="{'blue': selection === 0 }">
                         <div class="bet-runner">
-                          <span class="bet-btn-price">3.5</span>
-                          <span class="bet-btn-size">$8500</span>
-                        </div>
-                      </button>
-                    </td>
-                    <td class="header-bet-buttons">
-                      <button class="back-runner">
-                        <div class="bet-runner">
-                          <span class="bet-btn-price">3.5</span>
-                          <span class="bet-btn-size">$8500</span>
-                        </div>
-                      </button>
-                    </td>
-                    <td class="header-bet-buttons">
-                      <button class="back-runner blue">
-                        <div class="bet-runner">
-                          <span class="bet-btn-price">3.5</span>
-                          <span class="bet-btn-size">$8500</span>
+                          <span class="bet-btn-price">{{this.sharedService.returnRunWithIndex(item.exchange.availableToBack,selection).price }}</span>
+                          <span class="bet-btn-size">{{this.sharedService.returnRunWithIndex(item.exchange.availableToBack,selection).size}}</span>
                         </div>
                       </button>
                     </td>
 
-                    <td class="header-bet-buttons">
+                    <!-- selection odds to Lay -->
+                    <td class="header-bet-buttons" *ngFor="let selection of [2,1,0]; let i = index">
+                      <button class="back-runner" [ngClass]="{'pink': selection === 2 }">
+                        <div class="bet-runner">
+                          <span class="bet-btn-price">{{this.sharedService.returnRunWithIndex(item.exchange.availableToLay,selection).price }}</span>
+                          <span class="bet-btn-size">{{this.sharedService.returnRunWithIndex(item.exchange.availableToLay,selection).size}}</span>
+                        </div>
+                      </button>
+                    </td>
+                    
+
+                    <!-- <td class="header-bet-buttons">
                       <button class="back-runner pink">
                         <div class="bet-runner">
-                          <span class="bet-btn-price">3.5</span>
+                          <span class="bet-btn-price">3.6</span>
                           <span class="bet-btn-size">$8500</span>
                         </div>
                       </button>
@@ -119,7 +117,7 @@
                     <td class="header-bet-buttons">
                       <button class="back-runner">
                         <div class="bet-runner">
-                          <span class="bet-btn-price">3.5</span>
+                          <span class="bet-btn-price">3.666</span>
                           <span class="bet-btn-size">$8500</span>
                         </div>
                       </button>
@@ -127,12 +125,16 @@
                     <td class="header-bet-buttons">
                       <button class="back-runner">
                         <div class="bet-runner">
-                          <span class="bet-btn-price">3.5</span>
+                          <span class="bet-btn-price">3.66666</span>
                           <span class="bet-btn-size">$8500</span>
                         </div>
                       </button>
-                    </td>
+                    </td> -->
+
+
                   </tr>
+
+
                 </tbody>
               </table>
             </div>

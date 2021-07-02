@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
+import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
 
 @Component({
   selector: 'app-event-content',
@@ -49,7 +50,7 @@ export class EventContentComponent implements OnInit {
   topMarket:any = null;
   eventIsLive = false;
 
-  constructor(private dataService:DataService) {}
+  constructor(private dataService:DataService, public sharedService:SharedFunctionsService) {}
 
   ngOnInit(): void {
     this.topMarket = this.event.markets[0];

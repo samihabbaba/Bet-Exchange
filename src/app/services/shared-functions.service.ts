@@ -35,17 +35,17 @@ export class SharedFunctionsService {
   }
 
   returnHighestBet(bets:any){
-    if(bets == null){
-      return null;
-    }
-  let maxPrice =  Math.max.apply(Math, bets.map(function(o:any) { return o.price; }))
-  let index = bets.findIndex((x:any) => x.price === maxPrice);
-  if(index != -1){
-    return bets[index];
-  }
-  else{
-    return null
-  }
+      if(bets == null){
+        return null;
+      }
+    let maxPrice =  Math.max.apply(Math, bets.map(function(o:any) { return o.price; }))
+    let index = bets.findIndex((x:any) => x.price === maxPrice);
+    if(index != -1){
+      return bets[index];
+      }
+    else{
+      return null
+      }
   }
 
   getBackObj(obj:any,index:number){
@@ -65,4 +65,47 @@ export class SharedFunctionsService {
       return null
     }  
   }
+
+  formatNumber(num:any, isMoney=true) {
+
+    num = Number(num);
+    if(num === 0 ){
+      return 0;
+    }
+    if(isMoney){
+      num = num.toFixed(2);
+    }
+
+    else if(num.toString().includes(".")){
+      num = num.toFixed(2);
+    }
+
+      let numTr = num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+      return numTr;
+  }
+
+  returnRunWithIndex(obj:any, index:number){
+    if(obj == null || index > (obj.length-1)){
+      return {
+        price:'',
+        size:''
+      };
+    }
+    debugger
+    obj.sort( this.sortRunByPrice );
+    return obj[index]
+
+  }
+
+  sortRunByPrice( a:any, b:any ) {
+    if ( a.price > b.price ){
+      return -1;
+    }
+    if ( a.price < b.price ){
+      return 1;
+    }
+    return 0;
+  }
+  
+
 }
