@@ -29,7 +29,6 @@ export class AppComponent implements OnInit {
     });
 
     this.layoutService.MainLoading.subscribe((value) => {
-      console.log(value)
       this.isLoading = value;
     });
   }
