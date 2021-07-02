@@ -1,11 +1,18 @@
 <div class="container" id="inner-container">
-  <app-menu class="menu"> </app-menu>
+  <app-menu class="menu" [isLoading]="isLoading"> </app-menu>
   <div class="main">
     <div class="main-view">
-      <app-pre-games *ngIf="viewType == 'pre'"></app-pre-games>
-      <app-live-games *ngIf="viewType == 'live'"></app-live-games>
+      <app-pre-games
+        *ngIf="viewType == 'pre'"
+        [isLoading]="this.isLoading"
+      ></app-pre-games>
+      <app-live-games
+        *ngIf="viewType == 'live'"
+        [isLoading]="this.isLoading"
+      ></app-live-games>
       <app-event-details
         *ngIf="viewType == 'details'"
+        [isLoading]="this.isLoading"
       ></app-event-details>
     </div>
   </div>

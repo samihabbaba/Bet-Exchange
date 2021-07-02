@@ -1,201 +1,358 @@
-<div class="main-header-view">Pre Games</div>
-<div class="main-sport">
-  <div class="sport-name">
-    <fa-icon [icon]="fontAwesomeIcons.footBall"></fa-icon>
-    Soccer
-  </div>
-
-  <div class="odds-label">
-    <div class="label-1">1</div>
-    <div class="label-x">X</div>
-    <div class="label-2">2</div>
-  </div>
-</div>
-
-<div
-  class="main-item"
-  *ngFor="let event of this.games"
-  (click)="goToEventDetails()"
->
-  <fa-icon [icon]="fontAwesomeIcons.exit" class="main-icon"></fa-icon>
-  <div class="date-time">
-    <div class="time">{{ event.event.openDate | date: "h:mm" }}</div>
-    <div class="date">{{ event.event.openDate | date: "dd/MM" }}</div>
-  </div>
-  <div class="teams">
-    <div class="first-team">
-      {{ this.sharedService.returnTeamNameFromEvent(event.event.name) }}
+<div *ngIf="!isLoading">
+  <div class="main-header-view">Pre Games</div>
+  <div class="main-sport">
+    <div class="sport-name">
+      <fa-icon [icon]="fontAwesomeIcons.footBall"></fa-icon>
+      Soccer
     </div>
-     vs 
-    <!-- <div class="score">
+
+    <div class="odds-label">
+      <div class="label-1">1</div>
+      <div class="label-x">X</div>
+      <div class="label-2">2</div>
+    </div>
+  </div>
+
+  <div
+    class="main-item"
+    *ngFor="let event of this.games"
+    (click)="goToEventDetails()"
+  >
+    <fa-icon [icon]="fontAwesomeIcons.exit" class="main-icon"></fa-icon>
+    <div class="date-time">
+      <div class="time">{{ event.event.openDate | date: "h:mm" }}</div>
+      <div class="date">{{ event.event.openDate | date: "dd/MM" }}</div>
+    </div>
+    <div class="teams">
+      <div class="first-team">
+        {{ this.sharedService.returnTeamNameFromEvent(event.event.name) }}
+      </div>
+      vs
+      <!-- <div class="score">
       {{ this.sharedService.returnEventScore(event) }}
     </div> -->
-    <div class="second-team">
-      {{ this.sharedService.returnTeamNameFromEvent(event.event.name, false) }}
+      <div class="second-team">
+        {{
+          this.sharedService.returnTeamNameFromEvent(event.event.name, false)
+        }}
+      </div>
+      <!-- <div class="match-time">{{ event.timeline.elapsedRegularTime }}'</div> -->
     </div>
-    <!-- <div class="match-time">{{ event.timeline.elapsedRegularTime }}'</div> -->
-  </div>
-  <div class="odds" (click)="$event.stopPropagation()">
-    
-    <div class="odds-1">
+    <div class="odds" (click)="$event.stopPropagation()">
+      <div class="odds-1">
+        <div class="red-square">
+          <div class="bold">
+            <ng-container
+              *ngIf="
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getBackObj(event, 0)
+                ) !== null
+              "
+            >
+              {{
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getBackObj(event, 0)
+                ).price
+              }}
+            </ng-container>
 
-      <div class="red-square">
-        <div class="bold">
-          <ng-container 
-          *ngIf="this.sharedService.returnHighestBet(this.sharedService.getBackObj(event,0)) !== null"
-          >
-            {{ this.sharedService.returnHighestBet( this.sharedService.getBackObj(event,0) ).price }}
-          </ng-container>
+            <fa-icon
+              *ngIf="
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getBackObj(event, 0)
+                ) === null
+              "
+              [icon]="fontAwesomeIcons.lock"
+            ></fa-icon>
+          </div>
+          <div class="normal">
+            <ng-container
+              *ngIf="
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getBackObj(event, 0)
+                ) !== null
+              "
+            >
+              {{
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getBackObj(event, 0)
+                ).size
+              }}
+            </ng-container>
 
-          <fa-icon *ngIf="this.sharedService.returnHighestBet(this.sharedService.getBackObj(event,0)) === null" [icon]="fontAwesomeIcons.lock"></fa-icon>
-
-
+            <fa-icon
+              *ngIf="
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getBackObj(event, 0)
+                ) === null
+              "
+              [icon]="fontAwesomeIcons.lock"
+            ></fa-icon>
+          </div>
         </div>
-        <div class="normal">
 
-          <ng-container 
-          *ngIf="this.sharedService.returnHighestBet(this.sharedService.getBackObj(event,0)) !== null"
-          >
-            {{ this.sharedService.returnHighestBet( this.sharedService.getBackObj(event,0) ).size }}
-          </ng-container>
+        <div class="blue-square">
+          <div class="bold">
+            <ng-container
+              *ngIf="
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getLayObj(event, 0)
+                ) !== null
+              "
+            >
+              {{
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getLayObj(event, 0)
+                ).price
+              }}
+            </ng-container>
 
-          <fa-icon *ngIf="this.sharedService.returnHighestBet(this.sharedService.getBackObj(event,0)) === null" [icon]="fontAwesomeIcons.lock"></fa-icon>
+            <fa-icon
+              *ngIf="
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getLayObj(event, 0)
+                ) === null
+              "
+              [icon]="fontAwesomeIcons.lock"
+            ></fa-icon>
+          </div>
+          <div class="normal">
+            <ng-container
+              *ngIf="
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getLayObj(event, 0)
+                ) !== null
+              "
+            >
+              {{
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getLayObj(event, 0)
+                ).size
+              }}
+            </ng-container>
 
+            <fa-icon
+              *ngIf="
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getLayObj(event, 0)
+                ) === null
+              "
+              [icon]="fontAwesomeIcons.lock"
+            ></fa-icon>
+          </div>
         </div>
       </div>
 
-      <div class="blue-square">
-        <div class="bold">
+      <div class="odds-x">
+        <div class="red-square">
+          <div class="bold">
+            <ng-container
+              *ngIf="
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getBackObj(event, 1)
+                ) !== null
+              "
+            >
+              {{
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getBackObj(event, 1)
+                ).price
+              }}
+            </ng-container>
 
-          <ng-container 
-          *ngIf="this.sharedService.returnHighestBet(this.sharedService.getLayObj(event,0)) !== null"
-          >
-            {{ this.sharedService.returnHighestBet( this.sharedService.getLayObj(event,0) ).price }}
-          </ng-container>
+            <fa-icon
+              *ngIf="
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getBackObj(event, 1)
+                ) === null
+              "
+              [icon]="fontAwesomeIcons.lock"
+            ></fa-icon>
+          </div>
+          <div class="normal">
+            <ng-container
+              *ngIf="
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getBackObj(event, 1)
+                ) !== null
+              "
+            >
+              {{
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getBackObj(event, 1)
+                ).size
+              }}
+            </ng-container>
 
-          <fa-icon *ngIf="this.sharedService.returnHighestBet(this.sharedService.getLayObj(event,0)) === null" [icon]="fontAwesomeIcons.lock"></fa-icon>
-
+            <fa-icon
+              *ngIf="
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getBackObj(event, 1)
+                ) === null
+              "
+              [icon]="fontAwesomeIcons.lock"
+            ></fa-icon>
+          </div>
         </div>
-        <div class="normal">
 
-          <ng-container 
-          *ngIf="this.sharedService.returnHighestBet(this.sharedService.getLayObj(event,0)) !== null"
-          >
-            {{ this.sharedService.returnHighestBet( this.sharedService.getLayObj(event,0) ).size }}
-          </ng-container>
+        <div class="blue-square">
+          <div class="bold">
+            <ng-container
+              *ngIf="
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getLayObj(event, 1)
+                ) !== null
+              "
+            >
+              {{
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getLayObj(event, 1)
+                ).price
+              }}
+            </ng-container>
 
-          <fa-icon *ngIf="this.sharedService.returnHighestBet(this.sharedService.getLayObj(event,0)) === null" [icon]="fontAwesomeIcons.lock"></fa-icon>
+            <fa-icon
+              *ngIf="
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getLayObj(event, 1)
+                ) === null
+              "
+              [icon]="fontAwesomeIcons.lock"
+            ></fa-icon>
+          </div>
+          <div class="normal">
+            <ng-container
+              *ngIf="
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getLayObj(event, 1)
+                ) !== null
+              "
+            >
+              {{
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getLayObj(event, 1)
+                ).size
+              }}
+            </ng-container>
 
+            <fa-icon
+              *ngIf="
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getLayObj(event, 1)
+                ) === null
+              "
+              [icon]="fontAwesomeIcons.lock"
+            ></fa-icon>
+          </div>
         </div>
       </div>
 
+      <div class="odds-2">
+        <div class="red-square">
+          <div class="bold">
+            <ng-container
+              *ngIf="
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getBackObj(event, 2)
+                ) !== null
+              "
+            >
+              {{
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getBackObj(event, 2)
+                ).price
+              }}
+            </ng-container>
+
+            <fa-icon
+              *ngIf="
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getBackObj(event, 2)
+                ) === null
+              "
+              [icon]="fontAwesomeIcons.lock"
+            ></fa-icon>
+          </div>
+          <div class="normal">
+            <ng-container
+              *ngIf="
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getBackObj(event, 2)
+                ) !== null
+              "
+            >
+              {{
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getBackObj(event, 2)
+                ).size
+              }}
+            </ng-container>
+
+            <fa-icon
+              *ngIf="
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getBackObj(event, 2)
+                ) === null
+              "
+              [icon]="fontAwesomeIcons.lock"
+            ></fa-icon>
+          </div>
+        </div>
+
+        <div class="blue-square">
+          <div class="bold">
+            <ng-container
+              *ngIf="
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getLayObj(event, 2)
+                ) !== null
+              "
+            >
+              {{
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getLayObj(event, 2)
+                ).price
+              }}
+            </ng-container>
+
+            <fa-icon
+              *ngIf="
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getLayObj(event, 2)
+                ) === null
+              "
+              [icon]="fontAwesomeIcons.lock"
+            ></fa-icon>
+          </div>
+          <div class="normal">
+            <ng-container
+              *ngIf="
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getLayObj(event, 2)
+                ) !== null
+              "
+            >
+              {{
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getLayObj(event, 2)
+                ).size
+              }}
+            </ng-container>
+
+            <fa-icon
+              *ngIf="
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getLayObj(event, 2)
+                ) === null
+              "
+              [icon]="fontAwesomeIcons.lock"
+            ></fa-icon>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <div class="odds-x">
-
-      <div class="red-square">
-        <div class="bold">
-          <ng-container 
-          *ngIf="this.sharedService.returnHighestBet(this.sharedService.getBackObj(event,1)) !== null"
-          >
-            {{ this.sharedService.returnHighestBet( this.sharedService.getBackObj(event,1) ).price }}
-          </ng-container>
-
-          <fa-icon *ngIf="this.sharedService.returnHighestBet(this.sharedService.getBackObj(event,1)) === null" [icon]="fontAwesomeIcons.lock"></fa-icon>
-
-
-        </div>
-        <div class="normal">
-
-          <ng-container 
-          *ngIf="this.sharedService.returnHighestBet(this.sharedService.getBackObj(event,1)) !== null"
-          >
-            {{ this.sharedService.returnHighestBet( this.sharedService.getBackObj(event,1) ).size }}
-          </ng-container>
-
-          <fa-icon *ngIf="this.sharedService.returnHighestBet(this.sharedService.getBackObj(event,1)) === null" [icon]="fontAwesomeIcons.lock"></fa-icon>
-
-        </div>
-      </div>
-
-      <div class="blue-square">
-        <div class="bold">
-
-          <ng-container 
-          *ngIf="this.sharedService.returnHighestBet(this.sharedService.getLayObj(event,1)) !== null"
-          >
-            {{ this.sharedService.returnHighestBet( this.sharedService.getLayObj(event,1) ).price }}
-          </ng-container>
-
-          <fa-icon *ngIf="this.sharedService.returnHighestBet(this.sharedService.getLayObj(event,1)) === null" [icon]="fontAwesomeIcons.lock"></fa-icon>
-
-        </div>
-        <div class="normal">
-
-          <ng-container 
-          *ngIf="this.sharedService.returnHighestBet(this.sharedService.getLayObj(event,1)) !== null"
-          >
-            {{ this.sharedService.returnHighestBet( this.sharedService.getLayObj(event,1) ).size }}
-          </ng-container>
-
-          <fa-icon *ngIf="this.sharedService.returnHighestBet(this.sharedService.getLayObj(event,1)) === null" [icon]="fontAwesomeIcons.lock"></fa-icon>
-
-        </div>
-      </div>
-
-    </div>
-
-    <div class="odds-2">
-      <div class="red-square">
-        <div class="bold">
-          <ng-container 
-          *ngIf="this.sharedService.returnHighestBet(this.sharedService.getBackObj(event,2)) !== null"
-          >
-            {{ this.sharedService.returnHighestBet( this.sharedService.getBackObj(event,2) ).price }}
-          </ng-container>
-
-          <fa-icon *ngIf="this.sharedService.returnHighestBet(this.sharedService.getBackObj(event,2)) === null" [icon]="fontAwesomeIcons.lock"></fa-icon>
-
-
-        </div>
-        <div class="normal">
-
-          <ng-container 
-          *ngIf="this.sharedService.returnHighestBet(this.sharedService.getBackObj(event,2)) !== null"
-          >
-            {{ this.sharedService.returnHighestBet( this.sharedService.getBackObj(event,2) ).size }}
-          </ng-container>
-
-          <fa-icon *ngIf="this.sharedService.returnHighestBet(this.sharedService.getBackObj(event,2)) === null" [icon]="fontAwesomeIcons.lock"></fa-icon>
-
-        </div>
-      </div>
-
-      <div class="blue-square">
-        <div class="bold">
-
-          <ng-container 
-          *ngIf="this.sharedService.returnHighestBet(this.sharedService.getLayObj(event,2)) !== null"
-          >
-            {{ this.sharedService.returnHighestBet( this.sharedService.getLayObj(event,2) ).price }}
-          </ng-container>
-
-          <fa-icon *ngIf="this.sharedService.returnHighestBet(this.sharedService.getLayObj(event,2)) === null" [icon]="fontAwesomeIcons.lock"></fa-icon>
-
-        </div>
-        <div class="normal">
-
-          <ng-container 
-          *ngIf="this.sharedService.returnHighestBet(this.sharedService.getLayObj(event,2)) !== null"
-          >
-            {{ this.sharedService.returnHighestBet( this.sharedService.getLayObj(event,2) ).size }}
-          </ng-container>
-
-          <fa-icon *ngIf="this.sharedService.returnHighestBet(this.sharedService.getLayObj(event,2)) === null" [icon]="fontAwesomeIcons.lock"></fa-icon>
-
-        </div>
-      </div>
-    </div>
-
   </div>
 </div>
+
+
+<app-loader *ngIf="isLoading"></app-loader>

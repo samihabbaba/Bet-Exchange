@@ -7,6 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class SubHeaderComponent implements OnInit {
   @Input() viewType?: string;
+  @Input() isLoading?: boolean;
 
   constructor() {}
 

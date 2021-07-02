@@ -272,11 +272,20 @@ body {
   align-items: center;
   height: 100%;
   cursor: pointer;
+  // transition: background-color 0.1s, font-weight 0.5s;
+  &.loading {
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: transparent;
+      font-weight: 500;
+    }
+  }
 }
 
 .header-menu-item:hover {
   background-color: var(--darker-primary);
-  font-weight: 600;
+  font-weight: 550;
 }
 
 .header-menu-item-text {
@@ -361,6 +370,14 @@ body {
   display: flex;
   align-items: center;
   cursor: pointer;
+
+  &.loading {
+    cursor: not-allowed;
+    pointer-events: none;
+    &:hover {
+      background-color: var(--secondary);
+    }
+  }
 }
 
 .sub-header-item:hover {
@@ -387,6 +404,11 @@ body {
   position: absolute;
   top: 0px;
   left: 0px;
+
+  &.loading {
+    filter: grayscale(100%);
+    pointer-events: none;
+  }
 }
 
 .menu-view:last-child {
@@ -847,11 +869,9 @@ is smaller */
 // 	}
 // }
 
-
 .sports-header {
   padding: 0;
   width: 100%;
-
 }
 
 .star-favourites {
@@ -936,7 +956,6 @@ is smaller */
   margin-left: 4px;
   border-radius: 3px;
 }
-
 
 .head-to-head-btn {
   background: var(--linear-silver);

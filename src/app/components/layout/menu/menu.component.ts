@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { fadeMenuDropdown } from 'src/app/animations/animation';
 import {
   MenuHeader,
@@ -14,6 +14,8 @@ import { DataService } from 'src/app/services/data.service';
   animations: [fadeMenuDropdown()]
 })
 export class MenuComponent implements OnInit {
+  @Input() isLoading?: boolean;
+
   menu: MenuHeader[] = [
     {
       icon: 'fas fa-futbol',
