@@ -21,11 +21,11 @@ export class DataService {
   events = new BehaviorSubject<any>(null);
   selectedEvents = this.events.asObservable();
 
-
+  
   eventDetails = new BehaviorSubject<any>(null);
   selectedEventDetails = this.eventDetails.asObservable();
 
-
+  
 
   baseUrl = environment.apiUrl;
   constructor(private http: HttpClient, private layoutService:LayoutService
@@ -35,19 +35,19 @@ export class DataService {
     this.liveFeed.selectedEvents.subscribe(resp => {
       this.handleLiveFeed(resp);
     });
-
+    
     this.liveFeed.selectedEventDetail.subscribe(resp => {
       this.handleGameDetailFeed(resp);
     });
 
    }
 
-
+  
   ////////////////////////////////
   ////// sports Controller //////
   ///////////////////////////////
 
-
+  
   getSports(){
     return this.http.get<any>(`${this.baseUrl}sports`,  {
       headers: this.httpOptions.headers,
@@ -105,7 +105,7 @@ export class DataService {
   ////////////////////////////////
   ////// League Controller //////
   ////////////////////////////////
-
+  
   // GET​/leagues
   getLeagues​(pars:any){
     return this.http.get<any>(`${this.baseUrl}leagues​?PageNo=${pars.PageNo?pars.PageNo:''}&PageSize=${pars.PageSize?pars.PageSize:''}&SortBy=${pars.SortBy?pars.SortBy:''}&SortingType=${pars.SortingType?pars.SortingType:''}&regionCode=${pars.regionCode?pars.regionCode:''}&SportId=${pars.SportId?pars.SportId:''}`,  {
@@ -167,7 +167,7 @@ export class DataService {
   ////////////////////////////////
   ////// Region Controller //////
   ///////////////////////////////
-
+  
 
   getRegions​(pars:any){
     return this.http.get<any>(`${this.baseUrl}regions?PageNo=${pars.PageNo?pars.PageNo:''}&PageSize=${pars.PageSize?pars.PageSize:''}&SortBy=${pars.SortBy?pars.SortBy:''}&SortingType=${pars.SortingType?pars.SortingType:''}&SportId=${pars.SportId?pars.SportId:''}`,  {
@@ -224,7 +224,7 @@ export class DataService {
 
 
 
-  ////////////// end of API requests //////////////
+  ////////////// end of API requests ////////////// 
 
 
 
@@ -232,7 +232,7 @@ export class DataService {
   ////// matches requests   //////
   ////////////////////////////////
 
-  ////// live part
+  ////// live part 
 
   loadLiveGames(){
 
@@ -260,7 +260,6 @@ export class DataService {
   }
 
   handleLiveFeed(games:any){
-    // debugger
     if(this.layoutService.getHeaderValue() !== 'live'){
       return
     }
@@ -269,8 +268,7 @@ export class DataService {
   }
 
   handleGameDetailFeed(game:any){
-
-    // debugger
+    
     if(this.layoutService.getHeaderValue() !== 'details'){
       return
     }
@@ -278,11 +276,36 @@ export class DataService {
 
   }
 
+  loadMarketsForGameLive(eventId:any){
+    if(this.layoutService.isMainLoading()){
+      return;
+    }else{
+      this.layoutService.startMainLoading();
+    }
+    this.eventDetails.next([]);
+    this.layoutService.displayGameDetails();
 
-  ////// pre part
+    this.getLIveById(eventId).pipe(
+      finalize( () =>       this.layoutService.stopMainLoading()
+    ))
+    .subscribe(resp =>{
+      this.layoutService.displayGameDetails();
+      this.eventDetails.next(resp.body);
+      this.liveFeed.listenToEvent(eventId);
+    }, error=>{
+      this.eventDetails.next([]);
+      // add error message here
+    })
+  }
 
+  stopLiveEventListen(){
+    this.liveFeed.removeEventListen();
+  }
+
+  ////// pre part 
+  
   loadPreGames(leagueId:number, regionId:string){
-
+    
     if(this.layoutService.isMainLoading()){
       return;
     }
@@ -336,7 +359,25 @@ export class DataService {
     })
   }
 
-  loadMarketsForGame(){
+  loadMarketsForGamePre(eventId:any){
+    if(this.layoutService.isMainLoading()){
+      return;
+    }else{
+      this.layoutService.startMainLoading();
+    }
+    this.eventDetails.next([]);
+    this.layoutService.displayGameDetails();
+
+    this.getUpcomingById(eventId).pipe(
+      finalize( () =>       this.layoutService.stopMainLoading()
+    ))
+    .subscribe(resp =>{
+      this.layoutService.displayGameDetails();
+      this.eventDetails.next(resp.body);
+    }, error=>{
+      this.eventDetails.next([]);
+      // add error message here
+    })
   }
 
   ////////////////////////////////////////
@@ -356,7 +397,7 @@ export class DataService {
         localStorage.setItem("token", user.token);
 
      }, error=>{
-
+        
      })
    }
 

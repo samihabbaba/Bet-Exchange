@@ -16,7 +16,7 @@
   <div
     class="main-item"
     *ngFor="let event of this.games"
-    (click)="goToEventDetails()"
+    
   >
     <fa-icon [icon]="fontAwesomeIcons.exit" class="main-icon"></fa-icon>
     <div class="date-time">
@@ -206,7 +206,6 @@
               "
             >
               {{
-
                 this.sharedService.returnHighestBet(
                   this.sharedService.getLayObj(event, 1)
                 ).price
@@ -356,4 +355,4 @@
   </div>
 </div>
 
-<app-loader *ngIf="isLoading"></app-loader>
+<app-loader></app-loader>
