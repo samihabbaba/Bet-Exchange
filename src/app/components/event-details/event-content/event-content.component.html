@@ -96,11 +96,11 @@
                     </td>
 
                     <!-- selection odds to Lay -->
-                    <td class="header-bet-buttons" *ngFor="let selection of [2,1,0]; let i = index">
-                      <button class="back-runner" [ngClass]="{'pink': selection === 2 }">
+                    <td class="header-bet-buttons" *ngFor="let selection of [0,1,2]; let i = index">
+                      <button class="back-runner" [ngClass]="{'pink': selection === 0 }">
                         <div class="bet-runner">
-                          <span class="bet-btn-price">{{this.sharedService.returnRunWithIndex(item.exchange.availableToLay,selection).price }}</span>
-                          <span class="bet-btn-size">{{this.sharedService.returnRunWithIndex(item.exchange.availableToLay,selection).size}}</span>
+                          <span class="bet-btn-price">{{this.sharedService.returnRunWithIndex(item.exchange.availableToLay,selection,true).price }}</span>
+                          <span class="bet-btn-size">{{this.sharedService.returnRunWithIndex(item.exchange.availableToLay,selection,true).size}}</span>
                         </div>
                       </button>
                     </td>

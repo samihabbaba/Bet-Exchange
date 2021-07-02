@@ -84,7 +84,7 @@ export class SharedFunctionsService {
       return numTr;
   }
 
-  returnRunWithIndex(obj:any, index:number){
+  returnRunWithIndex(obj:any, index:number,ToLay = false){
     if(obj == null || index > (obj.length-1)){
       return {
         price:'',
@@ -92,7 +92,12 @@ export class SharedFunctionsService {
       };
     }
     debugger
-    obj.sort( this.sortRunByPrice );
+    if(ToLay){
+      obj.sort( this.sortRunByPriceDEC );
+    }else{
+      obj.sort( this.sortRunByPrice );
+    }
+
     return obj[index]
 
   }
@@ -102,6 +107,17 @@ export class SharedFunctionsService {
       return -1;
     }
     if ( a.price < b.price ){
+      return 1;
+    }
+    return 0;
+  }
+
+  
+  sortRunByPriceDEC( a:any, b:any ) {
+    if ( a.price < b.price ){
+      return -1;
+    }
+    if ( a.price > b.price ){
       return 1;
     }
     return 0;
