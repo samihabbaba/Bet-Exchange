@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { finalize } from 'rxjs/operators';
 import { fadeMenuDropdown } from 'src/app/animations/animation';
 import {
   MenuHeader,
@@ -6,12 +7,13 @@ import {
   MenuItemChildren,
 } from 'src/app/models/menu-item';
 import { DataService } from 'src/app/services/data.service';
+import { LayoutService } from 'src/app/services/layout.service';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
-  animations: [fadeMenuDropdown()]
+  animations: [fadeMenuDropdown()],
 })
 export class MenuComponent implements OnInit {
   @Input() isLoading?: boolean;
@@ -34,7 +36,6 @@ export class MenuComponent implements OnInit {
         //     {id:1,sportId:4, regionId:'BR', name: 'ChampionShip', active: false },
         //   ],
         // },
-
         // {
         //   flag: '',
         //   id:'SP',
@@ -50,68 +51,83 @@ export class MenuComponent implements OnInit {
     },
   ];
 
-  constructor(private dataService:DataService) {}
+  constructor(
+    private dataService: DataService,
+    private layoutService: LayoutService
+  ) {}
 
   ngOnInit(): void {}
 
-  handleMenuHeaderClick(item: MenuHeader) { // sport clicked ( load regions )
-    if(item.active){
+  handleMenuHeaderClick(item: MenuHeader) {
+    // sport clicked ( load regions )
+    if (item.active) {
       item.active = !item.active;
-      item.children =[];
-    } else{
-      this.dataService.getAllRegions(item.id).subscribe(resp => {
-
-        for(let i = 0; i<resp.body.length; i++){
-          item.children?.push({
-            id:resp.body[i].regionCode,
-            sportId:item.id,
-            name:resp.body[i].regionName,
-            active: false,
-            children : []
-          })
-        }
-        item.active = !item.active;
-
-      }, error =>{
-
-      })
+      item.children = [];
+    } else {
+      if (this.layoutService.isMainLoading()) {
+        return;
+      } else {
+        this.layoutService.startMainLoading();
+      }
+      this.dataService
+        .getAllRegions(item.id)
+        .pipe(finalize(() => this.layoutService.stopMainLoading()))
+        .subscribe(
+          (resp) => {
+            for (let i = 0; i < resp.body.length; i++) {
+              item.children?.push({
+                id: resp.body[i].regionCode,
+                sportId: item.id,
+                name: resp.body[i].regionName,
+                active: false,
+                children: [],
+              });
+            }
+            item.active = !item.active;
+          },
+          (error) => {}
+        );
     }
-
-
   }
 
   handleMenuItemClick(item: MenuItem) {
     // debugger
 
-    if(item.active){
+    if (item.active) {
       item.active = !item.active;
-      item.children =[];
-    } else{
-      this.dataService.getAllLeagues(item.id).subscribe(resp => {
-    // debugger
+      item.children = [];
+    } else {
+      if (this.layoutService.isMainLoading()) {
+        return;
+      } else {
+        this.layoutService.startMainLoading();
+      }
+      this.dataService
+        .getAllLeagues(item.id)
+        .pipe(finalize(() => this.layoutService.stopMainLoading()))
+        .subscribe(
+          (resp) => {
+            // debugger
 
-        for(let i = 0; i<resp.body.length; i++){
-          item.children?.push({
-            id:resp.body[i].leagueId,
-            regionId:resp.body[i].regionCode,
-            sportId: item.sportId,
-            name:resp.body[i].leagueName,
-            active: false
-          })
-        }
-        item.active = !item.active;
-
-      }, error =>{
-        // debugger
-      })
-    }  }
+            for (let i = 0; i < resp.body.length; i++) {
+              item.children?.push({
+                id: resp.body[i].leagueId,
+                regionId: resp.body[i].regionCode,
+                sportId: item.sportId,
+                name: resp.body[i].leagueName,
+                active: false,
+              });
+            }
+            item.active = !item.active;
+          },
+          (error) => {
+            // debugger
+          }
+        );
+    }
+  }
 
   handleGrandChildClick(item: MenuItemChildren) {
     this.dataService.loadPreGames(item.id, item.regionId);
   }
-
-
-
-
-
 }

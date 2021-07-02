@@ -1,7 +1,11 @@
 <div class="header">
   <img src="../../../../assets/images/cloudExchange.png" class="logo" />
   <div class="header-menu">
-    <div class="header-menu-item" [ngClass]="{loading: isLoading}" (click)="displayPreGames()">
+    <div
+      class="header-menu-item"
+      [ngClass]="{ loading: isLoading }"
+      (click)="displayPreGames()"
+    >
       <div
         class="header-menu-item-text"
         [ngClass]="{ active: viewType == 'pre' }"
@@ -9,7 +13,11 @@
         Pre-games
       </div>
     </div>
-    <div class="header-menu-item" [ngClass]="{loading: isLoading}" (click)="displayLiveGames()">
+    <div
+      class="header-menu-item"
+      [ngClass]="{ loading: isLoading }"
+      (click)="displayLiveGames()"
+    >
       <div
         class="header-menu-item-text"
         [ngClass]="{ active: viewType == 'live' }"
@@ -17,14 +25,18 @@
         In-play
       </div>
     </div>
-    <div class="header-menu-item" [ngClass]="{loading: isLoading}">
+    <div class="header-menu-item" [ngClass]="{ loading: isLoading }">
       <div class="header-menu-item-text">Other</div>
     </div>
   </div>
 
   <div class="login-and-language">
-    <button (click)="goToLoginPage()" class="login-btn">Log In</button>
+    <button (click)="goToLoginPage()" class="login-btn">
+      Log In &nbsp;<span class="login-icon"></span>
+    </button>
     <button class="join-now-btn">Join Now</button>
-    <button class="languages">TR</button>
+    <button #language class="languages" (click)="selectLanguage()">
+      TR
+    </button>
   </div>
 </div>

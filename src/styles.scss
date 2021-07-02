@@ -317,6 +317,18 @@ body {
     outline: 0;
     user-select: none;
     border: none;
+    .login-icon {
+      background-image: url("assets/svgs/flag-bundle.svg") !important;
+      background-repeat: no-repeat;
+      display: inline-block;
+      width: 12px;
+      height: 13px;
+      position: relative;
+      top: 0.5px;
+      vertical-align: top;
+      background-position: -158px -2px;
+      left: -1px;
+    }
 
     &:hover {
       background: var(--temp-grey);
@@ -404,7 +416,12 @@ body {
   position: absolute;
   top: 0px;
   left: 0px;
-
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   &.loading {
     filter: grayscale(100%);
     pointer-events: none;
@@ -420,7 +437,7 @@ body {
   color: white;
   font-weight: 600;
   padding: 10px;
-  outline: 1px solid var(--secondary);
+  // outline: 1px solid var(--secondary);
   border-radius: 3px;
 }
 
@@ -537,7 +554,7 @@ body {
   color: white;
   font-weight: 600;
   padding: 10px;
-  outline: 1px solid var(--secondary);
+  // outline: 1px solid var(--secondary);
   border-radius: 3px;
 }
 
@@ -574,16 +591,8 @@ body {
   justify-content: space-evenly;
 }
 
-.odds-for-live {
-  display: flex;
-  margin-left: auto;
-  width: 350px;
-  justify-content: space-evenly;
-  height: 100%;
-}
 
-.odds > *,
-.odds-for-live > * {
+.odds > * {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -708,7 +717,7 @@ body {
   color: white;
   font-weight: 600;
   padding: 10px;
-  outline: 1px solid var(--secondary);
+  // outline: 1px solid var(--secondary);
   border-radius: 3px;
   font-size: 1.4rem;
 }

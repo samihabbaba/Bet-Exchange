@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { LayoutService } from 'src/app/services/layout.service';
@@ -11,6 +11,7 @@ import { LayoutService } from 'src/app/services/layout.service';
 export class HeaderComponent implements OnInit {
   @Input() viewType?: string;
   @Input() isLoading?: boolean;
+  @ViewChild('language') languageBtn?: ElementRef;
 
   constructor(private router: Router, private layoutService: LayoutService, private dataService:DataService) {}
 
@@ -28,5 +29,9 @@ export class HeaderComponent implements OnInit {
   displayLiveGames() {
     // this.layoutService.displayLiveGames();
     this.dataService.loadLiveGames();
+  }
+
+  selectLanguage() {
+    console.log(this.languageBtn?.nativeElement);
   }
 }

@@ -19,7 +19,7 @@
   <div class="date-time">
     <div class="time">{{ event.event.openDate | date: "h:mm a" }}</div>
     <div class="date">{{ event.event.openDate | date: "dd/MM" }}</div>
-  
+
       </div>
       <div class="teams">
         <div class="first-team">
@@ -36,7 +36,7 @@
         </div>
         <!-- <div class="match-time">{{ event.timeline.elapsedRegularTime }}'</div> -->
       </div>
-      <div class="odds-for-live" (click)="$event.stopPropagation()">
+      <div class="odds" (click)="$event.stopPropagation()">
         <div class="odds-1">
           <div class="red-square">
             <div class="bold">
