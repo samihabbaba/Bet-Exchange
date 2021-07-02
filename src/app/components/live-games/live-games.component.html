@@ -16,7 +16,7 @@
   <div
     class="main-item"
     *ngFor="let event of this.games"
-    
+
   >
     <fa-icon [icon]="fontAwesomeIcons.exit" class="main-icon"></fa-icon>
     <div class="date-time">
@@ -355,4 +355,4 @@
   </div>
 </div>
 
-<app-loader></app-loader>
+<app-loader *ngIf="isLoading"></app-loader>
