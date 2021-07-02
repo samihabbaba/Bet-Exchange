@@ -13,11 +13,16 @@
     </div>
   </div>
 
-  <div class="main-item" *ngFor="let event of this.games">
-    <fa-icon [icon]="fontAwesomeIcons.exit" class="main-icon"></fa-icon>
-    <div class="date-time">
-      <div class="time">{{ event.event.openDate | date: "h:mm" }}</div>
-      <div class="date">{{ event.event.openDate | date: "dd/MM" }}</div>
+<div class="main-item" *ngFor="let event of this.games"
+(click)="this.goToEventDetails(event.event.eventId)">
+  <fa-icon [icon]="fontAwesomeIcons.exit" class="main-icon"></fa-icon>
+  <div class="date-time">
+    <div class="time">{{ event.event.openDate | date: "h:mm" }}</div>
+    <div class="date">{{ event.event.openDate | date: "dd/MM" }}</div>
+  </div>
+  <div class="teams">
+    <div class="first-team">
+      {{ this.sharedService.returnTeamNameFromEvent(event.event.name) }}
     </div>
     <div class="teams">
       <div class="first-team">
