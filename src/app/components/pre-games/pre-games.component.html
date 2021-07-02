@@ -16,7 +16,7 @@
   <div
     class="main-item"
     *ngFor="let event of this.games"
-    
+    (click)="this.goToEventDetails(event.event.eventId)"
   >
     <fa-icon [icon]="fontAwesomeIcons.exit" class="main-icon"></fa-icon>
     <div class="date-time">
