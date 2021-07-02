@@ -2331,3 +2331,25 @@ is smaller */
 // }
 
 /* End of event details styles*/
+
+
+
+/* No event component */
+.no-event-container {
+  // background-color: var(--white);
+  background: url('assets/images/login-page-bg.png');
+  background-size: cover;
+  color: var(--darker-secondary);
+  font-size: 19px;
+  font-weight: 700;
+  height: 250px;
+  min-width: 380px;
+  padding: 6px;
+  outline: 1px solid var(--temp-grey);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* End of no event component */
