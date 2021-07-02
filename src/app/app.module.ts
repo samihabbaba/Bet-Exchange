@@ -19,6 +19,7 @@ import { PreGamesComponent } from './components/pre-games/pre-games.component';
 import { EventDetailsHeaderComponent } from './components/event-details/event-details-header/event-details-header.component';
 import { EventContentComponent } from './components/event-details/event-content/event-content.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import { NoEventComponent } from './components/no-event/no-event.component';
 
 
 
@@ -38,6 +39,7 @@ import { LoaderComponent } from './components/loader/loader.component';
     EventDetailsHeaderComponent,
     EventContentComponent,
     LoaderComponent,
+    NoEventComponent,
   ],
   imports: [
     BrowserModule,
