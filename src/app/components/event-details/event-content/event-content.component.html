@@ -89,8 +89,8 @@
                     <td class="header-bet-buttons" *ngFor="let selection of [2,1,0]; let i = index">
                       <button class="back-runner" [ngClass]="{'blue': selection === 0 }">
                         <div class="bet-runner">
-                          <span class="bet-btn-price">{{this.sharedService.returnRunWithIndex(item.exchange.availableToBack,selection).price }}</span>
-                          <span class="bet-btn-size">{{this.sharedService.returnRunWithIndex(item.exchange.availableToBack,selection).size}}</span>
+                          <span class="bet-btn-price">{{this.sharedService.returnRunWithIndex(item,selection).price }}</span>
+                          <span class="bet-btn-size">{{this.sharedService.returnRunWithIndex(item,selection).size}}</span>
                         </div>
                       </button>
                     </td>
@@ -99,8 +99,8 @@
                     <td class="header-bet-buttons" *ngFor="let selection of [0,1,2]; let i = index">
                       <button class="back-runner" [ngClass]="{'pink': selection === 0 }">
                         <div class="bet-runner">
-                          <span class="bet-btn-price">{{this.sharedService.returnRunWithIndex(item.exchange.availableToLay,selection,true).price }}</span>
-                          <span class="bet-btn-size">{{this.sharedService.returnRunWithIndex(item.exchange.availableToLay,selection,true).size}}</span>
+                          <span class="bet-btn-price">{{this.sharedService.returnRunWithIndex(item,selection,true).price }}</span>
+                          <span class="bet-btn-size">{{this.sharedService.returnRunWithIndex(item,selection,true).size}}</span>
                         </div>
                       </button>
                     </td>
@@ -145,6 +145,9 @@
   </div>
 </div>
 
+
+<!-- end of top market -->
+
 <div class="other-markets-container">
   <div class="other-markets-header">
     <span>Other Markets</span>
@@ -152,6 +155,7 @@
 
   <div class="other-markets-tabs">
     <section class="mod-tabs">
+
       <ul class="tabs-container">
         <li
           [class]="item.class"
@@ -184,6 +188,9 @@
       </ul>
 
       <div class="other-markets-tab-content">
+
+
+        <!-- left markets -->
         <div class="column-left">
           <div class="mini-market-container" *ngFor="let item of [0, 1, 2]">
             <div class="mini-market-header-container">
@@ -264,6 +271,9 @@
             </div>
           </div>
         </div>
+
+
+        <!-- right markets -->
         <div class="column-right">
           <div class="mini-market-container" *ngFor="let item of [0, 1, 2,3,4,5]">
             <div class="mini-market-header-container">
@@ -344,6 +354,8 @@
             </div>
           </div>
         </div>
+
+
       </div>
     </section>
   </div>

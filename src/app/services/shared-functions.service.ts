@@ -84,14 +84,51 @@ export class SharedFunctionsService {
       return numTr;
   }
 
-  returnRunWithIndex(obj:any, index:number,ToLay = false){
-    if(obj == null || index > (obj.length-1)){
+  returnRunWithIndex(item:any, index:number,ToLay = false){
+   
+    if(!item || !item.exchange || (!ToLay && !item.exchange.availableToBack)|| (ToLay && !item.exchange.availableToLay) ){
       return {
         price:'',
-        size:''
+        size:'',
+        block:true
       };
     }
-    debugger
+
+    let obj = {...item.exchange.availableToLay}
+debugger
+    if(ToLay){
+
+      if(index > ( item.exchange.availableToLay.length-1)){
+        return {
+          price:'',
+          size:'',
+          block:true
+        };
+      }
+      else
+      {
+         obj = item.exchange.availableToLay
+      }
+
+    }
+    else{
+
+      if(index > ( item.exchange.availableToBack.length-1)){
+        return {
+          price:'',
+          size:'',
+          block:true
+        };
+      }
+      else
+      {
+         obj = item.exchange.availableToBack
+      }
+
+    }
+
+    
+    
     if(ToLay){
       obj.sort( this.sortRunByPriceDEC );
     }else{
