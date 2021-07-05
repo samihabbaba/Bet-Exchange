@@ -242,7 +242,8 @@ export class DataService {
         pars.PageNo ? pars.PageNo : ''
       }&PageSize=${pars.PageSize ? pars.PageSize : ''}&SortBy=${
         pars.SortBy ? pars.SortBy : ''
-      }&SortingType=${pars.SortingType ? pars.SortingType : ''}`,
+      }&SortingType=${pars.SortingType ? pars.SortingType : ''}
+      &sportId=${pars.sportId ? pars.sportId : ''}`,
       {
         headers: this.httpOptions.headers,
         observe: 'response',
@@ -388,7 +389,7 @@ export class DataService {
       );
   }
 
-  loadPreGamesFromHeader() {
+  loadPreGamesFromHeader(sportId?:number) {
     this.layoutService.closeMenuChilds();
     if (this.layoutService.isMainLoading()) {
       return;
@@ -404,6 +405,7 @@ export class DataService {
       PageSize: 15,
       SortBy: 'event.openDate',
       SortingType: 1,
+      sportId:sportId
     })
       .pipe(finalize(() => this.layoutService.stopMainLoading()))
       .subscribe(

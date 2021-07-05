@@ -28,28 +28,7 @@ export class MenuComponent implements OnInit {
       id: 4,
       active: false,
       children: [
-        // {
-        //   flag: '',
-        //   id:'EN',
-        //   sportId:4,
-        //   name: 'England',
-        //   active: false,
-        //   children: [
-        //     {id:1,sportId:4, regionId:'BR', name: 'Premier League', active: false },
-        //     {id:1,sportId:4, regionId:'BR', name: 'ChampionShip', active: false },
-        //   ],
-        // },
-        // {
-        //   flag: '',
-        //   id:'SP',
-        //   sportId:4,
-        //   name: 'Spain',
-        //   active: false,
-        //   children: [
-        //     { id:1,sportId:4, regionId:'BR', name: 'La Liga', active: false },
-        //     { id:1,sportId:4, regionId:'BR', name: 'ChampionShip', active: false },
-        //   ],
-        // },
+        
       ],
     },
   ];
@@ -80,6 +59,7 @@ export class MenuComponent implements OnInit {
         return;
       } else {
         this.layoutService.startMenuLoading();
+        this.layoutService.currentSport.next(item);
       }
       this.dataService
         .getAllRegions(item.id)
@@ -103,7 +83,7 @@ export class MenuComponent implements OnInit {
   }
 
   handleMenuItemClick(item: MenuItem) {
-    // debugger
+    //region clicked (load leagues)
 
     if (item.active) {
       item.active = !item.active;
@@ -113,6 +93,7 @@ export class MenuComponent implements OnInit {
         return;
       } else {
         this.layoutService.startMenuLoading();
+        this.layoutService.currentRegion.next(item);
       }
       this.dataService
         .getAllLeagues(item.id)
@@ -140,10 +121,13 @@ export class MenuComponent implements OnInit {
   }
 
   handleGrandChildClick(child: MenuItem, grandchild: MenuItemChildren) {
+    // league clicked (load events)
+
     if (!grandchild.active) {
       this.setAllChildsToFalse(child);
       grandchild.active = true;
     }
+    this.layoutService.currentLeague.next(grandchild);
     this.dataService.loadPreGames(grandchild.id, grandchild.regionId);
   }
 

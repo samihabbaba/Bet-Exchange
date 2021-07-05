@@ -35,7 +35,7 @@ export class SharedFunctionsService {
   }
 
   returnHighestBet(bets:any){
-      if(bets == null){
+    if(bets == null){
         return null;
       }
     let maxPrice =  Math.max.apply(Math, bets.map(function(o:any) { return o.price; }))
@@ -66,6 +66,24 @@ export class SharedFunctionsService {
     }  
   }
 
+  getBackObjForRun(obj:any){
+    try{
+        return obj.exchange.availableToBack;
+      }
+      catch(ex){
+        return null
+      }  
+    }
+  
+    getLayObjForRun(obj:any){
+      try{
+        return obj.exchange.availableToLay;
+      }
+      catch(ex){
+        return null
+      }  
+    }
+
   formatNumber(num:any, isMoney=true) {
 
     num = Number(num);
@@ -95,7 +113,7 @@ export class SharedFunctionsService {
     }
 
     let obj = {...item.exchange.availableToLay}
-debugger
+
     if(ToLay){
 
       if(index > ( item.exchange.availableToLay.length-1)){

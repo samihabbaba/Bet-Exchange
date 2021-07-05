@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { DataService } from 'src/app/services/data.service';
 import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
 
@@ -49,6 +50,10 @@ export class EventContentComponent implements OnInit {
 
   topMarket:any = null;
   eventIsLive = false;
+
+  fontAwesomeIcons = {
+    lock: faLock
+  };
 
   constructor(private dataService:DataService, public sharedService:SharedFunctionsService) {}
 
