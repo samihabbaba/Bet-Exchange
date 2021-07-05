@@ -68,14 +68,14 @@ export class EventContentComponent implements OnInit {
     private dataService: DataService,
     public sharedService: SharedFunctionsService,
     private screenSizeService: ScreenSizeService
-  ) {}
+  ) {  this.screenObserver$ = this.screenSizeService.currentScreenSize.subscribe(
+    this.setTabs.bind(this)
+  );}
 
   ngOnInit(): void {
     this.topMarket = this.event.markets[0];
     this.eventIsLive = this.event.isLive;
-    this.screenObserver$ = this.screenSizeService.currentScreenSize.subscribe(
-      this.setTabs.bind(this)
-    );
+  
   }
   ngOnDestroy() {
     this.screenObserver$?.unsubscribe();
@@ -150,14 +150,16 @@ export class EventContentComponent implements OnInit {
     };
     if (copy.length > num) {
       for (let item of copy) {
-        if (copy.indexOf(item) > num) {
+        if (copy.indexOf(item) >= num ) {
           moreObj.children.push(item);
         }
       }
-      copy.splice(num + 1, copy.length - num);
+      copy.splice(num , copy.length - num);
       copy.push(moreObj);
-      this.copyOfTabs = [];
-      this.copyOfTabs = [...copy];
+      if (moreObj.children.length > 1) {
+        this.copyOfTabs = [];
+        this.copyOfTabs = [...copy];
+      }
     }
   }
 }
