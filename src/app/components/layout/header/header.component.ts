@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit {
   displayPreGames() {
     // this.layoutService.displayPreGames();
     this.dataService.loadPreGamesFromHeader(
-      this.layoutService.getCurrentSport().id
+    this.layoutService.getCurrentSport()?.id
     );
   }
 
