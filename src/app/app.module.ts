@@ -20,6 +20,7 @@ import { EventDetailsHeaderComponent } from './components/event-details/event-de
 import { EventContentComponent } from './components/event-details/event-content/event-content.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { NoEventComponent } from './components/no-event/no-event.component';
+import { LanguageDropdownDirective } from './directives/language-dropdown.directive';
 
 
 
@@ -40,6 +41,7 @@ import { NoEventComponent } from './components/no-event/no-event.component';
     EventContentComponent,
     LoaderComponent,
     NoEventComponent,
+    LanguageDropdownDirective,
   ],
   imports: [
     BrowserModule,

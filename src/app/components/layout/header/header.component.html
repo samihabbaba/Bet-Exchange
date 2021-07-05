@@ -35,9 +35,25 @@
       Log In &nbsp;<span class="login-icon"></span>
     </button>
     <button class="join-now-btn">Join Now</button>
-    <button #language class="languages" >
-      <span class="language-flag english"></span>
+    <button #language class="languages" appLanguageDropdown>
+      <span class="language-flag english" #languageToDisplay></span>
       <span class="language-dropdown-arrow"></span>
     </button>
+    <div class="languages-dropdown-wrapper">
+      <div class="languages-dropdown-container">
+        <ul>
+          <li>
+            <a class="dropdown-link" (click)="handleFlagClick($event)">
+              <span class="flag english"></span>English
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-link" (click)="handleFlagClick($event)">
+              <span class="flag turkish"></span>Turkish
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
