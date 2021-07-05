@@ -367,7 +367,6 @@ body {
     }
 
     .language-flag {
-
       background-repeat: no-repeat;
       width: 21px;
       height: 9px;
@@ -401,6 +400,90 @@ body {
 
       &.active {
         transform: rotate(180deg);
+      }
+    }
+  }
+
+  .languages-dropdown-wrapper {
+    display: none;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 2;
+    left: 17px;
+    top: 11.5px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    white-space: nowrap;
+    cursor: default;
+    margin: 0 auto;
+    font-size: 12px;
+    &.active {
+      display: block;
+    }
+    .languages-dropdown-container {
+      line-height: 30px;
+      background-color: #fff;
+      position: absolute;
+      top: 12px;
+      color: #7e97a7;
+      border: 1px solid #cbcbca;
+      right: 0;
+      box-sizing: border-box;
+      white-space: nowrap;
+      border-collapse: collapse;
+      border-spacing: 0;
+
+      ul {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+        color: #7e97a7;
+        white-space: nowrap;
+        border-collapse: collapse;
+        border-spacing: 0;
+        li {
+          line-height: 30px;
+          box-sizing: border-box;
+          color: #7e97a7;
+          white-space: nowrap;
+          border-collapse: collapse;
+          border-spacing: 0;
+          .dropdown-link {
+            background-color: #f6f6f6;
+            color: #1e1e1e;
+            outline: 0;
+            display: block;
+            padding: 0 9px;
+            font-size: 12px;
+            text-decoration: none;
+            box-sizing: border-box;
+            line-height: 30px;
+            cursor: pointer;
+            font-family: Arial, Tahoma, Verdana, Helvetica, sans-serif;
+            .flag {
+              padding-left: 5px;
+
+              background-repeat: no-repeat;
+              width: 21px;
+              height: 9px;
+              display: inline-block;
+              box-sizing: border-box;
+              background-image: url("assets/svgs/flag-bundle.svg") !important;
+
+              &.turkish {
+                background-position: -63px -191px;
+              }
+
+              &.english {
+                background-position: -11px -134px;
+              }
+            }
+            &:hover {
+              background-color: var(--light-grey);
+            }
+          }
+        }
       }
     }
   }

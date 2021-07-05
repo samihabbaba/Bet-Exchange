@@ -18,7 +18,7 @@ import { LayoutService } from 'src/app/services/layout.service';
 export class HeaderComponent implements OnInit {
   @Input() viewType?: string;
   @Input() isLoading?: boolean;
-  @ViewChild('language') languageBtn?: any;
+  @ViewChild('languageToDisplay') languageBtn?: ElementRef;
 
   constructor(
     private router: Router,
@@ -34,7 +34,9 @@ export class HeaderComponent implements OnInit {
 
   displayPreGames() {
     // this.layoutService.displayPreGames();
-    this.dataService.loadPreGamesFromHeader(this.layoutService.getCurrentSport().id);
+    this.dataService.loadPreGamesFromHeader(
+      this.layoutService.getCurrentSport().id
+    );
   }
 
   displayLiveGames() {
@@ -42,5 +44,24 @@ export class HeaderComponent implements OnInit {
     this.dataService.loadLiveGames();
   }
 
+  handleFlagClick(event: any) {
+    if (event.target.classList.contains('english')) {
+      this.removeClassFromLanguagesButton();
+      this.languageBtn?.nativeElement.classList.add('english');
+    } else if (event.target.classList.contains('turkish')) {
+      this.removeClassFromLanguagesButton();
+      this.languageBtn?.nativeElement.classList.add('turkish');
+    } else {
+      this.removeClassFromLanguagesButton();
+      event.target.firstChild.classList.contains('english')
+        ? this.languageBtn?.nativeElement.classList.add('english')
+        : this.languageBtn?.nativeElement.classList.add('turkish');  
+    }
+  }
 
+  removeClassFromLanguagesButton() {
+    this.languageBtn?.nativeElement.classList.contains('english')
+      ? this.languageBtn?.nativeElement.classList.remove('english')
+      : this.languageBtn?.nativeElement.classList.remove('turkish');
+  }
 }
