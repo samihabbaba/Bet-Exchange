@@ -18,7 +18,7 @@ import { LayoutService } from 'src/app/services/layout.service';
 export class HeaderComponent implements OnInit {
   @Input() viewType?: string;
   @Input() isLoading?: boolean;
-  @ViewChild('language') languageBtn?: ElementRef;
+  @ViewChild('language') languageBtn?: any;
 
   constructor(
     private router: Router,
@@ -42,7 +42,5 @@ export class HeaderComponent implements OnInit {
     this.dataService.loadLiveGames();
   }
 
-  selectLanguage() {
-    console.log(this.languageBtn?.nativeElement);
-  }
+
 }

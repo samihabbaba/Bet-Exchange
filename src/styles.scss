@@ -363,7 +363,7 @@ body {
     border: 1px solid rgba(0, 0, 0, 0.3);
     cursor: pointer;
     &.active {
-      background: red;
+      // background: var(--linear-silver);
     }
 
     .language-flag {
@@ -371,6 +371,7 @@ body {
       background-repeat: no-repeat;
       width: 21px;
       height: 9px;
+      margin-right: 3px;
       display: inline-block;
       background-image: url("assets/svgs/flag-bundle.svg") !important;
       &.english {
@@ -397,6 +398,10 @@ body {
       outline: 0;
       line-height: 1.4;
       box-sizing: border-box;
+
+      &.active {
+        transform: rotate(180deg);
+      }
     }
   }
 }
