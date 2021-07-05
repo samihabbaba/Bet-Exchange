@@ -10,6 +10,10 @@ export class LayoutService {
   menuLoading = new BehaviorSubject<boolean>(false);
   closeMenuChild = new BehaviorSubject<string>('');
 
+  currentSport = new BehaviorSubject<string>('');
+  currentRegion = new BehaviorSubject<string>('');
+  currentLeague = new BehaviorSubject<string>('');
+
   constructor() {}
 
   displayPreGames() {
@@ -55,4 +59,20 @@ export class LayoutService {
   closeMenuChilds() {
     this.closeMenuChild.next('close');
   }
+
+
+
+
+
+  getCurrentSport(){
+    return this.currentSport.value;
+  }
+  getCurrentRegion(){
+    return this.currentRegion.value;
+  }
+  getCurrentLeague(){
+    return this.currentLeague.value;
+  }
+
+
 }

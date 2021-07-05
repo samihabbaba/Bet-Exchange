@@ -95,7 +95,7 @@ export class SharedFunctionsService {
     }
 
     let obj = {...item.exchange.availableToLay}
-debugger
+
     if(ToLay){
 
       if(index > ( item.exchange.availableToLay.length-1)){
