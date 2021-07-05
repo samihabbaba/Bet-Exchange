@@ -1,8 +1,8 @@
 <div *ngIf="this.games?.length >= 1">
   <div class="main-header-view">Pre Games</div>
   <div class="main-sport">
-    <div class="sport-name">
-      <fa-icon [icon]="fontAwesomeIcons.footBall" *ngIf="currentSport"></fa-icon>
+    <div class="sport-name" *ngIf="currentSport">
+      <fa-icon [icon]="fontAwesomeIcons.footBall" ></fa-icon>
       {{currentSport.name}}
     </div>
 
