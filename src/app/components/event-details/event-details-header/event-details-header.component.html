@@ -4,7 +4,7 @@
     <div class="event-header">
       <span class="title"><span>{{event?.event?.name}}</span></span>
       <!-- <div class="event-date">Fri 2 Jul, 17:00</div> -->
-      <div class="event-date">{{event?.event?.openDate | date:"EEEE, MMMM d, h:mm a"}}</div>
+      <div class="event-date">{{event?.event?.openDate | date:"EEEE, MMMM d, h:mm a"}} - {{this.layoutService.getCurrentRegion().name}} - {{this.layoutService.getCurrentLeague().name}}</div>
     </div>
     <div class="event-buttons">
       <div class="buttons-container">

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { LayoutService } from 'src/app/services/layout.service';
 
 @Component({
   selector: 'app-event-details-header',
@@ -8,7 +9,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class EventDetailsHeaderComponent implements OnInit {
   @Input() event:any= null;
 
-  constructor() { }
+  constructor(public layoutService:LayoutService) { }
 
   ngOnInit(): void {
   }
