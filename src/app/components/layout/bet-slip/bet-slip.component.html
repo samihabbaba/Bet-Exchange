@@ -1,6 +1,24 @@
+<div class="bet-header">Bet Slip</div>
 <div class="bet-view">
-  <div class="bet-header">Bet Header</div>
-  <div class="lay-section">
+  <div class="bet-slip-tabs">
+    <div
+      class="singles active"
+      value="singles"
+      #singles
+      (click)="handleTabClick($event)"
+    >
+      <h1>Singles</h1>
+    </div>
+    <div
+      class="open-bets"
+      value="open-bets"
+      #openBets
+      (click)="handleTabClick($event)"
+    >
+      <h1>Open Bets</h1>
+    </div>
+  </div>
+  <!-- <div class="lay-section">
     <div class="lay-header">
       <div class="inner-lay-header">
         <div class="lay-header-title">Back (Bet For)</div>
@@ -117,5 +135,34 @@
         </div>
       </div>
     </div>
+  </div> -->
+
+  <div *ngIf="this.tabToDisplay == 'Singles'">
+    <div *ngIf="selectedBets.length < 1" class="no-selection">
+      <h1>No bets selected. Select some bets by clicking the odds.</h1>
+    </div>
+  </div>
+
+  <div *ngIf="this.tabToDisplay == 'Open Bets'">
+    <div *ngIf="currentOpenBets.length < 1" class="no-selection">
+      <h1>You don't have any open bets.</h1>
+    </div>
+  </div>
+
+  <div class="bet-slip-buttons" *ngIf="this.tabToDisplay == 'Singles'">
+    <button
+      class="reset-btn"
+      (click)="resetBets()"
+      [ngClass]="{ disabled: this.selectedBets.length < 1 }"
+    >
+      Reset
+    </button>
+    <button
+      class="submit-btn"
+      (click)="submitBets()"
+      [ngClass]="{ disabled: this.selectedBets.length < 1 }"
+    >
+      Submit
+    </button>
   </div>
 </div>

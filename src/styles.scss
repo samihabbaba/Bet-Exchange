@@ -19,6 +19,8 @@
   --border-color: #dfdfdf;
   --linear-silver: linear-gradient(#e1e1e1, silver);
   --linear-black: linear-gradient(#404040, #353535);
+  --linear-primary: linear-gradient(#ffa500, #df9100);
+  --text-accent: #222;
 }
 
 * {
@@ -859,6 +861,7 @@ body {
   flex-direction: column;
   width: 100%;
   font-size: 1.2rem;
+  border: 1px solid #adadad;
 }
 
 .bet-header {
@@ -872,6 +875,47 @@ body {
 }
 
 /* bets styles */
+
+.bet-slip-tabs {
+  background: var(--white);
+  display: flex;
+  width: 100%;
+  justify-content: center;
+
+  .singles {
+    flex: 1;
+    text-align: center;
+    line-height: 21px;
+    font-size: 15px;
+    font-weight: 550;
+    padding: 4px 2px;
+    color: var(--text-accent);
+    background: var(--darker-white);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    &.active {
+      background: var(--white);
+      border-top: 2px solid var(--primary);
+    }
+  }
+
+  .open-bets {
+    flex: 1;
+    text-align: center;
+    line-height: 21px;
+    font-size: 15px;
+    font-weight: 550;
+    padding: 4px 2px;
+    color: var(--text-accent);
+    background: var(--darker-white);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    &.active {
+      background: var(--white);
+      border-top: 2px solid var(--primary);
+    }
+  }
+}
 
 .lay-section,
 .lay-items,
@@ -980,6 +1024,78 @@ input {
   padding-right: 3px;
   display: grid;
   align-items: center;
+}
+
+.no-selection {
+  background: var(--white);
+  width: 100%;
+  padding: 16px 8px;
+  line-height: 18px;
+  h1 {
+    font-size: 15px;
+    font-weight: 700;
+  }
+}
+
+.bet-slip-buttons {
+
+
+
+  width: 100%;
+  display: flex;
+  background: var(--white);
+  border-top: 1px solid var(--border-color);
+  padding: 13px 10px 8px 10px;
+
+  .reset-btn {
+    outline: 0;
+    border: none;
+    cursor: pointer;
+
+    border-radius: 4px;
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 20px;
+    text-transform: none;
+    white-space: nowrap;
+    font-weight: 700;
+
+    &:hover {
+      background: var(--linear-silver);
+    }
+
+    &.disabled {
+      background: var(--light-grey);
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
+
+  .submit-btn {
+    background: var(--primary);
+    outline: 0;
+    border: none;
+    margin-left: auto;
+    cursor: pointer;
+
+    border-radius: 4px;
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 20px;
+    text-transform: none;
+    white-space: nowrap;
+    font-weight: 700;
+    &:hover {
+      background: var(--linear-primary);
+    }
+    &.disabled {
+      background: var(--light-grey);
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
 }
 
 /* This part Makes the
@@ -2254,7 +2370,7 @@ is smaller */
 .mini-market-runners-list {
   position: relative;
   max-height: 250px;
-    overflow: auto;
+  overflow: auto;
 }
 
 .mini-market-runners-list-container {
