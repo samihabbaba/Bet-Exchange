@@ -59,7 +59,7 @@ export class MenuComponent implements OnInit {
         return;
       } else {
         this.layoutService.startMenuLoading();
-        this.layoutService.currentSport.next(item.name);
+        this.layoutService.currentSport.next(item);
       }
       this.dataService
         .getAllRegions(item.id)
@@ -93,7 +93,7 @@ export class MenuComponent implements OnInit {
         return;
       } else {
         this.layoutService.startMenuLoading();
-        this.layoutService.currentRegion.next(item.name);
+        this.layoutService.currentRegion.next(item);
       }
       this.dataService
         .getAllLeagues(item.id)
@@ -127,7 +127,7 @@ export class MenuComponent implements OnInit {
       this.setAllChildsToFalse(child);
       grandchild.active = true;
     }
-    this.layoutService.currentLeague.next(grandchild.name);
+    this.layoutService.currentLeague.next(grandchild);
     this.dataService.loadPreGames(grandchild.id, grandchild.regionId);
   }
 

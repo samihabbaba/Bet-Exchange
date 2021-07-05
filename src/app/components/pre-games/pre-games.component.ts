@@ -22,6 +22,10 @@ export class PreGamesComponent implements OnInit,OnDestroy {
     this.subscription = this.dataService.selectedEvents.subscribe(resp => {
     this.games = resp;
     })
+    
+    this.subscription2 = this.layoutService.currentSport.subscribe(resp => {
+    this.currentSport = resp;
+    })
   }
 
   fontAwesomeIcons = {
@@ -31,10 +35,13 @@ export class PreGamesComponent implements OnInit,OnDestroy {
   };
 
   games:any = [];
+  currentSport:any = {};
   subscription: Subscription
+  subscription2: Subscription
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe()
+    this.subscription2.unsubscribe()
   }
 
   ngOnInit(): void {

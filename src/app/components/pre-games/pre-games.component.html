@@ -2,8 +2,8 @@
   <div class="main-header-view">Pre Games</div>
   <div class="main-sport">
     <div class="sport-name">
-      <fa-icon [icon]="fontAwesomeIcons.footBall"></fa-icon>
-      Soccer
+      <fa-icon [icon]="fontAwesomeIcons.footBall" *ngIf="currentSport"></fa-icon>
+      {{currentSport.name}}
     </div>
 
     <div class="odds-label">
