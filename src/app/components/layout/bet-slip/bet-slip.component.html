@@ -20,42 +20,47 @@
   </div>
 
   <div class="bet-item-container" *ngIf="tabToDisplay == 'Singles'">
-    <div class="bet-item-header">Belgium-Brazil</div>
-    <div class="bet-item back">
-      <div class="bet-item-top-row">
-        <div class="remove-bet-icon-wrapper">
-          <fa-icon [icon]="fontAwesomeIcons.exit" class="delete-icon"></fa-icon>
+    <div *ngFor="let bet of this.betSlipService.selectedBets; let i = index">
+      <div class="bet-item-header">{{ bet.eventName }}</div>
+      <div class="bet-item" [ngClass]="{ back: bet.isBack, lay: !bet.isBack }">
+        <div class="bet-item-top-row">
+          <div class="remove-bet-icon-wrapper" (click)="removeFromSelectedBets(i)">
+            <fa-icon
+              [icon]="fontAwesomeIcons.exit"
+              class="delete-icon"
+            ></fa-icon>
+          </div>
+
+          <div class="bet-item-market-title">
+            <h1>{{ bet.market.run.runnerName }}</h1>
+            <h3>{{ bet.market.marketName }}</h3>
+          </div>
+
+          <div class="bet-item-inputs-container">
+            <div class="bet-item-match-odd">
+              <input [value]="bet.market.run.price" />
+            </div>
+            <div class="bet-item-match-stake">
+              <input
+                type="number"
+                min="0.1"
+                onkeyup="if(parseInt(this.value)>100000){ this.value =100000; return false; }"
+              />
+            </div>
+            <div class="bet-item-profit">
+              <span #betItemProfit>0.5</span>
+            </div>
+          </div>
         </div>
 
-        <div class="bet-item-market-title">
-          <h1>Over 0.5 Goals</h1>
-          <h3>Over/Under 0.5 Goals</h3>
+        <div class="bet-item-bottom-row">
+          <button class="bet-item-set-value">10</button>
+          <button class="bet-item-set-value">20</button>
+          <button class="bet-item-set-value">50</button>
+          <button class="bet-item-set-value">100</button>
+          <button class="bet-item-set-value">200</button>
+          <button class="bet-item-set-value">500</button>
         </div>
-
-        <div class="bet-item-inputs-container">
-          <div class="bet-item-match-odd">
-            <input value="5.9" />
-          </div>
-          <div class="bet-item-match-stake">
-            <input
-              type="number"
-              min="0.1"
-              onkeyup="if(parseInt(this.value)>100000){ this.value =100000; return false; }"
-            />
-          </div>
-          <div class="bet-item-profit">
-            <span #betItemProfit>0.5</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="bet-item-bottom-row">
-        <button class="bet-item-set-value">10</button>
-        <button class="bet-item-set-value">20</button>
-        <button class="bet-item-set-value">50</button>
-        <button class="bet-item-set-value">100</button>
-        <button class="bet-item-set-value">200</button>
-        <button class="bet-item-set-value">500</button>
       </div>
     </div>
   </div>

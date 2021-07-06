@@ -59,7 +59,7 @@ export class SharedFunctionsService {
     }
     catch(ex){
       return null
-    }  
+    }
   }
 
   getLayObj(obj:any,index:number){
@@ -68,7 +68,7 @@ export class SharedFunctionsService {
     }
     catch(ex){
       return null
-    }  
+    }
   }
 
   getBackObjForRun(obj:any){
@@ -77,16 +77,17 @@ export class SharedFunctionsService {
       }
       catch(ex){
         return null
-      }  
+      }
     }
-  
+
     getLayObjForRun(obj:any){
       try{
+
         return obj.exchange.availableToLay;
       }
       catch(ex){
         return null
-      }  
+      }
     }
 
   formatNumber(num:any, isMoney=true) {
@@ -108,7 +109,7 @@ export class SharedFunctionsService {
   }
 
   returnRunWithIndex(item:any, index:number,ToLay = false){
-   
+
     if(!item || !item.exchange || (!ToLay && !item.exchange.availableToBack)|| (ToLay && !item.exchange.availableToLay) ){
       return {
         price:'',
@@ -150,8 +151,8 @@ export class SharedFunctionsService {
 
     }
 
-    
-    
+
+
     if(ToLay){
       obj.sort( this.sortRunByPriceDEC );
     }else{
@@ -172,7 +173,7 @@ export class SharedFunctionsService {
     return 0;
   }
 
-  
+
   sortRunByPriceDEC( a:any, b:any ) {
     if ( a.price < b.price ){
       return -1;
@@ -182,7 +183,7 @@ export class SharedFunctionsService {
     }
     return 0;
   }
-  
+
   //////// markets tabs ////////
   isMarketPopular(name:string){
     if(this.popularMarkets.some(x=> x== name)){
@@ -191,9 +192,9 @@ export class SharedFunctionsService {
       return false;
     }
   }
-  
+
   isMarketOverUnder(name:string, runs:any){
-    if(name.toLowerCase().includes('over') || name.toLowerCase().includes('under') 
+    if(name.toLowerCase().includes('over') || name.toLowerCase().includes('under')
     || runs.some((x:any)=> x.description.runnerName.toLowerCase().includes('over'))
     || runs.some((x:any)=> x.description.runnerName.toLowerCase().includes('under'))){
       return true;
@@ -215,7 +216,7 @@ if(name.toLowerCase().includes('asian')){
       return false;
     }
   }
-  
+
   isMarketHalf(name:string){
     if(name.toLowerCase().includes('half') && !name.toLowerCase().includes('2nd')&& !name.toLowerCase().includes('second')){
       return true;
@@ -223,7 +224,7 @@ if(name.toLowerCase().includes('asian')){
       return false;
     }
   }
-  
+
   isMarketOthers(name:string, runs:any){
     if(!this.isMarketPopular(name) && !this.isMarketOverUnder(name, runs) && !this.isMarketHandicap(name, runs)&& !this.isMarketHalf(name)){
       return true;

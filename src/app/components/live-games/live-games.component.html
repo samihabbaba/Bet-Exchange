@@ -41,7 +41,20 @@
     </div>
     <div class="odds" (click)="$event.stopPropagation()">
       <div class="odds-1">
-        <div class="blue-square" (click)="this.betSlipService.pushToSelectedBets(event, true)">
+        <div
+          class="blue-square"
+          (click)="
+            this.betSlipService.pushToSelectedBets(
+              event,
+              true,
+              event.markets[0],
+              event.markets[0].runners[0],
+              this.sharedService.returnHighestBet(
+                this.sharedService.getBackObj(event, 0)
+              )
+            )
+          "
+        >
           <div class="bold">
             <ng-container
               *ngIf="
@@ -92,7 +105,20 @@
           </div>
         </div>
 
-        <div class="red-square" (click)="this.betSlipService.pushToSelectedBets(event)">
+        <div
+          class="red-square"
+          (click)="
+            this.betSlipService.pushToSelectedBets(
+              event,
+              false,
+              event.markets[0],
+              event.markets[0].runners[0],
+              this.sharedService.returnHighestBet(
+                this.sharedService.getLayObj(event, 0)
+              )
+            )
+          "
+        >
           <div class="bold">
             <ng-container
               *ngIf="
@@ -145,7 +171,20 @@
       </div>
 
       <div class="odds-x">
-        <div class="blue-square" (click)="this.betSlipService.pushToSelectedBets(event, true)">
+        <div
+          class="blue-square"
+          (click)="
+            this.betSlipService.pushToSelectedBets(
+              event,
+              true,
+              event.markets[0],
+              event.markets[0].runners[1],
+              this.sharedService.returnHighestBet(
+                this.sharedService.getBackObj(event, 1)
+              )
+            )
+          "
+        >
           <div class="bold">
             <ng-container
               *ngIf="
@@ -196,7 +235,20 @@
           </div>
         </div>
 
-        <div class="red-square" (click)="this.betSlipService.pushToSelectedBets(event)">
+        <div
+          class="red-square"
+          (click)="
+            this.betSlipService.pushToSelectedBets(
+              event,
+              false,
+              event.markets[0],
+              event.markets[0].runners[1],
+              this.sharedService.returnHighestBet(
+                this.sharedService.getLayObj(event, 1)
+              )
+            )
+          "
+        >
           <div class="bold">
             <ng-container
               *ngIf="
@@ -249,7 +301,20 @@
       </div>
 
       <div class="odds-2">
-        <div class="blue-square" (click)="this.betSlipService.pushToSelectedBets(event, true)">
+        <div
+          class="blue-square"
+          (click)="
+            this.betSlipService.pushToSelectedBets(
+              event,
+              true,
+              event.markets[0],
+              event.markets[0].runners[2],
+              this.sharedService.returnHighestBet(
+                this.sharedService.getBackObj(event, 2)
+              )
+            )
+          "
+        >
           <div class="bold">
             <ng-container
               *ngIf="
@@ -300,7 +365,20 @@
           </div>
         </div>
 
-        <div class="red-square" (click)="this.betSlipService.pushToSelectedBets(event)">
+        <div
+          class="red-square"
+          (click)="
+            this.betSlipService.pushToSelectedBets(
+              event,
+              false,
+              event.markets[0],
+              event.markets[0].runners[2],
+              this.sharedService.returnHighestBet(
+                this.sharedService.getLayObj(event, 2)
+              )
+            )
+          "
+        >
           <div class="bold">
             <ng-container
               *ngIf="

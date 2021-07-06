@@ -431,7 +431,7 @@
                             <div class="name-container"><h3>{{run.description.runnerName}} {{returnSecondPartRunName(run,item?.description.marketName)}}</h3></div>
                           </td>
 
-                          <td class="mini-market-back-runner" (click)="this.betSlipService.pushToSelectedBets(event, true)">
+                          <td class="mini-market-back-runner" (click)="this.betSlipService.pushToSelectedBets(event, true, run)">
                             <button>
                               <div>
                                 <span class="size">

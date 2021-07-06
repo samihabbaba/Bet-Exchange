@@ -26,7 +26,11 @@ export class BetSlipComponent implements OnInit {
   }
 
   submitBets() {
-    console.log(this.betSlipService.selectedBets)
+    console.log(this.betSlipService.selectedBets);
+  }
+
+  removeFromSelectedBets(betIndex: number) {
+    this.betSlipService.selectedBets.splice(betIndex, 1);
   }
 
   handleTabClick(event: any) {
