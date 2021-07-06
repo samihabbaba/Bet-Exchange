@@ -7,7 +7,7 @@
       <div class="match-odds-sticky-header">
         <div class="header-container">
           <div class="header-wrapper">
-            <h2 class="header-text">{{topMarket?.description.marketName}}</h2>
+            <h2 class="header-text">{{ topMarket?.description.marketName }}</h2>
             <div class="header-content-container">
               <div class="header-content">
                 <div class="header-main-section-wrapper">
@@ -35,9 +35,21 @@
                   <div class="header-total-matched-wrapper">
                     <div class="market-matched">
                       <span class="label">Matched:</span>
-                      <span class="total-matched">GBP {{this.sharedService.formatNumber( topMarket?.state.totalMatched )}}</span>
+                      <span class="total-matched"
+                        >GBP
+                        {{
+                          this.sharedService.formatNumber(
+                            topMarket?.state.totalMatched
+                          )
+                        }}</span
+                      >
                     </div>
-                    <button class="refresh-button"(click)="this.refreshEvent()">Refresh</button>
+                    <button
+                      class="refresh-button"
+                      (click)="this.refreshEvent()"
+                    >
+                      Refresh
+                    </button>
                   </div>
                 </div>
               </div>
@@ -48,7 +60,9 @@
         <table class="runners-header">
           <thead>
             <tr>
-              <th class="runner-name"><span>{{topMarket.runners.length}} selections</span></th>
+              <th class="runner-name">
+                <span>{{ topMarket.runners.length }} selections</span>
+              </th>
               <th class="percentage"><span>110%</span></th>
               <th class="back-all-btn">
                 <button><span>Back all</span></button>
@@ -68,8 +82,10 @@
             <div class="runners-list-container">
               <table class="runners-list">
                 <tbody>
-                  <tr class="runner-line" *ngFor="let item of topMarket.runners">
-
+                  <tr
+                    class="runner-line"
+                    *ngFor="let item of topMarket.runners"
+                  >
                     <!-- selection name -->
                     <td class="new-runner-info">
                       <div class="runner-info-container">
@@ -79,32 +95,95 @@
 
                         <div class="runner-info">
                           <div class="default-name">
-                            <h3 class="runner-name">{{item.description.runnerName}} {{returnSecondPartRunName(item,topMarket?.description.marketName)}}</h3>
+                            <h3 class="runner-name">
+                              {{ item.description.runnerName }}
+                              {{
+                                returnSecondPartRunName(
+                                  item,
+                                  topMarket?.description.marketName
+                                )
+                              }}
+                            </h3>
                           </div>
                         </div>
                       </div>
                     </td>
 
                     <!-- selection odds to back -->
-                    <td class="header-bet-buttons" *ngFor="let selection of [2,1,0]; let i = index">
-                      <button class="back-runner" [ngClass]="{'blue': selection === 0 }">
+                    <td
+                      class="header-bet-buttons"
+                      *ngFor="let selection of [2, 1, 0]; let i = index"
+                      (click)="
+                        this.betSlipService.pushToSelectedBets(
+                          event,
+                          true,
+                          topMarket,
+                          item,
+                          this.sharedService.returnRunWithIndex(item, selection)
+                        )
+                      "
+                    >
+                      <button
+                        class="back-runner"
+                        [ngClass]="{ blue: selection === 0 }"
+                      >
                         <div class="bet-runner">
-                          <span class="bet-btn-price">{{this.sharedService.returnRunWithIndex(item,selection).price }}</span>
-                          <span class="bet-btn-size">{{this.sharedService.returnRunWithIndex(item,selection).size}}</span>
+                          <span class="bet-btn-price">{{
+                            this.sharedService.returnRunWithIndex(
+                              item,
+                              selection
+                            ).price
+                          }}</span>
+                          <span class="bet-btn-size">{{
+                            this.sharedService.returnRunWithIndex(
+                              item,
+                              selection
+                            ).size
+                          }}</span>
                         </div>
                       </button>
                     </td>
 
                     <!-- selection odds to Lay -->
-                    <td class="header-bet-buttons" *ngFor="let selection of [0,1,2]; let i = index">
-                      <button class="back-runner" [ngClass]="{'pink': selection === 0 }">
+                    <td
+                      class="header-bet-buttons"
+                      *ngFor="let selection of [0, 1, 2]; let i = index"
+                      (click)="
+                        this.betSlipService.pushToSelectedBets(
+                          event,
+                          true,
+                          topMarket,
+                          item,
+                          this.sharedService.returnRunWithIndex(
+                            item,
+                            selection,
+                            true
+                          )
+                        )
+                      "
+                    >
+                      <button
+                        class="back-runner"
+                        [ngClass]="{ pink: selection === 0 }"
+                      >
                         <div class="bet-runner">
-                          <span class="bet-btn-price">{{this.sharedService.returnRunWithIndex(item,selection,true).price }}</span>
-                          <span class="bet-btn-size">{{this.sharedService.returnRunWithIndex(item,selection,true).size}}</span>
+                          <span class="bet-btn-price">{{
+                            this.sharedService.returnRunWithIndex(
+                              item,
+                              selection,
+                              true
+                            ).price
+                          }}</span>
+                          <span class="bet-btn-size">{{
+                            this.sharedService.returnRunWithIndex(
+                              item,
+                              selection,
+                              true
+                            ).size
+                          }}</span>
                         </div>
                       </button>
                     </td>
-
 
                     <!-- <td class="header-bet-buttons">
                       <button class="back-runner pink">
@@ -130,11 +209,7 @@
                         </div>
                       </button>
                     </td> -->
-
-
                   </tr>
-
-
                 </tbody>
               </table>
             </div>
@@ -145,7 +220,6 @@
   </div>
 </div>
 
-
 <!-- end of top market -->
 
 <div class="other-markets-container">
@@ -155,7 +229,6 @@
 
   <div class="other-markets-tabs">
     <section class="mod-tabs">
-
       <ul class="tabs-container">
         <li
           [class]="item.class"
@@ -177,7 +250,7 @@
             <li
               class="more-tab-item"
               *ngFor="let child of item.children"
-              (click)="handleChildClick(item,child); $event.stopPropagation()"
+              (click)="handleChildClick(item, child); $event.stopPropagation()"
             >
               <a class="item-link"
                 ><h4>{{ child.name }}</h4></a
@@ -188,16 +261,18 @@
       </ul>
 
       <div class="other-markets-tab-content">
-
-
         <!-- left markets -->
         <div class="column-left">
-
-          <div class="mini-market-container" *ngFor="let item of copyOfMarkets; let i = index">
+          <div
+            class="mini-market-container"
+            *ngFor="let item of copyOfMarkets; let i = index"
+          >
             <div class="mini-market-header-container" *ngIf="i % 2 == 0">
               <div class="mini-market-header">
                 <div class="mini-market-header-section-wrapper">
-                  <div class="mini-market-name"><span>{{item.description.marketName}}</span></div>
+                  <div class="mini-market-name">
+                    <span>{{ item.description.marketName }}</span>
+                  </div>
                   <div class="mini-market-buttons">
                     <div class="going-to-play"><span></span></div>
                     <div class="cashout"><span></span></div>
@@ -215,7 +290,14 @@
                 <thead>
                   <tr>
                     <th class="mini-market-runner-name">
-                      <span>Matched: GBP {{this.sharedService.formatNumber( item?.state.totalMatched )}}</span>
+                      <span
+                        >Matched: GBP
+                        {{
+                          this.sharedService.formatNumber(
+                            item?.state.totalMatched
+                          )
+                        }}</span
+                      >
                     </th>
                     <th class="mini-market-back"><span>Back</span></th>
                     <th class="mini-market-lay"><span>Lay</span></th>
@@ -237,25 +319,53 @@
                               <div class="graph-container">
                                 <button></button>
                               </div>
-                              <div class="name-container"><h3>{{run.description.runnerName}} {{returnSecondPartRunName(run,item?.description.marketName)}} </h3></div>
+                              <div class="name-container">
+                                <h3>
+                                  {{ run.description.runnerName }}
+                                  {{
+                                    returnSecondPartRunName(
+                                      run,
+                                      item?.description.marketName
+                                    )
+                                  }}
+                                </h3>
+                              </div>
                             </td>
 
-                            <td class="mini-market-back-runner" (click)="this.betSlipService.pushToSelectedBets(event, true)">
+                            <!-- Back -->
+
+                            <td
+                              class="mini-market-back-runner"
+                              (click)="
+                                this.betSlipService.pushToSelectedBets(
+                                  event,
+                                  true,
+                                  item,
+                                  run,
+                                  this.sharedService.returnHighestBet(
+                                    this.sharedService.getBackObjForRun(run)
+                                  )
+                                )
+                              "
+                            >
                               <button>
                                 <div>
                                   <span class="size">
-
                                     <!--  -->
                                     <ng-container
                                       *ngIf="
                                         this.sharedService.returnHighestBet(
-                                          this.sharedService.getBackObjForRun(run)
+                                          this.sharedService.getBackObjForRun(
+                                            run
+                                          )
                                         ) !== null
                                       "
                                     >
                                       {{
                                         this.sharedService.returnHighestBet(
-                                          this.sharedService.getBackObjForRun(run)
+                                          this.sharedService.getBackObjForRun(
+                                            run
+                                          )
                                         ).price
                                       }}
                                     </ng-container>
@@ -263,27 +373,31 @@
                                     <fa-icon
                                       *ngIf="
                                         this.sharedService.returnHighestBet(
-                                          this.sharedService.getBackObjForRun(run)
+                                          this.sharedService.getBackObjForRun(
+                                            run
+                                          )
                                         ) === null
                                       "
                                       [icon]="fontAwesomeIcons.lock"
                                     ></fa-icon>
                                     <!--  -->
-
                                   </span>
                                   <span class="amount">
-
                                     <!--  -->
                                     <ng-container
                                       *ngIf="
                                         this.sharedService.returnHighestBet(
-                                          this.sharedService.getBackObjForRun(run)
+                                          this.sharedService.getBackObjForRun(
+                                            run
+                                          )
                                         ) !== null
                                       "
                                     >
                                       {{
                                         this.sharedService.returnHighestBet(
-                                          this.sharedService.getBackObjForRun(run)
+                                          this.sharedService.getBackObjForRun(
+                                            run
+                                          )
                                         ).size
                                       }}
                                     </ng-container>
@@ -297,56 +411,76 @@
                                       [icon]="fontAwesomeIcons.lock"
                                     ></fa-icon> -->
                                     <!--  -->
-
                                   </span>
                                 </div>
                               </button>
                             </td>
 
-                            <td class="mini-market-lay-runner" (click)="this.betSlipService.pushToSelectedBets(event)">
+                            <!-- Lay -->
+                            <td
+                              class="mini-market-lay-runner"
+                              (click)="
+                                this.betSlipService.pushToSelectedBets(
+                                  event,
+                                  false,
+                                  item,
+                                  run,
+                                  this.sharedService.returnHighestBet(
+                                    this.sharedService.getLayObjForRun(run)
+                                  )
+                                )
+                              "
+                            >
                               <button>
                                 <div>
                                   <span class="size">
-
-                                    <!--  -->
-                                    <ng-container
-                                    *ngIf="
-                                      this.sharedService.returnHighestBet(
-                                        this.sharedService.getLayObjForRun(run)
-                                      ) !== null
-                                    "
-                                    >
-                                    {{
-                                      this.sharedService.returnHighestBet(
-                                        this.sharedService.getLayObjForRun(run)
-                                      ).price
-                                    }}
-                                    </ng-container>
-
-                                    <fa-icon
-                                    *ngIf="
-                                      this.sharedService.returnHighestBet(
-                                        this.sharedService.getLayObjForRun(run)
-                                      ) === null
-                                    "
-                                    [icon]="fontAwesomeIcons.lock"
-                                    ></fa-icon>
-                                    <!--  -->
-
-                                  </span>
-                                  <span class="amount">
-
                                     <!--  -->
                                     <ng-container
                                       *ngIf="
                                         this.sharedService.returnHighestBet(
-                                          this.sharedService.getLayObjForRun(run)
+                                          this.sharedService.getLayObjForRun(
+                                            run
+                                          )
                                         ) !== null
                                       "
                                     >
                                       {{
                                         this.sharedService.returnHighestBet(
-                                          this.sharedService.getLayObjForRun(run)
+                                          this.sharedService.getLayObjForRun(
+                                            run
+                                          )
+                                        ).price
+                                      }}
+                                    </ng-container>
+
+                                    <fa-icon
+                                      *ngIf="
+                                        this.sharedService.returnHighestBet(
+                                          this.sharedService.getLayObjForRun(
+                                            run
+                                          )
+                                        ) === null
+                                      "
+                                      [icon]="fontAwesomeIcons.lock"
+                                    ></fa-icon>
+                                    <!--  -->
+                                  </span>
+                                  <span class="amount">
+                                    <!--  -->
+                                    <ng-container
+                                      *ngIf="
+                                        this.sharedService.returnHighestBet(
+                                          this.sharedService.getLayObjForRun(
+                                            run
+                                          )
+                                        ) !== null
+                                      "
+                                    >
+                                      {{
+                                        this.sharedService.returnHighestBet(
+                                          this.sharedService.getLayObjForRun(
+                                            run
+                                          )
                                         ).size
                                       }}
                                     </ng-container>
@@ -360,7 +494,6 @@
                                       [icon]="fontAwesomeIcons.lock"
                                     ></fa-icon> -->
                                     <!--  -->
-
                                   </span>
                                 </div>
                               </button>
@@ -373,7 +506,7 @@
                 </div>
               </div>
 
-              <a (click)="setMarketAsTop(item)"class="mini-market-full-link"
+              <a (click)="setMarketAsTop(item)" class="mini-market-full-link"
                 ><span> View full market</span
                 ><i class="icon fas fa-angle-right"></i
               ></a>
@@ -381,198 +514,255 @@
           </div>
         </div>
 
-
         <!-- right markets -->
-        <div class="column-right" >
-          <div class="mini-market-container" *ngFor="let item of copyOfMarkets; let i = index">
-          <div class="mini-market-header-container" *ngIf="i % 2 != 0">
-            <div class="mini-market-header">
-              <div class="mini-market-header-section-wrapper">
-                <div class="mini-market-name"><span>{{item.description.marketName}}</span></div>
-                <div class="mini-market-buttons">
-                  <div class="going-to-play"><span></span></div>
-                  <div class="cashout"><span></span></div>
-                  <span class="market-rules"
-                    ><a>
-                      <span class="icon"></span>
-                      <span class="label">Rules</span></a
-                    ></span
-                  >
-                </div>
-              </div>
-            </div>
-
-            <table class="mini-market-runners-header">
-              <thead>
-                <tr>
-                  <th class="mini-market-runner-name">
-                    <span>Matched: GBP {{this.sharedService.formatNumber( item?.state.totalMatched )}}</span>
-                  </th>
-                  <th class="mini-market-back"><span>Back</span></th>
-                  <th class="mini-market-lay"><span>Lay</span></th>
-                </tr>
-              </thead>
-            </table>
-
-            <div class="mini-market-runners-list">
-              <div class="mini-market-runners-list-container">
-                <div class="mini-market-runners">
-                  <div class="mini-market-runners-wrapper">
-                    <table class="runners-table">
-                      <tbody>
-                        <tr
-                          class="runner-line"
-                          *ngFor="let run of item.runners"
-                        >
-                          <td class="new-runner">
-                            <div class="graph-container">
-                              <button></button>
-                            </div>
-                            <div class="name-container"><h3>{{run.description.runnerName}} {{returnSecondPartRunName(run,item?.description.marketName)}}</h3></div>
-                          </td>
-
-                          <td class="mini-market-back-runner" (click)="this.betSlipService.pushToSelectedBets(event, true, run)">
-                            <button>
-                              <div>
-                                <span class="size">
-
-                                  <!--  -->
-                                  <ng-container
-                                    *ngIf="
-                                      this.sharedService.returnHighestBet(
-                                        this.sharedService.getBackObjForRun(run)
-                                      ) !== null
-                                    "
-                                  >
-                                    {{
-                                      this.sharedService.returnHighestBet(
-                                        this.sharedService.getBackObjForRun(run)
-                                      ).price
-                                    }}
-                                  </ng-container>
-
-                                  <fa-icon
-                                    *ngIf="
-                                      this.sharedService.returnHighestBet(
-                                        this.sharedService.getBackObjForRun(run)
-                                      ) === null
-                                    "
-                                    [icon]="fontAwesomeIcons.lock"
-                                  ></fa-icon>
-                                  <!--  -->
-
-                                </span>
-                                <span class="amount">
-
-                                  <!--  -->
-                                  <ng-container
-                                    *ngIf="
-                                      this.sharedService.returnHighestBet(
-                                        this.sharedService.getBackObjForRun(run)
-                                      ) !== null
-                                    "
-                                  >
-                                    {{
-                                      this.sharedService.returnHighestBet(
-                                        this.sharedService.getBackObjForRun(run)
-                                      ).size
-                                    }}
-                                  </ng-container>
-
-                                  <!-- <fa-icon
-                                    *ngIf="
-                                      this.sharedService.returnHighestBet(
-                                        this.sharedService.getBackObjForRun(run)
-                                      ) === null
-                                    "
-                                    [icon]="fontAwesomeIcons.lock"
-                                  ></fa-icon> -->
-                                  <!--  -->
-
-                                </span>
-                              </div>
-                            </button>
-                          </td>
-
-                          <td class="mini-market-lay-runner" (click)="this.betSlipService.pushToSelectedBets(event)">
-                            <button>
-                              <div>
-                                <span class="size">
-
-                                  <!--  -->
-                                  <ng-container
-                                  *ngIf="
-                                    this.sharedService.returnHighestBet(
-                                      this.sharedService.getLayObjForRun(run)
-                                    ) !== null
-                                  "
-                                  >
-                                  {{
-                                    this.sharedService.returnHighestBet(
-                                      this.sharedService.getLayObjForRun(run)
-                                    ).price
-                                  }}
-                                  </ng-container>
-
-                                  <fa-icon
-                                  *ngIf="
-                                    this.sharedService.returnHighestBet(
-                                      this.sharedService.getLayObjForRun(run)
-                                    ) === null
-                                  "
-                                  [icon]="fontAwesomeIcons.lock"
-                                  ></fa-icon>
-                                  <!--  -->
-
-                                </span>
-                                <span class="amount">
-
-                                  <!--  -->
-                                  <ng-container
-                                    *ngIf="
-                                      this.sharedService.returnHighestBet(
-                                        this.sharedService.getLayObjForRun(run)
-                                      ) !== null
-                                    "
-                                  >
-                                    {{
-                                      this.sharedService.returnHighestBet(
-                                        this.sharedService.getLayObjForRun(run)
-                                      ).size
-                                    }}
-                                  </ng-container>
-
-                                  <!-- <fa-icon
-                                    *ngIf="
-                                      this.sharedService.returnHighestBet(
-                                        this.sharedService.getLayObjForRun(run)
-                                      ) === null
-                                    "
-                                    [icon]="fontAwesomeIcons.lock"
-                                  ></fa-icon> -->
-                                  <!--  -->
-
-                                </span>
-                              </div>
-                            </button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+        <div class="column-right">
+          <div
+            class="mini-market-container"
+            *ngFor="let item of copyOfMarkets; let i = index"
+          >
+            <div class="mini-market-header-container" *ngIf="i % 2 != 0">
+              <div class="mini-market-header">
+                <div class="mini-market-header-section-wrapper">
+                  <div class="mini-market-name">
+                    <span>{{ item.description.marketName }}</span>
+                  </div>
+                  <div class="mini-market-buttons">
+                    <div class="going-to-play"><span></span></div>
+                    <div class="cashout"><span></span></div>
+                    <span class="market-rules"
+                      ><a>
+                        <span class="icon"></span>
+                        <span class="label">Rules</span></a
+                      ></span
+                    >
                   </div>
                 </div>
               </div>
-            </div>
 
-            <a (click)="setMarketAsTop(item)"class="mini-market-full-link"
-              ><span> View full market</span
-              ><i class="icon fas fa-angle-right"></i
-            ></a>
+              <table class="mini-market-runners-header">
+                <thead>
+                  <tr>
+                    <th class="mini-market-runner-name">
+                      <span
+                        >Matched: GBP
+                        {{
+                          this.sharedService.formatNumber(
+                            item?.state.totalMatched
+                          )
+                        }}</span
+                      >
+                    </th>
+                    <th class="mini-market-back"><span>Back</span></th>
+                    <th class="mini-market-lay"><span>Lay</span></th>
+                  </tr>
+                </thead>
+              </table>
+
+              <div class="mini-market-runners-list">
+                <div class="mini-market-runners-list-container">
+                  <div class="mini-market-runners">
+                    <div class="mini-market-runners-wrapper">
+                      <table class="runners-table">
+                        <tbody>
+                          <tr
+                            class="runner-line"
+                            *ngFor="let run of item.runners"
+                          >
+                            <td class="new-runner">
+                              <div class="graph-container">
+                                <button></button>
+                              </div>
+                              <div class="name-container">
+                                <h3>
+                                  {{ run.description.runnerName }}
+                                  {{
+                                    returnSecondPartRunName(
+                                      run,
+                                      item?.description.marketName
+                                    )
+                                  }}
+                                </h3>
+                              </div>
+                            </td>
+
+                            <td
+                              class="mini-market-back-runner"
+                              (click)="
+                                this.betSlipService.pushToSelectedBets(
+                                  event,
+                                  true,
+                                  item,
+                                  run,
+                                  this.sharedService.returnHighestBet(
+                                    this.sharedService.getBackObjForRun(run)
+                                  )
+                                )
+                              "
+                            >
+                              <button>
+                                <div>
+                                  <span class="size">
+                                    <!--  -->
+                                    <ng-container
+                                      *ngIf="
+                                        this.sharedService.returnHighestBet(
+                                          this.sharedService.getBackObjForRun(
+                                            run
+                                          )
+                                        ) !== null
+                                      "
+                                    >
+                                      {{
+                                        this.sharedService.returnHighestBet(
+                                          this.sharedService.getBackObjForRun(
+                                            run
+                                          )
+                                        ).price
+                                      }}
+                                    </ng-container>
+
+                                    <fa-icon
+                                      *ngIf="
+                                        this.sharedService.returnHighestBet(
+                                          this.sharedService.getBackObjForRun(
+                                            run
+                                          )
+                                        ) === null
+                                      "
+                                      [icon]="fontAwesomeIcons.lock"
+                                    ></fa-icon>
+                                    <!--  -->
+                                  </span>
+                                  <span class="amount">
+                                    <!--  -->
+                                    <ng-container
+                                      *ngIf="
+                                        this.sharedService.returnHighestBet(
+                                          this.sharedService.getBackObjForRun(
+                                            run
+                                          )
+                                        ) !== null
+                                      "
+                                    >
+                                      {{
+                                        this.sharedService.returnHighestBet(
+                                          this.sharedService.getBackObjForRun(
+                                            run
+                                          )
+                                        ).size
+                                      }}
+                                    </ng-container>
+
+                                    <!-- <fa-icon
+                                    *ngIf="
+                                      this.sharedService.returnHighestBet(
+                                        this.sharedService.getBackObjForRun(run)
+                                      ) === null
+                                    "
+                                    [icon]="fontAwesomeIcons.lock"
+                                  ></fa-icon> -->
+                                    <!--  -->
+                                  </span>
+                                </div>
+                              </button>
+                            </td>
+
+                            <td
+                              class="mini-market-lay-runner"
+                              (click)="
+                                this.betSlipService.pushToSelectedBets(
+                                  event,
+                                  false,
+                                  item,
+                                  run,
+                                  this.sharedService.returnHighestBet(
+                                    this.sharedService.getLayObjForRun(run)
+                                  )
+                                )
+                              "
+                            >
+                              <button>
+                                <div>
+                                  <span class="size">
+                                    <!--  -->
+                                    <ng-container
+                                      *ngIf="
+                                        this.sharedService.returnHighestBet(
+                                          this.sharedService.getLayObjForRun(
+                                            run
+                                          )
+                                        ) !== null
+                                      "
+                                    >
+                                      {{
+                                        this.sharedService.returnHighestBet(
+                                          this.sharedService.getLayObjForRun(
+                                            run
+                                          )
+                                        ).price
+                                      }}
+                                    </ng-container>
+
+                                    <fa-icon
+                                      *ngIf="
+                                        this.sharedService.returnHighestBet(
+                                          this.sharedService.getLayObjForRun(
+                                            run
+                                          )
+                                        ) === null
+                                      "
+                                      [icon]="fontAwesomeIcons.lock"
+                                    ></fa-icon>
+                                    <!--  -->
+                                  </span>
+                                  <span class="amount">
+                                    <!--  -->
+                                    <ng-container
+                                      *ngIf="
+                                        this.sharedService.returnHighestBet(
+                                          this.sharedService.getLayObjForRun(
+                                            run
+                                          )
+                                        ) !== null
+                                      "
+                                    >
+                                      {{
+                                        this.sharedService.returnHighestBet(
+                                          this.sharedService.getLayObjForRun(
+                                            run
+                                          )
+                                        ).size
+                                      }}
+                                    </ng-container>
+
+                                    <!-- <fa-icon
+                                    *ngIf="
+                                      this.sharedService.returnHighestBet(
+                                        this.sharedService.getLayObjForRun(run)
+                                      ) === null
+                                    "
+                                    [icon]="fontAwesomeIcons.lock"
+                                  ></fa-icon> -->
+                                    <!--  -->
+                                  </span>
+                                </div>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <a (click)="setMarketAsTop(item)" class="mini-market-full-link"
+                ><span> View full market</span
+                ><i class="icon fas fa-angle-right"></i
+              ></a>
+            </div>
           </div>
         </div>
-        </div>
-
-
       </div>
     </section>
   </div>

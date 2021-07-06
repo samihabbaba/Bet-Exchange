@@ -22,6 +22,7 @@ export class BetSlipService {
     // console.log(market);
     // console.log(runners);
     // console.log(run);
+
     let selection = {
       isBack: isBack,
       eventName: eventName.event.name,
