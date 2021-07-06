@@ -17,12 +17,17 @@ export class BetSlipService {
     runners?: any,
     run?: any
   ) {
-    // console.log(eventName);
-    // isBack ? console.log('Im Back') : console.log('Im Lay');
-    // console.log(market);
-    // console.log(runners);
-    // console.log(run);
-
+    let index = this.selectedBets.findIndex((x) => {
+      return (
+        String(x.eventId) == String(eventName.event.eventId) &&
+        x.isBack == isBack &&
+        String(x.market.marketId) == String(market.marketId) &&
+        String(x.market.run.selectionId) == String(runners.selectionId)
+      );
+    });
+    if (index > -1) {
+      this.selectedBets.splice(index, 1);
+    }
     let selection = {
       isBack: isBack,
       eventName: eventName.event.name,
