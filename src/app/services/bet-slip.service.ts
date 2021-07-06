@@ -48,4 +48,19 @@ export class BetSlipService {
         : this.selectedBets.splice(i, 0, selection);
     }
   }
+
+  checkIfBetIsSelected(
+    eventId: string,
+    marketId: string,
+    selectionId: string,
+    isBack = false
+  ) {
+    return this.selectedBets.some(
+      (x) =>
+        x.market.run.selectionId === selectionId &&
+        x.isBack === isBack &&
+        x.market.marketId === marketId &&
+        x.eventId === eventId
+    );
+  }
 }

@@ -918,7 +918,6 @@ body {
   }
 }
 
-
 .bet-item-container {
   width: 100%;
   display: flex;
@@ -994,13 +993,10 @@ body {
 
   .delete-icon {
     align-self: center;
-
-
   }
   &:hover {
     color: var(--primary);
   }
-
 }
 
 .bet-item-inputs-container {
@@ -1990,12 +1986,19 @@ is smaller */
     &:hover {
       background-color: var(--dark-blue) !important;
     }
+    &.selected {
+      background-color: var(--dark-blue) !important;
+    }
   }
 
   &.pink {
     background-color: var(--light-red);
 
     &:hover {
+      background-color: var(--dark-red) !important;
+    }
+
+    &.selected {
       background-color: var(--dark-red) !important;
     }
   }
@@ -2603,7 +2606,12 @@ is smaller */
             text-rendering: auto;
             font-family: Arial, Helvetica, sans-serif;
             font-size: 11px;
+
             button {
+
+              &.selected {
+                background-color: var(--dark-blue);
+              }
               padding-bottom: 1px;
               border-right: 1px solid var(--white);
               border-left: none;
@@ -2621,6 +2629,8 @@ is smaller */
               &:hover {
                 background-color: var(--dark-blue);
               }
+
+
               div {
                 margin: 0;
                 padding: 0;
@@ -2663,7 +2673,12 @@ is smaller */
             vertical-align: top;
             text-rendering: auto;
 
+
+
             button {
+              &.selected {
+                background-color: var(--dark-red);
+              }
               padding-bottom: 1px;
               border-right: none;
               border-left: none;

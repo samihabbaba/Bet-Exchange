@@ -125,7 +125,15 @@
                     >
                       <button
                         class="back-runner"
-                        [ngClass]="{ blue: selection === 0 }"
+                        [ngClass]="{
+                          blue: selection === 0,
+                          selected: this.betSlipService.checkIfBetIsSelected(
+                            event.event.eventId,
+                            topMarket.marketId,
+                            item.selectionId,
+                            true
+                          )
+                        }"
                       >
                         <div class="bet-runner">
                           <span class="bet-btn-price">{{
@@ -151,7 +159,7 @@
                       (click)="
                         this.betSlipService.pushToSelectedBets(
                           event,
-                          true,
+                          false,
                           topMarket,
                           item,
                           this.sharedService.returnRunWithIndex(
@@ -164,7 +172,15 @@
                     >
                       <button
                         class="back-runner"
-                        [ngClass]="{ pink: selection === 0 }"
+                        [ngClass]="{
+                          pink: selection === 0,
+                          selected: this.betSlipService.checkIfBetIsSelected(
+                            event.event.eventId,
+                            topMarket.marketId,
+                            item.selectionId,
+                            false
+                          )
+                        }"
                       >
                         <div class="bet-runner">
                           <span class="bet-btn-price">{{
@@ -348,7 +364,17 @@
                                 )
                               "
                             >
-                              <button>
+                              <button
+                                [ngClass]="{
+                                  selected:
+                                    this.betSlipService.checkIfBetIsSelected(
+                                      event.event.eventId,
+                                      item.marketId,
+                                      run.selectionId,
+                                      true
+                                    )
+                                }"
+                              >
                                 <div>
                                   <span class="size">
                                     <!--  -->
@@ -431,7 +457,17 @@
                                 )
                               "
                             >
-                              <button>
+                              <button
+                                [ngClass]="{
+                                  selected:
+                                    this.betSlipService.checkIfBetIsSelected(
+                                      event.event.eventId,
+                                      item.marketId,
+                                      run.selectionId,
+                                      false
+                                    )
+                                }"
+                              >
                                 <div>
                                   <span class="size">
                                     <!--  -->
@@ -599,7 +635,17 @@
                                 )
                               "
                             >
-                              <button>
+                              <button
+                              [ngClass]="{
+                                selected:
+                                  this.betSlipService.checkIfBetIsSelected(
+                                    event.event.eventId,
+                                    item.marketId,
+                                    run.selectionId,
+                                    true
+                                  )
+                              }"
+                              >
                                 <div>
                                   <span class="size">
                                     <!--  -->
@@ -681,7 +727,17 @@
                                 )
                               "
                             >
-                              <button>
+                              <button
+                              [ngClass]="{
+                                selected:
+                                  this.betSlipService.checkIfBetIsSelected(
+                                    event.event.eventId,
+                                    item.marketId,
+                                    run.selectionId,
+                                    false
+                                  )
+                              }"
+                              >
                                 <div>
                                   <span class="size">
                                     <!--  -->
