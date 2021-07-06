@@ -17,40 +17,42 @@ export class BetSlipService {
     runners?: any,
     run?: any
   ) {
-    let index = this.selectedBets.findIndex((x) => {
-      return (
-        String(x.eventId) == String(eventName.event.eventId) &&
-        x.isBack == isBack &&
-        String(x.market.marketId) == String(market.marketId) &&
-        String(x.market.run.selectionId) == String(runners.selectionId)
-      );
-    });
-    if (index > -1) {
-      this.selectedBets.splice(index, 1);
-    }
-    let selection = {
-      isBack: isBack,
-      eventName: eventName.event.name,
-      eventId: eventName.event.eventId,
-      market: {
-        marketName: market.description.marketName,
-        marketId: market.marketId,
-        run: {
-          runnerName: runners.description.runnerName,
-          price: run.price,
-          size: run.size,
-          selectionId: runners.selectionId,
+    if (run?.price) {
+      let index = this.selectedBets.findIndex((x) => {
+        return (
+          String(x.eventId) == String(eventName.event.eventId) &&
+          x.isBack == isBack &&
+          String(x.market.marketId) == String(market.marketId) &&
+          String(x.market.run.selectionId) == String(runners.selectionId)
+        );
+      });
+      if (index > -1) {
+        this.selectedBets.splice(index, 1);
+      }
+      let selection = {
+        isBack: isBack,
+        eventName: eventName.event.name,
+        eventId: eventName.event.eventId,
+        market: {
+          marketName: market.description.marketName,
+          marketId: market.marketId,
+          run: {
+            runnerName: runners.description.runnerName,
+            price: run.price,
+            size: run.size,
+            selectionId: runners.selectionId,
+          },
         },
-      },
-    };
+      };
 
-    if (!selection.isBack) {
-      this.selectedBets.push(selection);
-    } else {
-      let i = this.selectedBets.findIndex((x) => !x.isBack);
-      i === -1
-        ? this.selectedBets.push(selection)
-        : this.selectedBets.splice(i, 0, selection);
+      if (!selection.isBack) {
+        this.selectedBets.push(selection);
+      } else {
+        let i = this.selectedBets.findIndex((x) => !x.isBack);
+        i === -1
+          ? this.selectedBets.push(selection)
+          : this.selectedBets.splice(i, 0, selection);
+      }
     }
   }
 
