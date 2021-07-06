@@ -38,7 +38,7 @@
       </div>
       <div class="odds" (click)="$event.stopPropagation()">
         <div class="odds-1">
-          <div class="red-square">
+          <div class="blue-square" (click)="this.betSlipService.pushToSelectedBets(event, true)">
             <div class="bold">
               <ng-container
                 *ngIf="
@@ -89,7 +89,7 @@
             </div>
           </div>
 
-          <div class="blue-square">
+          <div class="red-square" (click)="this.betSlipService.pushToSelectedBets(event)">
             <div class="bold">
               <ng-container
                 *ngIf="
@@ -142,7 +142,7 @@
         </div>
 
         <div class="odds-x">
-          <div class="red-square">
+          <div class="blue-square" (click)="this.betSlipService.pushToSelectedBets(event, true)">
             <div class="bold">
               <ng-container
                 *ngIf="
@@ -193,7 +193,7 @@
             </div>
           </div>
 
-          <div class="blue-square">
+          <div class="red-square" (click)="this.betSlipService.pushToSelectedBets(event)">
             <div class="bold">
               <ng-container
                 *ngIf="
@@ -246,7 +246,7 @@
         </div>
 
         <div class="odds-2">
-          <div class="red-square">
+          <div class="blue-square" (click)="this.betSlipService.pushToSelectedBets(event, true)">
             <div class="bold">
               <ng-container
                 *ngIf="
@@ -297,7 +297,7 @@
             </div>
           </div>
 
-          <div class="blue-square">
+          <div class="red-square" (click)="this.betSlipService.pushToSelectedBets(event)">
             <div class="bold">
               <ng-container
                 *ngIf="

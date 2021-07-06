@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
+import { BetSlipService } from 'src/app/services/bet-slip.service';
 import { DataService } from 'src/app/services/data.service';
 import {
   BreakSize,
@@ -68,7 +69,8 @@ export class EventContentComponent implements OnInit {
   constructor(
     private dataService: DataService,
     public sharedService: SharedFunctionsService,
-    private screenSizeService: ScreenSizeService
+    private screenSizeService: ScreenSizeService,
+    public betSlipService: BetSlipService
   ) {  this.screenObserver$ = this.screenSizeService.currentScreenSize.subscribe(
     this.setTabs.bind(this)
   );}
@@ -104,7 +106,7 @@ export class EventContentComponent implements OnInit {
     this.setAllTabsToFalse(this.tabItems);
     tab.active = false;
     child.active=true;
-    
+
     this.copyOfTabs.splice(this.copyOfTabs.length-1, 0, child);
     let tab2 = this.copyOfTabs[this.copyOfTabs.length-3];
     this.copyOfTabs.splice(this.copyOfTabs.length-3, 1);
@@ -191,7 +193,7 @@ export class EventContentComponent implements OnInit {
   }
 
   returnSecondPartRunName(run:any, marketName:string){
-    
+
     let showSign = marketName.toLowerCase().includes('handicap');
 
     if(run.handicap){
@@ -215,7 +217,7 @@ export class EventContentComponent implements OnInit {
 
     if(this.selectedTab == 'Popular'){
       this.copyOfMarkets = this.event.markets.filter( (x:any)=> this.sharedService.isMarketPopular(x.description.marketName));
-    } 
+    }
     else if(this.selectedTab == 'Over/Under'){
       this.copyOfMarkets = this.event.markets.filter( (x:any)=> this.sharedService.isMarketOverUnder(x.description.marketName, x.runners));
     }
@@ -229,7 +231,7 @@ export class EventContentComponent implements OnInit {
     else if(this.selectedTab == 'Others'){
       this.copyOfMarkets = this.event.markets.filter( (x:any)=> this.sharedService.isMarketOthers(x.description.marketName, x.runners));
     }
-    
+
     else{
       this.copyOfMarkets = [];
     }

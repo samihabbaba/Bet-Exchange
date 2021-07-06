@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faFutbol, faLock, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
+import { BetSlipService } from 'src/app/services/bet-slip.service';
 import { DataService } from 'src/app/services/data.service';
 import { LayoutService } from 'src/app/services/layout.service';
 import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
@@ -16,7 +17,8 @@ export class LiveGamesComponent implements OnInit, OnDestroy {
     public dataService: DataService,
     public sharedService: SharedFunctionsService,
     private router: Router,
-    private layoutService: LayoutService
+    private layoutService: LayoutService,
+    public betSlipService: BetSlipService
   ) {
     this.subscription = this.dataService.selectedEvents.subscribe((resp) => {
       this.games = resp;

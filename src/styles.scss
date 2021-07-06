@@ -918,6 +918,7 @@ body {
   }
 }
 
+
 .bet-item-container {
   width: 100%;
   display: flex;
@@ -937,11 +938,11 @@ body {
   padding: 4px 6px;
 
   &.back {
-    background: var(--dark-blue);
+    background: var(--light-blue);
   }
 
   &.lay {
-    background: var(--dark-red);
+    background: var(--light-red);
   }
 }
 
@@ -993,9 +994,13 @@ body {
 
   .delete-icon {
     align-self: center;
+
+
+  }
+  &:hover {
+    color: var(--primary);
   }
 
-  
 }
 
 .bet-item-inputs-container {

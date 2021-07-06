@@ -240,7 +240,7 @@
                               <div class="name-container"><h3>{{run.description.runnerName}} {{returnSecondPartRunName(run,item?.description.marketName)}} </h3></div>
                             </td>
 
-                            <td class="mini-market-back-runner">
+                            <td class="mini-market-back-runner" (click)="this.betSlipService.pushToSelectedBets(event, true)">
                               <button>
                                 <div>
                                   <span class="size">
@@ -303,7 +303,7 @@
                               </button>
                             </td>
 
-                            <td class="mini-market-lay-runner">
+                            <td class="mini-market-lay-runner" (click)="this.betSlipService.pushToSelectedBets(event)">
                               <button>
                                 <div>
                                   <span class="size">
@@ -431,7 +431,7 @@
                             <div class="name-container"><h3>{{run.description.runnerName}} {{returnSecondPartRunName(run,item?.description.marketName)}}</h3></div>
                           </td>
 
-                          <td class="mini-market-back-runner">
+                          <td class="mini-market-back-runner" (click)="this.betSlipService.pushToSelectedBets(event, true)">
                             <button>
                               <div>
                                 <span class="size">
@@ -494,7 +494,7 @@
                             </button>
                           </td>
 
-                          <td class="mini-market-lay-runner">
+                          <td class="mini-market-lay-runner" (click)="this.betSlipService.pushToSelectedBets(event)">
                             <button>
                               <div>
                                 <span class="size">
