@@ -5,6 +5,11 @@ import { Injectable } from '@angular/core';
 })
 export class SharedFunctionsService {
 
+
+  popularMarkets = ['Match Odds', 'Half Time', 'Both teams to Score?',
+  'Over/Under 1.5 Goals', 'First Half Goals 1.5', ]
+
+
   constructor() { }
 
   returnTeamNameFromEvent(eventName:string, isHome = true){
@@ -178,5 +183,53 @@ export class SharedFunctionsService {
     return 0;
   }
   
+  //////// markets tabs ////////
+  isMarketPopular(name:string){
+    if(this.popularMarkets.some(x=> x== name)){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  
+  isMarketOverUnder(name:string, runs:any){
+    if(name.toLowerCase().includes('over') || name.toLowerCase().includes('under') 
+    || runs.some((x:any)=> x.description.runnerName.toLowerCase().includes('over'))
+    || runs.some((x:any)=> x.description.runnerName.toLowerCase().includes('under'))){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  isMarketHandicap(name:string, runs:any){
+if(name.toLowerCase().includes('asian')){
+  debugger
+}
+
+    if(name.toLowerCase().includes('handicap')
+    ||name.includes('handicap') // or sign (+/-) then number
+    ){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  
+  isMarketHalf(name:string){
+    if(name.toLowerCase().includes('half') && !name.toLowerCase().includes('2nd')&& !name.toLowerCase().includes('second')){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  
+  isMarketOthers(name:string, runs:any){
+    if(!this.isMarketPopular(name) && !this.isMarketOverUnder(name, runs) && !this.isMarketHandicap(name, runs)&& !this.isMarketHalf(name)){
+      return true;
+    }else{
+      return false;
+    }
+  }
 
 }
