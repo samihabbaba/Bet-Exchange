@@ -777,6 +777,9 @@ body {
 
 .red-square {
   background-color: var(--light-red);
+  &.selected {
+    background-color: var(--dark-red);
+  }
 }
 
 .red-square:hover {
@@ -785,6 +788,9 @@ body {
 
 .blue-square {
   background-color: var(--light-blue);
+  &.selected {
+    background-color: var(--dark-blue);
+  }
 }
 
 .blue-square:hover {

@@ -43,6 +43,15 @@
       <div class="odds-1">
         <div
           class="blue-square"
+          [ngClass]="{
+            selected: this.betSlipService.checkIfBetIsSelected(
+              event.event.eventId,
+              event.markets[0].marketId,
+              event.markets[0].runners[0].selectionId,
+              true
+            )
+          }"
+
           (click)="
             this.betSlipService.pushToSelectedBets(
               event,
@@ -107,6 +116,14 @@
 
         <div
           class="red-square"
+          [ngClass]="{
+            selected: this.betSlipService.checkIfBetIsSelected(
+              event.event.eventId,
+              event.markets[0].marketId,
+              event.markets[0].runners[0].selectionId,
+              false
+            )
+          }"
           (click)="
             this.betSlipService.pushToSelectedBets(
               event,
@@ -173,6 +190,15 @@
       <div class="odds-x">
         <div
           class="blue-square"
+
+          [ngClass]="{
+            selected: this.betSlipService.checkIfBetIsSelected(
+              event.event.eventId,
+              event.markets[0].marketId,
+              event.markets[0].runners[1].selectionId,
+              true
+            )
+          }"
           (click)="
             this.betSlipService.pushToSelectedBets(
               event,
@@ -237,6 +263,14 @@
 
         <div
           class="red-square"
+          [ngClass]="{
+            selected: this.betSlipService.checkIfBetIsSelected(
+              event.event.eventId,
+              event.markets[0].marketId,
+              event.markets[0].runners[1].selectionId,
+              false
+            )
+          }"
           (click)="
             this.betSlipService.pushToSelectedBets(
               event,
@@ -303,6 +337,14 @@
       <div class="odds-2">
         <div
           class="blue-square"
+          [ngClass]="{
+            selected: this.betSlipService.checkIfBetIsSelected(
+              event.event.eventId,
+              event.markets[0].marketId,
+              event.markets[0].runners[2].selectionId,
+              true
+            )
+          }"
           (click)="
             this.betSlipService.pushToSelectedBets(
               event,
@@ -367,6 +409,14 @@
 
         <div
           class="red-square"
+          [ngClass]="{
+            selected: this.betSlipService.checkIfBetIsSelected(
+              event.event.eventId,
+              event.markets[0].marketId,
+              event.markets[0].runners[2].selectionId,
+              false
+            )
+          }"
           (click)="
             this.betSlipService.pushToSelectedBets(
               event,
