@@ -18,7 +18,49 @@
       <h1>Open Bets</h1>
     </div>
   </div>
-  <!-- <div class="lay-section">
+
+  <div class="bet-item-container" *ngIf="tabToDisplay == 'Singles'">
+    <div class="bet-item-header">Belgium-Brazil</div>
+    <div class="bet-item back">
+      <div class="bet-item-top-row">
+        <div class="remove-bet-icon-wrapper">
+          <fa-icon [icon]="fontAwesomeIcons.exit" class="delete-icon"></fa-icon>
+        </div>
+
+        <div class="bet-item-market-title">
+          <h1>Over 0.5 Goals</h1>
+          <h3>Over/Under 0.5 Goals</h3>
+        </div>
+
+        <div class="bet-item-inputs-container">
+          <div class="bet-item-match-odd">
+            <input value="5.9" />
+          </div>
+          <div class="bet-item-match-stake">
+            <input
+              type="number"
+              min="0.1"
+              onkeyup="if(parseInt(this.value)>100000){ this.value =100000; return false; }"
+            />
+          </div>
+          <div class="bet-item-profit">
+            <span #betItemProfit>0.5</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bet-item-bottom-row">
+        <button class="bet-item-set-value">10</button>
+        <button class="bet-item-set-value">20</button>
+        <button class="bet-item-set-value">50</button>
+        <button class="bet-item-set-value">100</button>
+        <button class="bet-item-set-value">200</button>
+        <button class="bet-item-set-value">500</button>
+      </div>
+    </div>
+  </div>
+  <!--
+  <div class="lay-section">
     <div class="lay-header">
       <div class="inner-lay-header">
         <div class="lay-header-title">Back (Bet For)</div>
@@ -32,7 +74,10 @@
     <div class="lay-items">
       <div class="lay-item">
         <div class="icon-wrapper">
-          <fa-icon [icon]="fontAwesomeIcons.exit" class="main-icon clickable"></fa-icon>
+          <fa-icon
+            [icon]="fontAwesomeIcons.exit"
+            class="main-icon clickable"
+          ></fa-icon>
         </div>
         <div class="bet-team-name">Bercelona</div>
         <div class="lay-items-other">
@@ -47,7 +92,10 @@
       </div>
       <div class="back-item">
         <div class="icon-wrapper">
-          <fa-icon [icon]="fontAwesomeIcons.exit" class="main-icon clickable"></fa-icon>
+          <fa-icon
+            [icon]="fontAwesomeIcons.exit"
+            class="main-icon clickable"
+          ></fa-icon>
         </div>
         <div class="bet-team-name">Bercelona</div>
         <div class="back-items-other">
@@ -62,7 +110,10 @@
       </div>
       <div class="back-item">
         <div class="icon-wrapper">
-          <fa-icon [icon]="fontAwesomeIcons.exit" class="main-icon clickable"></fa-icon>
+          <fa-icon
+            [icon]="fontAwesomeIcons.exit"
+            class="main-icon clickable"
+          ></fa-icon>
         </div>
         <div class="bet-team-name">Bercelona</div>
         <div class="back-items-other">
@@ -91,7 +142,10 @@
     <div class="back-items">
       <div class="back-item">
         <div class="icon-wrapper">
-          <fa-icon [icon]="fontAwesomeIcons.exit" class="main-icon clickable"></fa-icon>
+          <fa-icon
+            [icon]="fontAwesomeIcons.exit"
+            class="main-icon clickable"
+          ></fa-icon>
         </div>
         <div class="bet-team-name">Bercelona</div>
         <div class="back-items-other">
@@ -106,7 +160,10 @@
       </div>
       <div class="back-item">
         <div class="icon-wrapper">
-          <fa-icon [icon]="fontAwesomeIcons.exit" class="main-icon clickable"></fa-icon>
+          <fa-icon
+            [icon]="fontAwesomeIcons.exit"
+            class="main-icon clickable"
+          ></fa-icon>
         </div>
         <div class="bet-team-name">Bercelona</div>
         <div class="back-items-other">
@@ -121,7 +178,10 @@
       </div>
       <div class="back-item">
         <div class="icon-wrapper">
-          <fa-icon [icon]="fontAwesomeIcons.exit" class="main-icon clickable"></fa-icon>
+          <fa-icon
+            [icon]="fontAwesomeIcons.exit"
+            class="main-icon clickable"
+          ></fa-icon>
         </div>
         <div class="bet-team-name">Bercelona</div>
         <div class="back-items-other">
@@ -138,13 +198,19 @@
   </div> -->
 
   <div *ngIf="this.tabToDisplay == 'Singles'">
-    <div *ngIf="selectedBets.length < 1" class="no-selection">
+    <div
+      *ngIf="this.betSlipService.selectedBets.length < 1"
+      class="no-selection"
+    >
       <h1>No bets selected. Select some bets by clicking the odds.</h1>
     </div>
   </div>
 
   <div *ngIf="this.tabToDisplay == 'Open Bets'">
-    <div *ngIf="currentOpenBets.length < 1" class="no-selection">
+    <div
+      *ngIf="this.betSlipService.currentOpenBets.length < 1"
+      class="no-selection"
+    >
       <h1>You don't have any open bets.</h1>
     </div>
   </div>
@@ -153,14 +219,14 @@
     <button
       class="reset-btn"
       (click)="resetBets()"
-      [ngClass]="{ disabled: this.selectedBets.length < 1 }"
+      [ngClass]="{ disabled: this.betSlipService.selectedBets.length < 1 }"
     >
       Reset
     </button>
     <button
       class="submit-btn"
       (click)="submitBets()"
-      [ngClass]="{ disabled: this.selectedBets.length < 1 }"
+      [ngClass]="{ disabled: this.betSlipService.selectedBets.length < 1 }"
     >
       Submit
     </button>

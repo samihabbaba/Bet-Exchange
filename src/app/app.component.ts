@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { BetSlipService } from './services/bet-slip.service';
 import { DataService } from './services/data.service';
 import { LayoutService } from './services/layout.service';
 
@@ -7,6 +8,7 @@ import { LayoutService } from './services/layout.service';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  providers: [BetSlipService],
 })
 export class AppComponent implements OnInit {
   title = 'angular-exchange';

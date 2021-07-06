@@ -21,6 +21,7 @@
   --linear-black: linear-gradient(#404040, #353535);
   --linear-primary: linear-gradient(#ffa500, #df9100);
   --text-accent: #222;
+  --muted-text: #666;
 }
 
 * {
@@ -917,6 +918,138 @@ body {
   }
 }
 
+.bet-item-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.bet-item-header {
+  padding: 4px 6px;
+  color: var(--muted-text);
+  border: 1px solid var(--border-color);
+  font-size: 13px;
+}
+
+.bet-item {
+  display: flex;
+  flex-direction: column;
+  padding: 4px 6px;
+
+  &.back {
+    background: var(--dark-blue);
+  }
+
+  &.lay {
+    background: var(--dark-red);
+  }
+}
+
+.bet-item-top-row {
+  display: flex;
+}
+
+.bet-item-market-title {
+  padding-left: 6px;
+  flex: 1;
+  h1 {
+    font-size: 15px;
+    line-height: 18px;
+    font-weight: 750;
+    white-space: nowrap;
+  }
+
+  h3 {
+    line-height: 15px;
+    white-space: nowrap;
+  }
+}
+
+.bet-item-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 6px;
+}
+
+.bet-item-set-value {
+  outline: 0;
+  border: none;
+  width: 40px;
+  height: 22px;
+  text-align: center;
+  border-radius: 1px;
+  cursor: pointer;
+  background-color: var(--white);
+  &:hover {
+    background-color: var(--light-grey);
+  }
+}
+
+.remove-bet-icon-wrapper {
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  display: flex;
+
+  .delete-icon {
+    align-self: center;
+  }
+
+  
+}
+
+.bet-item-inputs-container {
+  display: flex;
+  justify-content: space-around;
+  padding-left: 8px;
+
+  .bet-item-match-odd {
+    align-self: center;
+    width: 33.3%;
+    input {
+      width: 105%;
+      border-radius: 4px;
+      outline: 0;
+      border: none;
+      background-color: var(--light-grey);
+      opacity: 0.7;
+      pointer-events: none;
+      user-select: none;
+      height: 25px;
+    }
+  }
+
+  .bet-item-match-stake {
+    align-self: center;
+    width: 33.3%;
+    input {
+      width: 105%;
+      border-radius: 4px;
+      outline: 0;
+      border: none;
+
+      height: 25px;
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      &::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      &:focus {
+        border: 1px solid var(--primary);
+      }
+    }
+  }
+
+  .bet-item-profit {
+    align-self: center;
+  }
+}
+
 .lay-section,
 .lay-items,
 .back-section,
@@ -1038,9 +1171,6 @@ input {
 }
 
 .bet-slip-buttons {
-
-
-
   width: 100%;
   display: flex;
   background: var(--white);

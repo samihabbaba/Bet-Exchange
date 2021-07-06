@@ -1,5 +1,6 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { BetSlipService } from 'src/app/services/bet-slip.service';
 
 @Component({
   selector: 'app-bet-slip',
@@ -7,15 +8,12 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
   styleUrls: ['./bet-slip.component.css'],
 })
 export class BetSlipComponent implements OnInit {
-  selectedBets: any[] = [
-    // {name:'1st'},{name:'2nd'}
-  ];
   currentOpenBets: any[] = [];
   tabToDisplay: string = 'Singles';
   @ViewChild('singles') singlesTab?: ElementRef;
   @ViewChild('openBets') openBetsTab?: ElementRef;
 
-  constructor() {}
+  constructor(public betSlipService: BetSlipService) {}
 
   ngOnInit(): void {}
 
@@ -24,10 +22,12 @@ export class BetSlipComponent implements OnInit {
   };
 
   resetBets() {
-    this.selectedBets = [];
+    this.betSlipService.selectedBets = [];
   }
 
-  submitBets() {}
+  submitBets() {
+    console.log(this.betSlipService.selectedBets)
+  }
 
   handleTabClick(event: any) {
     if (event.target.textContent !== this.tabToDisplay) {
