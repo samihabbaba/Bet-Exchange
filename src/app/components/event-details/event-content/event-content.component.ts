@@ -24,23 +24,22 @@ export class EventContentComponent implements OnInit {
       active: true,
     },
     {
-      name: '2nd',
+      name: 'Over/Under',
       class: 'tab',
       active: false,
     },
     {
-      name: '3rd',
-      class: 'tab',
-      active: false,
-    },
-
-    {
-      name: '4th',
+      name: 'Half Time',
       class: 'tab',
       active: false,
     },
     {
-      name: '5th',
+      name: 'Handicap',
+      class: 'tab',
+      active: false,
+    },
+    {
+      name: 'Others',
       class: 'tab',
       active: false,
     },
@@ -56,6 +55,8 @@ export class EventContentComponent implements OnInit {
     },
   ];
   copyOfTabs = [...this.tabItems];
+  selectedTab = this.copyOfTabs[0].name;
+  copyOfMarkets:any = [];
 
   topMarket: any = null;
   eventIsLive = false;
@@ -73,9 +74,14 @@ export class EventContentComponent implements OnInit {
   );}
 
   ngOnInit(): void {
-    this.topMarket = this.event.markets[0];
+    if(this.event.markets.length > 0){
+      this.topMarket = this.event.markets[0];
+    }
+    else{
+      this.topMarket = {};
+    }
     this.eventIsLive = this.event.isLive;
-  
+    this.getMarketsToDisplay();
   }
   ngOnDestroy() {
     this.screenObserver$?.unsubscribe();
@@ -89,11 +95,28 @@ export class EventContentComponent implements OnInit {
     if (!tab.active && !tab.children) {
       this.setAllTabsToFalse(this.tabItems);
       tab.active = true;
+      this.selectedTab = tab.name
+      this.getMarketsToDisplay();
     }
   }
 
-  handleChildClick(tab: any) {
+  handleChildClick(tab: any, child:any) {
+    this.setAllTabsToFalse(this.tabItems);
     tab.active = false;
+    child.active=true;
+    
+    this.copyOfTabs.splice(this.copyOfTabs.length-1, 0, child);
+    let tab2 = this.copyOfTabs[this.copyOfTabs.length-3];
+    this.copyOfTabs.splice(this.copyOfTabs.length-3, 1);
+
+    if(tab2.name == "Others"){
+      tab.children.push(tab2);
+    }else{
+      tab.children.unshift(tab2);
+    }
+    tab.children.splice(tab.children.indexOf(child),1);
+    this.selectedTab = child.name
+    this.getMarketsToDisplay();
   }
 
   setAllTabsToFalse(arr: any[]) {
@@ -101,6 +124,10 @@ export class EventContentComponent implements OnInit {
       if (tab.active) {
         tab.active = false;
       }
+    }
+
+    if(this.copyOfTabs.some(x=>x.name == 'More')){
+      this.copyOfTabs[this.copyOfTabs.findIndex(x=>x.name == "More")].active = false;
     }
   }
 
@@ -171,9 +198,9 @@ export class EventContentComponent implements OnInit {
       let num = +run.handicap;
       if(num.toString().includes('.75') || num.toString().includes('.25')){
         if(!num.toString().includes('-') && showSign){
-          return '+'+(num +0.25) + ' & ' + '+'+(num -0.25)
+          return '+'+(num -0.25) + ' & ' + '+'+(num +0.25)
         } else{
-          return (num +0.25) + ' & ' + (num -0.25)
+          return (num -0.25) + ' & ' + (num +0.25)
         }
       }else{
         return num;
@@ -181,6 +208,30 @@ export class EventContentComponent implements OnInit {
     }
     else{
       return '';
+    }
+  }
+
+  getMarketsToDisplay(){
+
+    if(this.selectedTab == 'Popular'){
+      this.copyOfMarkets = this.event.markets.filter( (x:any)=> this.sharedService.isMarketPopular(x.description.marketName));
+    } 
+    else if(this.selectedTab == 'Over/Under'){
+      this.copyOfMarkets = this.event.markets.filter( (x:any)=> this.sharedService.isMarketOverUnder(x.description.marketName, x.runners));
+    }
+    else if(this.selectedTab == 'Half Time'){
+      this.copyOfMarkets = this.event.markets.filter( (x:any)=> this.sharedService.isMarketHalf(x.description.marketName));
+    }
+    else if(this.selectedTab == 'Handicap'){
+      this.copyOfMarkets = this.event.markets.filter( (x:any)=> this.sharedService.isMarketHandicap(x.description.marketName, x.runners));
+    }
+
+    else if(this.selectedTab == 'Others'){
+      this.copyOfMarkets = this.event.markets.filter( (x:any)=> this.sharedService.isMarketOthers(x.description.marketName, x.runners));
+    }
+    
+    else{
+      this.copyOfMarkets = [];
     }
   }
 }

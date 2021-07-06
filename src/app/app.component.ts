@@ -22,6 +22,9 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.initializeSubscriptions();
     this.dataService.performLogIn();
+    this.dataService.loadPreGamesFromHeader(
+      this.layoutService.getCurrentSport()?.id
+      );
   }
 
   initializeSubscriptions() {

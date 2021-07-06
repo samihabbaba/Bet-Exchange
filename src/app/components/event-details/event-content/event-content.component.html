@@ -177,7 +177,7 @@
             <li
               class="more-tab-item"
               *ngFor="let child of item.children"
-              (click)="handleChildClick(item); $event.stopPropagation()"
+              (click)="handleChildClick(item,child); $event.stopPropagation()"
             >
               <a class="item-link"
                 ><h4>{{ child.name }}</h4></a
@@ -193,7 +193,7 @@
         <!-- left markets -->
         <div class="column-left">
 
-          <div class="mini-market-container" *ngFor="let item of event.markets; let i = index">
+          <div class="mini-market-container" *ngFor="let item of copyOfMarkets; let i = index">
             <div class="mini-market-header-container" *ngIf="i % 2 == 0">
               <div class="mini-market-header">
                 <div class="mini-market-header-section-wrapper">
@@ -383,7 +383,8 @@
 
 
         <!-- right markets -->
-        <div class="column-right" *ngFor="let item of event.markets; let i = index">
+        <div class="column-right" >
+          <div class="mini-market-container" *ngFor="let item of copyOfMarkets; let i = index">
           <div class="mini-market-header-container" *ngIf="i % 2 != 0">
             <div class="mini-market-header">
               <div class="mini-market-header-section-wrapper">
@@ -568,6 +569,7 @@
               ><i class="icon fas fa-angle-right"></i
             ></a>
           </div>
+        </div>
         </div>
 
 
