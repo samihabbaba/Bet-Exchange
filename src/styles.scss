@@ -39,6 +39,15 @@ app-main-content {
   // overflow: hidden;
 }
 
+app-event-details {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 .main-content-wrapper {
   overflow: auto;
   height: calc(100vh - 107px);
@@ -928,6 +937,13 @@ body {
   width: 100%;
   display: flex;
   flex-direction: column;
+  max-height: calc(100vh - 230px);
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .bet-item-header {
@@ -1859,7 +1875,7 @@ is smaller */
             box-sizing: border-box;
             .runners-list-container {
               max-height: 350px;
-              overflow: auto;
+              // overflow: auto;
               position: relative;
               padding: 0 8px;
               letter-spacing: normal;
@@ -1867,6 +1883,12 @@ is smaller */
               vertical-align: top;
               text-rendering: auto;
               padding-bottom: 8px;
+              -ms-overflow-style: none;
+              scrollbar-width: none;
+              overflow-y: scroll;
+              &::-webkit-scrollbar {
+                display: none;
+              }
               .runners-list {
                 min-height: 1px;
                 height: 100%;
@@ -2514,7 +2536,12 @@ is smaller */
 .mini-market-runners-list {
   position: relative;
   max-height: 250px;
-  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .mini-market-runners-list-container {
@@ -2614,7 +2641,6 @@ is smaller */
             font-size: 11px;
 
             button {
-
               &.selected {
                 background-color: var(--dark-blue);
               }
@@ -2635,7 +2661,6 @@ is smaller */
               &:hover {
                 background-color: var(--dark-blue);
               }
-
 
               div {
                 margin: 0;
@@ -2678,8 +2703,6 @@ is smaller */
             word-spacing: normal;
             vertical-align: top;
             text-rendering: auto;
-
-
 
             button {
               &.selected {
