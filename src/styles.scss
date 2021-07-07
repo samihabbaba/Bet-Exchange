@@ -1870,6 +1870,10 @@ is smaller */
       .runners-list-wrapper {
         position: relative;
         background-color: var(--white);
+
+        &.lowLiquidity {
+          overflow: hidden;
+        }
         .runner-list-component {
           margin-left: 0;
           margin-right: 0;
