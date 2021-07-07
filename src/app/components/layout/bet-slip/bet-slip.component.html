@@ -59,25 +59,23 @@
                 <input
                   type="number"
                   min="0.1"
-                  [(ngModel)]="bet.stake"
-                (input)="setLiabilityForBet(bet)"
                   onkeyup="if(parseInt(this.value)>100000){ this.value =100000; return false; }"
                 />
               </div>
               <div class="bet-item-profit">
-                <span #betItemProfit>{{this.sharedFunctionsService.formatNumber(bet.liability)}}</span>
+                <span #betItemProfit>0.5</span>
               </div>
             </div>
           </div>
 
-        <div class="bet-item-bottom-row">
-          <button class="bet-item-set-value" *ngFor="let stake of stakeOptions" (click)="setStakeForBet(bet,stake)">{{stake}}</button>
-          <!-- <button class="bet-item-set-value">10</button>
-          <button class="bet-item-set-value">20</button>
-          <button class="bet-item-set-value">50</button>
-          <button class="bet-item-set-value">100</button>
-          <button class="bet-item-set-value">200</button>
-          <button class="bet-item-set-value">500</button> -->
+          <div class="bet-item-bottom-row">
+            <button class="bet-item-set-value">10</button>
+            <button class="bet-item-set-value">20</button>
+            <button class="bet-item-set-value">50</button>
+            <button class="bet-item-set-value">100</button>
+            <button class="bet-item-set-value">200</button>
+            <button class="bet-item-set-value">500</button>
+          </div>
         </div>
       </div>
     </div>
