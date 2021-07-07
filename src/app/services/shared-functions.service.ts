@@ -216,7 +216,7 @@ export class SharedFunctionsService {
   }
 
   isMarketOverUnder(name:string, runs:any){
-    if(name.toLowerCase().includes('over') || name.toLowerCase().includes('under')
+    if(name.toLowerCase().includes('over') || name.toLowerCase().includes('under') || name.toLowerCase().includes('goal')
     || runs.some((x:any)=> x.description.runnerName.toLowerCase().includes('over'))
     || runs.some((x:any)=> x.description.runnerName.toLowerCase().includes('under'))){
       return true;
@@ -225,13 +225,23 @@ export class SharedFunctionsService {
     }
   }
 
-  isMarketHandicap(name:string, runs:any){
-if(name.toLowerCase().includes('asian')){
-  debugger
-}
+  
+  isMarketGoals(name:string){
+    if(name.toLowerCase().includes('score')  || name.toLowerCase().includes('goal')
+    // && (name.toLowerCase().includes('over') || name.toLowerCase().includes('under'))
+    ){
+      return true;
+    }else{
+      return false;
+    }
+  }
 
+  isMarketHandicap(name:string, runs:any){
+    
     if(name.toLowerCase().includes('handicap')
-    ||name.includes('handicap') // or sign (+/-) then number
+    ||(name.includes('+') && this.charIsNumber(name[name.indexOf("+")+1]))
+    ||(name.includes('-') && this.charIsNumber(name[name.indexOf("-")+1]))
+     // or sign (+/-) then number
     ){
       return true;
     }else{
@@ -248,11 +258,18 @@ if(name.toLowerCase().includes('asian')){
   }
 
   isMarketOthers(name:string, runs:any){
-    if(!this.isMarketPopular(name) && !this.isMarketOverUnder(name, runs) && !this.isMarketHandicap(name, runs)&& !this.isMarketHalf(name)){
+    if(!this.isMarketPopular(name) && !this.isMarketOverUnder(name, runs) && !this.isMarketHandicap(name, runs)&& !this.isMarketHalf(name)&& !this.isMarketGoals(name)  ){
       return true;
     }else{
       return false;
     }
+  }
+
+
+
+  charIsNumber(char:any){
+    char = char.toString()
+    return ( char >= '0' && char<='9')
   }
 
 }

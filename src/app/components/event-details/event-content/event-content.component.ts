@@ -1,3 +1,4 @@
+import { flatten } from '@angular/compiler';
 import { Component, Input, OnInit } from '@angular/core';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
@@ -30,6 +31,11 @@ export class EventContentComponent implements OnInit {
       active: false,
     },
     {
+      name: 'Goals',
+      class: 'tab',
+      active: false,
+    },
+    {
       name: 'Half Time',
       class: 'tab',
       active: false,
@@ -44,16 +50,16 @@ export class EventContentComponent implements OnInit {
       class: 'tab',
       active: false,
     },
-    {
-      name: '6th',
-      class: 'tab',
-      active: false,
-    },
-    {
-      name: '7th',
-      class: 'tab',
-      active: false,
-    },
+    // {
+    //   name: '6th',
+    //   class: 'tab',
+    //   active: false,
+    // },
+    // {
+    //   name: '7th',
+    //   class: 'tab',
+    //   active: false,
+    // },
   ];
   copyOfTabs = [...this.tabItems];
   selectedTab = this.copyOfTabs[0].name;
@@ -221,6 +227,9 @@ export class EventContentComponent implements OnInit {
     else if(this.selectedTab == 'Over/Under'){
       this.copyOfMarkets = this.event.markets.filter( (x:any)=> this.sharedService.isMarketOverUnder(x.description.marketName, x.runners));
     }
+    else if(this.selectedTab == 'Goals'){
+      this.copyOfMarkets = this.event.markets.filter( (x:any)=> this.sharedService.isMarketGoals(x.description.marketName));
+    }
     else if(this.selectedTab == 'Half Time'){
       this.copyOfMarkets = this.event.markets.filter( (x:any)=> this.sharedService.isMarketHalf(x.description.marketName));
     }
@@ -236,4 +245,5 @@ export class EventContentComponent implements OnInit {
       this.copyOfMarkets = [];
     }
   }
+
 }
