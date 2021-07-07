@@ -187,7 +187,7 @@ body {
 }
 
 .login-page-left-side {
-  background-image: url("./assets/images/login-vvd.png");
+  background-image: url("./assets/images/login-messi.jpg");
   background-position: right;
   background-size: cover;
   flex-basis: 50%;
@@ -553,6 +553,15 @@ body {
   max-height: 100%;
   position: relative;
   overflow-y: hidden;
+  z-index: 20;
+
+  &.active {
+    display: block;
+    position: absolute;
+    width: 200px;
+    max-height: calc(100vh - 110px);
+
+  }
 }
 
 .menu-view {
@@ -713,6 +722,13 @@ body {
   width: 100%;
   height: 100%;
   font-size: 1.4rem;
+  transition: filter 200ms;
+
+  &.menuActive {
+    filter: opacity(0.3);
+    pointer-events: none;
+
+  }
 }
 
 .main-view {
@@ -880,6 +896,10 @@ body {
   width: 100%;
   height: 100%;
   font-size: 1.4rem;
+
+  &.small {
+    display: none;
+  }
 }
 
 .bet-view {
@@ -2563,9 +2583,9 @@ is smaller */
     display: none;
   }
 
- &.lowLiquidity {
-   overflow:hidden;
- }
+  &.lowLiquidity {
+    overflow: hidden;
+  }
 }
 
 .disabled-mini-market-runners-list {

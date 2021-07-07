@@ -63,7 +63,7 @@ export class EventContentComponent implements OnInit {
   ];
   copyOfTabs = [...this.tabItems];
   selectedTab = this.copyOfTabs[0].name;
-  copyOfMarkets:any = [];
+  copyOfMarkets: any = [];
 
   topMarket: any = null;
   eventIsLive = false;
@@ -77,15 +77,16 @@ export class EventContentComponent implements OnInit {
     public sharedService: SharedFunctionsService,
     private screenSizeService: ScreenSizeService,
     public betSlipService: BetSlipService
-  ) {  this.screenObserver$ = this.screenSizeService.currentScreenSize.subscribe(
-    this.setTabs.bind(this)
-  );}
+  ) {
+    this.screenObserver$ = this.screenSizeService.currentScreenSize.subscribe(
+      this.setTabs.bind(this)
+    );
+  }
 
   ngOnInit(): void {
-    if(this.event.markets.length > 0){
+    if (this.event.markets.length > 0) {
       this.topMarket = this.event.markets[0];
-    }
-    else{
+    } else {
       this.topMarket = {};
     }
     this.eventIsLive = this.event.isLive;
@@ -103,27 +104,27 @@ export class EventContentComponent implements OnInit {
     if (!tab.active && !tab.children) {
       this.setAllTabsToFalse(this.tabItems);
       tab.active = true;
-      this.selectedTab = tab.name
+      this.selectedTab = tab.name;
       this.getMarketsToDisplay();
     }
   }
 
-  handleChildClick(tab: any, child:any) {
+  handleChildClick(tab: any, child: any) {
     this.setAllTabsToFalse(this.tabItems);
     tab.active = false;
-    child.active=true;
+    child.active = true;
 
-    this.copyOfTabs.splice(this.copyOfTabs.length-1, 0, child);
-    let tab2 = this.copyOfTabs[this.copyOfTabs.length-3];
-    this.copyOfTabs.splice(this.copyOfTabs.length-3, 1);
+    this.copyOfTabs.splice(this.copyOfTabs.length - 1, 0, child);
+    let tab2 = this.copyOfTabs[this.copyOfTabs.length - 3];
+    this.copyOfTabs.splice(this.copyOfTabs.length - 3, 1);
 
-    if(tab2.name == "Others"){
+    if (tab2.name == 'Others') {
       tab.children.push(tab2);
-    }else{
+    } else {
       tab.children.unshift(tab2);
     }
-    tab.children.splice(tab.children.indexOf(child),1);
-    this.selectedTab = child.name
+    tab.children.splice(tab.children.indexOf(child), 1);
+    this.selectedTab = child.name;
     this.getMarketsToDisplay();
   }
 
@@ -134,8 +135,10 @@ export class EventContentComponent implements OnInit {
       }
     }
 
-    if(this.copyOfTabs.some(x=>x.name == 'More')){
-      this.copyOfTabs[this.copyOfTabs.findIndex(x=>x.name == "More")].active = false;
+    if (this.copyOfTabs.some((x) => x.name == 'More')) {
+      this.copyOfTabs[
+        this.copyOfTabs.findIndex((x) => x.name == 'More')
+      ].active = false;
     }
   }
 
@@ -185,11 +188,11 @@ export class EventContentComponent implements OnInit {
     };
     if (copy.length > num) {
       for (let item of copy) {
-        if (copy.indexOf(item) >= num ) {
+        if (copy.indexOf(item) >= num) {
           moreObj.children.push(item);
         }
       }
-      copy.splice(num , copy.length - num);
+      copy.splice(num, copy.length - num);
       copy.push(moreObj);
       if (moreObj.children.length > 1) {
         this.copyOfTabs = [];
@@ -198,52 +201,55 @@ export class EventContentComponent implements OnInit {
     }
   }
 
-  returnSecondPartRunName(run:any, marketName:string){
-
+  returnSecondPartRunName(run: any, marketName: string) {
     let showSign = marketName.toLowerCase().includes('handicap');
 
-    if(run.handicap){
+    if (run.handicap) {
       let num = +run.handicap;
-      if(num.toString().includes('.75') || num.toString().includes('.25')){
-        if(!num.toString().includes('-') && showSign){
-          return '+'+(num -0.25) + ' & ' + '+'+(num +0.25)
-        } else{
-          return (num -0.25) + ' & ' + (num +0.25)
+      if (num.toString().includes('.75') || num.toString().includes('.25')) {
+        if (!num.toString().includes('-') && showSign) {
+          return '+' + (num - 0.25) + ' & ' + '+' + (num + 0.25);
+        } else {
+          return num - 0.25 + ' & ' + (num + 0.25);
         }
-      }else{
+      } else {
         return num;
       }
-    }
-    else{
+    } else {
       return '';
     }
   }
 
-  getMarketsToDisplay(){
-
-    if(this.selectedTab == 'Popular'){
-      this.copyOfMarkets = this.event.markets.filter( (x:any)=> this.sharedService.isMarketPopular(x.description.marketName));
-    }
-    else if(this.selectedTab == 'Over/Under'){
-      this.copyOfMarkets = this.event.markets.filter( (x:any)=> this.sharedService.isMarketOverUnder(x.description.marketName, x.runners));
-    }
-    else if(this.selectedTab == 'Goals'){
-      this.copyOfMarkets = this.event.markets.filter( (x:any)=> this.sharedService.isMarketGoals(x.description.marketName));
-    }
-    else if(this.selectedTab == 'Half Time'){
-      this.copyOfMarkets = this.event.markets.filter( (x:any)=> this.sharedService.isMarketHalf(x.description.marketName));
-    }
-    else if(this.selectedTab == 'Handicap'){
-      this.copyOfMarkets = this.event.markets.filter( (x:any)=> this.sharedService.isMarketHandicap(x.description.marketName, x.runners));
-    }
-
-    else if(this.selectedTab == 'Others'){
-      this.copyOfMarkets = this.event.markets.filter( (x:any)=> this.sharedService.isMarketOthers(x.description.marketName, x.runners));
-    }
-
-    else{
+  getMarketsToDisplay() {
+    if (this.selectedTab == 'Popular') {
+      this.copyOfMarkets = this.event.markets.filter((x: any) =>
+        this.sharedService.isMarketPopular(x.description.marketName)
+      );
+    } else if (this.selectedTab == 'Over/Under') {
+      this.copyOfMarkets = this.event.markets.filter((x: any) =>
+        this.sharedService.isMarketOverUnder(
+          x.description.marketName,
+          x.runners
+        )
+      );
+    } else if (this.selectedTab == 'Goals') {
+      this.copyOfMarkets = this.event.markets.filter((x: any) =>
+        this.sharedService.isMarketGoals(x.description.marketName)
+      );
+    } else if (this.selectedTab == 'Half Time') {
+      this.copyOfMarkets = this.event.markets.filter((x: any) =>
+        this.sharedService.isMarketHalf(x.description.marketName)
+      );
+    } else if (this.selectedTab == 'Handicap') {
+      this.copyOfMarkets = this.event.markets.filter((x: any) =>
+        this.sharedService.isMarketHandicap(x.description.marketName, x.runners)
+      );
+    } else if (this.selectedTab == 'Others') {
+      this.copyOfMarkets = this.event.markets.filter((x: any) =>
+        this.sharedService.isMarketOthers(x.description.marketName, x.runners)
+      );
+    } else {
       this.copyOfMarkets = [];
     }
   }
-
 }

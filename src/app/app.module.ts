@@ -22,6 +22,7 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { NoEventComponent } from './components/no-event/no-event.component';
 import { LanguageDropdownDirective } from './directives/language-dropdown.directive';
 import { ScrollShadowDirective } from './directives/scroll-shadow.directive';
+import { CloseAppMenuDirective } from './directives/close-app-menu.directive';
 
 
 
@@ -44,6 +45,7 @@ import { ScrollShadowDirective } from './directives/scroll-shadow.directive';
     NoEventComponent,
     LanguageDropdownDirective,
     ScrollShadowDirective,
+    CloseAppMenuDirective,
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,22 @@
-<div class="container" id="inner-container">
-  <app-menu class="menu" [isLoading]="isLoading" [menuLoading]="this.menuLoading"> </app-menu>
-  <div class="main">
+<button class="menu-open-btn" (click)="toggleMenu()">
+  <i class="fas fa-bars"></i>
+</button>
+<button class="bet-slip-open-btn"><i class="fas fa-bars"></i></button>
+
+<div
+  [ngClass]="{ container: !isSmall, smallContainer: isSmall }"
+  id="inner-container"
+>
+  <app-menu
+    class="menu"
+    [ngClass]="{active: isSmall}"
+    [@fadeMenuAndSlip]
+    *ngIf="displayMenu"
+    [isLoading]="isLoading"
+    [menuLoading]="this.menuLoading"
+  >
+  </app-menu>
+  <div class="main" [ngClass]="{ menuActive: this.displayMenu }">
     <div class="main-view">
       <app-pre-games *ngIf="viewType == 'pre' && !isLoading"></app-pre-games>
       <app-live-games *ngIf="viewType == 'live' && !isLoading"></app-live-games>
@@ -11,5 +27,5 @@
       <app-loader *ngIf="isLoading"></app-loader>
     </div>
   </div>
-  <app-bet-slip class="bets"></app-bet-slip>
+  <app-bet-slip class="bets" [ngClass]="{ small: isSmall }"></app-bet-slip>
 </div>
