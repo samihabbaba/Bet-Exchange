@@ -21,6 +21,7 @@ import { EventContentComponent } from './components/event-details/event-content/
 import { LoaderComponent } from './components/loader/loader.component';
 import { NoEventComponent } from './components/no-event/no-event.component';
 import { LanguageDropdownDirective } from './directives/language-dropdown.directive';
+import { ScrollShadowDirective } from './directives/scroll-shadow.directive';
 
 
 
@@ -42,6 +43,7 @@ import { LanguageDropdownDirective } from './directives/language-dropdown.direct
     LoaderComponent,
     NoEventComponent,
     LanguageDropdownDirective,
+    ScrollShadowDirective,
   ],
   imports: [
     BrowserModule,

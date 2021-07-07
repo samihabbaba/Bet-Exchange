@@ -132,10 +132,12 @@
                             topMarket.marketId,
                             item.selectionId,
                             true,
-                            item.description.runnerName+' '+returnSecondPartRunName(
-                              item,
-                              topMarket?.description.marketName
-                            )
+                            item.description.runnerName +
+                              ' ' +
+                              returnSecondPartRunName(
+                                item,
+                                topMarket?.description.marketName
+                              )
                           )
                         }"
                       >
@@ -183,10 +185,12 @@
                             topMarket.marketId,
                             item.selectionId,
                             false,
-                            item.description.runnerName+' '+returnSecondPartRunName(
-                              item,
-                              topMarket?.description.marketName
-                            )
+                            item.description.runnerName +
+                              ' ' +
+                              returnSecondPartRunName(
+                                item,
+                                topMarket?.description.marketName
+                              )
                           )
                         }"
                       >
@@ -329,7 +333,10 @@
                 </thead>
               </table>
 
-              <div class="mini-market-runners-list">
+              <div class="mini-market-runners-list" [ngClass]="{lowLiquidity : true}">
+                <div class="disabled-mini-market-runners-list" *ngIf="true">
+                  <h1>Low Liquidity</h1>
+                </div>
                 <div class="mini-market-runners-list-container">
                   <div class="mini-market-runners">
                     <div class="mini-market-runners-wrapper">
@@ -380,10 +387,12 @@
                                       item.marketId,
                                       run.selectionId,
                                       true,
-                                      run.description.runnerName+' '+returnSecondPartRunName(
-                                        run,
-                                        item?.description.marketName
-                                      )
+                                      run.description.runnerName +
+                                        ' ' +
+                                        returnSecondPartRunName(
+                                          run,
+                                          item?.description.marketName
+                                        )
                                     )
                                 }"
                               >
@@ -477,10 +486,12 @@
                                       item.marketId,
                                       run.selectionId,
                                       false,
-                                      run.description.runnerName+' '+returnSecondPartRunName(
-                                        run,
-                                        item?.description.marketName
-                                      )
+                                      run.description.runnerName +
+                                        ' ' +
+                                        returnSecondPartRunName(
+                                          run,
+                                          item?.description.marketName
+                                        )
                                     )
                                 }"
                               >
@@ -610,7 +621,10 @@
                 </thead>
               </table>
 
-              <div class="mini-market-runners-list">
+              <div class="mini-market-runners-list" [ngClass]="{lowLiquidity : true}">
+                <div class="disabled-mini-market-runners-list" *ngIf="true">
+                  <h1>Low Liquidity</h1>
+                </div>
                 <div class="mini-market-runners-list-container">
                   <div class="mini-market-runners">
                     <div class="mini-market-runners-wrapper">
@@ -652,19 +666,21 @@
                               "
                             >
                               <button
-                              [ngClass]="{
-                                selected:
-                                  this.betSlipService.checkIfBetIsSelected(
-                                    event.event.eventId,
-                                    item.marketId,
-                                    run.selectionId,
-                                    true,
-                                    run.description.runnerName+' '+returnSecondPartRunName(
-                                      run,
-                                      item?.description.marketName
+                                [ngClass]="{
+                                  selected:
+                                    this.betSlipService.checkIfBetIsSelected(
+                                      event.event.eventId,
+                                      item.marketId,
+                                      run.selectionId,
+                                      true,
+                                      run.description.runnerName +
+                                        ' ' +
+                                        returnSecondPartRunName(
+                                          run,
+                                          item?.description.marketName
+                                        )
                                     )
-                                  )
-                              }"
+                                }"
                               >
                                 <div>
                                   <span class="size">
@@ -748,19 +764,21 @@
                               "
                             >
                               <button
-                              [ngClass]="{
-                                selected:
-                                  this.betSlipService.checkIfBetIsSelected(
-                                    event.event.eventId,
-                                    item.marketId,
-                                    run.selectionId,
-                                    false,
-                                    run.description.runnerName+' '+returnSecondPartRunName(
-                                      run,
-                                      item?.description.marketName
+                                [ngClass]="{
+                                  selected:
+                                    this.betSlipService.checkIfBetIsSelected(
+                                      event.event.eventId,
+                                      item.marketId,
+                                      run.selectionId,
+                                      false,
+                                      run.description.runnerName +
+                                        ' ' +
+                                        returnSecondPartRunName(
+                                          run,
+                                          item?.description.marketName
+                                        )
                                     )
-                                  )
-                              }"
+                                }"
                               >
                                 <div>
                                   <span class="size">
