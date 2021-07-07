@@ -1,7 +1,7 @@
 <section class="login-page">
   <div class="login-page-left-side"></div>
   <div class="login-page-right-side">
-    <form class="login-page-form" [formGroup]="loginForm">
+    <form class="login-page-form" [formGroup]="loginForm" (ngSubmit)="login()">
       <fieldset>
         <div class="logo"></div>
         <input type="text" placeholder="LOGIN" formControlName="username" />
@@ -10,7 +10,7 @@
           placeholder="PASSWORD"
           formControlName="password"
         />
-        <button class="login-btn">LOGIN</button>
+        <button class="login-btn" [disabled]="!loginForm.valid">LOGIN</button>
       </fieldset>
     </form>
   </div>
