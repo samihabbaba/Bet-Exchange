@@ -37,6 +37,7 @@ export class BetSlipService {
       isBack: isBack,
       eventName: eventName.event.name,
       eventId: eventName.event.eventId,
+      liability:0,
       market: {
         marketName: market.description.marketName,
         marketId: market.marketId,
@@ -98,4 +99,25 @@ export class BetSlipService {
       return '';
     }
   }
+
+  calculateSingleLiability(run:BetSlip){
+    if(run.isBack){
+      return run.stake?run.stake:0;
+    }
+    else{
+      return run.stake?run.stake * (run.market.run.price -1):0
+    }
+  }
+
+  calculateAllLiability(){
+    let backBets = this.selectedBets.filter(x=>x.isBack);
+    let LayBets = this.selectedBets.filter(x=>!x.isBack);
+
+    let backLia = 0;
+    let LayLia = 0;
+
+
+
+  }
+  
 }

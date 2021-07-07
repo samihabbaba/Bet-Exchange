@@ -1,6 +1,7 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BetSlipService } from 'src/app/services/bet-slip.service';
+import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
 
 @Component({
   selector: 'app-bet-slip',
@@ -13,7 +14,17 @@ export class BetSlipComponent implements OnInit {
   @ViewChild('singles') singlesTab?: ElementRef;
   @ViewChild('openBets') openBetsTab?: ElementRef;
 
-  constructor(public betSlipService: BetSlipService) {}
+  constructor(public betSlipService: BetSlipService,
+    public sharedFunctionsService:SharedFunctionsService) {}
+
+    stakeOptions =[
+      10,
+      20,
+      50,
+      100,
+      200,
+      500
+    ]
 
   ngOnInit(): void {}
 
@@ -43,5 +54,14 @@ export class BetSlipComponent implements OnInit {
 
       this.tabToDisplay = event.target.textContent;
     }
+  }
+
+  setStakeForBet(bet:any,stake:number){
+    bet.stake = stake;
+   this.setLiabilityForBet(bet);
+  }
+
+  setLiabilityForBet(bet:any){
+    bet.liability = this.betSlipService.calculateSingleLiability(bet);
   }
 }
