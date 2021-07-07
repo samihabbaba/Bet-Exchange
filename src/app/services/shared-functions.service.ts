@@ -184,6 +184,28 @@ export class SharedFunctionsService {
     return 0;
   }
 
+
+  returnSecondPartRunName(run:any, marketName:string):any{
+
+    let showSign = marketName.toLowerCase().includes('handicap');
+
+    if(run.handicap){
+      let num = +run.handicap;
+      if(num.toString().includes('.75') || num.toString().includes('.25')){
+        if(!num.toString().includes('-') && showSign){
+          return '+'+(num -0.25) + ' & ' + '+'+(num +0.25)
+        } else{
+          return (num -0.25) + ' & ' + (num +0.25)
+        }
+      }else{
+        return num;
+      }
+    }
+    else{
+      return '';
+    }
+  }
+
   //////// markets tabs ////////
   isMarketPopular(name:string){
     if(this.popularMarkets.some(x=> x== name)){

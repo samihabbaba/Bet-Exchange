@@ -23,14 +23,13 @@ export class BetSlipService {
     console.log(runners);
     console.log(run);
     // if (run?.price) {
-    let index = this.selectedBets.findIndex((x) => {
-      return (
+    let index = this.selectedBets.findIndex((x) => 
         String(x.eventId) == String(eventName.event.eventId) &&
         x.isBack == isBack &&
         String(x.market.marketId) == String(market.marketId) &&
-        String(x.market.run.selectionId) == String(runners.selectionId)
-      );
-    });
+        String(x.market.run.selectionId) == String(runners.selectionId) &&
+        x.market.run.runnerName == runners.description.runnerName + ' '+ this.returnSecondPartRunName(runners, market.description.marketName)
+        );
     if (index > -1) {
       this.selectedBets.splice(index, 1);
     }
@@ -65,16 +64,16 @@ export class BetSlipService {
     eventId: string,
     marketId: string,
     selectionId: string,
-    isBack = false
+    isBack = false,
+    runName?:any,
   ) {
-    return this.selectedBets.some((x) => {
-      return (
+    return this.selectedBets.some((x) => 
         x.market.run.selectionId === selectionId &&
         x.isBack === isBack &&
         x.market.marketId === marketId &&
-        x.eventId === eventId
-      );
-    });
+        x.eventId === eventId &&  
+        (runName ? x.market.run.runnerName == runName : true)
+    );
   }
 
 

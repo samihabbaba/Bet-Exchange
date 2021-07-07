@@ -131,7 +131,11 @@
                             event.event.eventId,
                             topMarket.marketId,
                             item.selectionId,
-                            true
+                            true,
+                            item.description.runnerName+' '+returnSecondPartRunName(
+                              item,
+                              topMarket?.description.marketName
+                            )
                           )
                         }"
                       >
@@ -178,7 +182,11 @@
                             event.event.eventId,
                             topMarket.marketId,
                             item.selectionId,
-                            false
+                            false,
+                            item.description.runnerName+' '+returnSecondPartRunName(
+                              item,
+                              topMarket?.description.marketName
+                            )
                           )
                         }"
                       >
@@ -371,7 +379,11 @@
                                       event.event.eventId,
                                       item.marketId,
                                       run.selectionId,
-                                      true
+                                      true,
+                                      run.description.runnerName+' '+returnSecondPartRunName(
+                                        run,
+                                        item?.description.marketName
+                                      )
                                     )
                                 }"
                               >
@@ -464,7 +476,11 @@
                                       event.event.eventId,
                                       item.marketId,
                                       run.selectionId,
-                                      false
+                                      false,
+                                      run.description.runnerName+' '+returnSecondPartRunName(
+                                        run,
+                                        item?.description.marketName
+                                      )
                                     )
                                 }"
                               >
@@ -642,7 +658,11 @@
                                     event.event.eventId,
                                     item.marketId,
                                     run.selectionId,
-                                    true
+                                    true,
+                                    run.description.runnerName+' '+returnSecondPartRunName(
+                                      run,
+                                      item?.description.marketName
+                                    )
                                   )
                               }"
                               >
@@ -734,7 +754,11 @@
                                     event.event.eventId,
                                     item.marketId,
                                     run.selectionId,
-                                    false
+                                    false,
+                                    run.description.runnerName+' '+returnSecondPartRunName(
+                                      run,
+                                      item?.description.marketName
+                                    )
                                   )
                               }"
                               >
