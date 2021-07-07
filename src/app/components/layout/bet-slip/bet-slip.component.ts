@@ -12,6 +12,8 @@ export class BetSlipComponent implements OnInit {
   tabToDisplay: string = 'Singles';
   @ViewChild('singles') singlesTab?: ElementRef;
   @ViewChild('openBets') openBetsTab?: ElementRef;
+  @ViewChild('loaderWrapper') loaderWrapper?: ElementRef;
+  @ViewChild('loader') loader?: ElementRef;
 
   constructor(public betSlipService: BetSlipService) {}
 
@@ -27,6 +29,7 @@ export class BetSlipComponent implements OnInit {
 
   submitBets() {
     console.log(this.betSlipService.selectedBets);
+    this.startLoading();
   }
 
   removeFromSelectedBets(betIndex: number) {
@@ -34,14 +37,27 @@ export class BetSlipComponent implements OnInit {
   }
 
   handleTabClick(event: any) {
-    if (event.target.textContent !== this.tabToDisplay) {
+    let text = event.target.textContent;
+    text = text.trim();
+    text = text.split(' ')[0];
+    if (text !== this.tabToDisplay) {
       this.singlesTab?.nativeElement.classList.remove('active');
       this.openBetsTab?.nativeElement.classList.remove('active');
-      event.target.textContent == 'Singles'
+      text == 'Singles'
         ? this.singlesTab?.nativeElement.classList.add('active')
         : this.openBetsTab?.nativeElement.classList.add('active');
 
-      this.tabToDisplay = event.target.textContent;
+      this.tabToDisplay = text;
     }
+  }
+
+  startLoading() {
+    this.loaderWrapper?.nativeElement.classList.add('loader-wrapper');
+    this.loader?.nativeElement.classList.add('loader');
+  }
+
+  stopLoading() {
+    this.loaderWrapper?.nativeElement.classList.remove('loader-wrapper');
+    this.loader?.nativeElement.classList.remove('loader');
   }
 }

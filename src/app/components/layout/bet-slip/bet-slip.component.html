@@ -1,70 +1,85 @@
 <div class="bet-header">Bet Slip</div>
-<div class="bet-view">
-  <div class="bet-slip-tabs">
-    <div
-      class="singles active"
-      value="singles"
-      #singles
-      (click)="handleTabClick($event)"
-    >
-      <h1>Singles</h1>
+
+<div #loaderWrapper>
+  <div #loader></div>
+
+  <div class="bet-view">
+    <div class="bet-slip-tabs">
+      <div
+        class="singles active"
+        value="singles"
+        #singles
+        (click)="handleTabClick($event)"
+      >
+        <h1>
+          Singles
+          <span *ngIf="this.betSlipService.selectedBets.length > 0">{{
+            this.betSlipService.selectedBets.length
+          }}</span>
+        </h1>
+      </div>
+      <div
+        class="open-bets"
+        value="open-bets"
+        #openBets
+        (click)="handleTabClick($event)"
+      >
+        <h1>Open Bets</h1>
+      </div>
     </div>
-    <div
-      class="open-bets"
-      value="open-bets"
-      #openBets
-      (click)="handleTabClick($event)"
-    >
-      <h1>Open Bets</h1>
-    </div>
-  </div>
 
-  <div class="bet-item-container" *ngIf="tabToDisplay == 'Singles'">
-    <div *ngFor="let bet of this.betSlipService.selectedBets; let i = index">
-      <div class="bet-item-header">{{ bet.eventName }}</div>
-      <div class="bet-item" [ngClass]="{ back: bet.isBack, lay: !bet.isBack }">
-        <div class="bet-item-top-row">
-          <div class="remove-bet-icon-wrapper" (click)="removeFromSelectedBets(i)">
-            <fa-icon
-              [icon]="fontAwesomeIcons.exit"
-              class="delete-icon"
-            ></fa-icon>
-          </div>
-
-          <div class="bet-item-market-title">
-            <h1>{{ bet.market.run.runnerName }}</h1>
-            <h3>{{ bet.market.marketName }}</h3>
-          </div>
-
-          <div class="bet-item-inputs-container">
-            <div class="bet-item-match-odd">
-              <input [value]="bet.market.run.price" />
+    <div class="bet-item-container" *ngIf="tabToDisplay == 'Singles'">
+      <div *ngFor="let bet of this.betSlipService.selectedBets; let i = index">
+        <div class="bet-item-header">{{ bet.eventName }}</div>
+        <div
+          class="bet-item"
+          [ngClass]="{ back: bet.isBack, lay: !bet.isBack }"
+        >
+          <div class="bet-item-top-row">
+            <div
+              class="remove-bet-icon-wrapper"
+              (click)="removeFromSelectedBets(i)"
+            >
+              <fa-icon
+                [icon]="fontAwesomeIcons.exit"
+                class="delete-icon"
+              ></fa-icon>
             </div>
-            <div class="bet-item-match-stake">
-              <input
-                type="number"
-                min="0.1"
-                onkeyup="if(parseInt(this.value)>100000){ this.value =100000; return false; }"
-              />
+
+            <div class="bet-item-market-title">
+              <h1>{{ bet.market.run.runnerName }}</h1>
+              <h3>{{ bet.market.marketName }}</h3>
             </div>
-            <div class="bet-item-profit">
-              <span #betItemProfit>0.5</span>
+
+            <div class="bet-item-inputs-container">
+              <div class="bet-item-match-odd">
+                <input [value]="bet.market.run.price" />
+              </div>
+              <div class="bet-item-match-stake">
+                <input
+                  type="number"
+                  min="0.1"
+                  onkeyup="if(parseInt(this.value)>100000){ this.value =100000; return false; }"
+                />
+              </div>
+              <div class="bet-item-profit">
+                <span #betItemProfit>0.5</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="bet-item-bottom-row">
-          <button class="bet-item-set-value">10</button>
-          <button class="bet-item-set-value">20</button>
-          <button class="bet-item-set-value">50</button>
-          <button class="bet-item-set-value">100</button>
-          <button class="bet-item-set-value">200</button>
-          <button class="bet-item-set-value">500</button>
+          <div class="bet-item-bottom-row">
+            <button class="bet-item-set-value">10</button>
+            <button class="bet-item-set-value">20</button>
+            <button class="bet-item-set-value">50</button>
+            <button class="bet-item-set-value">100</button>
+            <button class="bet-item-set-value">200</button>
+            <button class="bet-item-set-value">500</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <!--
+    <!--
   <div class="lay-section">
     <div class="lay-header">
       <div class="inner-lay-header">
@@ -202,38 +217,39 @@
     </div>
   </div> -->
 
-  <div *ngIf="this.tabToDisplay == 'Singles'">
-    <div
-      *ngIf="this.betSlipService.selectedBets.length < 1"
-      class="no-selection"
-    >
-      <h1>No bets selected. Select some bets by clicking the odds.</h1>
+    <div *ngIf="this.tabToDisplay == 'Singles'">
+      <div
+        *ngIf="this.betSlipService.selectedBets.length < 1"
+        class="no-selection"
+      >
+        <h1>No bets selected. Select some bets by clicking the odds.</h1>
+      </div>
     </div>
-  </div>
 
-  <div *ngIf="this.tabToDisplay == 'Open Bets'">
-    <div
-      *ngIf="this.betSlipService.currentOpenBets.length < 1"
-      class="no-selection"
-    >
-      <h1>You don't have any open bets.</h1>
+    <div *ngIf="this.tabToDisplay == 'Open'">
+      <div
+        *ngIf="this.betSlipService.currentOpenBets.length < 1"
+        class="no-selection"
+      >
+        <h1>You don't have any open bets.</h1>
+      </div>
     </div>
-  </div>
 
-  <div class="bet-slip-buttons" *ngIf="this.tabToDisplay == 'Singles'">
-    <button
-      class="reset-btn"
-      (click)="resetBets()"
-      [ngClass]="{ disabled: this.betSlipService.selectedBets.length < 1 }"
-    >
-      Reset
-    </button>
-    <button
-      class="submit-btn"
-      (click)="submitBets()"
-      [ngClass]="{ disabled: this.betSlipService.selectedBets.length < 1 }"
-    >
-      Submit
-    </button>
+    <div class="bet-slip-buttons" *ngIf="this.tabToDisplay == 'Singles'">
+      <button
+        class="reset-btn"
+        (click)="resetBets()"
+        [ngClass]="{ disabled: this.betSlipService.selectedBets.length < 1 }"
+      >
+        Reset
+      </button>
+      <button
+        class="submit-btn"
+        (click)="submitBets()"
+        [ngClass]="{ disabled: this.betSlipService.selectedBets.length < 1 }"
+      >
+        Submit
+      </button>
+    </div>
   </div>
 </div>
