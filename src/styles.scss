@@ -2558,6 +2558,10 @@ is smaller */
   &::-webkit-scrollbar {
     display: none;
   }
+
+ &.lowLiquidity {
+   overflow:hidden;
+ }
 }
 
 .disabled-mini-market-runners-list {
@@ -2573,6 +2577,7 @@ is smaller */
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow-y: none;
   background-color: rgba(0, 0, 0, 0.5);
   h1 {
     font-size: 16px;

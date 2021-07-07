@@ -333,7 +333,7 @@
                 </thead>
               </table>
 
-              <div class="mini-market-runners-list">
+              <div class="mini-market-runners-list" [ngClass]="{lowLiquidity : true}">
                 <div class="disabled-mini-market-runners-list" *ngIf="true">
                   <h1>Low Liquidity</h1>
                 </div>
@@ -621,7 +621,7 @@
                 </thead>
               </table>
 
-              <div class="mini-market-runners-list">
+              <div class="mini-market-runners-list" [ngClass]="{lowLiquidity : true}">
                 <div class="disabled-mini-market-runners-list" *ngIf="true">
                   <h1>Low Liquidity</h1>
                 </div>
