@@ -48,10 +48,21 @@ app-event-details {
   }
 }
 
+.scrollShadow {
+
+
+}
+
 .main-content-wrapper {
-  overflow: auto;
+  // overflow: auto;
   height: calc(100vh - 107px);
   position: relative;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .icon-wrapper {
@@ -555,6 +566,7 @@ body {
   position: absolute;
   top: 0px;
   left: 0px;
+
   -ms-overflow-style: none;
   scrollbar-width: none;
   overflow-y: scroll;
