@@ -3,7 +3,7 @@ export interface BetSlip {
   eventId: string;
   isBack: boolean;
   stake?:number;
-  liability?:number;
+  liability:number;
   market: {
     marketName: string;
     marketId: string;

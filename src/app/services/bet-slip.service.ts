@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { DebugElement, Injectable } from '@angular/core';
 import { BetSlip } from '../models/bet-slip';
 
 @Injectable({
@@ -113,11 +113,14 @@ export class BetSlipService {
     let backBets = this.selectedBets.filter(x=>x.isBack);
     let LayBets = this.selectedBets.filter(x=>!x.isBack);
 
-    let backLia = 0;
+    let backLia = backBets.reduce((backLia, b) => backLia + b.liability,0);
+    
     let LayLia = 0;
+    if(LayBets.length > 0){
+    LayLia = LayBets.reduce((a, b) => a.liability > b.liability? a:b).liability;
+    }
 
-
-
+    return LayLia + backLia;
   }
   
 }
