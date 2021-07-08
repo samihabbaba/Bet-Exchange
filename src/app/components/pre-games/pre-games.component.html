@@ -18,7 +18,7 @@
     *ngFor="let event of this.games"
     (click)="this.goToEventDetails(event.event.eventId)"
   >
-    <fa-icon [icon]="fontAwesomeIcons.exit" class="main-icon"></fa-icon>
+    <!-- <fa-icon [icon]="fontAwesomeIcons.exit" class="main-icon"></fa-icon> -->
     <div class="date-time">
       <div class="time">{{ event.event.openDate | date: "h:mm a" }}</div>
       <div class="date">{{ event.event.openDate | date: "dd/MM" }}</div>
