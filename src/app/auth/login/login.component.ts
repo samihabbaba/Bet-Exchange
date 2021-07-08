@@ -25,14 +25,11 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    debugger;
     let loginModel = {
       'username': this.loginForm.value.username,
       'password': this.loginForm.value.password
     }
     
     this.authService.performLogIn(loginModel);
-    
-
   }
 }

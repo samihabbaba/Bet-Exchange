@@ -1,3 +1,4 @@
+import { ASTWithName } from '@angular/compiler';
 import {
   Component,
   ElementRef,
@@ -7,6 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { LayoutService } from 'src/app/services/layout.service';
 
@@ -23,13 +25,14 @@ export class HeaderComponent implements OnInit {
   constructor(
     private router: Router,
     private layoutService: LayoutService,
-    private dataService: DataService
+    private dataService: DataService,
+    public authService:AuthService
   ) {}
 
   ngOnInit(): void {}
 
   goToLoginPage() {
-    this.router.navigateByUrl('(auth:login)');
+    this.router.navigateByUrl('login');
   }
 
   displayPreGames() {
