@@ -64,7 +64,7 @@
         >
           <div class="bold">
             <ng-container
-              *ngIf="this.sharedService.oddAvailable(event,0,true, true)"
+              *ngIf="this.sharedService.oddAvailableForMainPage(event,0,true)"
             >
               {{
                 this.sharedService.returnHighestBet(
@@ -74,13 +74,13 @@
             </ng-container>
 
             <fa-icon
-              *ngIf="!this.sharedService.oddAvailable(event,0,true, true)"
+              *ngIf="!this.sharedService.oddAvailableForMainPage(event,0,true)"
               [icon]="fontAwesomeIcons.lock"
             ></fa-icon>
           </div>
           <div class="normal">
             <ng-container
-              *ngIf="this.sharedService.oddAvailable(event,0,true, true)"
+              *ngIf="this.sharedService.oddAvailableForMainPage(event,0,true)"
             >
               {{
                 this.sharedService.returnHighestBet(
@@ -90,7 +90,7 @@
             </ng-container>
 
             <fa-icon
-              *ngIf="!this.sharedService.oddAvailable(event,0,true, true)"
+              *ngIf="!this.sharedService.oddAvailableForMainPage(event,0,true)"
               [icon]="fontAwesomeIcons.lock"
             ></fa-icon>
           </div>
@@ -120,7 +120,7 @@
         >
           <div class="bold">
             <ng-container
-              *ngIf="this.sharedService.oddAvailable(event,0,false, true)"
+              *ngIf="this.sharedService.oddAvailableForMainPage(event,0,false)"
             >
               {{
                 this.sharedService.returnHighestBet(
@@ -130,13 +130,13 @@
             </ng-container>
 
             <fa-icon
-              *ngIf="!this.sharedService.oddAvailable(event,0,false, true)"
+              *ngIf="!this.sharedService.oddAvailableForMainPage(event,0,false)"
               [icon]="fontAwesomeIcons.lock"
             ></fa-icon>
           </div>
           <div class="normal">
             <ng-container
-              *ngIf="this.sharedService.oddAvailable(event,0,false, true)"
+              *ngIf="this.sharedService.oddAvailableForMainPage(event,0,false)"
             >
               {{
                 this.sharedService.returnHighestBet(
@@ -146,7 +146,7 @@
             </ng-container>
 
             <fa-icon
-              *ngIf="!this.sharedService.oddAvailable(event,0,false, true)"
+              *ngIf="!this.sharedService.oddAvailableForMainPage(event,0,false)"
               [icon]="fontAwesomeIcons.lock"
             ></fa-icon>
           </div>
@@ -178,7 +178,7 @@
         >
           <div class="bold">
             <ng-container
-              *ngIf="this.sharedService.oddAvailable(event,1,true, true)"
+              *ngIf="this.sharedService.oddAvailableForMainPage(event,1,true)"
             >
               {{
                 this.sharedService.returnHighestBet(
@@ -188,13 +188,13 @@
             </ng-container>
 
             <fa-icon
-              *ngIf="!this.sharedService.oddAvailable(event,1,true, true)"
+              *ngIf="!this.sharedService.oddAvailableForMainPage(event,1,true)"
               [icon]="fontAwesomeIcons.lock"
             ></fa-icon>
           </div>
           <div class="normal">
             <ng-container
-              *ngIf="this.sharedService.oddAvailable(event,1,true, true)"
+              *ngIf="this.sharedService.oddAvailableForMainPage(event,1,true)"
             >
               {{
                 this.sharedService.returnHighestBet(
@@ -204,7 +204,7 @@
             </ng-container>
 
             <fa-icon
-              *ngIf="!this.sharedService.oddAvailable(event,1,true, true)"
+              *ngIf="!this.sharedService.oddAvailableForMainPage(event,1,true)"
               [icon]="fontAwesomeIcons.lock"
             ></fa-icon>
           </div>
@@ -234,7 +234,7 @@
         >
           <div class="bold">
             <ng-container
-              *ngIf="this.sharedService.oddAvailable(event,1,false, true)"
+              *ngIf="this.sharedService.oddAvailableForMainPage(event,1,false)"
             >
               {{
                 this.sharedService.returnHighestBet(
@@ -244,13 +244,13 @@
             </ng-container>
 
             <fa-icon
-              *ngIf="!this.sharedService.oddAvailable(event,1,false, true)"
+              *ngIf="!this.sharedService.oddAvailableForMainPage(event,1,false)"
               [icon]="fontAwesomeIcons.lock"
             ></fa-icon>
           </div>
           <div class="normal">
             <ng-container
-              *ngIf="this.sharedService.oddAvailable(event,1,false, true)"
+              *ngIf="this.sharedService.oddAvailableForMainPage(event,1,false)"
             >
               {{
                 this.sharedService.returnHighestBet(
@@ -260,7 +260,7 @@
             </ng-container>
 
             <fa-icon
-              *ngIf="!this.sharedService.oddAvailable(event,1,false, true)"
+              *ngIf="!this.sharedService.oddAvailableForMainPage(event,1,false)"
               [icon]="fontAwesomeIcons.lock"
             ></fa-icon>
           </div>
@@ -292,7 +292,7 @@
         >
           <div class="bold">
             <ng-container
-              *ngIf="this.sharedService.oddAvailable(event,2,true, true)"
+              *ngIf="this.sharedService.oddAvailableForMainPage(event,2,true)"
             >
               {{
                 this.sharedService.returnHighestBet(
@@ -302,13 +302,13 @@
             </ng-container>
 
             <fa-icon
-              *ngIf="!this.sharedService.oddAvailable(event,2,true, true)"
+              *ngIf="!this.sharedService.oddAvailableForMainPage(event,2,true)"
               [icon]="fontAwesomeIcons.lock"
             ></fa-icon>
           </div>
           <div class="normal">
             <ng-container
-              *ngIf="this.sharedService.oddAvailable(event,2,true, true)"
+              *ngIf="this.sharedService.oddAvailableForMainPage(event,2,true)"
             >
               {{
                 this.sharedService.returnHighestBet(
@@ -318,7 +318,7 @@
             </ng-container>
 
             <fa-icon
-              *ngIf="!this.sharedService.oddAvailable(event,2,true, true)"
+              *ngIf="!this.sharedService.oddAvailableForMainPage(event,2,true)"
               [icon]="fontAwesomeIcons.lock"
             ></fa-icon>
           </div>
@@ -348,7 +348,7 @@
         >
           <div class="bold">
             <ng-container
-              *ngIf="this.sharedService.oddAvailable(event,2,false, true)"
+              *ngIf="this.sharedService.oddAvailableForMainPage(event,2,false)"
             >
               {{
                 this.sharedService.returnHighestBet(
@@ -358,13 +358,13 @@
             </ng-container>
 
             <fa-icon
-              *ngIf="!this.sharedService.oddAvailable(event,2,false, true)"
+              *ngIf="!this.sharedService.oddAvailableForMainPage(event,2,false)"
               [icon]="fontAwesomeIcons.lock"
             ></fa-icon>
           </div>
           <div class="normal">
             <ng-container
-              *ngIf="this.sharedService.oddAvailable(event,2,false, true)"
+              *ngIf="this.sharedService.oddAvailableForMainPage(event,2,false)"
             >
               {{
                 this.sharedService.returnHighestBet(
@@ -374,7 +374,7 @@
             </ng-container>
 
             <fa-icon
-              *ngIf="!this.sharedService.oddAvailable(event,2,false, true)"
+              *ngIf="!this.sharedService.oddAvailableForMainPage(event,2,false)"
               [icon]="fontAwesomeIcons.lock"
             ></fa-icon>
           </div>

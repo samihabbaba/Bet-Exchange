@@ -272,9 +272,8 @@ export class SharedFunctionsService {
     return ( char >= '0' && char<='9')
   }
 
-  oddAvailable(obj:any , index:number,back = true, ForMainMarket = false){
+  oddAvailableForMainPage(obj:any , index:number,back = true){
 
-    if(ForMainMarket){
       if (back){
         if(this.returnHighestBet( this.getBackObj(obj, index)) === null){
           return false;
@@ -291,11 +290,9 @@ export class SharedFunctionsService {
           return true
         }
       }
-    }
-
-    else{
-      return false
-    }
   }
 
+  marketAvailable(){
+    return true;
+  }
 }
