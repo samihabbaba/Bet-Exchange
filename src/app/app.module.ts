@@ -24,6 +24,7 @@ import { LanguageDropdownDirective } from './directives/language-dropdown.direct
 import { ScrollShadowDirective } from './directives/scroll-shadow.directive';
 import { CloseAppMenuDirective } from './directives/close-app-menu.directive';
 import { CloseBetSlipDirective } from './directives/close-bet-slip.directive';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 
@@ -56,7 +57,8 @@ import { CloseBetSlipDirective } from './directives/close-bet-slip.directive';
     FontAwesomeModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent],

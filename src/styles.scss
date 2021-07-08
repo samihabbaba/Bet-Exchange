@@ -32,7 +32,6 @@ app-root {
   height: 100%;
   width: 100%;
   box-sizing: border-box;
-  
 }
 
 app-main-content {
@@ -177,7 +176,7 @@ body {
   height: 100vh;
   width: 100vw;
   background-color: #f9f9f9;
-  background-image: url("./assets/images/login-page-bg.png");
+  background-image: url("./assets/images/login-bg.jpg");
   background-position: center;
   background-size: cover;
   display: flex;
@@ -189,6 +188,9 @@ body {
 }
 
 .login-page-left-side {
+  //
+  display: none;
+  //
   background-image: url("./assets/images/login-messi.jpg");
   background-position: right;
   background-size: cover;
@@ -243,6 +245,7 @@ body {
     }
 
     .login-btn {
+      font-weight: 700;
       padding: 8px 15px;
       margin-bottom: 1.5rem;
       font-size: 1.5rem;
@@ -273,7 +276,7 @@ body {
     grid-template-areas:
       "logo logo"
       ". .";
-      width: 100% !important;
+    width: 100% !important;
   }
   .logo {
     grid-area: logo;
@@ -2949,3 +2952,41 @@ is smaller */
 }
 
 /* End Bet slip loader styles*/
+
+/* Notification Styles*/
+.snackSuccess {
+  font-weight: 500;
+  color: var(--white);
+  background-color: #10b759;
+  .mat-simple-snackbar-action {
+    color: var(--white);
+  }
+}
+
+.snackError {
+  font-weight: 500;
+  color: var(--white);
+  background-color: #ff1c55;
+  .mat-simple-snackbar-action {
+    color: var(--white);
+  }
+}
+
+.snackInfo {
+  font-weight: 500;
+  color: var(--black);
+  background-color: var(--primary);
+  .mat-simple-snackbar-action {
+    color: var(--black);
+  }
+}
+/* End of notification styles */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
