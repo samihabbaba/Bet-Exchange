@@ -5,6 +5,12 @@
   grid-template-columns: 200px 10px 1fr 10px 300px;
   grid-template-rows: 1fr;
   grid-template-areas: "menu . main . bets";
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .smallContainer {
@@ -19,7 +25,7 @@
 .menu-open-btn {
   position: absolute;
   left: 0;
-  top: 60px;
+  top: -27px;
   border: none;
   cursor: pointer;
   height: 27px;
@@ -38,7 +44,7 @@
 .bet-slip-open-btn {
   position: absolute;
   right: 0;
-  top: 60px;
+  top: -27px;
   height: 27px;
   border: none;
   cursor: pointer;
