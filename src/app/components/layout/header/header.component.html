@@ -35,7 +35,7 @@
 
   <div class="login-and-language">
     <button (click)="goToLoginPage()" class="login-btn">
-      Log In &nbsp;<span class="login-icon"></span>
+      {{this.authService.loggedIn()?'Log Out':'Log In'}} &nbsp;<span class="login-icon"></span>
     </button>
     <button class="join-now-btn">Join Now</button>
     <button #language class="languages" appLanguageDropdown>
