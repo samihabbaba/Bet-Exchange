@@ -292,6 +292,33 @@ export class SharedFunctionsService {
       }
   }
 
+  
+  oddAvailableEventContent(obj:any , index:number,back = true){
+    
+    try{
+      let runOdds = null;
+      if (back){
+        runOdds = obj.exchange.availableToBack;
+        runOdds.sort( this.sortRunByPrice );
+      }
+      else{
+        runOdds = obj.exchange.availableToLay;
+        runOdds.sort( this.sortRunByPriceDEC );
+      }
+  
+      if(runOdds.length-1 < index){
+        return false;
+      }
+
+      return true;
+
+    }
+    catch(ex){
+      return false;
+    }
+
+}
+
   marketAvailable(){
     return true;
   }
