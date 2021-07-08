@@ -265,11 +265,37 @@ export class SharedFunctionsService {
     }
   }
 
-
+  ///////////////////
 
   charIsNumber(char:any){
     char = char.toString()
     return ( char >= '0' && char<='9')
+  }
+
+  oddAvailable(obj:any , index:number,back = true, ForMainMarket = false){
+
+    if(ForMainMarket){
+      if (back){
+        if(this.returnHighestBet( this.getBackObj(obj, index)) === null){
+          return false;
+        }
+        else{
+          return true
+        }
+      }
+      else{
+        if(this.returnHighestBet( this.getLayObj(obj, index)) === null){
+          return false;
+        }
+        else{
+          return true
+        }
+      }
+    }
+
+    else{
+      return false
+    }
   }
 
 }
