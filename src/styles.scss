@@ -32,10 +32,12 @@ app-root {
   height: 100%;
   width: 100%;
   box-sizing: border-box;
+  
 }
 
 app-main-content {
   background-color: var(--darker-white);
+  position: relative;
   // overflow: hidden;
 }
 
@@ -261,6 +263,36 @@ body {
 /* End of Login Component Styles*/
 
 /* Header Styles */
+
+@media screen and (max-width: 1000px) {
+  .header {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+      "logo logo"
+      ". .";
+      width: 100% !important;
+  }
+  .logo {
+    grid-area: logo;
+    justify-self: center;
+  }
+
+  .container {
+    grid-template-rows: 80px 27px 1fr;
+  }
+
+  .header-menu {
+    align-self: center;
+  }
+
+  .login-and-language {
+    justify-self: end;
+    align-self: center;
+  }
+}
 
 .header {
   display: flex;
@@ -561,8 +593,8 @@ body {
     width: 200px;
     left: 1px;
     min-height: max-content;
-    box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
-      0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+    // box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
+    //   0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
     max-height: calc(100vh - 110px);
   }
 }
