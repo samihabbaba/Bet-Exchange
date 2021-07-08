@@ -265,11 +265,61 @@ export class SharedFunctionsService {
     }
   }
 
-
+  ///////////////////
 
   charIsNumber(char:any){
     char = char.toString()
     return ( char >= '0' && char<='9')
   }
 
+  oddAvailableForMainPage(obj:any , index:number,back = true){
+
+      if (back){
+        if(this.returnHighestBet( this.getBackObj(obj, index)) === null){
+          return false;
+        }
+        else{
+          return true
+        }
+      }
+      else{
+        if(this.returnHighestBet( this.getLayObj(obj, index)) === null){
+          return false;
+        }
+        else{
+          return true
+        }
+      }
+  }
+
+  
+  oddAvailableEventContent(obj:any , index:number,back = true){
+    
+    try{
+      let runOdds = null;
+      if (back){
+        runOdds = obj.exchange.availableToBack;
+        runOdds.sort( this.sortRunByPrice );
+      }
+      else{
+        runOdds = obj.exchange.availableToLay;
+        runOdds.sort( this.sortRunByPriceDEC );
+      }
+  
+      if(runOdds.length-1 < index){
+        return false;
+      }
+
+      return true;
+
+    }
+    catch(ex){
+      return false;
+    }
+
+}
+
+  marketAvailable(){
+    return true;
+  }
 }

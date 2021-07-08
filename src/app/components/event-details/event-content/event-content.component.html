@@ -76,10 +76,10 @@
         </table>
       </div>
 
-      <div class="runners-list-wrapper" [ngClass]="{lowLiquidity : true}">
+      <div class="runners-list-wrapper" [ngClass]="{lowLiquidity : !this.sharedService.marketAvailable()}">
 
 
-                <div class="disabled-mini-market-runners-list" *ngIf="true">
+                <div class="disabled-mini-market-runners-list" *ngIf="!this.sharedService.marketAvailable()">
 
                   <h1>Low Liquidity</h1>
                 </div>
@@ -149,7 +149,7 @@
                           )
                         }"
                       >
-                        <div class="bet-runner">
+                        <div class="bet-runner" *ngIf="this.sharedService.oddAvailableEventContent(item,selection,true)">
                           <span class="bet-btn-price">{{
                             this.sharedService.returnRunWithIndex(
                               item,
@@ -163,6 +163,14 @@
                             ).size
                           }}</span>
                         </div>
+
+                        <div class="bet-runner" *ngIf="!this.sharedService.oddAvailableEventContent(item,selection,true)">
+                          <fa-icon 
+                          [icon]="fontAwesomeIcons.lock"
+                       ></fa-icon>
+
+                        </div>
+                            
                       </button>
                     </td>
 
@@ -202,7 +210,7 @@
                           )
                         }"
                       >
-                        <div class="bet-runner">
+                        <div class="bet-runner" *ngIf="this.sharedService.oddAvailableEventContent(item,selection,false)">
                           <span class="bet-btn-price">{{
                             this.sharedService.returnRunWithIndex(
                               item,
@@ -218,6 +226,13 @@
                             ).size
                           }}</span>
                         </div>
+
+                        <div class="bet-runner" *ngIf="!this.sharedService.oddAvailableEventContent(item,selection,false)">
+                          <fa-icon 
+                          [icon]="fontAwesomeIcons.lock"
+                       ></fa-icon>
+                       </div>
+
                       </button>
                     </td>
 
@@ -341,8 +356,8 @@
                 </thead>
               </table>
 
-              <div class="mini-market-runners-list" [ngClass]="{lowLiquidity : true}">
-                <div class="disabled-mini-market-runners-list" *ngIf="true">
+              <div class="mini-market-runners-list" [ngClass]="{lowLiquidity : !this.sharedService.marketAvailable()}">
+                <div class="disabled-mini-market-runners-list" *ngIf="!this.sharedService.marketAvailable()">
                   <h1>Low Liquidity</h1>
                 </div>
                 <div class="mini-market-runners-list-container">
@@ -408,13 +423,7 @@
                                   <span class="size">
                                     <!--  -->
                                     <ng-container
-                                      *ngIf="
-                                        this.sharedService.returnHighestBet(
-                                          this.sharedService.getBackObjForRun(
-                                            run
-                                          )
-                                        ) !== null
-                                      "
+                                    *ngIf="this.sharedService.oddAvailableEventContent(run,0)"
                                     >
                                       {{
                                         this.sharedService.returnHighestBet(
@@ -426,13 +435,7 @@
                                     </ng-container>
 
                                     <fa-icon
-                                      *ngIf="
-                                        this.sharedService.returnHighestBet(
-                                          this.sharedService.getBackObjForRun(
-                                            run
-                                          )
-                                        ) === null
-                                      "
+                                      *ngIf="!this.sharedService.oddAvailableEventContent(run,0)"
                                       [icon]="fontAwesomeIcons.lock"
                                     ></fa-icon>
                                     <!--  -->
@@ -457,15 +460,6 @@
                                       }}
                                     </ng-container>
 
-                                    <!-- <fa-icon
-                                      *ngIf="
-                                        this.sharedService.returnHighestBet(
-                                          this.sharedService.getBackObjForRun(run)
-                                        ) === null
-                                      "
-                                      [icon]="fontAwesomeIcons.lock"
-                                    ></fa-icon> -->
-                                    <!--  -->
                                   </span>
                                 </div>
                               </button>
@@ -507,13 +501,7 @@
                                   <span class="size">
                                     <!--  -->
                                     <ng-container
-                                      *ngIf="
-                                        this.sharedService.returnHighestBet(
-                                          this.sharedService.getLayObjForRun(
-                                            run
-                                          )
-                                        ) !== null
-                                      "
+                                    *ngIf="this.sharedService.oddAvailableEventContent(run,0, false)"
                                     >
                                       {{
                                         this.sharedService.returnHighestBet(
@@ -524,14 +512,7 @@
                                       }}
                                     </ng-container>
 
-                                    <fa-icon
-                                      *ngIf="
-                                        this.sharedService.returnHighestBet(
-                                          this.sharedService.getLayObjForRun(
-                                            run
-                                          )
-                                        ) === null
-                                      "
+                                    <fa-icon *ngIf="!this.sharedService.oddAvailableEventContent(run,0, false)"
                                       [icon]="fontAwesomeIcons.lock"
                                     ></fa-icon>
                                     <!--  -->
@@ -556,15 +537,6 @@
                                       }}
                                     </ng-container>
 
-                                    <!-- <fa-icon
-                                      *ngIf="
-                                        this.sharedService.returnHighestBet(
-                                          this.sharedService.getLayObjForRun(run)
-                                        ) === null
-                                      "
-                                      [icon]="fontAwesomeIcons.lock"
-                                    ></fa-icon> -->
-                                    <!--  -->
                                   </span>
                                 </div>
                               </button>
@@ -629,8 +601,8 @@
                 </thead>
               </table>
 
-              <div class="mini-market-runners-list" [ngClass]="{lowLiquidity : true}">
-                <div class="disabled-mini-market-runners-list" *ngIf="true">
+              <div class="mini-market-runners-list" [ngClass]="{lowLiquidity : !this.sharedService.marketAvailable()}">
+                <div class="disabled-mini-market-runners-list" *ngIf="!this.sharedService.marketAvailable()">
                   <h1>Low Liquidity</h1>
                 </div>
                 <div class="mini-market-runners-list-container">
@@ -694,13 +666,7 @@
                                   <span class="size">
                                     <!--  -->
                                     <ng-container
-                                      *ngIf="
-                                        this.sharedService.returnHighestBet(
-                                          this.sharedService.getBackObjForRun(
-                                            run
-                                          )
-                                        ) !== null
-                                      "
+                                    *ngIf="this.sharedService.oddAvailableEventContent(run,0)"
                                     >
                                       {{
                                         this.sharedService.returnHighestBet(
@@ -711,14 +677,7 @@
                                       }}
                                     </ng-container>
 
-                                    <fa-icon
-                                      *ngIf="
-                                        this.sharedService.returnHighestBet(
-                                          this.sharedService.getBackObjForRun(
-                                            run
-                                          )
-                                        ) === null
-                                      "
+                                    <fa-icon *ngIf="!this.sharedService.oddAvailableEventContent(run,0)"
                                       [icon]="fontAwesomeIcons.lock"
                                     ></fa-icon>
                                     <!--  -->
@@ -743,15 +702,6 @@
                                       }}
                                     </ng-container>
 
-                                    <!-- <fa-icon
-                                    *ngIf="
-                                      this.sharedService.returnHighestBet(
-                                        this.sharedService.getBackObjForRun(run)
-                                      ) === null
-                                    "
-                                    [icon]="fontAwesomeIcons.lock"
-                                  ></fa-icon> -->
-                                    <!--  -->
                                   </span>
                                 </div>
                               </button>
@@ -792,13 +742,7 @@
                                   <span class="size">
                                     <!--  -->
                                     <ng-container
-                                      *ngIf="
-                                        this.sharedService.returnHighestBet(
-                                          this.sharedService.getLayObjForRun(
-                                            run
-                                          )
-                                        ) !== null
-                                      "
+                                    *ngIf="this.sharedService.oddAvailableEventContent(run,0,false)"
                                     >
                                       {{
                                         this.sharedService.returnHighestBet(
@@ -809,14 +753,7 @@
                                       }}
                                     </ng-container>
 
-                                    <fa-icon
-                                      *ngIf="
-                                        this.sharedService.returnHighestBet(
-                                          this.sharedService.getLayObjForRun(
-                                            run
-                                          )
-                                        ) === null
-                                      "
+                                    <fa-icon *ngIf="!this.sharedService.oddAvailableEventContent(run,0,false)"
                                       [icon]="fontAwesomeIcons.lock"
                                     ></fa-icon>
                                     <!--  -->
@@ -840,16 +777,7 @@
                                         ).size
                                       }}
                                     </ng-container>
-
-                                    <!-- <fa-icon
-                                    *ngIf="
-                                      this.sharedService.returnHighestBet(
-                                        this.sharedService.getLayObjForRun(run)
-                                      ) === null
-                                    "
-                                    [icon]="fontAwesomeIcons.lock"
-                                  ></fa-icon> -->
-                                    <!--  -->
+                                    
                                   </span>
                                 </div>
                               </button>
