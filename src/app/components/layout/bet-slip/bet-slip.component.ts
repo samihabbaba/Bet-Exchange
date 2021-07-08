@@ -33,7 +33,7 @@ export class BetSlipComponent implements OnInit {
 
   resetBets() {
     this.betSlipService.selectedBets = [];
-    this.notificationService.info('1332')
+    this.notificationService.info('1332');
   }
 
   submitBets() {
@@ -46,7 +46,6 @@ export class BetSlipComponent implements OnInit {
   }
 
   handleTabClick(event: any) {
-    debugger;
     let text = event.target.textContent;
     text = text.trim();
     text = text.split(' ')[0];

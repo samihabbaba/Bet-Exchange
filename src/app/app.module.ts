@@ -25,6 +25,7 @@ import { ScrollShadowDirective } from './directives/scroll-shadow.directive';
 import { CloseAppMenuDirective } from './directives/close-app-menu.directive';
 import { CloseBetSlipDirective } from './directives/close-bet-slip.directive';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 
 
@@ -58,7 +59,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent],
