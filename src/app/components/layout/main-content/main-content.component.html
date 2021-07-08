@@ -1,7 +1,21 @@
-<button class="menu-open-btn" (click)="toggleMenu()">
-  <i class="fas fa-bars"></i>
+<button
+  title="Menu"
+  class="menu-open-btn"
+  *ngIf="isSmall"
+  (click)="toggleMenu(); $event.stopPropagation()"
+  [ngClass]="{ active: this.displayMenu }"
+>
+  <i class="fas fa-arrow-alt-circle-down"></i>
 </button>
-<button class="bet-slip-open-btn"><i class="fas fa-bars"></i></button>
+<button
+  title="Bet Slip"
+  class="bet-slip-open-btn"
+  *ngIf="isSmall"
+  (click)="toggleBetSlip(); $event.stopPropagation()"
+  [ngClass]="{ active: this.displayBetSlip }"
+>
+  <i class="fas fa-arrow-alt-circle-down"></i>
+</button>
 
 <div
   [ngClass]="{ container: !isSmall, smallContainer: isSmall }"
@@ -9,14 +23,20 @@
 >
   <app-menu
     class="menu"
-    [ngClass]="{active: isSmall}"
+    [ngClass]="{ small: isSmall }"
     [@fadeMenuAndSlip]
-    *ngIf="displayMenu"
+    appCloseAppMenu
+    [displayMenu]="this.displayMenu"
+    (closeMenu)="closeMenu()"
+    *ngIf="(displayMenu && isSmall) || (!displayMenu && !isSmall)"
     [isLoading]="isLoading"
     [menuLoading]="this.menuLoading"
   >
   </app-menu>
-  <div class="main" [ngClass]="{ menuActive: this.displayMenu }">
+  <div
+    class="main"
+    [ngClass]="{ menuActive: this.displayMenu || this.displayBetSlip }"
+  >
     <div class="main-view">
       <app-pre-games *ngIf="viewType == 'pre' && !isLoading"></app-pre-games>
       <app-live-games *ngIf="viewType == 'live' && !isLoading"></app-live-games>
@@ -27,5 +47,13 @@
       <app-loader *ngIf="isLoading"></app-loader>
     </div>
   </div>
-  <app-bet-slip class="bets" [ngClass]="{ small: isSmall }"></app-bet-slip>
+  <app-bet-slip
+    class="bets"
+    appCloseBetSlip
+    [displayBetSlip]="displayBetSlip"
+    (closeBetSlip)="closeSlip()"
+    [ngClass]="{ small: isSmall }"
+    [@fadeMenuAndSlip]
+    *ngIf="(displayBetSlip && isSmall) || (!displayMenu && !isSmall)"
+  ></app-bet-slip>
 </div>

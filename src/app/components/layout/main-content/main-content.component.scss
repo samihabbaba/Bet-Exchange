@@ -19,20 +19,37 @@
 .menu-open-btn {
   position: absolute;
   left: 0;
-  top: 50px;
+  top: 60px;
   border: none;
   cursor: pointer;
-  background: #101820;
-  color: white;
+  height: 27px;
+  background: transparent;
+  color: #f2aa4c;
+  font-size: 18px;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: transform 200ms;
+
+  &.active {
+    transform: rotate(180deg);
+  }
 }
 
 .bet-slip-open-btn {
   position: absolute;
   right: 0;
-  top: 50px;
+  top: 60px;
+  height: 27px;
   border: none;
   cursor: pointer;
-  background: #101820;
-  color: white;
-}
+  background: transparent;
+  color: #f2aa4c;
+  font-size: 18px;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: transform 200ms;
 
+  &.active {
+    transform: rotate(180deg);
+  }
+}

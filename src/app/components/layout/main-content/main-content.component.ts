@@ -63,6 +63,8 @@ export class MainContentComponent implements OnInit {
       this.isSmall = true;
     }
     if (size === BreakSize.LG || size === BreakSize.XL) {
+      this.displayMenu = false;
+      this.displayBetSlip = false;
       console.log(size);
       this.isSmall = false;
     }
@@ -76,5 +78,11 @@ export class MainContentComponent implements OnInit {
     this.displayBetSlip = !this.displayBetSlip;
   }
 
- 
+  closeMenu() {
+    this.displayMenu = false;
+  }
+
+  closeSlip() {
+    this.displayBetSlip = false;
+  }
 }

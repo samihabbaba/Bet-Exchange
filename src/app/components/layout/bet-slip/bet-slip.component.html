@@ -22,8 +22,9 @@
         class="open-bets"
         value="open-bets"
         #openBets
-        (click)="handleTabClick($event)"
+        (click)="handleTabClick($event); $event.stopPropagation()"
       >
+      
         <h1>Open Bets</h1>
       </div>
     </div>
@@ -245,7 +246,7 @@
         (click)="resetBets()"
         [ngClass]="{ disabled: this.betSlipService.selectedBets.length < 1 }"
       >
-        Reset 
+        Reset
       </button>
       <button
         class="submit-btn"
