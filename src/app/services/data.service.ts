@@ -308,7 +308,7 @@ export class DataService {
     if (this.layoutService.getHeaderValue() !== 'live') {
       return;
     }
-    this.events.next(games);
+    this.events.next(games.filter((x:any)=>x.markets.length > 0));
   }
 
   handleGameDetailFeed(game: any) {
@@ -380,7 +380,7 @@ export class DataService {
       .subscribe(
         (resp) => {
           this.layoutService.displayPreGames();
-          this.events.next(resp.body);
+          this.events.next(resp.body.filter((x:any)=>x.markets.length > 0));
         },
         (error) => {
           this.events.next([]);
@@ -411,7 +411,7 @@ export class DataService {
       .subscribe(
         (resp) => {
           this.layoutService.displayPreGames();
-          this.events.next(resp.body.items);
+          this.events.next(resp.body.items.filter((x:any)=>x.markets.length > 0));
         },
         (error) => {
           this.events.next([]);

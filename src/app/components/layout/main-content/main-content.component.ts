@@ -28,9 +28,18 @@ import { SharedFunctionsService } from 'src/app/services/shared-functions.servic
   animations: [fadeMenuAndSlip()],
 })
 export class MainContentComponent implements OnInit {
-  @Input() viewType?: string;
-  @Input() isLoading?: boolean;
-  @Input() menuLoading?: boolean;
+
+  // @Input() viewType?: string;
+  // @Input() isLoading?: boolean;
+  // @Input() menuLoading?: boolean;
+
+  
+   viewType?: string;
+   isLoading?: boolean;
+   menuLoading?: boolean;
+   subscriptions: Subscription[] = []
+  
+
   screenObserver$?: Subscription;
   isSmall?: boolean;
   displayMenu?: boolean = false;
@@ -40,17 +49,45 @@ export class MainContentComponent implements OnInit {
   constructor(
     public dataService: DataService,
     public sharedService: SharedFunctionsService,
-    private screenSizeService: ScreenSizeService
-  ) {}
+    private screenSizeService: ScreenSizeService,
+    private layoutService: LayoutService,
+  ) {
+    this.initializeSubscriptions();
+  }
 
   ngOnInit(): void {
     this.screenObserver$ = this.screenSizeService.currentScreenSize.subscribe(
       this.isScreenSmall.bind(this)
     );
+
+    this.dataService.loadPreGamesFromHeader(
+      this.layoutService.getCurrentSport()?.id
+      );
+
   }
 
   ngOnDestroy() {
     this.screenObserver$?.unsubscribe();
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe())
+  }
+
+  initializeSubscriptions() {
+
+    let sub1 = this.layoutService.mainContentDisplayType.subscribe((value) => {
+      this.viewType = value;
+    });
+
+    let sub2 = this.layoutService.MainLoading.subscribe((value) => {
+      this.isLoading = value;
+    });
+
+    let sub3 = this.layoutService.menuLoading.subscribe((value) => {
+      this.menuLoading = value;
+    });
+
+    this.subscriptions.push(sub1);
+    this.subscriptions.push(sub2);
+    this.subscriptions.push(sub3);
   }
 
   isScreenSmall(size: BreakSize): void {

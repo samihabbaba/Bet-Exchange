@@ -1,4 +1,5 @@
-<div class="container" *ngIf="router.url != '/(auth:login)'">
+<div class="container"
+*ngIf="router.url != '/login'" >
   <app-header
     class="main-header"
     [viewType]="this.viewType"
@@ -9,12 +10,17 @@
     [viewType]="this.viewType"
     [isLoading]="this.isLoading"
   ></app-sub-header>
-  <app-main-content
+  <!-- <app-main-content
     [viewType]="this.viewType"
     [isLoading]="this.isLoading"
     [menuLoading]="this.menuLoading"
-  ></app-main-content>
-  <!-- <router-outlet style="display: none"></router-outlet> -->
+  ></app-main-content> -->
+  <router-outlet></router-outlet>
 </div>
 
-<router-outlet name="auth"></router-outlet>
+<router-outlet
+*ngIf="router.url == '/login'"
+></router-outlet>
+
+
+<!-- <router-outlet name="auth"></router-outlet> -->

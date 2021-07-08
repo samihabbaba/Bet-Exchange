@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from './services/auth.service';
 import { BetSlipService } from './services/bet-slip.service';
 import { DataService } from './services/data.service';
 import { LayoutService } from './services/layout.service';
@@ -18,15 +19,21 @@ export class AppComponent implements OnInit {
 
   constructor(
     public router: Router,
-    private dataService: DataService,
-    private layoutService: LayoutService
+    // private dataService: DataService,
+    private layoutService: LayoutService,
+    public authService:AuthService
   ) {}
   ngOnInit(): void {
     this.initializeSubscriptions();
-    this.dataService.performLogIn();
-    this.dataService.loadPreGamesFromHeader(
-      this.layoutService.getCurrentSport()?.id
-      );
+    // this.dataService.performLogIn();
+    // this.dataService.loadPreGamesFromHeader(
+    //   this.layoutService.getCurrentSport()?.id
+    //   );
+
+    if(!this.authService.loggedIn()){
+      this.router.navigateByUrl('login');
+    }
+
   }
 
   initializeSubscriptions() {

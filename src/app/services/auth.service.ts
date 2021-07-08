@@ -3,13 +3,16 @@ import { Injectable } from '@angular/core';
 import { DataService } from './data.service';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http:HttpClient, private dataService:DataService) { }
+  constructor(private http:HttpClient, private dataService:DataService,
+    private route:Router
+    ) { }
 
   
   jwtHelper = new JwtHelperService();
@@ -22,7 +25,7 @@ export class AuthService {
       username: 'DiscTest',
       password: 'Disc123!',
     };
-debugger
+
     if(loginModel){
       model.username = loginModel.username,
       model.password = loginModel.password
@@ -30,7 +33,7 @@ debugger
 
     this.login(model).subscribe(
       (resp) => {
-        debugger
+
         const user: any = resp.body;
         localStorage.setItem('token', user.token);
 
@@ -43,6 +46,7 @@ debugger
           // const role = this.decodedToken.role;      
           localStorage.setItem("token", user.token);
           this.logInSuccess = true;
+          this.route.navigateByUrl('home')
         }
         else{
           this.logInSuccess = false;
@@ -50,9 +54,7 @@ debugger
 
       },
       (error) => {
-        debugger
         this.logInSuccess = false;
-
       }
     );
   }
