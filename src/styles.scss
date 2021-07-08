@@ -2963,7 +2963,7 @@ is smaller */
 .snackError {
   font-weight: 500;
   color: var(--white);
-  background-color: #ff3366;
+  background-color: #ff1c55;
   .mat-simple-snackbar-action {
     color: var(--white);
   }
@@ -2971,10 +2971,10 @@ is smaller */
 
 .snackInfo {
   font-weight: 500;
-  color: var(--white);
+  color: var(--black);
   background-color: var(--primary);
   .mat-simple-snackbar-action {
-    color: var(--white);
+    color: var(--black);
   }
 }
 /* End of notification styles */
