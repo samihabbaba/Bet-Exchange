@@ -66,13 +66,17 @@ export class AuthService {
     });
   }
 
-  logut(){
+  logut(routeAfter = true){
     this.decodedToken = null;
     localStorage.removeItem('token');
 
    this.dataService.httpOptions.headers = new HttpHeaders({
       Authorization: 'Bearer ',
     });
+
+    if(routeAfter){
+      this.route.navigateByUrl('login')
+    }
   }
 
   loggedIn(){
