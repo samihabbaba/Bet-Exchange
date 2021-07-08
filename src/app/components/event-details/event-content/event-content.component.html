@@ -149,7 +149,7 @@
                           )
                         }"
                       >
-                        <div class="bet-runner">
+                        <div class="bet-runner" *ngIf="this.sharedService.oddAvailableEventContent(item,selection,true)">
                           <span class="bet-btn-price">{{
                             this.sharedService.returnRunWithIndex(
                               item,
@@ -163,6 +163,14 @@
                             ).size
                           }}</span>
                         </div>
+
+                        <div class="bet-runner" *ngIf="!this.sharedService.oddAvailableEventContent(item,selection,true)">
+                          <fa-icon 
+                          [icon]="fontAwesomeIcons.lock"
+                       ></fa-icon>
+
+                        </div>
+                            
                       </button>
                     </td>
 
@@ -202,7 +210,7 @@
                           )
                         }"
                       >
-                        <div class="bet-runner">
+                        <div class="bet-runner" *ngIf="this.sharedService.oddAvailableEventContent(item,selection,false)">
                           <span class="bet-btn-price">{{
                             this.sharedService.returnRunWithIndex(
                               item,
@@ -218,6 +226,13 @@
                             ).size
                           }}</span>
                         </div>
+
+                        <div class="bet-runner" *ngIf="!this.sharedService.oddAvailableEventContent(item,selection,false)">
+                          <fa-icon 
+                          [icon]="fontAwesomeIcons.lock"
+                       ></fa-icon>
+                       </div>
+
                       </button>
                     </td>
 
