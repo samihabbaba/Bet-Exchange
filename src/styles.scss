@@ -32,7 +32,7 @@ app-root {
   height: 100%;
   width: 100%;
   box-sizing: border-box;
-  
+
 }
 
 app-main-content {
@@ -2949,3 +2949,36 @@ is smaller */
 }
 
 /* End Bet slip loader styles*/
+
+/* Notification Styles*/
+.snackSuccess {
+  font-weight: 500;
+  color: var(--white);
+  background-color: #10b759;
+  .mat-simple-snackbar-action {
+    color: var(--white);
+  }
+}
+
+.snackError {
+  font-weight: 500;
+  color: var(--white);
+  background-color: #ff3366;
+  .mat-simple-snackbar-action {
+    color: var(--white);
+  }
+}
+
+.snackInfo {
+  font-weight: 500;
+  color: var(--white);
+  background-color: var(--primary);
+  .mat-simple-snackbar-action {
+    color: var(--white);
+  }
+}
+/* End of notification styles */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
