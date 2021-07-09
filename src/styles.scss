@@ -1310,6 +1310,16 @@ input {
     }
   }
 
+  .total-liability {
+    margin-left: auto;
+    display: flex;
+    h1 {
+      font-size: 13px;
+      font-weight: 550;
+      align-self: center;
+    }
+  }
+
   .submit-btn {
     background: var(--primary);
     outline: 0;
