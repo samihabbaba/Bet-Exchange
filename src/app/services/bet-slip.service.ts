@@ -17,22 +17,11 @@ export class BetSlipService {
     runners?: any,
     run?: any
   ) {
-    console.log(eventName);
-    console.log(isBack);
-    console.log(market);
-    console.log(runners);
-    console.log(run);
-    // if (run?.price) {
-    let index = this.selectedBets.findIndex((x) =>
-        String(x.eventId) == String(eventName.event.eventId) &&
-        x.isBack == isBack &&
-        String(x.market.marketId) == String(market.marketId) &&
-        String(x.market.run.selectionId) == String(runners.selectionId) &&
-        x.market.run.runnerName == runners.description.runnerName + ' '+ this.returnSecondPartRunName(runners, market.description.marketName)
-        );
-    if (index > -1) {
-      this.selectedBets.splice(index, 1);
+    
+    if(!this.validOdd(market, runners, run)){
+      return;
     }
+
     let selection = {
       isBack: isBack,
       eventName: eventName.event.name,
@@ -50,15 +39,38 @@ export class BetSlipService {
       },
     };
 
-    if (!selection.isBack) {
-      this.selectedBets.push(selection);
-    } else {
-      let i = this.selectedBets.findIndex((x) => !x.isBack);
-      i === -1
-        ? this.selectedBets.push(selection)
-        : this.selectedBets.splice(i, 0, selection);
+    
+    let lastPrice = -1;
+    let lastSize = -1;
+    // if (run?.price) {
+    let index = this.selectedBets.findIndex((x) =>
+        String(x.eventId) == String(eventName.event.eventId) &&
+        x.isBack == isBack &&
+        String(x.market.marketId) == String(market.marketId) &&
+        String(x.market.run.selectionId) == String(runners.selectionId) &&
+        x.market.run.runnerName == runners.description.runnerName + ' '+ this.returnSecondPartRunName(runners, market.description.marketName)
+        );
+    if (index > -1) {
+      lastPrice = this.selectedBets[index].market.run.price;
+      lastSize = this.selectedBets[index].market.run.size;
+      this.selectedBets.splice(index, 1);
     }
-    // }
+    
+    if((lastPrice > -1 || lastSize > -1) && (selection.market.run.price == lastPrice && selection.market.run.size == lastSize )){
+      // do nothing
+    }
+    else{
+      if (!selection.isBack) {
+        this.selectedBets.push(selection);
+      } else {
+        let i = this.selectedBets.findIndex((x) => !x.isBack);
+        i === -1
+          ? this.selectedBets.push(selection)
+          : this.selectedBets.splice(i, 0, selection);
+      }
+    }
+
+
   }
 
   checkIfBetIsSelected(
@@ -76,8 +88,6 @@ export class BetSlipService {
         (runName ? x.market.run.runnerName == runName : true)
     );
   }
-
-
 
   returnSecondPartRunName(run:any, marketName:string):any{
 
@@ -123,4 +133,12 @@ export class BetSlipService {
     return LayLia + backLia;
   }
 
+  validOdd(market:any, runners:any, run:any){
+debugger
+    if(!run || !run.price || !run.size || run.price == '' || run.size == ''){
+      return false;
+    }
+    
+    return true;
+  }
 }
