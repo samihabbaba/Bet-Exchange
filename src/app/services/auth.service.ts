@@ -4,6 +4,7 @@ import { DataService } from './data.service';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ import { Router } from '@angular/router';
 export class AuthService {
 
   constructor(private http:HttpClient, private dataService:DataService,
-    private route:Router
+    private route:Router,
+    private notificationService: NotificationService
     ) { }
 
   
@@ -50,11 +52,13 @@ export class AuthService {
         }
         else{
           this.logInSuccess = false;
+          this.notificationService.error('Wrong Username Or Password',5000);
         }
 
       },
       (error) => {
         this.logInSuccess = false;
+        this.notificationService.error('Wrong Username Or Password',5000);
       }
     );
   }

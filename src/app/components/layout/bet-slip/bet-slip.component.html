@@ -52,8 +52,8 @@
             </div>
 
             <div class="bet-item-inputs-container">
-              <div class="bet-item-match-odd">
-                <input [value]="bet.market.run.price" />
+              <div class="bet-item-match-odd" >
+                <input [value]="bet.market.run.price" type="number" />
               </div>
               <div class="bet-item-match-stake">
                 <input
@@ -65,7 +65,7 @@
                 />
               </div>
               <div class="bet-item-profit">
-                <span #betItemProfit>{{ bet.liability }}</span>
+                <span #betItemProfit>{{ this.sharedFunctionsService.formatNumber(bet.liability) }}</span>
               </div>
             </div>
           </div>
@@ -187,7 +187,9 @@
       >
         Reset
       </button>
-      <div class="total-liability"><h1>Liability:&nbsp;{{1234}}</h1></div>
+      <div class="total-liability"
+      *ngIf="this.betSlipService.calculateAllLiability() > 0"
+      ><h1>Liability:&nbsp;{{this.sharedFunctionsService.formatNumber( this.betSlipService.calculateAllLiability() )}}</h1></div>
       <button
         class="submit-btn"
         (click)="submitBets()"
