@@ -134,7 +134,7 @@ export class BetSlipService {
   }
 
   validOdd(market:any, runners:any, run:any){
-debugger
+
     if(!run || !run.price || !run.size || run.price == '' || run.size == ''){
       return false;
     }
