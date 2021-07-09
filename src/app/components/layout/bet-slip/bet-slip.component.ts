@@ -10,7 +10,8 @@ import { NotificationService } from 'src/app/services/notification.service';
   styleUrls: ['./bet-slip.component.css'],
 })
 export class BetSlipComponent implements OnInit {
-  currentOpenBets: any[] = [];
+  openBetsSelectOptions: any[] = ['Bet1', 'Bet2'];
+  selectedOpenBet: any = 'Bet1';
   tabToDisplay: any = 'Singles';
   @ViewChild('singles') singlesTab?: ElementRef;
   @ViewChild('openBets') openBetsTab?: ElementRef;
@@ -33,7 +34,7 @@ export class BetSlipComponent implements OnInit {
 
   resetBets() {
     this.betSlipService.selectedBets = [];
-    this.notificationService.info('1332');
+    this.notificationService.success('1332');
   }
 
   submitBets() {

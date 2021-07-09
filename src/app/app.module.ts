@@ -26,6 +26,8 @@ import { CloseAppMenuDirective } from './directives/close-app-menu.directive';
 import { CloseBetSlipDirective } from './directives/close-bet-slip.directive';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatSelectModule} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 
 
@@ -60,7 +62,9 @@ import {MatExpansionModule} from '@angular/material/expansion';
     FormsModule,
     HttpClientModule,
     MatSnackBarModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSelectModule,
+    MatFormFieldModule
   ],
   providers: [],
   bootstrap: [AppComponent],

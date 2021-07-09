@@ -6,7 +6,7 @@ import { BetSlip } from '../models/bet-slip';
 })
 export class BetSlipService {
   selectedBets: BetSlip[] = [];
-  currentOpenBets: any[] = [];
+  currentOpenBets: any[] = ['1', '12'];
 
   constructor() {}
 
@@ -23,7 +23,7 @@ export class BetSlipService {
     console.log(runners);
     console.log(run);
     // if (run?.price) {
-    let index = this.selectedBets.findIndex((x) => 
+    let index = this.selectedBets.findIndex((x) =>
         String(x.eventId) == String(eventName.event.eventId) &&
         x.isBack == isBack &&
         String(x.market.marketId) == String(market.marketId) &&
@@ -68,11 +68,11 @@ export class BetSlipService {
     isBack = false,
     runName?:any,
   ) {
-    return this.selectedBets.some((x) => 
+    return this.selectedBets.some((x) =>
         x.market.run.selectionId === selectionId &&
         x.isBack === isBack &&
         x.market.marketId === marketId &&
-        x.eventId === eventId &&  
+        x.eventId === eventId &&
         (runName ? x.market.run.runnerName == runName : true)
     );
   }
@@ -114,7 +114,7 @@ export class BetSlipService {
     let LayBets = this.selectedBets.filter(x=>!x.isBack);
 
     let backLia = backBets.reduce((backLia, b) => backLia + b.liability,0);
-    
+
     let LayLia = 0;
     if(LayBets.length > 0){
     LayLia = LayBets.reduce((a, b) => a.liability > b.liability? a:b).liability;
@@ -122,5 +122,5 @@ export class BetSlipService {
 
     return LayLia + backLia;
   }
-  
+
 }

@@ -24,7 +24,6 @@
         #openBets
         (click)="handleTabClick($event); $event.stopPropagation()"
       >
-
         <h1>Open Bets</h1>
       </div>
     </div>
@@ -66,161 +65,101 @@
                 />
               </div>
               <div class="bet-item-profit">
-                <span #betItemProfit>{{bet.liability}}</span>
+                <span #betItemProfit>{{ bet.liability }}</span>
               </div>
             </div>
           </div>
 
           <div class="bet-item-bottom-row">
-            <button class="bet-item-set-value" *ngFor="let stake of stakeOptions" (click)="setStakeForBet(bet,stake)">{{stake}}</button>
+            <button
+              class="bet-item-set-value"
+              *ngFor="let stake of stakeOptions"
+              (click)="setStakeForBet(bet, stake)"
+            >
+              {{ stake }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-            <!-- <button class="bet-item-set-value">10</button>
-            <button class="bet-item-set-value">20</button>
-            <button class="bet-item-set-value">50</button>
-            <button class="bet-item-set-value">100</button>
-            <button class="bet-item-set-value">200</button>
-            <button class="bet-item-set-value">500</button> -->
+    <div
+      *ngIf="
+        this.tabToDisplay == 'Open' &&
+        this.betSlipService.currentOpenBets.length > 0
+      "
+    >
+      <mat-form-field appearance="legacy" class="open-bets-select">
+        <!-- <mat-label>Favorite food</mat-label> -->
+        <mat-select [(ngModel)]="selectedOpenBet" name="food">
+          <mat-option
+            *ngFor="let selectedBet of openBetsSelectOptions"
+            [value]="selectedBet"
+          >
+            {{ selectedBet }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="unmatched-bets"><span>WAITING (UNMATCHED)</span></div>
+      <div
+        *ngFor="
+          let openBet of this.betSlipService.currentOpenBets;
+          let i = index
+        "
+      >
+        <div class="open-bets-waiting-match back">
+          <div class="top-row">
+            <div class="remove-bet-btn">
+              <fa-icon
+                [icon]="fontAwesomeIcons.exit"
+                class="delete-icon"
+              ></fa-icon>
+            </div>
+            <div class="open-bets-title">
+              <h1>Belgium vs Brazil</h1>
+              <h2>Match Odds</h2>
+            </div>
+            <div class="open-bets-odds">
+              <input type="number" value="2" />
+              <span><p>2</p> </span>
+              <span><p>25</p> </span>
+            </div>
+          </div>
+          <div class="bottom-row">
+            <h1>At In-Play</h1>
+            <div class="cancel-checkbox">
+              <input type="radio" id="cancel" name="cancel" />
+              <label for="cancel">Cancel</label>
+            </div>
+
+            <div class="keep-checkbox">
+              <input type="radio" id="keep" name="keep" />
+              <label for="keep">Keep</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="matched-bets"><span>PLACED (MATCHED)</span></div>
+      <div
+        *ngFor="
+          let openBet of this.betSlipService.currentOpenBets;
+          let i = index
+        "
+      >
+        <div class="open-bets-placed-match lay">
+          <div class="matched-bet-title">
+            <h1>Amro vs Ibrahim</h1>
+            <h2>UFC</h2>
+          </div>
+          <div class="matched-bet-odds">
+            <span><p>2</p></span>
+            <span><p>2</p></span>
+            <span><p>20</p></span>
           </div>
         </div>
       </div>
     </div>
-    <!--
-  <div class="lay-section">
-    <div class="lay-header">
-      <div class="inner-lay-header">
-        <div class="lay-header-title">Back (Bet For)</div>
-        <div class="lay-header-other">
-          <div class="bet-odds">Odds</div>
-          <div class="bet-stake">Stake</div>
-          <div class="bet-profit">Profit</div>
-        </div>
-      </div>
-    </div>
-    <div class="lay-items">
-      <div class="lay-item">
-        <div class="icon-wrapper">
-          <fa-icon
-            [icon]="fontAwesomeIcons.exit"
-            class="main-icon clickable"
-          ></fa-icon>
-        </div>
-        <div class="bet-team-name">Bercelona</div>
-        <div class="lay-items-other">
-          <div class="bet-odds-input">
-            <input type="text" name="odds" />
-          </div>
-          <div class="bet-stake-input">
-            <input type="text" name="stake" />
-          </div>
-          <div class="bet-profit-output">0</div>
-        </div>
-      </div>
-      <div class="back-item">
-        <div class="icon-wrapper">
-          <fa-icon
-            [icon]="fontAwesomeIcons.exit"
-            class="main-icon clickable"
-          ></fa-icon>
-        </div>
-        <div class="bet-team-name">Bercelona</div>
-        <div class="back-items-other">
-          <div class="bet-odds-input">
-            <input type="text" name="odds" />
-          </div>
-          <div class="bet-stake-input">
-            <input type="text" name="stake" />
-          </div>
-          <div class="bet-profit-output">0</div>
-        </div>
-      </div>
-      <div class="back-item">
-        <div class="icon-wrapper">
-          <fa-icon
-            [icon]="fontAwesomeIcons.exit"
-            class="main-icon clickable"
-          ></fa-icon>
-        </div>
-        <div class="bet-team-name">Bercelona</div>
-        <div class="back-items-other">
-          <div class="bet-odds-input">
-            <input type="text" name="odds" />
-          </div>
-          <div class="bet-stake-input">
-            <input type="text" name="stake" />
-          </div>
-          <div class="bet-profit-output">0</div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="back-section">
-    <div class="back-header">
-      <div class="inner-back-header">
-        <div class="back-header-title">Back (Bet For)</div>
-        <div class="back-header-other">
-          <div class="bet-odds">Odds</div>
-          <div class="bet-stake">Stake</div>
-          <div class="bet-profit">Profit</div>
-        </div>
-      </div>
-    </div>
-    <div class="back-items">
-      <div class="back-item">
-        <div class="icon-wrapper">
-          <fa-icon
-            [icon]="fontAwesomeIcons.exit"
-            class="main-icon clickable"
-          ></fa-icon>
-        </div>
-        <div class="bet-team-name">Bercelona</div>
-        <div class="back-items-other">
-          <div class="bet-odds-input">
-            <input type="text" name="odds" />
-          </div>
-          <div class="bet-stake-input">
-            <input type="text" name="stake" />
-          </div>
-          <div class="bet-profit-output">0</div>
-        </div>
-      </div>
-      <div class="back-item">
-        <div class="icon-wrapper">
-          <fa-icon
-            [icon]="fontAwesomeIcons.exit"
-            class="main-icon clickable"
-          ></fa-icon>
-        </div>
-        <div class="bet-team-name">Bercelona</div>
-        <div class="back-items-other">
-          <div class="bet-odds-input">
-            <input type="text" name="odds" />
-          </div>
-          <div class="bet-stake-input">
-            <input type="text" name="stake" />
-          </div>
-          <div class="bet-profit-output">0</div>
-        </div>
-      </div>
-      <div class="back-item">
-        <div class="icon-wrapper">
-          <fa-icon
-            [icon]="fontAwesomeIcons.exit"
-            class="main-icon clickable"
-          ></fa-icon>
-        </div>
-        <div class="bet-team-name">Bercelona</div>
-        <div class="back-items-other">
-          <div class="bet-odds-input">
-            <input type="text" name="odds" />
-          </div>
-          <div class="bet-stake-input">
-            <input type="text" name="stake" />
-          </div>
-          <div class="bet-profit-output">0</div>
-        </div>
-      </div>
-    </div>
-  </div> -->
 
     <div *ngIf="this.tabToDisplay == 'Singles'">
       <div
@@ -254,6 +193,20 @@
         [ngClass]="{ disabled: this.betSlipService.selectedBets.length < 1 }"
       >
         Submit
+      </button>
+    </div>
+
+
+    <div class="bet-slip-buttons" *ngIf="this.tabToDisplay == 'Open'">
+      <button
+        class="reset-btn"
+      >
+        Cancel All Unmatched
+      </button>
+      <button
+        class="submit-btn"
+      >
+        Update
       </button>
     </div>
   </div>
