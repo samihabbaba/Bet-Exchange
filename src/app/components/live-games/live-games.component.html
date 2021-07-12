@@ -115,7 +115,8 @@
               event.markets[0],
               event.markets[0].runners[0],
               this.sharedService.returnHighestBet(
-                this.sharedService.getLayObj(event, 0)
+                this.sharedService.getLayObj(event, 0),
+                false
               )
             )
           "
@@ -126,7 +127,8 @@
             >
               {{
                 this.sharedService.returnHighestBet(
-                  this.sharedService.getLayObj(event, 0)
+                  this.sharedService.getLayObj(event, 0),
+                  false
                 ).price
               }}
             </ng-container>
@@ -142,7 +144,8 @@
             >
               {{
                 this.sharedService.returnHighestBet(
-                  this.sharedService.getLayObj(event, 0)
+                  this.sharedService.getLayObj(event, 0),
+                  false
                 ).size
               }}
             </ng-container>
@@ -230,7 +233,8 @@
               event.markets[0],
               event.markets[0].runners[1],
               this.sharedService.returnHighestBet(
-                this.sharedService.getLayObj(event, 1)
+                this.sharedService.getLayObj(event, 1),
+                false
               )
             )
           "
@@ -241,7 +245,8 @@
             >
               {{
                 this.sharedService.returnHighestBet(
-                  this.sharedService.getLayObj(event, 1)
+                  this.sharedService.getLayObj(event, 1),
+                  false
                 ).price
               }}
             </ng-container>
@@ -257,7 +262,8 @@
             >
               {{
                 this.sharedService.returnHighestBet(
-                  this.sharedService.getLayObj(event, 1)
+                  this.sharedService.getLayObj(event, 1),
+                  false
                 ).size
               }}
             </ng-container>
@@ -344,7 +350,8 @@
               event.markets[0],
               event.markets[0].runners[2],
               this.sharedService.returnHighestBet(
-                this.sharedService.getLayObj(event, 2)
+                this.sharedService.getLayObj(event, 2),
+                false
               )
             )
           "
@@ -355,7 +362,8 @@
             >
               {{
                 this.sharedService.returnHighestBet(
-                  this.sharedService.getLayObj(event, 2)
+                  this.sharedService.getLayObj(event, 2),
+                  false
                 ).price
               }}
             </ng-container>
@@ -371,7 +379,8 @@
             >
               {{
                 this.sharedService.returnHighestBet(
-                  this.sharedService.getLayObj(event, 2)
+                  this.sharedService.getLayObj(event, 2),
+                  false
                 ).size
               }}
             </ng-container>

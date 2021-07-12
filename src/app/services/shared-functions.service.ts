@@ -39,18 +39,32 @@ export class SharedFunctionsService {
     }
   }
 
-  returnHighestBet(bets:any){
+  returnHighestBet(bets:any, isBack = true){
     if(bets == null){
         return null;
       }
-    let maxPrice =  Math.max.apply(Math, bets.map(function(o:any) { return o.price; }))
-    let index = bets.findIndex((x:any) => x.price === maxPrice);
-    if(index != -1){
-      return bets[index];
+      if(isBack){
+        let maxPrice =  Math.max.apply(Math, bets.map(function(o:any) { return o.price; }))
+        let index = bets.findIndex((x:any) => x.price === maxPrice);
+        if(index != -1){
+          return bets[index];
+          }
+        else{
+          return null
+          }
       }
-    else{
-      return null
+      else
+      {
+        let maxPrice =  Math.min.apply(Math, bets.map(function(o:any) { return o.price; }))
+        let index = bets.findIndex((x:any) => x.price === maxPrice);
+        if(index != -1){
+          return bets[index];
+          }
+        else{
+          return null
+          }
       }
+    
   }
 
   getBackObj(obj:any,index:number){
@@ -283,7 +297,7 @@ export class SharedFunctionsService {
         }
       }
       else{
-        if(this.returnHighestBet( this.getLayObj(obj, index)) === null){
+        if(this.returnHighestBet( this.getLayObj(obj, index),false) === null){
           return false;
         }
         else{
