@@ -34,7 +34,6 @@ export class BetSlipComponent implements OnInit {
 
   resetBets() {
     this.betSlipService.selectedBets = [];
-    this.notificationService.success('1332');
   }
 
   submitBets() {
