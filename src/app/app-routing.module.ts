@@ -6,9 +6,23 @@ import { EventDetailsComponent } from './components/event-details/event-details.
 import { RouteGuard } from './route.guard';
 
 const routes: Routes = [
-  { path: '', component: MainContentComponent, canActivate:[RouteGuard] },
-  { path: 'home', component: MainContentComponent, canActivate:[RouteGuard]},
+  { path: '', component: MainContentComponent, canActivate: [RouteGuard] },
+  { path: 'home', component: MainContentComponent, canActivate: [RouteGuard] },
   { path: 'login', component: LoginComponent },
+  {
+    path: 'super',
+    loadChildren: () =>
+      import('./super-account/super-account.module').then(
+        (m) => m.SuperAccountModule
+      ),
+  },
+  {
+    path: 'master',
+    loadChildren: () =>
+      import('./master-account/master-account.module').then(
+        (m) => m.MasterAccountModule
+      ),
+  },
   // { path: 'login', component: LoginComponent, outlet: 'auth' },
 ];
 

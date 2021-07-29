@@ -13,12 +13,12 @@ export class RouteGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    // return true;
-      let canRoute = this.authService.loggedIn();
-      if(!canRoute){
-        this.router.navigateByUrl('login')
-      }
-    return canRoute;
+    return true;
+    //   let canRoute = this.authService.loggedIn();
+    //   if(!canRoute){
+    //     this.router.navigateByUrl('login')
+    //   }
+    // return canRoute;
   }
-  
+
 }

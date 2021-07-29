@@ -7,7 +7,7 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { LayoutService } from 'src/app/services/layout.service';
@@ -26,7 +26,8 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private layoutService: LayoutService,
     private dataService: DataService,
-    public authService:AuthService
+    public authService: AuthService,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {}
@@ -38,7 +39,7 @@ export class HeaderComponent implements OnInit {
   displayPreGames() {
     // this.layoutService.displayPreGames();
     this.dataService.loadPreGamesFromHeader(
-    this.layoutService.getCurrentSport()?.id
+      this.layoutService.getCurrentSport()?.id
     );
   }
 
@@ -58,7 +59,7 @@ export class HeaderComponent implements OnInit {
       this.removeClassFromLanguagesButton();
       event.target.firstChild.classList.contains('english')
         ? this.languageBtn?.nativeElement.classList.add('english')
-        : this.languageBtn?.nativeElement.classList.add('turkish');  
+        : this.languageBtn?.nativeElement.classList.add('turkish');
     }
   }
 
@@ -67,4 +68,5 @@ export class HeaderComponent implements OnInit {
       ? this.languageBtn?.nativeElement.classList.remove('english')
       : this.languageBtn?.nativeElement.classList.remove('turkish');
   }
+
 }

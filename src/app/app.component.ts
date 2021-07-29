@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { BetSlipService } from './services/bet-slip.service';
 import { DataService } from './services/data.service';
@@ -19,17 +19,17 @@ export class AppComponent implements OnInit {
 
   constructor(
     public router: Router,
+    private activatedRoute: ActivatedRoute,
     // private dataService: DataService,
     private layoutService: LayoutService,
-    public authService:AuthService
+    public authService: AuthService
   ) {}
   ngOnInit(): void {
     this.initializeSubscriptions();
-    
+
     // if(!this.authService.loggedIn()){
     //   this.router.navigateByUrl('login');
     // }
-
   }
 
   initializeSubscriptions() {
@@ -44,5 +44,17 @@ export class AppComponent implements OnInit {
     this.layoutService.menuLoading.subscribe((value) => {
       this.menuLoading = value;
     });
+  }
+
+  checkForRoute() {
+    if (
+      this.router.url.includes('super') ||
+      this.router.url.includes('master') ||
+      this.router.url.includes('login')
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

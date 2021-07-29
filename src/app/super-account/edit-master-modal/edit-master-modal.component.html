@@ -1,0 +1,140 @@
+<h2 mat-dialog-title>Edit Master</h2>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="editMasterForm">
+    <div class="cs-modal-form-field-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Email" formControlName="email" required />
+        <mat-error *ngIf="form.email.invalid"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Username</mat-label>
+        <input
+          matInput
+          placeholder="Username"
+          formControlName="username"
+          required
+        />
+        <mat-error *ngIf="form.username.invalid"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>FirstName</mat-label>
+        <input
+          matInput
+          placeholder="FirstName"
+          formControlName="firstName"
+          required
+        />
+        <mat-error *ngIf="form.firstName.invalid"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>LastName</mat-label>
+        <input
+          matInput
+          placeholder="LastName"
+          formControlName="lastName"
+          required
+        />
+        <mat-error *ngIf="form.lastName.invalid"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          placeholder="Password"
+          formControlName="password"
+          required
+        />
+        <mat-error *ngIf="form.password.invalid"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Confirm Password</mat-label>
+        <input
+          matInput
+          placeholder="Confirm Password"
+          formControlName="confirmPassword"
+          required
+        />
+        <mat-error *ngIf="form.confirmPassword.invalid"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Phone</mat-label>
+        <input matInput placeholder="Phone" formControlName="phone" required />
+        <mat-error *ngIf="form.phone.invalid"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Commission</mat-label>
+        <input
+          matInput
+          placeholder="Commission"
+          formControlName="commission"
+          required
+        />
+        <mat-error *ngIf="form.commission.invalid"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>PT</mat-label>
+        <mat-select formControlName="pt" required>
+          <mat-option value="option">Option</mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.pt.invalid">This field is required.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>PT Limit</mat-label>
+        <mat-select formControlName="ptLimit" required>
+          <mat-option value="option">Option</mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.ptLimit.invalid"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Forced PT</mat-label>
+        <mat-select formControlName="forcedPt" required>
+          <mat-option value="option">Option</mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.forcedPt.invalid"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button
+    color="primary"
+    mat-button
+    [mat-dialog-close]="true"
+    cdkFocusInitial
+    [disabled]="!this.editMasterForm.valid"
+  >
+    Edit Master
+  </button>
+</mat-dialog-actions>
