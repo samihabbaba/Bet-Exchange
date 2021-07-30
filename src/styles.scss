@@ -28,6 +28,16 @@
 
 * {
   box-sizing: border-box;
+
+  ::-moz-selection { /* Code for Firefox */
+    // color: red;
+    background: var(--primary);
+  }
+
+  ::selection {
+    // color: red;
+    background: var(--primary);
+  }
 }
 
 app-root {
@@ -3227,7 +3237,7 @@ is smaller */
 }
 /* End of notification styles */
 
-/* Start of su\per & master user styles */
+/* Start of super & master user styles */
 
 .mat-theme-primary {
   background-color: var(--primary);
@@ -3301,6 +3311,7 @@ mat-drawer-content {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  overflow: hidden;
 }
 
 table {
@@ -3312,12 +3323,21 @@ table {
   width: 100%;
 }
 
+
 td,
 th,
 tr {
   width: 90px;
-  min-width: 90px;
+  // min-width: 90px;
   vertical-align: middle;
+}
+
+.mat-calendar-body {
+  td, th, tr {
+    // display: inline-block !important;
+    width: inherit !important;
+    min-width: none !important;
+  }
 }
 
 tbody {
@@ -3355,6 +3375,59 @@ tr.mat-footer-row {
     grid-template-columns: 1fr;
   }
 }
+
+mat-button-toggle-group {
+  font-size: 15px;
+}
+
+app-super-account {
+  min-width: 950px;
+  display: block;
+}
+
+.cs-super-profile-account-name {
+  margin-left: auto !important;
+}
+
+/*Summary section */
+
+.cs-summary-card-container {
+  padding-top: 20px;
+  font-size: 16px;
+  height: 100%;
+  padding-left: 20px;
+  mat-card {
+    width: max-content;
+
+  }
+}
+
+.cs-summary-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  div {
+    padding-top: 8px;
+    span {
+      font-weight: 600;
+    }
+  }
+}
+/*End of Summary section */
+
+/* Change password section*/
+.cs-super-change-password-form {
+  display: flex;
+  // flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  mat-form-field {
+    padding: 8px;
+  }
+}
+
+
+/* End of change password section*/
 
 /* End of super & master user styles  */
 

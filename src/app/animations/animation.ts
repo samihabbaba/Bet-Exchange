@@ -30,6 +30,20 @@ export function fadeMenuAndSlip(): AnimationTriggerMetadata {
     ]),
   ]);
 }
+
+export function contentInOut(): AnimationTriggerMetadata {
+  return trigger('contentInOut', [
+    transition(':enter', [
+      style({ height: 0, opacity: 0 }),
+      animate('.4s ease-out', style({ height: 250, opacity: 1 })),
+    ]),
+    transition(':leave', [
+      style({ height: 250, opacity: 1 }),
+      animate('.4s ease-in', style({ height: 0, opacity: 0 })),
+    ]),
+  ]);
+}
+
 export function listAnimation(): AnimationTriggerMetadata {
   return trigger('listAnimation', [
     transition('* <=> *', [
