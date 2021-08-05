@@ -1,0 +1,48 @@
+<h2 mat-dialog-title>Limit Exposure</h2>
+<mat-dialog-content class="mat-typography">
+  <!-- <h3>Available Balance: {{data.balance}}</h3> -->
+  <form [formGroup]="exposureForm">
+    <div class="cs-modal-form-field-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Exposure</mat-label>
+        <input
+          matInput
+          placeholder="Exposure"
+          formControlName="exposure"
+          required
+        />
+        <mat-error *ngIf="form.exposure.invalid"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          placeholder="Password"
+          formControlName="password"
+          required
+        />
+        <mat-error *ngIf="form.password.invalid"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+
+    </div>
+
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button
+    color="primary"
+    mat-button
+    [mat-dialog-close]="true"
+    cdkFocusInitial
+    [disabled]="!this.exposureForm.valid"
+  >
+    Save
+  </button>
+</mat-dialog-actions>

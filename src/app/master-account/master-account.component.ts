@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-master-account',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MasterAccountComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+
+  goToProfile() {
+    this.router.navigate([`master/details`])
+  }
+
+  goToPlayersTable() {
+    this.router.navigate([`master/players`])
   }
 
 }

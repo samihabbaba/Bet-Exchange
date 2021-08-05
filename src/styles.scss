@@ -29,7 +29,8 @@
 * {
   box-sizing: border-box;
 
-  ::-moz-selection { /* Code for Firefox */
+  ::-moz-selection {
+    /* Code for Firefox */
     // color: red;
     background: var(--primary);
   }
@@ -3323,7 +3324,6 @@ table {
   width: 100%;
 }
 
-
 td,
 th,
 tr {
@@ -3333,7 +3333,9 @@ tr {
 }
 
 .mat-calendar-body {
-  td, th, tr {
+  td,
+  th,
+  tr {
     // display: inline-block !important;
     width: inherit !important;
     min-width: none !important;
@@ -3397,8 +3399,8 @@ app-super-account {
   height: 100%;
   padding-left: 20px;
   mat-card {
-    width: max-content;
-
+    width: 100%;
+    // width: max-content;
   }
 }
 
@@ -3426,8 +3428,15 @@ app-super-account {
   }
 }
 
-
 /* End of change password section*/
+
+/* Master User Styles */
+app-master-account {
+  min-width: 950px;
+  display: block;
+}
+
+/* End of Master User Styles */
 
 /* End of super & master user styles  */
 

@@ -1,1 +1,30 @@
-<p>master-account works!</p>
+<mat-toolbar color="theme-primary">
+  <!-- <button mat-icon-button (click)="drawer.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button> -->
+  <span
+
+    ><img
+    (click)="goToPlayersTable()"
+      src="../../../../assets/images/cloudExchange.png"
+      class="logo cs-super-toolbar-logo"
+  /></span>
+  <span class="cs-toolbar-spacer"></span>
+  <span class="cs-super-balance">Balance: 100.00$</span>
+  <button mat-icon-button matTooltip="Home" (click)="goToPlayersTable()">
+    <mat-icon>home</mat-icon>
+  </button>
+  <button mat-icon-button matTooltip="Profile" (click)="goToProfile()">
+    <mat-icon>person</mat-icon>
+  </button>
+  <button mat-icon-button matTooltip="Log Out">
+    <mat-icon>exit_to_app</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-drawer-container class="cs-mat-drawer-container" [hasBackdrop]="true">
+  <mat-drawer #drawer mode="over" [opened]="false">Fuck</mat-drawer>
+  <mat-drawer-content>
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>

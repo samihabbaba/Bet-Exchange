@@ -1,0 +1,142 @@
+<h2 mat-dialog-title>Add Player</h2>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="addPlayerForm">
+    <div class="cs-modal-form-field-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Email" formControlName="email" required />
+        <mat-error *ngIf="form.email.invalid"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Username</mat-label>
+        <input
+          matInput
+          placeholder="Username"
+          formControlName="username"
+          required
+        />
+        <mat-error *ngIf="form.username.invalid"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>FirstName</mat-label>
+        <input
+          matInput
+          placeholder="FirstName"
+          formControlName="firstName"
+          required
+        />
+        <mat-error *ngIf="form.firstName.invalid"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>LastName</mat-label>
+        <input
+          matInput
+          placeholder="LastName"
+          formControlName="lastName"
+          required
+        />
+        <mat-error *ngIf="form.lastName.invalid"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          placeholder="Password"
+          formControlName="password"
+          required
+        />
+        <mat-error *ngIf="form.password.invalid"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Confirm Password</mat-label>
+        <input
+          matInput
+          placeholder="Confirm Password"
+          formControlName="confirmPassword"
+          required
+        />
+        <mat-error *ngIf="form.confirmPassword.invalid"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Phone</mat-label>
+        <input matInput placeholder="Phone" formControlName="phone" required />
+        <mat-error *ngIf="form.phone.invalid"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Exposure</mat-label>
+        <input
+          matInput
+          placeholder="Exposure"
+          formControlName="exposure"
+          required
+        />
+        <mat-error *ngIf="form.exposure.invalid"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Commission</mat-label>
+        <input
+          matInput
+          placeholder="Commission"
+          formControlName="commission"
+          required
+        />
+        <mat-error *ngIf="form.commission.invalid"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>PT</mat-label>
+        <mat-select formControlName="pt" required>
+          <mat-option value="option">Option</mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.pt.invalid">This field is required.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Comment</mat-label>
+        <input
+          matInput
+          placeholder="Comment"
+          formControlName="comment"
+        />
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button
+    color="primary"
+    mat-button
+    [mat-dialog-close]="true"
+    cdkFocusInitial
+    [disabled]="!this.addPlayerForm.valid"
+  >
+    Add Player
+  </button>
+</mat-dialog-actions>
