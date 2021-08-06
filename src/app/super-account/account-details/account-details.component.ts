@@ -1,5 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatButtonToggleGroup } from '@angular/material/button-toggle';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -9,7 +14,7 @@ import { contentInOut } from 'src/app/animations/animation';
   selector: 'app-account-details',
   templateUrl: './account-details.component.html',
   styleUrls: ['./account-details.component.css'],
-  animations: [contentInOut()]
+  animations: [contentInOut()],
 })
 export class AccountDetailsComponent implements OnInit {
   @ViewChild('profile') profile?: any;
@@ -23,7 +28,7 @@ export class AccountDetailsComponent implements OnInit {
 
   range = new FormGroup({
     start: new FormControl(),
-    end: new FormControl()
+    end: new FormControl(),
   });
   // Change Password Section
   changePasswordForm?: any;
@@ -50,6 +55,45 @@ export class AccountDetailsComponent implements OnInit {
   ];
   pLData = new MatTableDataSource<any>(PL);
 
+  // Total PL Section
+  displayedColumnstotalPL: string[] = [
+    'user',
+    'pl',
+    'mpl',
+    'pt',
+    'commission',
+    'currentCommission',
+    'total',
+    'mTotal',
+  ];
+  totalPLData = new MatTableDataSource<any>(totalPL);
+
+  // Total Casino Section
+  displayedColumnsCasinoTotal: string[] = [
+    'user',
+    'pl',
+    'mpl',
+    'pt',
+    'commission',
+    'currentCommission',
+    'total',
+    'mTotal',
+  ];
+  casinoTotalData = new MatTableDataSource<any>(casinoTotal);
+
+  // Transactions Section
+  displayedColumnstTransactions: string[] = [
+    'date',
+    'transactionNo',
+    'transactionTypes',
+    'debits',
+    'credits',
+    'balance',
+    'comment',
+    'fromTo',
+  ];
+  transactionsData = new MatTableDataSource<any>(transactions);
+
   constructor(private fb: FormBuilder) {}
   ngOnInit(): void {
     this.changePasswordForm = this.fb.group({
@@ -66,6 +110,19 @@ const FORECAST: any[] = [
 
 const PL: any[] = [
   {
+    user: 'Sami',
+    pl: 20.5,
+    mpl: 1.0079,
+    pt: 50,
+    commission: 0.5,
+    currentCommission: 4,
+    total: 18.5,
+    mTotal: 19,
+  },
+];
+
+const totalPL: any[] = [
+  {
     user: 'Amro',
     pl: 20.5,
     mpl: 1.0079,
@@ -77,3 +134,28 @@ const PL: any[] = [
   },
 ];
 
+const casinoTotal: any[] = [
+  {
+    user: 'Some',
+    pl: 20.5,
+    mpl: 1.0079,
+    pt: 50,
+    commission: 0.5,
+    currentCommission: 4,
+    total: 18.5,
+    mTotal: 19,
+  },
+];
+
+const transactions: any[] = [
+  {
+    date: '29/07/2001',
+    transactionNo: 21421,
+    transactionTypes: 'System/Internal',
+    debits: 200,
+    credits: 500,
+    balance: 220,
+    comment: 'test',
+    fromTo: 'test -> testing',
+  },
+];

@@ -51,6 +51,45 @@ export class MasterDetailsComponent implements OnInit {
   ];
   pLData = new MatTableDataSource<any>(PL);
 
+    // Total PL Section
+    displayedColumnstotalPL: string[] = [
+      'user',
+      'pl',
+      'mpl',
+      'pt',
+      'commission',
+      'currentCommission',
+      'total',
+      'mTotal',
+    ];
+    totalPLData = new MatTableDataSource<any>(totalPL);
+
+    // Total Casino Section
+    displayedColumnsCasinoTotal: string[] = [
+      'user',
+      'pl',
+      'mpl',
+      'pt',
+      'commission',
+      'currentCommission',
+      'total',
+      'mTotal',
+    ];
+    casinoTotalData = new MatTableDataSource<any>(casinoTotal);
+
+    // Transactions Section
+    displayedColumnstTransactions: string[] = [
+      'date',
+      'transactionNo',
+      'transactionTypes',
+      'debits',
+      'credits',
+      'balance',
+      'comment',
+      'fromTo',
+    ];
+    transactionsData = new MatTableDataSource<any>(transactions);
+
   constructor(private fb: FormBuilder) {}
   ngOnInit(): void {
     this.changePasswordForm = this.fb.group({
@@ -77,5 +116,46 @@ const PL: any[] = [
     currentCommission: 4,
     total: 18.5,
     mTotal: 19,
+  },
+];
+
+
+
+const totalPL: any[] = [
+  {
+    user: 'Amro',
+    pl: 20.5,
+    mpl: 1.0079,
+    pt: 50,
+    commission: 0.5,
+    currentCommission: 4,
+    total: 18.5,
+    mTotal: 19,
+  },
+];
+
+const casinoTotal: any[] = [
+  {
+    user: 'Some',
+    pl: 20.5,
+    mpl: 1.0079,
+    pt: 50,
+    commission: 0.5,
+    currentCommission: 4,
+    total: 18.5,
+    mTotal: 19,
+  },
+];
+
+const transactions: any[] = [
+  {
+    date: '29/07/2001',
+    transactionNo: 21421,
+    transactionTypes: 'System/Internal',
+    debits: 200,
+    credits: 500,
+    balance: 220,
+    comment: 'test',
+    fromTo: 'test -> testing',
   },
 ];
