@@ -58,7 +58,7 @@
       </th>
       <td mat-cell *matCellDef="let row">
         <input
-        min="0"
+          min="0"
           type="number"
           (click)="$event.stopPropagation()"
           style="width: 40%"
@@ -74,7 +74,7 @@
         </button>
 
         <mat-menu #menu2="matMenu" yPosition="above">
-          <mat-button-toggle-group name="selection">
+          <mat-button-toggle-group name="selection" value="deposit">
             <mat-button-toggle
               value="deposit"
               (click)="$event.stopPropagation()"
@@ -87,7 +87,12 @@
             >
           </mat-button-toggle-group>
 
-          <button  mat-menu-item (click)="$event.stopPropagation()">
+          <button
+            style="margin-left: 2px"
+            color="primary"
+            mat-stroked-button
+            (click)="$event.stopPropagation()"
+          >
             Full
           </button>
         </mat-menu>
@@ -120,7 +125,25 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
         Credit Reference
       </th>
-      <td mat-cell *matCellDef="let row">{{ row.creditReference }}</td>
+      <td mat-cell *matCellDef="let row">
+        <input
+          style="width: 40%"
+          (click)="$event.stopPropagation()"
+          type="text"
+          [value]="row.creditReference"
+        />
+
+
+        <button
+        mat-icon-button
+        color="primary"
+        (click)="$event.stopPropagation()"
+      >
+      <mat-icon>edit</mat-icon>
+      </button>
+
+
+      </td>
       <td mat-footer-cell *matFooterCellDef>{{ getCreditReference() }}</td>
     </ng-container>
 
