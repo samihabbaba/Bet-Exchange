@@ -124,11 +124,13 @@ export class BetSlipService {
     let LayBets = this.selectedBets.filter(x=>!x.isBack);
 
     let backLia = backBets.reduce((backLia, b) => backLia + b.liability,0);
+    let LayLia = LayBets.reduce((LayLia, b) => LayLia + b.liability,0);
 
-    let LayLia = 0;
-    if(LayBets.length > 0){
-    LayLia = LayBets.reduce((a, b) => a.liability > b.liability? a:b).liability;
-    }
+    // get lay liability with highest value 
+    // let LayLia = 0;
+    // if(LayBets.length > 0){
+    // LayLia = LayBets.reduce((a, b) => a.liability > b.liability? a:b).liability;
+    // }
 
     return LayLia + backLia;
   }
