@@ -84,6 +84,7 @@ export class EventContentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    debugger
     if (this.event.markets.length > 0) {
       this.topMarket = this.event.markets[0];
     } else {
@@ -202,6 +203,10 @@ export class EventContentComponent implements OnInit {
   }
 
   returnSecondPartRunName(run: any, marketName: string) {
+    if(!marketName){
+      debugger
+      return ''
+    }
     let showSign = marketName.toLowerCase().includes('handicap');
 
     if (run.handicap) {

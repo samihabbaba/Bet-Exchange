@@ -91,6 +91,11 @@ export class BetSlipService {
 
   returnSecondPartRunName(run:any, marketName:string):any{
 
+    // if(!marketName){
+    //   debugger
+    //   return ''
+    // }
+
     let showSign = marketName.toLowerCase().includes('handicap');
 
     if(run.handicap){

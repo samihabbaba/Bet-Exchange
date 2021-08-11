@@ -7,7 +7,7 @@
       <div class="match-odds-sticky-header">
         <div class="header-container">
           <div class="header-wrapper">
-            <h2 class="header-text">{{ topMarket?.description.marketName }}</h2>
+            <h2 class="header-text">{{ topMarket?.name }}</h2>
             <div class="header-content-container">
               <div class="header-content">
                 <div class="header-main-section-wrapper">
@@ -39,7 +39,7 @@
                         >GBP
                         {{
                           this.sharedService.formatNumber(
-                            topMarket?.state.totalMatched
+                            topMarket?.totalMatched
                           )
                         }}</span
                       >
@@ -104,11 +104,11 @@
                         <div class="runner-info">
                           <div class="default-name">
                             <h3 class="runner-name">
-                              {{ item.description.runnerName }}
+                              {{ item.name }}
                               {{
                                 returnSecondPartRunName(
                                   item,
-                                  topMarket?.description.marketName
+                                  topMarket?.name
                                 )
                               }}
                             </h3>
@@ -136,11 +136,11 @@
                         [ngClass]="{
                           blue: selection === 0,
                           selected: this.betSlipService.checkIfBetIsSelected(
-                            event.event.eventId,
-                            topMarket.marketId,
+                            event.id,
+                            topMarket.id,
                             item.selectionId,
                             true,
-                            item.description.runnerName +
+                            item.name +
                               ' ' +
                               returnSecondPartRunName(
                                 item,
@@ -197,11 +197,11 @@
                         [ngClass]="{
                           pink: selection === 0,
                           selected: this.betSlipService.checkIfBetIsSelected(
-                            event.event.eventId,
-                            topMarket.marketId,
+                            event.id,
+                            topMarket.id,
                             item.selectionId,
                             false,
-                            item.description.runnerName +
+                            item.name +
                               ' ' +
                               returnSecondPartRunName(
                                 item,
@@ -375,11 +375,11 @@
                               </div>
                               <div class="name-container">
                                 <h3>
-                                  {{ run.description.runnerName }}
+                                  {{ run.name }}
                                   {{
                                     returnSecondPartRunName(
                                       run,
-                                      item?.description.marketName
+                                      item?.name
                                     )
                                   }}
                                 </h3>
@@ -406,15 +406,15 @@
                                 [ngClass]="{
                                   selected:
                                     this.betSlipService.checkIfBetIsSelected(
-                                      event.event.eventId,
-                                      item.marketId,
+                                      event.id,
+                                      item.id,
                                       run.selectionId,
                                       true,
-                                      run.description.runnerName +
+                                      run.name +
                                         ' ' +
                                         returnSecondPartRunName(
                                           run,
-                                          item?.description.marketName
+                                          item?.name
                                         )
                                     )
                                 }"
@@ -485,15 +485,15 @@
                                 [ngClass]="{
                                   selected:
                                     this.betSlipService.checkIfBetIsSelected(
-                                      event.event.eventId,
-                                      item.marketId,
+                                      event.id,
+                                      item.id,
                                       run.selectionId,
                                       false,
-                                      run.description.runnerName +
+                                      run.name +
                                         ' ' +
                                         returnSecondPartRunName(
                                           run,
-                                          item?.description.marketName
+                                          item?.name
                                         )
                                     )
                                 }"
@@ -624,11 +624,11 @@
                               </div>
                               <div class="name-container">
                                 <h3>
-                                  {{ run.description.runnerName }}
+                                  {{ run.name }}
                                   {{
                                     returnSecondPartRunName(
                                       run,
-                                      item?.description.marketName
+                                      item?.name
                                     )
                                   }}
                                 </h3>
@@ -653,15 +653,15 @@
                                 [ngClass]="{
                                   selected:
                                     this.betSlipService.checkIfBetIsSelected(
-                                      event.event.eventId,
-                                      item.marketId,
+                                      event.id,
+                                      item.id,
                                       run.selectionId,
                                       true,
-                                      run.description.runnerName +
+                                      run.name +
                                         ' ' +
                                         returnSecondPartRunName(
                                           run,
-                                          item?.description.marketName
+                                          item?.name
                                         )
                                     )
                                 }"
@@ -730,15 +730,15 @@
                                 [ngClass]="{
                                   selected:
                                     this.betSlipService.checkIfBetIsSelected(
-                                      event.event.eventId,
-                                      item.marketId,
+                                      event.id,
+                                      item.id,
                                       run.selectionId,
                                       false,
-                                      run.description.runnerName +
+                                      run.name +
                                         ' ' +
                                         returnSecondPartRunName(
                                           run,
-                                          item?.description.marketName
+                                          item?.name
                                         )
                                     )
                                 }"
