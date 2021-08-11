@@ -51,6 +51,7 @@ export class MenuComponent implements OnInit {
 
   handleMenuHeaderClick(item: MenuHeader) {
     // sport clicked ( load regions )
+    debugger
     if (item.active) {
       item.active = !item.active;
       item.children = [];
@@ -66,11 +67,12 @@ export class MenuComponent implements OnInit {
         .pipe(finalize(() => this.layoutService.stopMenuLoading()))
         .subscribe(
           (resp) => {
+            debugger
             for (let i = 0; i < resp.body.length; i++) {
               item.children?.push({
-                id: resp.body[i].regionCode,
+                id: resp.body[i].countryCode,
                 sportId: item.id,
-                name: resp.body[i].regionName,
+                name: resp.body[i].name,
                 active: false,
                 children: [],
               });
@@ -84,7 +86,7 @@ export class MenuComponent implements OnInit {
 
   handleMenuItemClick(item: MenuItem) {
     //region clicked (load leagues)
-
+debugger
     if (item.active) {
       item.active = !item.active;
       item.children = [];
@@ -95,19 +97,20 @@ export class MenuComponent implements OnInit {
         this.layoutService.startMenuLoading();
         this.layoutService.currentRegion.next(item);
       }
+      item.id = 'International';
       this.dataService
         .getAllLeagues(item.id)
         .pipe(finalize(() => this.layoutService.stopMenuLoading()))
         .subscribe(
           (resp) => {
-            // debugger
+            debugger
 
             for (let i = 0; i < resp.body.length; i++) {
               item.children?.push({
-                id: resp.body[i].leagueId,
-                regionId: resp.body[i].regionCode,
+                id: resp.body[i].id,
+                regionId: resp.body[i].regionId,
                 sportId: item.sportId,
-                name: resp.body[i].leagueName,
+                name: resp.body[i].name,
                 active: false,
               });
             }
@@ -122,7 +125,7 @@ export class MenuComponent implements OnInit {
 
   handleGrandChildClick(child: MenuItem, grandchild: MenuItemChildren) {
     // league clicked (load events)
-
+debugger
     if (!grandchild.active) {
       this.setAllChildsToFalse(child);
       grandchild.active = true;

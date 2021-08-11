@@ -17,21 +17,21 @@ export class BetSlipService {
     runners?: any,
     run?: any
   ) {
-    
+    debugger
     if(!this.validOdd(market, runners, run)){
       return;
     }
 
     let selection = {
       isBack: isBack,
-      eventName: event.event.name,
-      eventId: event.event.eventId,
+      eventName: event.name,
+      eventId: event.id,
       liability:0,
       market: {
-        marketName: market.description.marketName,
-        marketId: market.marketId,
+        marketName: market.name,
+        marketId: market.id,
         run: {
-          runnerName:runners.description.runnerName + ' '+ this.returnSecondPartRunName(runners, market.description.marketName),
+          runnerName:runners.name + ' '+ this.returnSecondPartRunName(runners, market.name),
           price: run.price,
           size: run.size,
           selectionId: runners.selectionId,
@@ -44,11 +44,11 @@ export class BetSlipService {
     let lastSize = -1;
     // if (run?.price) {
     let index = this.selectedBets.findIndex((x) =>
-        String(x.eventId) == String(event.event.eventId) &&
+        String(x.eventId) == String(event.id) &&
         x.isBack == isBack &&
-        String(x.market.marketId) == String(market.marketId) &&
+        String(x.market.marketId) == String(market.id) &&
         String(x.market.run.selectionId) == String(runners.selectionId) &&
-        x.market.run.runnerName == runners.description.runnerName + ' '+ this.returnSecondPartRunName(runners, market.description.marketName)
+        x.market.run.runnerName == runners.name + ' '+ this.returnSecondPartRunName(runners, market.name)
         );
     if (index > -1) {
       lastPrice = this.selectedBets[index].market.run.price;
@@ -145,7 +145,6 @@ export class BetSlipService {
   }
 
   pickAllTopMarketsOdds(event:any, market:any, isBack = true){
-    debugger
 
     // event: any,
     // isBack = false,
@@ -159,7 +158,7 @@ export class BetSlipService {
       try{
 
         if(isBack){
-          let run = market.runners[i].exchange.availableToBack[0];
+          let run = market.runners[i].exchangePrices.availableToBack[0];
           this.pushToSelectedBets(
             event,
             isBack,
@@ -168,7 +167,7 @@ export class BetSlipService {
             run
           )
         }else{
-          let run = market.runners[i].exchange.availableToLay[0];
+          let run = market.runners[i].exchangePrices.availableToLay[0];
           this.pushToSelectedBets(
             event,
             isBack,

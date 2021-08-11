@@ -16,16 +16,16 @@
   <div
     class="main-item"
     *ngFor="let event of this.games"
-    (click)="this.goToEventDetails(event.event.eventId)"
+    (click)="this.goToEventDetails(event.id)"
   >
     <!-- <fa-icon [icon]="fontAwesomeIcons.exit" class="main-icon"></fa-icon> -->
     <div class="date-time">
-      <div class="time">{{ event.event.openDate | date: "h:mm a" }}</div>
-      <div class="date">{{ event.event.openDate | date: "dd/MM" }}</div>
+      <div class="time">{{ event.openDate | date: "h:mm a" }}</div>
+      <div class="date">{{ event.openDate | date: "dd/MM" }}</div>
     </div>
     <div class="teams">
       <div class="first-team">
-        {{ this.sharedService.returnTeamNameFromEvent(event.event.name) }}
+        {{ this.sharedService.returnTeamNameFromEvent(event.name) }}
       </div>
       vs
       <!-- <div class="score">
@@ -33,7 +33,7 @@
     </div> -->
       <div class="second-team">
         {{
-          this.sharedService.returnTeamNameFromEvent(event.event.name, false)
+          this.sharedService.returnTeamNameFromEvent(event.name, false)
         }}
       </div>
       <!-- <div class="match-time">{{ event.timeline.elapsedRegularTime }}'</div> -->
@@ -44,9 +44,9 @@
           class="blue-square"
           [ngClass]="{
             selected: this.betSlipService.checkIfBetIsSelected(
-              event.event.eventId,
-              event.markets[0].marketId,
-              event.markets[0].runners[0].selectionId,
+              event.id,
+              event.markets[0].id,
+              event.markets[0].runners[0]?.selectionId,
               true
             )
           }"
@@ -100,9 +100,9 @@
           class="red-square"
           [ngClass]="{
             selected: this.betSlipService.checkIfBetIsSelected(
-              event.event.eventId,
-              event.markets[0].marketId,
-              event.markets[0].runners[0].selectionId,
+              event.id,
+              event.markets[0].id,
+              event.markets[0].runners[0]?.selectionId,
               false
             )
           }"
@@ -161,9 +161,9 @@
           class="blue-square"
           [ngClass]="{
             selected: this.betSlipService.checkIfBetIsSelected(
-              event.event.eventId,
-              event.markets[0].marketId,
-              event.markets[0].runners[1].selectionId,
+              event.id,
+              event.markets[0].id,
+              event.markets[0].runners[1]?.selectionId,
               true
             )
           }"
@@ -217,9 +217,9 @@
           class="red-square"
           [ngClass]="{
             selected: this.betSlipService.checkIfBetIsSelected(
-              event.event.eventId,
-              event.markets[0].marketId,
-              event.markets[0].runners[1].selectionId,
+              event.id,
+              event.markets[0].id,
+              event.markets[0].runners[1]?.selectionId,
               false
             )
           }"
@@ -278,9 +278,9 @@
           class="blue-square"
           [ngClass]="{
             selected: this.betSlipService.checkIfBetIsSelected(
-              event.event.eventId,
-              event.markets[0].marketId,
-              event.markets[0].runners[2].selectionId,
+              event.id,
+              event.markets[0].id,
+              event.markets[0].runners[2]?.selectionId,
               true
             )
           }"
@@ -334,9 +334,9 @@
           class="red-square"
           [ngClass]="{
             selected: this.betSlipService.checkIfBetIsSelected(
-              event.event.eventId,
-              event.markets[0].marketId,
-              event.markets[0].runners[2].selectionId,
+              event.id,
+              event.markets[0].id,
+              event.markets[0].runners[2]?.selectionId,
               false
             )
           }"

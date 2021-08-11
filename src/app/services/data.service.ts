@@ -107,7 +107,7 @@ export class DataService {
   // GET​/leagues
   getLeagues(pars: any) {
     return this.http.get<any>(
-      `${this.baseUrl}leagues​?PageNo=${
+      `${this.baseUrl}leagues/paged​?PageNo=${
         pars.PageNo ? pars.PageNo : ''
       }&PageSize=${pars.PageSize ? pars.PageSize : ''}&SortBy=${
         pars.SortBy ? pars.SortBy : ''
@@ -124,7 +124,7 @@ export class DataService {
   // GET​/leagues
   getAllLeagues(regionCode: string) {
     return this.http.get<any>(
-      `${this.baseUrl}leagues/all?regionCode=${regionCode ? regionCode : ''}`,
+      `${this.baseUrl}leagues?regionCode=${regionCode ? regionCode : ''}`,
       {
         headers: this.httpOptions.headers,
         observe: 'response',
@@ -152,7 +152,7 @@ export class DataService {
 
   getLive(pars: any) {
     return this.http.get<any>(
-      `${this.baseUrl}live?RegionCode=${
+      `${this.baseUrl}live/paged?RegionCode=${
         pars.RegionCode ? pars.RegionCode : ''
       }&LeagueId=${pars.LeagueId ? pars.LeagueId : ''}&IncludeDisabled=${
         pars.IncludeDisabled ? pars.IncludeDisabled : false
@@ -170,7 +170,7 @@ export class DataService {
 
   getAllLive(pars: any) {
     return this.http.get<any>(
-      `${this.baseUrl}live/all?RegionCode=${
+      `${this.baseUrl}live?RegionCode=${
         pars.RegionCode ? pars.RegionCode : ''
       }&LeagueId=${pars.LeagueId ? pars.LeagueId : ''}&IncludeDisabled=${
         pars.IncludeDisabled ? pars.IncludeDisabled : false
@@ -195,7 +195,7 @@ export class DataService {
 
   getRegions(pars: any) {
     return this.http.get<any>(
-      `${this.baseUrl}regions?PageNo=${
+      `${this.baseUrl}regions/paged?PageNo=${
         pars.PageNo ? pars.PageNo : ''
       }&PageSize=${pars.PageSize ? pars.PageSize : ''}&SortBy=${
         pars.SortBy ? pars.SortBy : ''
@@ -210,7 +210,7 @@ export class DataService {
   }
 
   getAllRegions(sportId: number) {
-    return this.http.get<any>(`${this.baseUrl}regions/all`, {
+    return this.http.get<any>(`${this.baseUrl}regions`, {
       headers: this.httpOptions.headers,
       observe: 'response',
     });
@@ -236,7 +236,7 @@ export class DataService {
 
   getUpcoming(pars: any) {
     return this.http.get<any>(
-      `${this.baseUrl}upcoming?RegionCode=${
+      `${this.baseUrl}upcoming/paged?RegionCode=${
         pars.RegionCode ? pars.RegionCode : ''
       }&LeagueId=${pars.LeagueId ? pars.LeagueId : ''}&PageNo=${
         pars.PageNo ? pars.PageNo : ''
@@ -253,7 +253,7 @@ export class DataService {
 
   getAllUpcoming(pars: any) {
     return this.http.get<any>(
-      `${this.baseUrl}upcoming/all?RegionCode=${
+      `${this.baseUrl}upcoming?RegionCode=${
         pars.RegionCode ? pars.RegionCode : ''
       }&LeagueId=${pars.LeagueId ? pars.LeagueId : ''}`,
       {
@@ -379,6 +379,7 @@ export class DataService {
       )
       .subscribe(
         (resp) => {
+          debugger
           this.layoutService.displayPreGames();
           this.events.next(resp.body.filter((x:any)=>x.markets.length > 0));
         },
@@ -390,6 +391,7 @@ export class DataService {
   }
 
   loadPreGamesFromHeader(sportId?:number) {
+return
     this.layoutService.closeMenuChilds();
     if (this.layoutService.isMainLoading()) {
       return;
@@ -410,6 +412,7 @@ export class DataService {
       .pipe(finalize(() => this.layoutService.stopMainLoading()))
       .subscribe(
         (resp) => {
+          console.log(resp.body.items.filter((x:any)=>x.markets.length > 0))
           this.layoutService.displayPreGames();
           this.events.next(resp.body.items.filter((x:any)=>x.markets.length > 0));
         },

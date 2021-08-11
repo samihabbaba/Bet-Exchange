@@ -26,6 +26,8 @@ export class SharedFunctionsService {
   }
 
   returnEventScore(event:any){
+    
+
     if(!event  || !event.timeline || !event.timeline.score){
       return " vs ";
     }
@@ -40,6 +42,7 @@ export class SharedFunctionsService {
   }
 
   returnHighestBet(bets:any, isBack = true){
+    
     if(bets == null){
         return null;
       }
@@ -68,8 +71,9 @@ export class SharedFunctionsService {
   }
 
   getBackObj(obj:any,index:number){
+    
   try{
-      return obj.markets[0].runners[index].exchange.availableToBack;
+      return obj.markets[0].runners[index].exchangePrices.availableToBack;
     }
     catch(ex){
       return null
@@ -78,7 +82,7 @@ export class SharedFunctionsService {
 
   getLayObj(obj:any,index:number){
     try{
-      return obj.markets[0].runners[index].exchange.availableToLay;
+      return obj.markets[0].runners[index].exchangePrices.availableToLay;
     }
     catch(ex){
       return null
@@ -87,7 +91,7 @@ export class SharedFunctionsService {
 
   getBackObjForRun(obj:any){
     try{
-        return obj.exchange.availableToBack;
+        return obj.exchangePrices.availableToBack;
       }
       catch(ex){
         return null
@@ -97,7 +101,7 @@ export class SharedFunctionsService {
     getLayObjForRun(obj:any){
       try{
 
-        return obj.exchange.availableToLay;
+        return obj.exchangePrices.availableToLay;
       }
       catch(ex){
         return null
@@ -124,7 +128,7 @@ export class SharedFunctionsService {
 
   returnRunWithIndex(item:any, index:number,ToLay = false){
 
-    if(!item || !item.exchange || (!ToLay && !item.exchange.availableToBack)|| (ToLay && !item.exchange.availableToLay) ){
+    if(!item || !item.exchangePrices || (!ToLay && !item.exchangePrices.availableToBack)|| (ToLay && !item.exchangePrices.availableToLay) ){
       return {
         price:'',
         size:'',
@@ -132,11 +136,11 @@ export class SharedFunctionsService {
       };
     }
 
-    let obj = {...item.exchange.availableToLay}
+    let obj = {...item.exchangePrices.availableToLay}
 
     if(ToLay){
 
-      if(index > ( item.exchange.availableToLay.length-1)){
+      if(index > ( item.exchangePrices.availableToLay.length-1)){
         return {
           price:'',
           size:'',
@@ -145,13 +149,13 @@ export class SharedFunctionsService {
       }
       else
       {
-         obj = item.exchange.availableToLay
+         obj = item.exchangePrices.availableToLay
       }
 
     }
     else{
 
-      if(index > ( item.exchange.availableToBack.length-1)){
+      if(index > ( item.exchangePrices.availableToBack.length-1)){
         return {
           price:'',
           size:'',
@@ -160,7 +164,7 @@ export class SharedFunctionsService {
       }
       else
       {
-         obj = item.exchange.availableToBack
+         obj = item.exchangePrices.availableToBack
       }
 
     }
@@ -312,11 +316,11 @@ export class SharedFunctionsService {
     try{
       let runOdds = null;
       if (back){
-        runOdds = obj.exchange.availableToBack;
+        runOdds = obj.exchangePrices.availableToBack;
         runOdds.sort( this.sortRunByPrice );
       }
       else{
-        runOdds = obj.exchange.availableToLay;
+        runOdds = obj.exchangePrices.availableToLay;
         runOdds.sort( this.sortRunByPriceDEC );
       }
   

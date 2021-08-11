@@ -5,6 +5,7 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { NotificationService } from './notification.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -64,7 +65,9 @@ export class AuthService {
   }
 
   login(model: any) {
-    let loginURL = 'https://api.vebobet.com/api/v1/auth/login';
+    // let loginURL = 'https://api.vebobet.com/api/v1/auth/login';
+    // let loginURL = 'https://api.xexchange.xyz/auth/login';
+    let loginURL = environment.apiUrl+'auth/login';
     return this.http.post(loginURL, model, {
       observe: 'response',
     });
