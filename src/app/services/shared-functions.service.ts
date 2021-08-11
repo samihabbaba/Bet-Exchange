@@ -12,7 +12,7 @@ export class SharedFunctionsService {
 
   constructor() { }
 
-  returnTeamNameFromEvent(eventName:string, isHome = true){
+  returnTeamNameFromEvent(eventName:string, isHome = true,hfa=null){
 
     if(eventName === undefined || eventName === null || !eventName.includes(" v ")){
       return "";
