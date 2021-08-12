@@ -25,9 +25,9 @@
     </div>
     <div class="teams">
       <div class="first-team">
-        {{ this.sharedService.returnTeamNameFromEvent(event.name,true,event) }}
+        {{ this.sharedService.returnTeamNameFromEvent(event.name,true) }}
       </div>
-      <div class="score">
+      <div class="score" *ngIf="this.sharedService.returnTeamNameFromEvent(event.name, false) !== ''">
         {{ this.sharedService.returnEventScore(event) }}
       </div>
       <div class="second-team">

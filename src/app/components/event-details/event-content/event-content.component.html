@@ -144,7 +144,7 @@
                               ' ' +
                               returnSecondPartRunName(
                                 item,
-                                topMarket?.description.marketName
+                                topMarket?.name
                               )
                           )
                         }"
@@ -205,7 +205,7 @@
                               ' ' +
                               returnSecondPartRunName(
                                 item,
-                                topMarket?.description.marketName
+                                topMarket?.name
                               )
                           )
                         }"
@@ -322,7 +322,7 @@
               <div class="mini-market-header">
                 <div class="mini-market-header-section-wrapper">
                   <div class="mini-market-name">
-                    <span>{{ item.description.marketName }}</span>
+                    <span>{{ item.name }}</span>
                   </div>
                   <div class="mini-market-buttons">
                     <div class="going-to-play"><span></span></div>
@@ -345,7 +345,7 @@
                         >Matched: GBP
                         {{
                           this.sharedService.formatNumber(
-                            item?.state.totalMatched
+                            item?.totalMatched
                           )
                         }}</span
                       >
@@ -571,7 +571,7 @@
               <div class="mini-market-header">
                 <div class="mini-market-header-section-wrapper">
                   <div class="mini-market-name">
-                    <span>{{ item.description.marketName }}</span>
+                    <span>{{ item.name }}</span>
                   </div>
                   <div class="mini-market-buttons">
                     <div class="going-to-play"><span></span></div>
@@ -594,7 +594,7 @@
                         >Matched: GBP
                         {{
                           this.sharedService.formatNumber(
-                            item?.state.totalMatched
+                            item?.totalMatched
                           )
                         }}</span
                       >

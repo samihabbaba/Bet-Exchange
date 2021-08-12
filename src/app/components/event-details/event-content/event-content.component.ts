@@ -84,7 +84,7 @@ export class EventContentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    debugger
+    
     if (this.event.markets.length > 0) {
       this.topMarket = this.event.markets[0];
     } else {
@@ -204,7 +204,7 @@ export class EventContentComponent implements OnInit {
 
   returnSecondPartRunName(run: any, marketName: string) {
     if(!marketName){
-      debugger
+      
       return ''
     }
     let showSign = marketName.toLowerCase().includes('handicap');
@@ -226,34 +226,47 @@ export class EventContentComponent implements OnInit {
   }
 
   getMarketsToDisplay() {
+    
     if (this.selectedTab == 'Popular') {
       this.copyOfMarkets = this.event.markets.filter((x: any) =>
-        this.sharedService.isMarketPopular(x.description.marketName)
+        this.sharedService.isMarketPopular(x.name)
       );
-    } else if (this.selectedTab == 'Over/Under') {
+    } 
+    
+    else if (this.selectedTab == 'Over/Under') {
       this.copyOfMarkets = this.event.markets.filter((x: any) =>
         this.sharedService.isMarketOverUnder(
-          x.description.marketName,
+          x.name,
           x.runners
         )
       );
-    } else if (this.selectedTab == 'Goals') {
+    } 
+    
+    else if (this.selectedTab == 'Goals') {
       this.copyOfMarkets = this.event.markets.filter((x: any) =>
-        this.sharedService.isMarketGoals(x.description.marketName)
+        this.sharedService.isMarketGoals(x.name)
       );
-    } else if (this.selectedTab == 'Half Time') {
+    } 
+    
+    else if (this.selectedTab == 'Half Time') {
       this.copyOfMarkets = this.event.markets.filter((x: any) =>
-        this.sharedService.isMarketHalf(x.description.marketName)
+        this.sharedService.isMarketHalf(x.name)
       );
-    } else if (this.selectedTab == 'Handicap') {
+    } 
+   
+    else if (this.selectedTab == 'Handicap') {
       this.copyOfMarkets = this.event.markets.filter((x: any) =>
-        this.sharedService.isMarketHandicap(x.description.marketName, x.runners)
+        this.sharedService.isMarketHandicap(x.name, x.runners)
       );
-    } else if (this.selectedTab == 'Others') {
+    } 
+   
+    else if (this.selectedTab == 'Others') {
       this.copyOfMarkets = this.event.markets.filter((x: any) =>
-        this.sharedService.isMarketOthers(x.description.marketName, x.runners)
+        this.sharedService.isMarketOthers(x.name, x.runners)
       );
-    } else {
+    } 
+   
+    else {
       this.copyOfMarkets = [];
     }
   }

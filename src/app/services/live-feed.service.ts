@@ -89,6 +89,7 @@ export class LiveFeedService {
 	}
 
 	public onLiveUpdate(games: Match[]) {
+		// debugger
 		console.log(`Recieved information for ${games.length} games`);
     this.events.next(games);
   }

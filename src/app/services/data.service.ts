@@ -294,7 +294,7 @@ export class DataService {
       .subscribe(
         (resp) => {
           this.layoutService.displayLiveGames();
-          this.events.next(resp.body);
+          this.events.next(resp.body.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null));
           this.liveFeed.startLiveUpdate();
         },
         (error) => {
@@ -308,7 +308,8 @@ export class DataService {
     if (this.layoutService.getHeaderValue() !== 'live') {
       return;
     }
-    this.events.next(games.filter((x:any)=>x.markets.length > 0));
+    // this.events.next(games.filter((x:any)=>x.markets.length > 0));
+    this.events.next(games.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null));
   }
 
   handleGameDetailFeed(game: any) {
@@ -381,7 +382,10 @@ export class DataService {
         (resp) => {
           debugger
           this.layoutService.displayPreGames();
-          this.events.next(resp.body.filter((x:any)=>x.markets.length > 0));
+          
+          // this.events.next(resp.body.filter((x:any)=>x.markets.length > 0));
+          this.events.next(resp.body.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null));
+          
         },
         (error) => {
           this.events.next([]);
@@ -414,7 +418,8 @@ return
         (resp) => {
           console.log(resp.body.items.filter((x:any)=>x.markets.length > 0))
           this.layoutService.displayPreGames();
-          this.events.next(resp.body.items.filter((x:any)=>x.markets.length > 0));
+          // this.events.next(resp.body.items.filter((x:any)=>x.markets.length > 0));
+          this.events.next(resp.body.items.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null));          
         },
         (error) => {
           this.events.next([]);

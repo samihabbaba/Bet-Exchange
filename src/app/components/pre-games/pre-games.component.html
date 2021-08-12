@@ -27,7 +27,13 @@
       <div class="first-team">
         {{ this.sharedService.returnTeamNameFromEvent(event.name) }}
       </div>
-      vs
+      
+      <span *ngIf="
+        this.sharedService.returnTeamNameFromEvent(event.name, false) !== ''
+      ">
+        vs
+      </span>
+
       <!-- <div class="score">
       {{ this.sharedService.returnEventScore(event) }}
     </div> -->

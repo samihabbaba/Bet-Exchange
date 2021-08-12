@@ -12,10 +12,14 @@ export class SharedFunctionsService {
 
   constructor() { }
 
-  returnTeamNameFromEvent(eventName:string, isHome = true,hfa=null){
+  returnTeamNameFromEvent(eventName:string, isHome = true){
 
     if(eventName === undefined || eventName === null || !eventName.includes(" v ")){
-      return "";
+      if(isHome){
+        return eventName;
+      }else{
+        return "";
+      }
     }
 
     if(isHome){
@@ -235,8 +239,8 @@ export class SharedFunctionsService {
 
   isMarketOverUnder(name:string, runs:any){
     if(name.toLowerCase().includes('over') || name.toLowerCase().includes('under') || name.toLowerCase().includes('goal')
-    || runs.some((x:any)=> x.description.runnerName.toLowerCase().includes('over'))
-    || runs.some((x:any)=> x.description.runnerName.toLowerCase().includes('under'))){
+    || runs.some((x:any)=> x.name.toLowerCase().includes('over'))
+    || runs.some((x:any)=> x.name.toLowerCase().includes('under'))){
       return true;
     }else{
       return false;

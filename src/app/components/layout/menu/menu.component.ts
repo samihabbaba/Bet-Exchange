@@ -97,7 +97,7 @@ debugger
         this.layoutService.startMenuLoading();
         this.layoutService.currentRegion.next(item);
       }
-      item.id = 'International';
+      // item.id = 'International';
       this.dataService
         .getAllLeagues(item.id)
         .pipe(finalize(() => this.layoutService.stopMenuLoading()))
