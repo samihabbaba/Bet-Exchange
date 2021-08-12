@@ -293,8 +293,19 @@ export class DataService {
       .pipe(finalize(() => this.layoutService.stopMainLoading()))
       .subscribe(
         (resp) => {
+
           this.layoutService.displayLiveGames();
-          this.events.next(resp.body.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null));
+debugger
+let hfa = resp.body.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null).sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0)
+
+let result = hfa.reduce(function (r:any, a:any) {
+  r[a.eventTypeId] = r[a.eventTypeId] || [];
+  r[a.eventTypeId].push(a);
+  return r;
+}, Object.create(null))
+
+          // this.events.next(resp.body.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null).sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0));
+          this.events.next(result);
           this.liveFeed.startLiveUpdate();
         },
         (error) => {
@@ -309,7 +320,9 @@ export class DataService {
       return;
     }
     // this.events.next(games.filter((x:any)=>x.markets.length > 0));
-    this.events.next(games.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null));
+    //x.sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0)
+    
+    this.events.next(games.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null).sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0));
   }
 
   handleGameDetailFeed(game: any) {
@@ -380,11 +393,11 @@ export class DataService {
       )
       .subscribe(
         (resp) => {
-          debugger
+
           this.layoutService.displayPreGames();
           
           // this.events.next(resp.body.filter((x:any)=>x.markets.length > 0));
-          this.events.next(resp.body.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null));
+          this.events.next(resp.body.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null).sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0));
           
         },
         (error) => {
@@ -419,7 +432,7 @@ return
           console.log(resp.body.items.filter((x:any)=>x.markets.length > 0))
           this.layoutService.displayPreGames();
           // this.events.next(resp.body.items.filter((x:any)=>x.markets.length > 0));
-          this.events.next(resp.body.items.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null));          
+          this.events.next(resp.body.items.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null).sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0));          
         },
         (error) => {
           this.events.next([]);

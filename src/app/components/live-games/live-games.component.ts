@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faFutbol, faLock, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
+import { last } from 'rxjs/operators';
 import { BetSlipService } from 'src/app/services/bet-slip.service';
 import { DataService } from 'src/app/services/data.service';
 import { LayoutService } from 'src/app/services/layout.service';
@@ -20,13 +21,23 @@ export class LiveGamesComponent implements OnInit, OnDestroy {
     private layoutService: LayoutService,
     public betSlipService: BetSlipService
   ) {
-    this.subscription = this.dataService.selectedEvents.subscribe((resp) => {
-      this.games = resp;
+    this.subscription = this.dataService.selectedEvents.subscribe((resp) => {debugger
+
+      let arrOfGames = [];
+      for (let key in resp) {
+        let value = resp[key];
+        arrOfGames.push({events:value, sport:value[0].eventType.name});
+        // Use `key` and `value`
+    }
+      
+      this.games = arrOfGames;
     });
   }
 
+  deb = false;
   games: any = [];
   subscription: Subscription;
+  lastSport = '';
 
   fontAwesomeIcons = {
     footBall: faFutbol,
@@ -43,5 +54,24 @@ export class LiveGamesComponent implements OnInit, OnDestroy {
   goToEventDetails(eventId: any) {
     this.dataService.loadMarketsForGameLive(eventId);
     // this.layoutService.displayGameDetails();
+  }
+
+  showSport(sport:string, i:number){
+
+    if(i == 0){
+      this.lastSport == ''
+    }
+
+    console.log(this.lastSport)
+    
+
+    if(sport == this.lastSport){
+      return false;
+    }
+    else{
+      this.lastSport = sport;
+      return true;
+    }
+
   }
 }

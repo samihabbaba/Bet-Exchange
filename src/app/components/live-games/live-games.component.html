@@ -1,9 +1,12 @@
 <div *ngIf="this.games?.length >= 1">
   <div class="main-header-view">Live Games</div>
+<ng-container *ngFor="let sport of this.games; let i = index">
+
   <div class="main-sport">
     <div class="sport-name">
       <fa-icon [icon]="fontAwesomeIcons.footBall"></fa-icon>
-      Soccer
+      <!-- {{event.eventType.name}} -->
+      sport - {{sport.sport}}
     </div>
 
     <div class="odds-label">
@@ -15,7 +18,7 @@
 
   <div
     class="main-item"
-    *ngFor="let event of this.games"
+    *ngFor="let event of sport.events;"
     (click)="this.goToEventDetails(event.id)"
   >
     <!-- <fa-icon [icon]="fontAwesomeIcons.exit" class="main-icon"></fa-icon> -->
@@ -34,6 +37,8 @@
         {{
           this.sharedService.returnTeamNameFromEvent(event.name, false)
         }}
+
+        (({{event.eventType.name}}))
       </div>
       <div class="match-time" *ngIf="event.timeline">
         {{ event.timeline?.elapsedRegularTime }}'
@@ -394,6 +399,11 @@
       </div>
     </div>
   </div>
+
+</ng-container>
+
+
+  
 </div>
 
 <app-no-event *ngIf="this.games?.length < 1"></app-no-event>
