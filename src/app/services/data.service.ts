@@ -100,6 +100,7 @@ export class DataService {
     });
   }
 
+  
   ////////////////////////////////
   ////// League Controller //////
   ////////////////////////////////
@@ -113,7 +114,7 @@ export class DataService {
         pars.SortBy ? pars.SortBy : ''
       }&SortingType=${pars.SortingType ? pars.SortingType : ''}&regionCode=${
         pars.regionCode ? pars.regionCode : ''
-      }&SportId=${pars.SportId ? pars.SportId : ''}`,
+      }&EventTypeId=${pars.SportId ? pars.SportId : ''}`,
       {
         headers: this.httpOptions.headers,
         observe: 'response',
@@ -122,9 +123,9 @@ export class DataService {
   }
 
   // GET​/leagues
-  getAllLeagues(regionCode: string) {
+  getAllLeagues(sportId:string,regionCode: string) {
     return this.http.get<any>(
-      `${this.baseUrl}leagues?regionCode=${regionCode ? regionCode : ''}`,
+      `${this.baseUrl}leagues?EventTypeId=${sportId ? sportId : ''}&regionCode=${regionCode ? regionCode : ''}`,
       {
         headers: this.httpOptions.headers,
         observe: 'response',
@@ -154,7 +155,7 @@ export class DataService {
     return this.http.get<any>(
       `${this.baseUrl}live/paged?RegionCode=${
         pars.RegionCode ? pars.RegionCode : ''
-      }&LeagueId=${pars.LeagueId ? pars.LeagueId : ''}&IncludeDisabled=${
+      }&CompetitionId=${pars.LeagueId ? pars.LeagueId : ''}&IncludeDisabled=${
         pars.IncludeDisabled ? pars.IncludeDisabled : false
       }&PageNo=${pars.PageNo ? pars.PageNo : ''}&PageSize=${
         pars.PageSize ? pars.PageSize : ''
@@ -172,7 +173,7 @@ export class DataService {
     return this.http.get<any>(
       `${this.baseUrl}live?RegionCode=${
         pars.RegionCode ? pars.RegionCode : ''
-      }&LeagueId=${pars.LeagueId ? pars.LeagueId : ''}&IncludeDisabled=${
+      }&CompetitionId=${pars.LeagueId ? pars.LeagueId : ''}&IncludeDisabled=${
         pars.IncludeDisabled ? pars.IncludeDisabled : false
       }`,
       {
@@ -199,7 +200,7 @@ export class DataService {
         pars.PageNo ? pars.PageNo : ''
       }&PageSize=${pars.PageSize ? pars.PageSize : ''}&SortBy=${
         pars.SortBy ? pars.SortBy : ''
-      }&SortingType=${pars.SortingType ? pars.SortingType : ''}&SportId=${
+      }&SortingType=${pars.SortingType ? pars.SortingType : ''}&EventTypeId=${
         pars.SportId ? pars.SportId : ''
       }`,
       {
@@ -210,7 +211,7 @@ export class DataService {
   }
 
   getAllRegions(sportId: number) {
-    return this.http.get<any>(`${this.baseUrl}regions`, {
+    return this.http.get<any>(`${this.baseUrl}regions?EventTypeId=${sportId}`, {
       headers: this.httpOptions.headers,
       observe: 'response',
     });
@@ -238,12 +239,12 @@ export class DataService {
     return this.http.get<any>(
       `${this.baseUrl}upcoming/paged?RegionCode=${
         pars.RegionCode ? pars.RegionCode : ''
-      }&LeagueId=${pars.LeagueId ? pars.LeagueId : ''}&PageNo=${
+      }&CompetitionId=${pars.LeagueId ? pars.LeagueId : ''}&PageNo=${
         pars.PageNo ? pars.PageNo : ''
       }&PageSize=${pars.PageSize ? pars.PageSize : ''}&SortBy=${
         pars.SortBy ? pars.SortBy : ''
       }&SortingType=${pars.SortingType ? pars.SortingType : ''}
-      &sportId=${pars.sportId ? pars.sportId : ''}`,
+      &EventTypeId=${pars.sportId ? pars.sportId : ''}`,
       {
         headers: this.httpOptions.headers,
         observe: 'response',
@@ -255,7 +256,7 @@ export class DataService {
     return this.http.get<any>(
       `${this.baseUrl}upcoming?RegionCode=${
         pars.RegionCode ? pars.RegionCode : ''
-      }&LeagueId=${pars.LeagueId ? pars.LeagueId : ''}`,
+      }&CompetitionId=${pars.LeagueId ? pars.LeagueId : ''}&EventTypeId=${pars.sportId ? pars.sportId : ''}`,
       {
         headers: this.httpOptions.headers,
         observe: 'response',
@@ -364,7 +365,7 @@ let result = hfa.reduce(function (r:any, a:any) {
 
   ////// pre part
 
-  loadPreGames(leagueId: number, regionId: string) {
+  loadPreGames(leagueId: number, regionId: string,sportId:string) {
     if (this.layoutService.isMainLoading()) {
       return;
     }
@@ -384,6 +385,7 @@ let result = hfa.reduce(function (r:any, a:any) {
     this.getAllUpcoming({
       LeagueId: leagueId,
       RegionCode: regionId,
+      sportId:sportId
     })
       .pipe(
         finalize(() => {
@@ -408,7 +410,7 @@ let result = hfa.reduce(function (r:any, a:any) {
   }
 
   loadPreGamesFromHeader(sportId?:number) {
-return
+// return
     this.layoutService.closeMenuChilds();
     if (this.layoutService.isMainLoading()) {
       return;

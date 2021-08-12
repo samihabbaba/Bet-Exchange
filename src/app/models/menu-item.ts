@@ -23,7 +23,7 @@ export class MenuHeader {
 export class MenuItem {
   flag?: any;
   id: string;
-  sportId:number;
+  sportId:any;
   name: string;
   active? = false;
   children?: MenuItemChildren[] | null;
@@ -48,7 +48,7 @@ export class MenuItem {
 export class MenuItemChildren {
   id:number;
   regionId:string;
-  sportId:Number;
+  sportId:any;
   name: string;
   active? = false;
 

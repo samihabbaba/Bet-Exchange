@@ -166,7 +166,7 @@
       <div class="odds-x">
         <div
           class="blue-square"
-
+          *ngIf="event.markets[0].numberOfRunners == 3"
           [ngClass]="{
             selected: this.betSlipService.checkIfBetIsSelected(
               event.id,
@@ -222,6 +222,7 @@
         </div>
 
         <div
+        *ngIf="event.markets[0].numberOfRunners == 3"
           class="red-square"
           [ngClass]="{
             selected: this.betSlipService.checkIfBetIsSelected(

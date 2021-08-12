@@ -39,6 +39,23 @@ export class MenuComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
+    this.menu =[];
+    this.dataService.getSports().subscribe(resp => {
+      
+      resp.body.forEach((element:any) => {
+        this.menu.push({
+          icon:'fas fa-futbol',
+          name:element.name,
+          id:element.id,
+          active:false,
+          children:[]
+        })
+      });
+    }, error =>{
+
+    })
+
     this.layoutService.closeMenuChild.subscribe((value) => {
       if (value == 'close') {
         this.closeAllLeagues();
@@ -51,7 +68,7 @@ export class MenuComponent implements OnInit {
 
   handleMenuHeaderClick(item: MenuHeader) {
     // sport clicked ( load regions )
-    debugger
+    
     if (item.active) {
       item.active = !item.active;
       item.children = [];
@@ -67,7 +84,7 @@ export class MenuComponent implements OnInit {
         .pipe(finalize(() => this.layoutService.stopMenuLoading()))
         .subscribe(
           (resp) => {
-            debugger
+            
             for (let i = 0; i < resp.body.length; i++) {
               item.children?.push({
                 id: resp.body[i].countryCode,
@@ -86,7 +103,7 @@ export class MenuComponent implements OnInit {
 
   handleMenuItemClick(item: MenuItem) {
     //region clicked (load leagues)
-debugger
+
     if (item.active) {
       item.active = !item.active;
       item.children = [];
@@ -98,12 +115,13 @@ debugger
         this.layoutService.currentRegion.next(item);
       }
       // item.id = 'International';
+
       this.dataService
-        .getAllLeagues(item.id)
+        .getAllLeagues(item.sportId, item.id)
         .pipe(finalize(() => this.layoutService.stopMenuLoading()))
         .subscribe(
           (resp) => {
-            debugger
+            
 
             for (let i = 0; i < resp.body.length; i++) {
               item.children?.push({
@@ -117,7 +135,7 @@ debugger
             item.active = !item.active;
           },
           (error) => {
-            // debugger
+            // 
           }
         );
     }
@@ -125,13 +143,13 @@ debugger
 
   handleGrandChildClick(child: MenuItem, grandchild: MenuItemChildren) {
     // league clicked (load events)
-debugger
+
     if (!grandchild.active) {
       this.setAllChildsToFalse(child);
       grandchild.active = true;
     }
     this.layoutService.currentLeague.next(grandchild);
-    this.dataService.loadPreGames(grandchild.id, grandchild.regionId);
+    this.dataService.loadPreGames(grandchild.id, grandchild.regionId, grandchild.sportId);
   }
 
   setAllChildsToFalse(currentChild: MenuItem) {
