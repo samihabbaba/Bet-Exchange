@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { DebugElement, Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { BetSlip } from '../models/bet-slip';
 
 @Injectable({
@@ -8,7 +11,7 @@ export class BetSlipService {
   selectedBets: BetSlip[] = [];
   currentOpenBets: any[] = ['1', '12'];
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   pushToSelectedBets(
     event: any,
@@ -192,4 +195,34 @@ export class BetSlipService {
       
 
   }
+
+
+
+  ///////////////// API requests ////////////////////////
+  submitBets(){
+debugger
+    let betsToSend = []
+    this.selectedBets.forEach(bet => {
+      betsToSend.push({
+        walletId:'String',
+        stake:bet.stake,
+        marketId:bet.market.marketId,
+        selectionId:bet.market.run.selectionId,
+        betType:bet.isBack?'BACK':'LAY'
+      })
+    });
+
+    return;
+
+  }
+
+
+  // login(model: any) {
+  //   let loginURL = 'https://api.vebobet.com/api/v1/auth/login';
+  //   return this.http.post(loginURL, model, {
+  //     headers: this.httpOptions.headers,
+  //     observe: 'response',
+  //   });
+  // }
+
 }

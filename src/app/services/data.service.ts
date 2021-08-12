@@ -60,7 +60,7 @@ export class DataService {
         pars.PageNo ? pars.PageNo : ''
       }&PageSize=${pars.PageSize ? pars.PageSize : ''}&SortBy=${
         pars.SortBy ? pars.SortBy : ''
-      }&SortingType=${pars.SortingType ? pars.SortingType : ''}`,
+      }&SortingType=1`,
       {
         headers: this.httpOptions.headers,
         observe: 'response',
@@ -112,7 +112,7 @@ export class DataService {
         pars.PageNo ? pars.PageNo : ''
       }&PageSize=${pars.PageSize ? pars.PageSize : ''}&SortBy=${
         pars.SortBy ? pars.SortBy : ''
-      }&SortingType=${pars.SortingType ? pars.SortingType : ''}&regionCode=${
+      }&SortingType=1&regionCode=${
         pars.regionCode ? pars.regionCode : ''
       }&EventTypeId=${pars.SportId ? pars.SportId : ''}`,
       {
@@ -159,9 +159,7 @@ export class DataService {
         pars.IncludeDisabled ? pars.IncludeDisabled : false
       }&PageNo=${pars.PageNo ? pars.PageNo : ''}&PageSize=${
         pars.PageSize ? pars.PageSize : ''
-      }&SortBy=${pars.SortBy ? pars.SortBy : ''}&SortingType=${
-        pars.SortingType ? pars.SortingType : ''
-      }`,
+      }&SortBy=${pars.SortBy ? pars.SortBy : ''}&SortingType=1`,
       {
         headers: this.httpOptions.headers,
         observe: 'response',
@@ -200,7 +198,7 @@ export class DataService {
         pars.PageNo ? pars.PageNo : ''
       }&PageSize=${pars.PageSize ? pars.PageSize : ''}&SortBy=${
         pars.SortBy ? pars.SortBy : ''
-      }&SortingType=${pars.SortingType ? pars.SortingType : ''}&EventTypeId=${
+      }&SortingType=1&EventTypeId=${
         pars.SportId ? pars.SportId : ''
       }`,
       {
@@ -243,8 +241,7 @@ export class DataService {
         pars.PageNo ? pars.PageNo : ''
       }&PageSize=${pars.PageSize ? pars.PageSize : ''}&SortBy=${
         pars.SortBy ? pars.SortBy : ''
-      }&SortingType=${pars.SortingType ? pars.SortingType : ''}
-      &EventTypeId=${pars.sportId ? pars.sportId : ''}`,
+      }&SortingType=1&EventTypeId=${pars.sportId ? pars.sportId : ''}`,
       {
         headers: this.httpOptions.headers,
         observe: 'response',
@@ -428,8 +425,8 @@ export class DataService {
       );
   }
 
-  loadPreGamesFromHeader(sportId?:number) {
-// return
+  loadPreGamesFromHeader(sportId?:any) {
+return //uncomment here
     this.layoutService.closeMenuChilds();
     if (this.layoutService.isMainLoading()) {
       return;
@@ -439,11 +436,11 @@ export class DataService {
 
     this.events.next([]);
     this.layoutService.displayPreGames();
-
+    sportId='1';
     this.getUpcoming({
       PageNo: 1,
       PageSize: 15,
-      SortBy: 'event.openDate',
+      SortBy: 'OpenDate',
       SortingType: 1,
       sportId:sportId
     })

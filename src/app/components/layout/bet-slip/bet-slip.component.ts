@@ -37,8 +37,9 @@ export class BetSlipComponent implements OnInit {
   }
 
   submitBets() {
-    console.log(this.betSlipService.selectedBets);
-    this.startLoading();
+    // console.log(this.betSlipService.selectedBets);
+    // this.startLoading();
+    this.betSlipService.submitBets();
   }
 
   removeFromSelectedBets(betIndex: number) {
