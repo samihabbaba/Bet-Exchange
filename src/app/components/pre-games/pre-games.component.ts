@@ -22,7 +22,15 @@ export class PreGamesComponent implements OnInit,OnDestroy {
     public betSlipService: BetSlipService
   ) {
     this.subscription = this.dataService.selectedEvents.subscribe(resp => {
-    this.games = resp;
+debugger
+      let arrOfGames = [];
+      for (let key in resp) {
+        let value = resp[key];
+        arrOfGames.push({events:value, sport:value[0].eventType.name});
+        // Use `key` and `value`
+    }
+
+    this.games = arrOfGames;
     })
 
     this.subscription2 = this.layoutService.currentSport.subscribe(resp => {
