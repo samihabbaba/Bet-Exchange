@@ -96,6 +96,7 @@ export class LiveFeedService {
 	
 	private onLiveGameUpdate(game: Match) {
 		console.log(`Recieved information for one game`);
+		debugger
     this.eventDetail.next(game);
   }
 

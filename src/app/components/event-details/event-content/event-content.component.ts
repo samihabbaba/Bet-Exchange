@@ -85,6 +85,9 @@ export class EventContentComponent implements OnInit {
 
   ngOnInit(): void {
     
+    //comment function call below to always show all markets categories (tabs)
+    this.setTabsToShow();
+
     if (this.event.markets.length > 0) {
       this.topMarket = this.event.markets[0];
     } else {
@@ -150,9 +153,9 @@ export class EventContentComponent implements OnInit {
   refreshEvent() {
     if (this.eventIsLive) {
       // we don't request ignore listen as true --> because when the loading start the onDestroy of details comp will cut the listen to event
-      this.dataService.loadMarketsForGameLive(this.event.event.eventId);
+      this.dataService.loadMarketsForGameLive(this.event.id);
     } else {
-      this.dataService.loadMarketsForGamePre(this.event.event.eventId);
+      this.dataService.loadMarketsForGamePre(this.event.id);
     }
   }
 
@@ -270,4 +273,74 @@ export class EventContentComponent implements OnInit {
       this.copyOfMarkets = [];
     }
   }
+
+
+
+
+
+
+
+
+  setTabsToShow(){
+    this.copyOfTabs=[];
+    this.tabItems.forEach(elem => {
+
+      if (elem.name == 'Popular') {
+        
+        if(this.event.markets.some( (x: any) => this.sharedService.isMarketPopular(x.name)  )){
+          this.copyOfTabs.push( elem )
+        }
+
+      } 
+      
+      else if (elem.name == 'Over/Under') {
+        if( this.event.markets.some((x: any) =>
+          this.sharedService.isMarketOverUnder(
+            x.name,
+            x.runners
+          )
+        )){
+          this.copyOfTabs.push( elem )
+        }
+      } 
+      
+      else if (elem.name == 'Goals') {
+        if( this.event.markets.some((x: any) =>
+          this.sharedService.isMarketGoals(x.name)
+        )){
+          this.copyOfTabs.push( elem )
+        }
+      } 
+      
+      else if (elem.name == 'Half Time') {
+        if( this.event.markets.some((x: any) =>
+          this.sharedService.isMarketHalf(x.name)
+        )){
+          this.copyOfTabs.push( elem )
+        }
+      } 
+     
+      else if (elem.name == 'Handicap') {
+        if( this.event.markets.some((x: any) =>
+          this.sharedService.isMarketHandicap(x.name, x.runners)
+        )){
+          this.copyOfTabs.push( elem )
+        }
+      } 
+     
+      else if (elem.name == 'Others') {
+        if( this.event.markets.some((x: any) =>
+          this.sharedService.isMarketOthers(x.name, x.runners)
+        )){
+          this.copyOfTabs.push( elem )
+        }
+      }
+
+
+    })
+
+  this.selectedTab = this.copyOfTabs[0].name;
+
+  }
+
 }
