@@ -19,12 +19,15 @@
       (click)="handleMenuHeaderClick(header)"
       [ngClass]="{ active: header.active, loading: menuLoading || isLoading }"
     >
-      <i
+      <!-- <i
         [ngClass]="{ active: header.active }"
         class="menu-item-icon"
         [class]="header.icon"
-      ></i
-      >{{ header.name }}
+      ></i> -->
+      <img src="../../../../assets/sportsIcons/{{header.id}}.png"
+              class="sport-menu-icon"/>
+
+      {{ header.name }}
       <div class="arrow-area" [ngClass]="{ active: header.active }">
         <i class="item-arrow fas fa-chevron-down"></i>
       </div>

@@ -293,7 +293,7 @@ export class DataService {
         (resp) => {
 
           this.layoutService.displayLiveGames();
-            debugger
+
             let sorted = resp.body.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null).sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0)
             let result = sorted.reduce(function (r:any, a:any) {
               r[a.eventTypeId] = r[a.eventTypeId] || [];
@@ -319,7 +319,6 @@ export class DataService {
     // this.events.next(games.filter((x:any)=>x.markets.length > 0));
     //x.sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0)
     
-    debugger
     let sorted = games.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null).sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0)
     let result = sorted.reduce(function (r:any, a:any) {
       r[a.eventTypeId] = r[a.eventTypeId] || [];
@@ -405,7 +404,6 @@ export class DataService {
           this.layoutService.displayPreGames();
           
 
-          debugger
           let sorted = resp.body.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null).sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0)
           let result = sorted.reduce(function (r:any, a:any) {
             r[a.eventTypeId] = r[a.eventTypeId] || [];
@@ -450,7 +448,6 @@ return //uncomment here
           console.log(resp.body.items.filter((x:any)=>x.markets.length > 0))
           this.layoutService.displayPreGames();
 
-          debugger
           let sorted = resp.body.items.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null).sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0)
           let result = sorted.reduce(function (r:any, a:any) {
             r[a.eventTypeId] = r[a.eventTypeId] || [];
