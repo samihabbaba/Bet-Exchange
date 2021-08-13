@@ -45,6 +45,8 @@
       </div>
     </div>
     <div class="odds" (click)="$event.stopPropagation()">
+     
+     
       <div class="odds-1">
         <div
           class="blue-square"
@@ -163,128 +165,11 @@
         </div>
       </div>
 
+
       <div class="odds-x">
         <div
           class="blue-square"
           *ngIf="event.markets[0].numberOfRunners == 3"
-          [ngClass]="{
-            selected: this.betSlipService.checkIfBetIsSelected(
-              event.id,
-              event.markets[0].id,
-              event.markets[0].runners[1]?.selectionId,
-              true
-            )
-          }"
-          (click)="
-            this.betSlipService.pushToSelectedBets(
-              event,
-              true,
-              event.markets[0],
-              event.markets[0].runners[1],
-              this.sharedService.returnHighestBet(
-                this.sharedService.getBackObj(event, 1)
-              )
-            )
-          "
-        >
-          <div class="bold">
-            <ng-container
-              *ngIf="this.sharedService.oddAvailableForMainPage(event,1,true)"
-            >
-              {{
-                this.sharedService.returnHighestBet(
-                  this.sharedService.getBackObj(event, 1)
-                ).price
-              }}
-            </ng-container>
-
-            <fa-icon
-              *ngIf="!this.sharedService.oddAvailableForMainPage(event,1,true)"
-              [icon]="fontAwesomeIcons.lock"
-            ></fa-icon>
-          </div>
-          <div class="normal">
-            <ng-container
-              *ngIf="this.sharedService.oddAvailableForMainPage(event,1,true)"
-            >
-              {{
-                this.sharedService.returnHighestBet(
-                  this.sharedService.getBackObj(event, 1)
-                ).size
-              }}
-            </ng-container>
-
-            <!-- <fa-icon
-              *ngIf="!this.sharedService.oddAvailableForMainPage(event,1,true)"
-              [icon]="fontAwesomeIcons.lock"
-            ></fa-icon> -->
-          </div>
-        </div>
-
-        <div
-        *ngIf="event.markets[0].numberOfRunners == 3"
-          class="red-square"
-          [ngClass]="{
-            selected: this.betSlipService.checkIfBetIsSelected(
-              event.id,
-              event.markets[0].id,
-              event.markets[0].runners[1]?.selectionId,
-              false
-            )
-          }"
-          (click)="
-            this.betSlipService.pushToSelectedBets(
-              event,
-              false,
-              event.markets[0],
-              event.markets[0].runners[1],
-              this.sharedService.returnHighestBet(
-                this.sharedService.getLayObj(event, 1),
-                false
-              )
-            )
-          "
-        >
-          <div class="bold">
-            <ng-container
-              *ngIf="this.sharedService.oddAvailableForMainPage(event,1,false)"
-            >
-              {{
-                this.sharedService.returnHighestBet(
-                  this.sharedService.getLayObj(event, 1),
-                  false
-                ).price
-              }}
-            </ng-container>
-
-            <fa-icon
-              *ngIf="!this.sharedService.oddAvailableForMainPage(event,1,false)"
-              [icon]="fontAwesomeIcons.lock"
-            ></fa-icon>
-          </div>
-          <div class="normal">
-            <ng-container
-              *ngIf="this.sharedService.oddAvailableForMainPage(event,1,false)"
-            >
-              {{
-                this.sharedService.returnHighestBet(
-                  this.sharedService.getLayObj(event, 1),
-                  false
-                ).size
-              }}
-            </ng-container>
-
-            <!-- <fa-icon
-              *ngIf="!this.sharedService.oddAvailableForMainPage(event,1,false)"
-              [icon]="fontAwesomeIcons.lock"
-            ></fa-icon> -->
-          </div>
-        </div>
-      </div>
-
-      <div class="odds-2" *ngIf="event.markets[0].numberOfRunners == 3">
-        <div
-          class="blue-square"
           [ngClass]="{
             selected: this.betSlipService.checkIfBetIsSelected(
               event.id,
@@ -340,6 +225,7 @@
         </div>
 
         <div
+        *ngIf="event.markets[0].numberOfRunners == 3"
           class="red-square"
           [ngClass]="{
             selected: this.betSlipService.checkIfBetIsSelected(
@@ -400,8 +286,117 @@
       </div>
 
 
+      <!-- <div class="odds-2" *ngIf="event.markets[0].numberOfRunners == 3">
+        <div
+          class="blue-square"
+          [ngClass]="{
+            selected: this.betSlipService.checkIfBetIsSelected(
+              event.id,
+              event.markets[0].id,
+              event.markets[0].runners[2]?.selectionId,
+              true
+            )
+          }"
+          (click)="
+            this.betSlipService.pushToSelectedBets(
+              event,
+              true,
+              event.markets[0],
+              event.markets[0].runners[2],
+              this.sharedService.returnHighestBet(
+                this.sharedService.getBackObj(event, 2)
+              )
+            )
+          "
+        >
+          <div class="bold">
+            <ng-container
+              *ngIf="this.sharedService.oddAvailableForMainPage(event,2,true)"
+            >
+              {{
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getBackObj(event, 2)
+                ).price
+              }}
+            </ng-container>
+
+            <fa-icon
+              *ngIf="!this.sharedService.oddAvailableForMainPage(event,2,true)"
+              [icon]="fontAwesomeIcons.lock"
+            ></fa-icon>
+          </div>
+          <div class="normal">
+            <ng-container
+              *ngIf="this.sharedService.oddAvailableForMainPage(event,2,true)"
+            >
+              {{
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getBackObj(event, 2)
+                ).size
+              }}
+            </ng-container>
+            
+          </div>
+        </div>
+
+        <div
+          class="red-square"
+          [ngClass]="{
+            selected: this.betSlipService.checkIfBetIsSelected(
+              event.id,
+              event.markets[0].id,
+              event.markets[0].runners[2]?.selectionId,
+              false
+            )
+          }"
+          (click)="
+            this.betSlipService.pushToSelectedBets(
+              event,
+              false,
+              event.markets[0],
+              event.markets[0].runners[2],
+              this.sharedService.returnHighestBet(
+                this.sharedService.getLayObj(event, 2),
+                false
+              )
+            )
+          "
+        >
+          <div class="bold">
+            <ng-container
+              *ngIf="this.sharedService.oddAvailableForMainPage(event,2,false)"
+            >
+              {{
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getLayObj(event, 2),
+                  false
+                ).price
+              }}
+            </ng-container>
+
+            <fa-icon
+              *ngIf="!this.sharedService.oddAvailableForMainPage(event,2,false)"
+              [icon]="fontAwesomeIcons.lock"
+            ></fa-icon>
+          </div>
+          <div class="normal">
+            <ng-container
+              *ngIf="this.sharedService.oddAvailableForMainPage(event,2,false)"
+            >
+              {{
+                this.sharedService.returnHighestBet(
+                  this.sharedService.getLayObj(event, 2),
+                  false
+                ).size
+              }}
+            </ng-container>
+            
+          </div>
+        </div>
+      </div> -->
       
-      <div class="odds-2" *ngIf="event.markets[0].numberOfRunners != 3">
+
+      <div class="odds-2">
         <div
           class="blue-square"
           [ngClass]="{
