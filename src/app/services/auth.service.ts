@@ -12,6 +12,12 @@ import { environment } from 'src/environments/environment';
 })
 export class AuthService {
 
+  httpOptions = {
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    }),
+  };
+
   constructor(private http:HttpClient, private dataService:DataService,
     private route:Router,
     private notificationService: NotificationService
@@ -35,7 +41,7 @@ export class AuthService {
     }
 
     this.login(model).subscribe(
-      (resp) => {
+     async (resp) => {
 
         const user: any = resp.body;
         localStorage.setItem('token', user.token);
@@ -44,12 +50,24 @@ export class AuthService {
           Authorization: 'Bearer ' + user.token,
         });
 
+        
+        this.httpOptions.headers = new HttpHeaders({
+          Authorization: 'Bearer ' + user.token,
+        });
+
         if (user.token) {
           this.decodedToken = this.jwtHelper.decodeToken(user.token);
           // const role = this.decodedToken.role;      
           localStorage.setItem("token", user.token);
-          this.logInSuccess = true;
-          this.route.navigateByUrl('home')
+          
+          let dataLoaded = await this.initializeData();
+          if(dataLoaded){
+            this.logInSuccess = true;
+            this.route.navigateByUrl('home')
+          }else{
+            this.logInSuccess = false;
+            this.notificationService.error('Error while Logging to the system',5000);  
+          }
         }
         else{
           this.logInSuccess = false;
@@ -77,9 +95,14 @@ export class AuthService {
     this.decodedToken = null;
     localStorage.removeItem('token');
 
-   this.dataService.httpOptions.headers = new HttpHeaders({
+    this.dataService.httpOptions.headers = new HttpHeaders({
       Authorization: 'Bearer ',
     });
+
+    
+   this.httpOptions.headers = new HttpHeaders({
+    Authorization: 'Bearer ',
+  });
 
     if(routeAfter){
       this.route.navigateByUrl('login')
@@ -94,6 +117,24 @@ export class AuthService {
     else{
       return false;
     }
+  }
+
+  async initializeData(){
+    return new Promise((resolve, reject) => {
+
+      this.http.get<any>(`${environment.apiUrl}wallets/`, {
+        headers: this.httpOptions.headers,
+        observe: 'response',
+      }).subscribe(resp =>{
+
+        resolve(true);
+      }, error =>{
+
+        // reject(false);
+        resolve(false);
+      });
+
+   });
   }
 
 }

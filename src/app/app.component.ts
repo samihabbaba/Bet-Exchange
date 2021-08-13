@@ -30,6 +30,7 @@ export class AppComponent implements OnInit {
     if(!this.authService.loggedIn()){
       this.router.navigateByUrl('login');
     }
+    
   }
 
   initializeSubscriptions() {

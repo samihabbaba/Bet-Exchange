@@ -20,7 +20,7 @@ export class BetSlipService {
     runners?: any,
     run?: any
   ) {
-    debugger
+
     if(!this.validOdd(market, runners, run)){
       return;
     }

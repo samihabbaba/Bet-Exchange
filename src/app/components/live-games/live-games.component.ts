@@ -21,7 +21,7 @@ export class LiveGamesComponent implements OnInit, OnDestroy {
     private layoutService: LayoutService,
     public betSlipService: BetSlipService
   ) {
-    this.subscription = this.dataService.selectedEvents.subscribe((resp) => {debugger
+    this.subscription = this.dataService.selectedEvents.subscribe((resp) => {
 
       let arrOfGames = [];
       for (let key in resp) {
