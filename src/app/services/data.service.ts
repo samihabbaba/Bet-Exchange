@@ -305,7 +305,7 @@ export class DataService {
 
           this.layoutService.displayLiveGames();
 
-            let sorted = resp.body.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null).sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0)
+            let sorted = resp.body/*.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null)*/.sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0)
             let result = sorted.reduce(function (r:any, a:any) {
               r[a.eventTypeId] = r[a.eventTypeId] || [];
               r[a.eventTypeId].push(a);
@@ -330,7 +330,7 @@ export class DataService {
     // this.events.next(games.filter((x:any)=>x.markets.length > 0));
     //x.sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0)
     
-    let sorted = games.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null).sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0)
+    let sorted = games/*.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null)*/.sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0)
     let result = sorted.reduce(function (r:any, a:any) {
       r[a.eventTypeId] = r[a.eventTypeId] || [];
       r[a.eventTypeId].push(a);
@@ -415,7 +415,7 @@ export class DataService {
           this.layoutService.displayPreGames();
           
 
-          let sorted = resp.body.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null).sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0)
+          let sorted = resp.body/*.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null)*/.sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0)
           let result = sorted.reduce(function (r:any, a:any) {
             r[a.eventTypeId] = r[a.eventTypeId] || [];
             r[a.eventTypeId].push(a);
@@ -456,10 +456,9 @@ export class DataService {
       .pipe(finalize(() => this.layoutService.stopMainLoading()))
       .subscribe(
         (resp) => {
-          console.log(resp.body.items.filter((x:any)=>x.markets.length > 0))
           this.layoutService.displayPreGames();
 
-          let sorted = resp.body.items.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null).sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0)
+          let sorted = resp.body.items/*.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null)*/.sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0)
           let result = sorted.reduce(function (r:any, a:any) {
             r[a.eventTypeId] = r[a.eventTypeId] || [];
             r[a.eventTypeId].push(a);

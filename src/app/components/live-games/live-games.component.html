@@ -44,7 +44,9 @@
         {{ event.timeline?.elapsedRegularTime }}'
       </div>
     </div>
-    <div class="odds" (click)="$event.stopPropagation()">
+
+
+    <div class="odds" (click)="$event.stopPropagation()" *ngIf="event.markets[0] !== undefined">
      
      
       <div class="odds-1">
@@ -515,6 +517,104 @@
 
 
     </div>
+
+
+    <div class="odds" (click)="$event.stopPropagation()" *ngIf="event.markets[0] === undefined">
+      <div class="odds-1">
+        <div
+          class="blue-square"
+        >
+          <div class="bold">
+            <fa-icon
+              
+              [icon]="fontAwesomeIcons.lock"
+            ></fa-icon>
+          </div>
+          <div class="normal">
+          </div>
+        </div>
+
+        <div
+          class="red-square"
+        >
+          <div class="bold">
+           
+            <fa-icon
+             
+              [icon]="fontAwesomeIcons.lock"
+            ></fa-icon>
+          </div>
+          <div class="normal">
+          
+
+          </div>
+        </div>
+      </div>
+
+      <div class="odds-x" >
+        <div
+        class="blue-square"
+      >
+        <div class="bold">
+          <fa-icon
+            
+            [icon]="fontAwesomeIcons.lock"
+          ></fa-icon>
+        </div>
+        <div class="normal">
+        </div>
+      </div>
+
+      <div
+        class="red-square"
+      >
+        <div class="bold">
+         
+          <fa-icon
+           
+            [icon]="fontAwesomeIcons.lock"
+          ></fa-icon>
+        </div>
+        <div class="normal">
+        
+
+        </div>
+      </div>
+      </div>
+      
+      <div class="odds-2" >
+        <div
+        class="blue-square"
+      >
+        <div class="bold">
+          <fa-icon
+            
+            [icon]="fontAwesomeIcons.lock"
+          ></fa-icon>
+        </div>
+        <div class="normal">
+        </div>
+      </div>
+
+      <div
+        class="red-square"
+      >
+        <div class="bold">
+         
+          <fa-icon
+           
+            [icon]="fontAwesomeIcons.lock"
+          ></fa-icon>
+        </div>
+        <div class="normal">
+        
+
+        </div>
+      </div>
+      </div>
+    </div>
+
+
   </div>
 
 </ng-container>
