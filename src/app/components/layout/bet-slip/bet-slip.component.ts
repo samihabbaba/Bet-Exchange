@@ -3,6 +3,8 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BetSlipService } from 'src/app/services/bet-slip.service';
 import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { finalize } from 'rxjs/operators';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-bet-slip',
@@ -20,6 +22,7 @@ export class BetSlipComponent implements OnInit {
 
   constructor(
     public betSlipService: BetSlipService,
+    public dataService: DataService,
     public sharedFunctionsService: SharedFunctionsService,
     private notificationService: NotificationService
   ) {}
@@ -38,8 +41,27 @@ export class BetSlipComponent implements OnInit {
 
   submitBets() {
     // console.log(this.betSlipService.selectedBets);
-    // this.startLoading();
-    this.betSlipService.submitBets();
+    this.startLoading();
+    let betsToSend:any = []
+    this.betSlipService.selectedBets.forEach(bet => {
+      betsToSend.push({
+        walletId:'String',
+        stake:bet.stake,
+        marketId:bet.market.marketId,
+        selectionId:bet.market.run.selectionId,
+        betType:bet.isBack?'BACK':'LAY'
+      })
+    });
+
+    this.dataService.submitBets(betsToSend)
+    .pipe(finalize( () =>       this.stopLoading()
+    ))
+    .subscribe(resp => {
+      this.notificationService.success("Bet(s) added successfully!")
+    }, error =>{
+      this.notificationService.error("Error while adding Bet(s)!")
+    });
+    
   }
 
   removeFromSelectedBets(betIndex: number) {

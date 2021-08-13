@@ -199,23 +199,7 @@ export class BetSlipService {
 
 
   ///////////////// API requests ////////////////////////
-  submitBets(){
-debugger
-    let betsToSend = []
-    this.selectedBets.forEach(bet => {
-      betsToSend.push({
-        walletId:'String',
-        stake:bet.stake,
-        marketId:bet.market.marketId,
-        selectionId:bet.market.run.selectionId,
-        betType:bet.isBack?'BACK':'LAY'
-      })
-    });
-
-    return;
-
-  }
-
+  
 
   // login(model: any) {
   //   let loginURL = 'https://api.vebobet.com/api/v1/auth/login';

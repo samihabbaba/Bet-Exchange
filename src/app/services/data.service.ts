@@ -38,9 +38,20 @@ export class DataService {
     });
   }
 
+
+
   ////////////////////////////////
-  ////// sports Controller //////
+  ////// Bet Controller //////
   ///////////////////////////////
+
+
+  submitBets(bets:any){        
+     return this.http.post(`${environment.apiUrl}bets`, bets, {
+       headers: this.httpOptions.headers,
+       observe: "response",
+     });
+  }
+    
 
   getSports() {
     return this.http.get<any>(`${this.baseUrl}sports`, {
