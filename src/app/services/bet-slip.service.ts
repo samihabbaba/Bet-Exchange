@@ -10,6 +10,7 @@ import { BetSlip } from '../models/bet-slip';
 export class BetSlipService {
   selectedBets: BetSlip[] = [];
   currentOpenBets: any[] = ['1', '12'];
+  minStakeForBet = 1;
 
   constructor(private http: HttpClient) {}
 

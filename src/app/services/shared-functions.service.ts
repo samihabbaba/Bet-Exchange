@@ -252,8 +252,9 @@ export class SharedFunctionsService {
 
   isMarketOverUnder(name:string, runs:any){
     if(name.toLowerCase().includes('over') || name.toLowerCase().includes('under') || name.toLowerCase().includes('goal')
-    || runs.some((x:any)=> x.name.toLowerCase().includes('over'))
-    || runs.some((x:any)=> x.name.toLowerCase().includes('under'))){
+    || runs.some((x:any)=> x.name.toLowerCase().includes('over ')) || runs.some((x:any)=> x.name.toLowerCase().includes(' over'))
+    || runs.some((x:any)=> x.name.toLowerCase().includes('under '))|| runs.some((x:any)=> x.name.toLowerCase().includes(' under'))
+    ){
       return true;
     }else{
       return false;

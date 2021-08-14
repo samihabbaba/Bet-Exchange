@@ -101,4 +101,16 @@ export class BetSlipComponent implements OnInit {
     this.loaderWrapper?.nativeElement.classList.remove('loader-wrapper');
     this.loader?.nativeElement.classList.remove('loader');
   }
+
+  disableSlipSubmit(){
+    if(this.betSlipService.selectedBets.length < 1){
+      return true;
+    }
+
+    if(this.betSlipService.selectedBets.some(x=>x.stake == undefined || x.stake == null || x.stake < this.betSlipService.minStakeForBet)){
+      return true;
+    }
+
+    return false;
+  }
 }

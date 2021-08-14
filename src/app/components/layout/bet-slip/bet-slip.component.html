@@ -193,7 +193,7 @@
       <button
         class="submit-btn"
         (click)="submitBets()"
-        [ngClass]="{ disabled: this.betSlipService.selectedBets.length < 1 }"
+        [ngClass]="{ disabled: disableSlipSubmit() }"
       >
         Submit
       </button>
