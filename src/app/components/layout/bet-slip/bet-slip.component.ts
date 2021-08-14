@@ -110,8 +110,7 @@ export class BetSlipComponent implements OnInit {
     if(this.betSlipService.selectedBets.some(x=>x.stake == undefined || x.stake == null || x.stake < this.betSlipService.minStakeForBet)){
       return true;
     }
-
-    debugger
+    
     let hh = this.betSlipService.selectedBets[0].market.run.price;
     if(this.betSlipService.selectedBets.some(x=>x.market.run.price == undefined || x.market.run.price == null || x.market.run.price < 1.01)){
       return true;
