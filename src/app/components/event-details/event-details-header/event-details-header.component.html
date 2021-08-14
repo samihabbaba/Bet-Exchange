@@ -2,7 +2,7 @@
   <div class="sports-header">
     <div class="star-favourites"></div>
     <div class="event-header">
-      <span class="title"><span>{{event?.name}}</span></span>
+      <span class="title"><span>{{returnEventName(event?.name)}}</span></span>
       <!-- <div class="event-date">Fri 2 Jul, 17:00</div> -->
       <div class="event-date">{{event?.openDate | date:"EEEE, MMMM d, h:mm a"}} - {{event?.region.name}} - {{event?.competition.name}}</div>
     </div>

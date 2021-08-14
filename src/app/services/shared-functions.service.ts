@@ -14,7 +14,7 @@ export class SharedFunctionsService {
 
   returnTeamNameFromEvent(eventName:string, isHome = true){
 
-    if(eventName === undefined || eventName === null || !eventName.includes(" v ")){
+    if(eventName === undefined || eventName === null || (!eventName.includes(" v ") && !eventName.includes(" @ "))){
       if(isHome){
         return eventName;
       }else{
@@ -22,11 +22,24 @@ export class SharedFunctionsService {
       }
     }
 
-    if(isHome){
-      return eventName.split(" v ")[0].trim();
-    }else{
-      return eventName.split(" v ")[1].trim();
+    if(eventName.includes(" v ")){
+      if(isHome){
+        return eventName.split(" v ")[0].trim();
+      }else{
+        return eventName.split(" v ")[1].trim();
+      }
     }
+    else if(eventName.includes(" @ ")){
+      if(isHome){
+        return eventName.split(" @ ")[0].trim();
+      }else{
+        return eventName.split(" @ ")[1].trim();
+      }
+    }
+    else{
+      return "";
+    }
+
   }
 
   returnEventScore(event:any){

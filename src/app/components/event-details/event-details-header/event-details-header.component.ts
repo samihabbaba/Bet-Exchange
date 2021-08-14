@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { eventNames } from 'process';
 import { multicast } from 'rxjs/operators';
 import { LayoutService } from 'src/app/services/layout.service';
 
@@ -15,4 +16,22 @@ export class EventDetailsHeaderComponent implements OnInit {
   ngOnInit(): void {
   }
   
+  returnEventName(eventName:string){
+
+    if(eventName == null || eventName == undefined){
+      eventName;
+    }
+
+    if(eventName.includes(" v ")){
+      return eventName.replace(' v ',' vs ')
+    }
+    else if(eventName.includes(" @ ")){
+      return eventName.replace(' @ ',' vs ')
+    }
+    else{
+      return eventName;
+    }
+
+  }
+
 }
