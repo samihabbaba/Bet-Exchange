@@ -111,6 +111,12 @@ export class BetSlipComponent implements OnInit {
       return true;
     }
 
+    debugger
+    let hh = this.betSlipService.selectedBets[0].market.run.price;
+    if(this.betSlipService.selectedBets.some(x=>x.market.run.price == undefined || x.market.run.price == null || x.market.run.price < 1.01)){
+      return true;
+    }
+
     return false;
   }
 }

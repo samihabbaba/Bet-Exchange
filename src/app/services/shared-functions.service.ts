@@ -6,8 +6,8 @@ import { Injectable } from '@angular/core';
 export class SharedFunctionsService {
 
 
-  popularMarkets = ['Match Odds', 'Half Time', 'Both teams to Score?',
-  'Over/Under 1.5 Goals', 'First Half Goals 1.5', ]
+  popularMarkets = ['Match Odds', 'Half Time', 'Both teams to Score?', 'Over/Under 1.5 Goals', 'First Half Goals 1.5', 'Series Winner', 'Regular Time Match Odds',
+   'Match Winner', 'Moneyline', 'Fight Result']
 
 
   constructor() { }
