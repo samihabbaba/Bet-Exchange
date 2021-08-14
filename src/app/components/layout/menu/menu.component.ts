@@ -85,6 +85,23 @@ export class MenuComponent implements OnInit {
         .subscribe(
           (resp) => {
             
+            item.children?.push({
+              id:'',
+              sportId:item.id,
+              name:'Upcoming',
+              active:false,
+              children:null
+            })
+
+            
+            item.children?.push({
+              id:'',
+              sportId:item.id,
+              name:'All Leagues',
+              active:false,
+              children:[]
+            })
+
             for (let i = 0; i < resp.body.length; i++) {
               item.children?.push({
                 id: resp.body[i].countryCode,
@@ -104,41 +121,48 @@ export class MenuComponent implements OnInit {
   handleMenuItemClick(item: MenuItem) {
     //region clicked (load leagues)
 
-    if (item.active) {
-      item.active = !item.active;
-      item.children = [];
-    } else {
-      if (this.layoutService.isMenuLoading()) {
-        return;
-      } else {
-        this.layoutService.startMenuLoading();
-        this.layoutService.currentRegion.next(item);
-      }
-      // item.id = 'International';
-
-      this.dataService
-        .getAllLeagues(item.sportId, item.id)
-        .pipe(finalize(() => this.layoutService.stopMenuLoading()))
-        .subscribe(
-          (resp) => {
-            
-
-            for (let i = 0; i < resp.body.length; i++) {
-              item.children?.push({
-                id: resp.body[i].id,
-                regionId: resp.body[i].regionId,
-                sportId: item.sportId,
-                name: resp.body[i].name,
-                active: false,
-              });
-            }
-            item.active = !item.active;
-          },
-          (error) => {
-            // 
-          }
-        );
+    if(item.name == 'Upcoming'){
+      this.dataService.loadPreGames('', '', item.sportId,true);
     }
+    else{
+      if (item.active) {
+        item.active = !item.active;
+        item.children = [];
+      } else {
+        if (this.layoutService.isMenuLoading()) {
+          return;
+        } else {
+          this.layoutService.startMenuLoading();
+          this.layoutService.currentRegion.next(item);
+        }
+        // item.id = 'International';
+  
+        this.dataService
+          .getAllLeagues(item.sportId, item.id)
+          .pipe(finalize(() => this.layoutService.stopMenuLoading()))
+          .subscribe(
+            (resp) => {
+              
+  
+              for (let i = 0; i < resp.body.length; i++) {
+                item.children?.push({
+                  id: resp.body[i].id,
+                  regionId: resp.body[i].regionId,
+                  sportId: item.sportId,
+                  name: resp.body[i].name,
+                  active: false,
+                });
+              }
+              item.active = !item.active;
+            },
+            (error) => {
+              // 
+            }
+          );
+      }
+    }
+
+    
   }
 
   handleGrandChildClick(child: MenuItem, grandchild: MenuItemChildren) {

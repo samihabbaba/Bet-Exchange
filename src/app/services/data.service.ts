@@ -381,61 +381,61 @@ export class DataService {
 
   ////// pre part
 
-  loadPreGames(leagueId: number, regionId: string,sportId:string) {
+  loadPreGames(leagueId: any, regionId: string,sportId:string, paged=false) {
     if (this.layoutService.isMainLoading()) {
       return;
     }
     if (!this.layoutService.isMainLoading()) {
       this.layoutService.startMainLoading();
     }
-    if (this.layoutService.isMenuLoading()) {
-      return;
-    }
-    if (!this.layoutService.isMenuLoading()) {
-      this.layoutService.startMenuLoading();
-    }
 
     this.events.next([]);
     this.layoutService.displayPreGames();
 
-    this.getAllUpcoming({
-      LeagueId: leagueId,
-      RegionCode: regionId,
-      sportId:sportId
-    })
-      .pipe(
-        finalize(() => {
-          this.layoutService.stopMainLoading();
-          this.layoutService.stopMenuLoading();
-        })
-      )
-      .subscribe(
-        (resp) => {
-
-          this.layoutService.displayPreGames();
-          
-
-          let sorted = resp.body/*.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null)*/.sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0)
-          let result = sorted.reduce(function (r:any, a:any) {
-            r[a.eventTypeId] = r[a.eventTypeId] || [];
-            r[a.eventTypeId].push(a);
-            return r;
-          }, Object.create(null))
+    if(paged){
+      this.loadPreGamesFromHeader(sportId);
+    }
+    else{
+      this.getAllUpcoming({
+        LeagueId: leagueId,
+        RegionCode: regionId,
+        sportId:sportId
+      })
+        .pipe(
+          finalize(() => {
+            this.layoutService.stopMainLoading();
+            this.layoutService.stopMenuLoading();
+          })
+        )
+        .subscribe(
+          (resp) => {
+  
+            this.layoutService.displayPreGames();
+            
+  
+            let sorted = resp.body/*.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null)*/.sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0)
+            let result = sorted.reduce(function (r:any, a:any) {
+              r[a.eventTypeId] = r[a.eventTypeId] || [];
+              r[a.eventTypeId].push(a);
+              return r;
+            }, Object.create(null))
+      
+            // this.events.next(resp.body.filter((x:any)=>x.markets.length > 0));
+            // this.events.next(resp.body.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null).sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0));
+            this.events.next(result);
+            
+          },
+          (error) => {
+            this.events.next([]);
+            // add error message here
+          }
+        );
+    }
     
-          // this.events.next(resp.body.filter((x:any)=>x.markets.length > 0));
-          // this.events.next(resp.body.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null).sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0));
-          this.events.next(result);
-          
-        },
-        (error) => {
-          this.events.next([]);
-          // add error message here
-        }
-      );
   }
 
   loadPreGamesFromHeader(sportId?:any) {
-return //uncomment here
+// return //uncomment here
     this.layoutService.closeMenuChilds();
     if (this.layoutService.isMainLoading()) {
       return;

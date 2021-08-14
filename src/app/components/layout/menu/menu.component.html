@@ -48,7 +48,7 @@
 
           {{ child.name }}
           <div class="child-arrow-area" [ngClass]="{ active: child.active }">
-            <i class="child-item-arrow fas fa-chevron-down"></i>
+            <i *ngIf="child.children != null" class="child-item-arrow fas fa-chevron-down"></i>
           </div>
         </span>
       </div>
