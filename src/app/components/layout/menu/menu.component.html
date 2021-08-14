@@ -41,6 +41,11 @@
         [@fadeMenuDropdown]
       >
         <span class="menu-subItem-label" [ngClass]="{ active: child.active }">
+
+          <img src="../../../../assets/flags/{{child.name.toLowerCase()}}.svg"
+              class="sport-menu-icon"/>
+
+
           {{ child.name }}
           <div class="child-arrow-area" [ngClass]="{ active: child.active }">
             <i class="child-item-arrow fas fa-chevron-down"></i>
