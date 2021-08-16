@@ -22,4 +22,7 @@ export class MasterAccountComponent implements OnInit {
     this.router.navigate([`master/players`])
   }
 
+  goToLoginPage() {
+    this.router.navigateByUrl('login');
+  }
 }
