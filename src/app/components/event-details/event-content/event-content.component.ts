@@ -99,7 +99,7 @@ export class EventContentComponent implements OnInit {
 
 
   setTopMarket(){
-    debugger
+    
     if (this.event.markets.length > 0) {
 
       if(this.event.markets.some((x:any)=> this.sharedService.mainMarkets.some(y=> y == x.name))){

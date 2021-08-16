@@ -45,8 +45,8 @@ export class BetSlipComponent implements OnInit {
     let betsToSend:any = []
     this.betSlipService.selectedBets.forEach(bet => {
       betsToSend.push({
-        walletId:'String',
         stake:bet.stake,
+        odd:bet.market.run.price,
         marketId:bet.market.marketId,
         selectionId:bet.market.run.selectionId,
         betType:bet.isBack?'BACK':'LAY'
