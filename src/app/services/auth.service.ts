@@ -121,7 +121,8 @@ export class AuthService {
 
   async initializeData(){
     return new Promise((resolve, reject) => {
-
+      resolve(true);
+      return;
       this.http.get<any>(`${environment.apiUrl}wallets/`, {
         headers: this.httpOptions.headers,
         observe: 'response',

@@ -87,18 +87,33 @@ export class EventContentComponent implements OnInit {
     
     //comment function call below to always show all markets categories (tabs)
     this.setTabsToShow();
-
-    if (this.event.markets.length > 0) {
-      this.topMarket = this.event.markets[0];
-    } else {
-      this.topMarket = {};
-    }
+    this.setTopMarket();
+    
     this.eventIsLive = this.event.isLive;
     this.getMarketsToDisplay();
   }
+
   ngOnDestroy() {
     this.screenObserver$?.unsubscribe();
   }
+
+
+  setTopMarket(){
+    debugger
+    if (this.event.markets.length > 0) {
+
+      if(this.event.markets.some((x:any)=> this.sharedService.mainMarkets.some(y=> y == x.name))){
+        this.topMarket = this.event.markets[this.event.markets.findIndex((x:any)=>this.sharedService.mainMarkets.some(y=> y == x.name))]
+      }
+      else{
+        this.topMarket = this.event.markets[0];
+      }
+
+    } else {
+      this.topMarket = {};
+    }
+  }
+
 
   handleTabClick(tab: any) {
     if (tab.children) {

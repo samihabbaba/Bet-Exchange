@@ -436,7 +436,7 @@ export class DataService {
   }
 
   loadPreGamesFromHeader(sportId?:any) {
-// return //uncomment here
+return //uncomment here
 
 this.layoutService.closeMenuChilds();
     if (this.layoutService.isMainLoading()) {
