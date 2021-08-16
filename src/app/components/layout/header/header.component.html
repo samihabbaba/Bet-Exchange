@@ -37,7 +37,9 @@
     <button (click)="goToLoginPage()" class="login-btn">
       {{this.authService.loggedIn()?'Log Out':'Log In'}} &nbsp;<span class="login-icon"></span>
     </button>
-    <button class="join-now-btn">Join Now</button>
+    <!-- just add not'!' to the if below -->
+    <button *ngIf="this.authService.loggedIn()" 
+    class="join-now-btn">Join Now</button>
     <button #language class="languages" appLanguageDropdown>
       <span class="language-flag english" #languageToDisplay></span>
       <span class="language-dropdown-arrow"></span>

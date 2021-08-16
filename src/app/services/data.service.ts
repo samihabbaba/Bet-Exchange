@@ -245,6 +245,7 @@ export class DataService {
   ////////////////////////////////
 
   getUpcoming(pars: any) {
+    debugger
     return this.http.get<any>(
       `${this.baseUrl}upcoming/paged?RegionCode=${
         pars.RegionCode ? pars.RegionCode : ''
@@ -385,13 +386,13 @@ export class DataService {
     if (this.layoutService.isMainLoading()) {
       return;
     }
-    if (!this.layoutService.isMainLoading()) {
+    if (!this.layoutService.isMainLoading() && !paged) {
       this.layoutService.startMainLoading();
     }
 
     this.events.next([]);
     this.layoutService.displayPreGames();
-
+debugger
     if(paged){
       this.loadPreGamesFromHeader(sportId);
     }
@@ -436,6 +437,7 @@ export class DataService {
 
   loadPreGamesFromHeader(sportId?:any) {
 // return //uncomment here
+debugger
     this.layoutService.closeMenuChilds();
     if (this.layoutService.isMainLoading()) {
       return;
@@ -445,7 +447,10 @@ export class DataService {
 
     this.events.next([]);
     this.layoutService.displayPreGames();
-    sportId='1';
+    if(!sportId || sportId == null || sportId =='')
+    {
+      sportId='1';
+    }
     this.getUpcoming({
       PageNo: 1,
       PageSize: 15,
@@ -453,9 +458,16 @@ export class DataService {
       SortingType: 1,
       sportId:sportId
     })
-      .pipe(finalize(() => this.layoutService.stopMainLoading()))
+      .pipe(
+        finalize(
+          () => {
+            debugger
+            this.layoutService.stopMainLoading()}
+          )
+        )
       .subscribe(
         (resp) => {
+          debugger
           this.layoutService.displayPreGames();
 
           let sorted = resp.body.items/*.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null)*/.sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0)
