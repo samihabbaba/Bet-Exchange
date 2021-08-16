@@ -461,7 +461,8 @@ this.layoutService.closeMenuChilds();
       .pipe(
         finalize(
           () => {
-            this.layoutService.stopMainLoading()}
+            this.layoutService.stopMainLoading()
+            }
           )
         )
       .subscribe(
