@@ -538,4 +538,131 @@ this.layoutService.closeMenuChilds();
       observe: 'response',
     });
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /////////////////////// users ////////////////////////////
+
+
+
+ getAllUsers(pars:any) {
+      return this.http.get<any>( `${this.baseUrl}users​?PageNo=${
+        pars.PageNo ? pars.PageNo : ''
+      }&PageSize=${pars.PageSize ? pars.PageSize : ''}&SortBy=${
+        pars.SortBy ? pars.SortBy : ''
+      }&rParentId=${
+        pars.parentId ? pars.parentId : ''
+      }&Role=${pars.Role ? pars.Role : ''}`, {
+        headers: this.httpOptions.headers,
+      });
+    }
+
+    getUserById(id:string) {
+      return this.http.get<any>(`${environment.apiUrl}users/${id}`, {
+        headers: this.httpOptions.headers,
+      });
+    }
+
+    updateUser(obj:any) {
+      return this.http.patch(
+        `${environment.apiUrl}users/${obj.id}`,
+        obj,
+        { headers: this.httpOptions.headers, observe: 'response' }
+      );
+    }
+
+    addNewUser(obj:any) {
+      return this.http.post(`${environment.apiUrl}users`, obj, {
+        headers: this.httpOptions.headers,
+        observe: 'response',
+      });
+    }
+  
+    updatePassword(id:string , password:string) {
+      return this.http.put(
+        `${environment.apiUrl}users/${id}/password`,
+        {newPassword:password},
+        { headers: this.httpOptions.headers, observe: 'response' }
+      );
+    }
+    
+    updateMyPassword( obj:any) {
+      return this.http.put(
+        `${environment.apiUrl}users/me/password`,
+        obj,
+        { headers: this.httpOptions.headers, observe: 'response' }
+      );
+    }
+
+    toggleUserActive(id:string) {
+      return this.http.post(`${environment.apiUrl}users/${id}/active/toggle`, {}, {
+        headers: this.httpOptions.headers,
+        observe: 'response',
+      });
+    }
+
+    changeUserRisk(id:string, newRisk:number) {
+      return this.http.post(`${environment.apiUrl}users/${id}/risk`, {newRisk:newRisk}, {
+        headers: this.httpOptions.headers,
+        observe: 'response',
+      });
+    }
+    
+    depositUser(id:string, amount:number) {
+      return this.http.post(`${environment.apiUrl}users/${id}/deposit`, {amount:amount}, {
+        headers: this.httpOptions.headers,
+        observe: 'response',
+      });
+    }
+
+    withdrawUser(id:string, amount:number) {
+      return this.http.post(`${environment.apiUrl}users/${id}/withdraw`, {amount:amount}, {
+        headers: this.httpOptions.headers,
+        observe: 'response',
+      });
+    }
+    
+    exchangeUser(id:string, amount:number) {
+      return this.http.post(`${environment.apiUrl}users/exchange`, {toUserId:id, amount:amount}, {
+        headers: this.httpOptions.headers,
+        observe: 'response',
+      });
+    }
+
+
+
+
+
+
+
+
 }
