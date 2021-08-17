@@ -23,6 +23,7 @@ const routes: Routes = [
         (m) => m.MasterAccountModule
       ),
   },
+  { path: 'software-holder', loadChildren: () => import('./software-holder/software-holder.module').then(m => m.SoftwareHolderModule) },
   // { path: 'login', component: LoginComponent, outlet: 'auth' },
 ];
 
