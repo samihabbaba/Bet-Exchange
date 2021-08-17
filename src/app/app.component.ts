@@ -51,7 +51,8 @@ export class AppComponent implements OnInit {
     if (
       this.router.url.includes('super') ||
       this.router.url.includes('master') ||
-      this.router.url.includes('login')
+      this.router.url.includes('login')||
+      this.router.url.includes('software-holder')
     ) {
       return true;
     } else {

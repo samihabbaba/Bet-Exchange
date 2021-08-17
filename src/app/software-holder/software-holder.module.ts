@@ -3,15 +3,19 @@ import { CommonModule } from '@angular/common';
 
 import { SoftwareHolderRoutingModule } from './software-holder-routing.module';
 import { SoftwareHolderComponent } from './software-holder.component';
+import { AccountDetailsComponent } from './account-details/account-details.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
   declarations: [
-    SoftwareHolderComponent
+    SoftwareHolderComponent,
+    AccountDetailsComponent
   ],
   imports: [
     CommonModule,
-    SoftwareHolderRoutingModule
+    SoftwareHolderRoutingModule,
+    SharedModule
   ]
 })
 export class SoftwareHolderModule { }
