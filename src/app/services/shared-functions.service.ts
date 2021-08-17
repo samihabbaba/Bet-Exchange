@@ -11,6 +11,7 @@ export class SharedFunctionsService {
 
    mainMarkets = ['Match Odds', 'Fight Result', 'Moneyline', 'Match Winner', 'Regular Time Match Odds', ];
 
+   currencyList = ['TRY', 'USD', 'EUR', 'GBP']
   constructor() { }
 
   returnTeamNameFromEvent(eventName:string, isHome = true){
@@ -127,21 +128,26 @@ export class SharedFunctionsService {
     }
 
   formatNumber(num:any, isMoney=true) {
-
-    num = Number(num);
-    if(num === 0 ){
-      return 0;
+    try{
+      num = Number(num);
+      if(num === 0 ){
+        return 0;
+      }
+      if(isMoney){
+        num = num.toFixed(2);
+      }
+  
+      else if(num.toString().includes(".")){
+        num = num.toFixed(2);
+      }
+  
+        let numTr = num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+        return numTr;
     }
-    if(isMoney){
-      num = num.toFixed(2);
+    catch(ex){
+      return -1;
     }
-
-    else if(num.toString().includes(".")){
-      num = num.toFixed(2);
-    }
-
-      let numTr = num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-      return numTr;
+    
   }
 
   returnRunWithIndex(item:any, index:number,ToLay = false){

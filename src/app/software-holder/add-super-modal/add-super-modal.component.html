@@ -1,14 +1,8 @@
-<h2 mat-dialog-title>Add Master</h2>
+<h2 mat-dialog-title>Add Super Admin</h2>
 <mat-dialog-content class="mat-typography">
   <form [formGroup]="addMasterForm">
     <div class="cs-modal-form-field-container">
-      <mat-form-field appearance="fill">
-        <mat-label>Email</mat-label>
-        <input matInput placeholder="Email" formControlName="email" required />
-        <mat-error *ngIf="form.email.invalid"
-          >This field is required.</mat-error
-        >
-      </mat-form-field>
+     
 
       <mat-form-field appearance="fill">
         <mat-label>Username</mat-label>
@@ -24,27 +18,30 @@
       </mat-form-field>
 
       <mat-form-field appearance="fill">
-        <mat-label>FirstName</mat-label>
+        <mat-label>name</mat-label>
         <input
           matInput
-          placeholder="FirstName"
-          formControlName="firstName"
+          placeholder="name"
+          formControlName="name"
           required
         />
-        <mat-error *ngIf="form.firstName.invalid"
+        <mat-error *ngIf="form.name.invalid"
           >This field is required.</mat-error
         >
       </mat-form-field>
 
       <mat-form-field appearance="fill">
-        <mat-label>LastName</mat-label>
-        <input
-          matInput
-          placeholder="LastName"
-          formControlName="lastName"
-          required
-        />
-        <mat-error *ngIf="form.lastName.invalid"
+        <mat-label>E-mail</mat-label>
+        <input matInput placeholder="E-mail" formControlName="email" required />
+        <mat-error *ngIf="form.email.invalid"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Phone</mat-label>
+        <input matInput placeholder="Phone" formControlName="phoneNumber" required />
+        <mat-error *ngIf="form.phoneNumber.invalid"
           >This field is required.</mat-error
         >
       </mat-form-field>
@@ -56,13 +53,14 @@
           placeholder="Password"
           formControlName="password"
           required
+          autocomplete="off"
         />
         <mat-error *ngIf="form.password.invalid"
           >This field is required.</mat-error
         >
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
+      <!-- <mat-form-field appearance="fill">
         <mat-label>Confirm Password</mat-label>
         <input
           matInput
@@ -73,23 +71,20 @@
         <mat-error *ngIf="form.confirmPassword.invalid"
           >This field is required.</mat-error
         >
-      </mat-form-field>
+      </mat-form-field> -->
+
+      
 
       <mat-form-field appearance="fill">
-        <mat-label>Phone</mat-label>
-        <input matInput placeholder="Phone" formControlName="phone" required />
-        <mat-error *ngIf="form.phone.invalid"
-          >This field is required.</mat-error
-        >
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Commission</mat-label>
+        <mat-label>Commission (0-100%)</mat-label>
         <input
           matInput
           placeholder="Commission"
           formControlName="commission"
           required
+          type="number"
+          min="0"
+          max="100"
         />
         <mat-error *ngIf="form.commission.invalid"
           >This field is required.</mat-error
@@ -97,32 +92,15 @@
       </mat-form-field>
 
       <mat-form-field appearance="fill">
-        <mat-label>PT</mat-label>
-        <mat-select formControlName="pt" required>
-          <mat-option value="option">Option</mat-option>
+        <mat-label>Currency</mat-label>
+        <mat-select formControlName="walletCurrency" required>
+          <mat-option *ngFor="let item of this.sharedFunctions.currencyList" value="{{item}}">{{item}}</mat-option>
         </mat-select>
-        <mat-error *ngIf="form.pt.invalid">This field is required.</mat-error>
+        <mat-error *ngIf="form.walletCurrency.invalid">This field is required.</mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
-        <mat-label>PT Limit</mat-label>
-        <mat-select formControlName="ptLimit" required>
-          <mat-option value="option">Option</mat-option>
-        </mat-select>
-        <mat-error *ngIf="form.ptLimit.invalid"
-          >This field is required.</mat-error
-        >
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Forced PT</mat-label>
-        <mat-select formControlName="forcedPt" required>
-          <mat-option value="option">Option</mat-option>
-        </mat-select>
-        <mat-error *ngIf="form.forcedPt.invalid"
-          >This field is required.</mat-error
-        >
-      </mat-form-field>
+     
+      
     </div>
   </form>
 </mat-dialog-content>
@@ -134,7 +112,8 @@
     [mat-dialog-close]="true"
     cdkFocusInitial
     [disabled]="!this.addMasterForm.valid"
+    (click)="addSuper()"
   >
-    Add Master
+    Add
   </button>
 </mat-dialog-actions>

@@ -575,11 +575,9 @@ this.layoutService.closeMenuChilds();
 
 
  getAllUsers(pars:any) {
-      return this.http.get<any>( `${this.baseUrl}users​?PageNo=${
+      return this.http.get<any>( `${this.baseUrl}users?PageNo=${
         pars.PageNo ? pars.PageNo : ''
-      }&PageSize=${pars.PageSize ? pars.PageSize : ''}&SortBy=${
-        pars.SortBy ? pars.SortBy : ''
-      }&rParentId=${
+      }&PageSize=${pars.PageSize ? pars.PageSize : ''}&ParentId=${
         pars.parentId ? pars.parentId : ''
       }&Role=${pars.Role ? pars.Role : ''}`, {
         headers: this.httpOptions.headers,
@@ -601,6 +599,10 @@ this.layoutService.closeMenuChilds();
     }
 
     addNewUser(obj:any) {
+      if(obj.commission){
+        obj.commission /= 100.
+      }
+
       return this.http.post(`${environment.apiUrl}users`, obj, {
         headers: this.httpOptions.headers,
         observe: 'response',
