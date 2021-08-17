@@ -9,15 +9,15 @@
   
 </h2>
 <mat-dialog-content class="mat-typography">
-  
-  <span *ngIf="this.data.isActive">
-    Are You Sure you want to deactivate ?
-  </span>
+  <div class="cs-modal-form-field-container">
+    <span *ngIf="this.data.isActive">
+      Are You Sure you want to deactivate {{this.data.userName}}?
+    </span>
 
-  <span *ngIf="!this.data.isActive">
-    Are You Sure you want to activate ?
-  </span>
-
+    <span *ngIf="!this.data.isActive">
+      Are You Sure you want to activate {{this.data.userName}}?
+    </span>
+  </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
