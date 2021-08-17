@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { NotificationService } from './notification.service';
 import { environment } from 'src/environments/environment';
+import { SignalRNotificationsService } from './signal-r-notifications.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class AuthService {
 
   constructor(private http:HttpClient, private dataService:DataService,
     private route:Router,
+    private signalRNoti:SignalRNotificationsService,
     private notificationService: NotificationService
     ) { }
 
@@ -89,6 +91,7 @@ export class AuthService {
     return this.http.post(loginURL, model, {
       observe: 'response',
     });
+    
   }
 
   logut(routeAfter = true){
@@ -99,11 +102,11 @@ export class AuthService {
       Authorization: 'Bearer ',
     });
 
-    
    this.httpOptions.headers = new HttpHeaders({
     Authorization: 'Bearer ',
   });
 
+  this.signalRNoti.stopNotificationListen();
     if(routeAfter){
       this.route.navigateByUrl('login')
     }
@@ -120,6 +123,9 @@ export class AuthService {
   }
 
   async initializeData(){
+
+    this.signalRNoti.startNotificationListen();
+    
     return new Promise((resolve, reject) => {
       resolve(true);
       return;

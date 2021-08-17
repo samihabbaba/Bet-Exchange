@@ -9,7 +9,8 @@ export const environment = {
   // signalrEndpoint: 'https://socket.vebobet.xyz/hubs/datafeed'
 
   apiUrl: 'https://api.xexchange.xyz/',
-  signalrEndpoint: 'https://api.xexchange.xyz/hubs/datafeed'
+  signalrEndpoint: 'https://api.xexchange.xyz/hubs/datafeed',
+  notificationsEndpoint: 'https://api.xexchange.xyz/hubs/notifications'
 };
 
 /*

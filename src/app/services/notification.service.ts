@@ -1,11 +1,22 @@
 import { Injectable, NgZone } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { SignalRNotificationsService } from './signal-r-notifications.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NotificationService {
-  constructor(private _snackBar: MatSnackBar, private zone: NgZone) {}
+  constructor(private _snackBar: MatSnackBar, private zone: NgZone, private notiSignalR:SignalRNotificationsService) {
+    this.notiSignalR.notification.subscribe(noti => {
+      if(noti.type == 'ACCOUNT_SUSPENDED'){
+        this.error(noti.message);
+      }
+      else if(noti.type == 'BET_MATCHED'){
+        this.info(noti.message);
+      }
+
+    })
+  }
 
   success(message: string, duration?: number) {
     if (duration == undefined) {
