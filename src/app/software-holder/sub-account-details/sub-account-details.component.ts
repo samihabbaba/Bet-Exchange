@@ -32,7 +32,27 @@ export class SubAccountDetailsComponent implements OnInit {
   displayedColumnsLoginHistory: string[] = ['ip', 'createdAt', 'isSuccessfull'];
   loginHistoryData = new MatTableDataSource<any>(loginHistory);
 
+  displayedColumnsProfitLoss: string[] = [
+    'market',
+    'startTime',
+    'settledDate',
+    'profitLoss',
+  ];
 
+  profitLossData = new MatTableDataSource<any>(profitLoss);
+
+  displayedColumnsBettingHistory: string[] = [
+    'market',
+    'selection',
+    'bidType',
+    'betId',
+    'betPlace',
+    'stake',
+    'matchedSize',
+    'avgOddsMatched',
+    'pl',
+  ];
+  bettingHistoryData = new MatTableDataSource<any>(bettingHistory);
   constructor() {}
 
   ngOnInit(): void {}
@@ -48,6 +68,29 @@ const transactions: any[] = [
     credits: 4,
     comment: 'FF',
     fromTo: 'Sami -> Amro',
+  },
+];
+
+const profitLoss: any[] = [
+  {
+    market: 'Super Lig/ Galatasaray vs Fenerbahce',
+    startTime: '28/07/2021',
+    settledDate: '18/08/2021',
+    profitLoss: -29,
+  },
+];
+
+const bettingHistory: any[] = [
+  {
+    market: '',
+    selection: '',
+    bidType: '',
+    betId: '',
+    betPlace: '',
+    stake: '',
+    matchedSize: '',
+    avgOddsMatched: '',
+    pl: '',
   },
 ];
 
