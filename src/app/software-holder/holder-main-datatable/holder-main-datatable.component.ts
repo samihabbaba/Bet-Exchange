@@ -205,9 +205,9 @@ export class HolderMainDatatableComponent implements OnInit {
     });
   }
 
-  openEditMasterDialog(id?: string) {
+  openEditMasterDialog(obj:any) {
     const dialogRef = this.dialog.open(EditSuperModalComponent, {
-      data: {balance: 100, id: 'Master Id'},
+      data: obj,
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);

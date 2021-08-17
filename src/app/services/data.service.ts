@@ -591,7 +591,11 @@ this.layoutService.closeMenuChilds();
     }
 
     updateUser(obj:any) {
-      return this.http.patch(
+      debugger
+      if(obj.commission){
+        obj.commission /= 100.
+      }
+      return this.http.put(
         `${environment.apiUrl}users/${obj.id}`,
         obj,
         { headers: this.httpOptions.headers, observe: 'response' }

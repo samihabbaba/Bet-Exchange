@@ -5,6 +5,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DataService } from 'src/app/services/data.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-edit-super-modal',
@@ -17,11 +19,15 @@ export class EditSuperModalComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: string
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private dataService:DataService,
+    private notify:NotificationService
   ) {}
 
   ngOnInit(): void {
     this.initalizeForm();
+
+    this.editMasterForm.value = this.data;
     this.form = this.editMasterForm.controls;
 
     // Use this as a master id then after making getMasterById patch the data to editMasterForm
@@ -30,18 +36,36 @@ export class EditSuperModalComponent implements OnInit {
 
   initalizeForm() {
     this.editMasterForm = this.fb.group({
-      email: new FormControl(null, Validators.required),
-      username: new FormControl(null, Validators.required),
-      firstName: new FormControl(null, Validators.required),
-      lastName: new FormControl(null, Validators.required),
-      password: new FormControl(null, Validators.required),
-      confirmPassword: new FormControl(null, Validators.required),
-      phone: new FormControl(null, Validators.required),
-      commission: new FormControl(null, Validators.required),
-      pt: new FormControl(null, Validators.required),
-      ptLimit: new FormControl(null, Validators.required),
-      forcedPt: new FormControl(null, Validators.required),
+      email: new FormControl(this.data.email, Validators.required),
+      name: new FormControl(this.data.name, Validators.required),
+      phoneNumber: new FormControl(this.data.phoneNumber, Validators.required),
+      commission: new FormControl(this.data.commission, Validators.required),
+      
     });
   }
+
+  updateSuper(){
+    this.dataService.updateUser({...this.editMasterForm.value, id:this.data.id}).subscribe(resp => {
+
+      this.notify.success('User Updated');
+
+    }, error => {
+
+        try{
+          let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
+          if( msg !== undefined){
+            this.notify.error(msg);
+          }else{
+            this.notify.error('Error updating user');
+          }
+        }
+        catch(ex){
+          this.notify.error('Error updating user');
+        }
+
+    })
+  }
+
+
 }
 

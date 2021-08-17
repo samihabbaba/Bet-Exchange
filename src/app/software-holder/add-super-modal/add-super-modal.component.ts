@@ -44,26 +44,23 @@ export class AddSuperModalComponent implements OnInit {
 
   addSuper(){
     
-    debugger 
     this.dataService.addNewUser({...this.addMasterForm.value, role:'SuperAdmin'}).subscribe(resp => {
 
       this.notify.success('User Added');
 
     }, error => {
-debugger
 
-    try{
-      let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
-      if( msg !== undefined){
-        this.notify.error(msg);
-      }else{
-        this.notify.error('Error adding user');
-      }
-    }
-    catch(ex){
-      this.notify.error('Error adding user');
-    }
-  
+        try{
+          let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
+          if( msg !== undefined){
+            this.notify.error(msg);
+          }else{
+            this.notify.error('Error adding user');
+          }
+        }
+        catch(ex){
+          this.notify.error('Error adding user');
+        }
 
     })
   }
