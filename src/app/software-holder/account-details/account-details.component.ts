@@ -6,11 +6,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
+import { contentInOut } from 'src/app/animations/animation';
 
 @Component({
   selector: 'app-account-details',
   templateUrl: './account-details.component.html',
-  styleUrls: ['./account-details.component.css']
+  styleUrls: ['./account-details.component.css'],
+  animations: [contentInOut()],
 })
 export class AccountDetailsComponent implements OnInit {
   @ViewChild('profile') profile?: any;

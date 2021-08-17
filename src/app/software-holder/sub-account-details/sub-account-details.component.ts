@@ -6,7 +6,8 @@ import { contentInOut } from 'src/app/animations/animation';
 @Component({
   selector: 'app-sub-account-details',
   templateUrl: './sub-account-details.component.html',
-  styleUrls: ['./sub-account-details.component.css']
+  styleUrls: ['./sub-account-details.component.css'],
+  animations: [contentInOut()],
 })
 export class SubAccountDetailsComponent implements OnInit {
   transactionTypesSelect: any[] = ['Fuck', 'Fuck'];

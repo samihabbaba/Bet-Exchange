@@ -168,7 +168,7 @@ export class HolderMainDatatableComponent implements OnInit {
   }
 
   openDetails(id: string) {
-    this.router.navigate([`super/masters/${id}`]);
+    this.router.navigate([`software-holder/supers/${id}`]);
   }
 
   openAddMasterDialog() {

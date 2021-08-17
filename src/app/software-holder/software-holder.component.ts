@@ -11,11 +11,11 @@ export class SoftwareHolderComponent implements OnInit {
   ngOnInit() {}
 
   goToProfile() {
-    this.router.navigate([`super/details`])
+    this.router.navigate([`software-holder/details`])
   }
 
   goToMastersTable() {
-    this.router.navigate([`super/masters`])
+    this.router.navigate([`software-holder/supers`])
   }
   
   goToLoginPage() {
