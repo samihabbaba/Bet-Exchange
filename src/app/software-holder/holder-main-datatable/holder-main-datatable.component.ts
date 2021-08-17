@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
+import { ActivationModalComponent } from 'src/app/shared/activation-modal/activation-modal.component';
 // import { MasterUser } from 'src/app/models/master-user';
 import { AddSuperModalComponent } from '../add-super-modal/add-super-modal.component';
 import { ChangePasswordModalComponent } from '../change-password-modal/change-password-modal.component';
@@ -202,15 +203,18 @@ export class HolderMainDatatableComponent implements OnInit {
     const dialogRef = this.dialog.open(AddSuperModalComponent);
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
+      this.loadUsers();
     });
   }
 
   openEditMasterDialog(obj:any) {
+    let objToSend = {...obj, commission : obj.commission *100}
     const dialogRef = this.dialog.open(EditSuperModalComponent, {
-      data: obj,
+      data: objToSend,
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
+      this.loadUsers();
     });
   }
 
@@ -220,6 +224,7 @@ export class HolderMainDatatableComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
+      this.loadUsers();
     });
   }
 
@@ -230,6 +235,7 @@ export class HolderMainDatatableComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
+      this.loadUsers();
     });
   }
 
@@ -240,6 +246,16 @@ export class HolderMainDatatableComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  openActivationDialog(obj:any){
+    const dialogRef = this.dialog.open(ActivationModalComponent, {
+      data: obj,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+      this.loadUsers();
     });
   }
 }

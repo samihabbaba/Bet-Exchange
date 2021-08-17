@@ -26,8 +26,9 @@ export class EditSuperModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.initalizeForm();
-
-    this.editMasterForm.value = this.data;
+    // this.data.commission = this.data.commission*100;
+    
+    this.editMasterForm.value =  this.data;
     this.form = this.editMasterForm.controls;
 
     // Use this as a master id then after making getMasterById patch the data to editMasterForm

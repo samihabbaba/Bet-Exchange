@@ -18,9 +18,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { ActivationModalComponent } from './activation-modal/activation-modal.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    ActivationModalComponent
+  ],
   imports: [
     CommonModule,
     MatToolbarModule,
