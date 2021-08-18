@@ -218,9 +218,10 @@ export class HolderMainDatatableComponent implements OnInit {
     });
   }
 
-  openDepositMasterDialog(id?: string) {
+  openDepositMasterDialog(obj: any) {
+
     const dialogRef = this.dialog.open(DepositSuperModalComponent, {
-      data: {balance: 100, id: 'Master Id'},
+      data: {...obj},
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
@@ -229,9 +230,11 @@ export class HolderMainDatatableComponent implements OnInit {
   }
 
 
-  openWithdrawMasterDialog(id?: string) {
+  openWithdrawMasterDialog(obj: any) {
+
+
     const dialogRef = this.dialog.open(WithdrawSuperModalComponent, {
-      data: {balance: 100, id: 'Master Id'},
+      data: {...obj},
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
@@ -242,7 +245,7 @@ export class HolderMainDatatableComponent implements OnInit {
 
   openChangePasswordDialog(id?: string) {
     const dialogRef = this.dialog.open(ChangePasswordModalComponent, {
-      data: {balance: 100, id: 'Master Id'},
+      data: { id: id},
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);

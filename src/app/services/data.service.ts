@@ -689,22 +689,22 @@ this.layoutService.closeMenuChilds();
       });
     }
     
-    depositUser(id:string, amount:number) {
-      return this.http.post(`${environment.apiUrl}users/${id}/deposit`, {amount:amount}, {
+    depositUser( obj:any) {
+      return this.http.post(`${environment.apiUrl}users/${obj.toUserId}/deposit`, obj, {
         headers: this.httpOptions.headers,
         observe: 'response',
       });
     }
 
-    withdrawUser(id:string, amount:number) {
-      return this.http.post(`${environment.apiUrl}users/${id}/withdraw`, {amount:amount}, {
+    withdrawUser( obj:any) {
+      return this.http.post(`${environment.apiUrl}users/${obj.toUserId}/withdraw`, obj, {
         headers: this.httpOptions.headers,
         observe: 'response',
       });
     }
     
-    exchangeUser(id:string, amount:number) {
-      return this.http.post(`${environment.apiUrl}users/exchange`, {toUserId:id, amount:amount}, {
+    exchangeUser( obj:any) {
+      return this.http.post(`${environment.apiUrl}users/exchange`, obj, {
         headers: this.httpOptions.headers,
         observe: 'response',
       });

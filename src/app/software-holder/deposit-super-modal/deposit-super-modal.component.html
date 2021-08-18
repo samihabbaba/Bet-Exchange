@@ -1,9 +1,9 @@
-<h2 mat-dialog-title>Deposit Master</h2>
+<h2 mat-dialog-title>Deposit</h2>
 <mat-dialog-content class="mat-typography">
-  <h3>Available Balance: {{data.balance}}</h3>
+  <h3>Available Balance: {{data.wallet.balance}}</h3>
   <form [formGroup]="depositMasterForm">
-    <div class="cs-modal-form-field-container small">
-      <mat-form-field appearance="fill">
+      
+    <mat-form-field appearance="fill" style="padding: 10px">
         <mat-label>Amount</mat-label>
         <input
           matInput
@@ -16,19 +16,6 @@
         >
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Password</mat-label>
-        <input
-          matInput
-          placeholder="Password"
-          formControlName="password"
-          required
-        />
-        <mat-error *ngIf="form.password.invalid"
-          >This field is required.</mat-error
-        >
-      </mat-form-field>
-    </div>
 
     <mat-form-field appearance="fill" style="padding: 10px">
       <mat-label>Comment</mat-label>
@@ -44,7 +31,8 @@
     [mat-dialog-close]="true"
     cdkFocusInitial
     [disabled]="!this.depositMasterForm.valid"
+    (click)="addDeposit()"
   >
-    Deposit Master
+    Deposit
   </button>
 </mat-dialog-actions>

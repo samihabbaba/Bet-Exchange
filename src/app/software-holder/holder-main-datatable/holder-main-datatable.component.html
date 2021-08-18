@@ -191,7 +191,7 @@
           <mat-icon>attach_money</mat-icon>
           <span>Withdraw</span>
         </button>
-        <button mat-menu-item (click)="openChangePasswordDialog(row)">
+        <button mat-menu-item (click)="openChangePasswordDialog(row.id)">
           <mat-icon>lock</mat-icon>
           <span>Change Password</span>
         </button>
@@ -215,11 +215,11 @@
      
   
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr
-        mat-row
-        (click)="openDetails(row.id)"
-        *matRowDef="let row; columns: displayedColumns"
-      ></tr>
+        <tr
+          mat-row
+          (click)="openDetails(row.id)"
+          *matRowDef="let row; columns: displayedColumns">
+        </tr>
       <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr>
   
       <tr class="mat-row" *matNoDataRow>

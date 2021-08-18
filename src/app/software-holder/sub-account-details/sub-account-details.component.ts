@@ -83,7 +83,7 @@ export class SubAccountDetailsComponent implements OnInit {
   loadUserById()
    {
      this.dataService.getUserById(this.currentUserId).subscribe(resp =>{
-      debugger
+
       this.currentUser = resp;
      }, error =>{
        // redirect somewhere
