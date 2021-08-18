@@ -72,6 +72,25 @@ export class DataService {
     });
  }
 
+  ///////////////////////////////////
+  ///// Transaction Controller /////
+  //////////////////////////////////
+
+  getTransactions(PageNo:number, PageSize:number, UserId='', ToUserId='', CurrencyCode='', ParentId='',  ) {
+    return this.http.get<any>(`${this.baseUrl}transactions?PageNo=${PageNo}&PageSize=${PageSize}&UserId=${UserId}&ParentId=${ParentId}&ToUserId=${ToUserId}&CurrencyCode=${CurrencyCode}`, {
+      headers: this.httpOptions.headers,
+      observe: 'response',
+    });
+  }
+    
+  getTransactionById(id:string) {
+    return this.http.get<any>(`${this.baseUrl}transactions/${id}`, {
+      headers: this.httpOptions.headers,
+      observe: 'response',
+    });
+  }
+
+
 
 
 
