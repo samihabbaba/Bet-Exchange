@@ -70,6 +70,8 @@ export class SubAccountDetailsComponent implements OnInit {
 
   ngOnInit(): void {
 
+
+
     this.sub = this.route.params.subscribe(params => {
       this.currentUserId = params['id']; 
       this.loadUserById();
@@ -93,7 +95,7 @@ export class SubAccountDetailsComponent implements OnInit {
    loadUsersBet(){
     this.dataService.getBets(1, 5, '', this.currentUserId).subscribe(resp =>{
 
-      debugger;
+
       this.bettingHistoryData.data = resp.body.items;
     }, error =>{
       // redirect somewhere

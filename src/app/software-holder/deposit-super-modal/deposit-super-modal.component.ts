@@ -40,7 +40,7 @@ export class DepositSuperModalComponent implements OnInit {
   }
 
   addDeposit(){
-    debugger
+    
     let objToSend = this.depositMasterForm.value;
     objToSend.toUserId = this.data.id;
 

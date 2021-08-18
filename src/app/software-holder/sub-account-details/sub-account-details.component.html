@@ -1,5 +1,4 @@
 <mat-toolbar>
-
   <mat-button-toggle-group
     #profile="matButtonToggleGroup"
     name="profile"
@@ -8,10 +7,10 @@
     <mat-button-toggle value="summary" [checked]="true"
       >Account Summary</mat-button-toggle>
 
-    <mat-button-toggle value="profitLoss" [checked]="true"
+    <mat-button-toggle value="profitLoss" [checked]="false"
       >Profit & Loss</mat-button-toggle>
     
-    <mat-button-toggle value="bettingHistory" [checked]="true"
+    <mat-button-toggle value="bettingHistory" [checked]="false"
       >Betting History</mat-button-toggle>
 
     <mat-button-toggle value="transactions"
@@ -40,8 +39,8 @@
       <div>Phone Number: &nbsp; <span> {{currentUser?.phoneNumber}} </span></div>
       <div>Risk: &nbsp; <span> {{currentUser?.risk}} </span></div>
       <div>Commission: &nbsp; <span> {{this.sharedService.formatNumber( currentUser?.commission*100)}}% </span></div>
-      <div>Wallet Currency: &nbsp; <span> {{currentUser?.wallet.currency}} </span></div>
-      <div>Wallet Balance: &nbsp; <span> {{this.sharedService.formatNumber( currentUser?.wallet.balance )}} </span></div>
+      <div>Wallet Currency: &nbsp; <span> {{currentUser?.wallet?.currency}} </span></div>
+      <div>Wallet Balance: &nbsp; <span> {{this.sharedService.formatNumber( currentUser?.wallet?.balance )}} </span></div>
       <div>Active: &nbsp; <span> {{currentUser?.isActive}} </span></div>
       <div>Role: &nbsp; <span> {{currentUser?.role}} </span></div>
       
