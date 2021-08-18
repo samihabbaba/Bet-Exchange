@@ -44,6 +44,12 @@ export class DataService {
   ////// Bet Controller //////
   ///////////////////////////////
 
+  getBets(PageNo:number, PageSize:number, UserId='', ParentId='', BetType='', MarketId='', SelectionId='', EventTypeId='', CompetitionId='', ) {
+    return this.http.get<any>(`${this.baseUrl}bets?PageNo=${PageNo}&PageSize=${PageSize}&UserId=${UserId}&ParentId=${ParentId}&BetType=${BetType}&MarketId=${MarketId}&SelectionId=${SelectionId}&EventTypeId=${EventTypeId}&CompetitionId=${CompetitionId}`, {
+      headers: this.httpOptions.headers,
+      observe: 'response',
+    });
+  }
 
   submitBets(bets:any){        
      return this.http.post(`${environment.apiUrl}bets`, bets, {
@@ -52,6 +58,25 @@ export class DataService {
      });
   }
     
+  getBetById(id:string) {
+    return this.http.get<any>(`${this.baseUrl}bets/${id}`, {
+      headers: this.httpOptions.headers,
+      observe: 'response',
+    });
+  }
+
+  voidBets(id:string){        
+    return this.http.post(`${environment.apiUrl}bets/${id}`,{}, {
+      headers: this.httpOptions.headers,
+      observe: "response",
+    });
+ }
+
+
+
+
+
+
 
   getSports() {
     return this.http.get<any>(`${this.baseUrl}sports`, {

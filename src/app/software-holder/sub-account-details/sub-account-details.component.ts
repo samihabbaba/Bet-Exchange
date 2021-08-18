@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute } from '@angular/router';
 import { contentInOut } from 'src/app/animations/animation';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-sub-account-details',
@@ -11,6 +13,7 @@ import { contentInOut } from 'src/app/animations/animation';
 })
 export class SubAccountDetailsComponent implements OnInit {
   transactionTypesSelect: any[] = ['Fuck', 'Fuck'];
+
   range = new FormGroup({
     start: new FormControl(),
     end: new FormControl(),
@@ -52,10 +55,41 @@ export class SubAccountDetailsComponent implements OnInit {
     'avgOddsMatched',
     'pl',
   ];
-  bettingHistoryData = new MatTableDataSource<any>(bettingHistory);
-  constructor() {}
 
-  ngOnInit(): void {}
+
+  bettingHistoryData = new MatTableDataSource<any>(bettingHistory);
+  private sub: any;
+  currentUserId = '';
+  
+  constructor(private route: ActivatedRoute, private dataService:DataService) {}
+
+  ngOnInit(): void {
+
+    this.sub = this.route.params.subscribe(params => {
+      this.currentUserId = params['id']; 
+      this.loadUserById();
+   });
+
+   
+  }
+
+  loadUserById()
+   {
+     this.dataService.getUserById(this.currentUserId).subscribe(resp =>{
+
+     }, error =>{
+       // redirect somewhere
+     })
+   }
+
+   loadUsersBet(){
+    this.dataService.getBets(1,5,this.currentUserId).subscribe(resp =>{
+
+    }, error =>{
+      // redirect somewhere
+    })
+   }
+
 }
 
 const transactions: any[] = [
