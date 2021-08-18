@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { contentInOut } from 'src/app/animations/animation';
 import { DataService } from 'src/app/services/data.service';
+import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
 
 @Component({
   selector: 'app-sub-account-details',
@@ -14,9 +15,12 @@ import { DataService } from 'src/app/services/data.service';
 export class SubAccountDetailsComponent implements OnInit {
   transactionTypesSelect: any[] = ['Fuck', 'Fuck'];
 
+  // start:Date= new Date();
+  //  end:Date= new Date();
+
   range = new FormGroup({
-    start: new FormControl(),
-    end: new FormControl(),
+    start: new FormControl(new Date()),
+    end: new FormControl(new Date()),
   });
 
   displayedColumnsTransactions: string[] = [
@@ -60,14 +64,17 @@ export class SubAccountDetailsComponent implements OnInit {
   bettingHistoryData = new MatTableDataSource<any>(bettingHistory);
   private sub: any;
   currentUserId = '';
-  
-  constructor(private route: ActivatedRoute, private dataService:DataService) {}
+  currentUser:any = {};
+
+  constructor(private route: ActivatedRoute, private dataService:DataService, public sharedService: SharedFunctionsService) {}
 
   ngOnInit(): void {
 
     this.sub = this.route.params.subscribe(params => {
       this.currentUserId = params['id']; 
       this.loadUserById();
+      this.loadUsersBet();
+      this.loadUsersTransactions();
    });
 
    
@@ -76,18 +83,39 @@ export class SubAccountDetailsComponent implements OnInit {
   loadUserById()
    {
      this.dataService.getUserById(this.currentUserId).subscribe(resp =>{
-
+      debugger
+      this.currentUser = resp;
      }, error =>{
        // redirect somewhere
      })
    }
 
    loadUsersBet(){
-    this.dataService.getBets(1,5,this.currentUserId).subscribe(resp =>{
+    this.dataService.getBets(1, 5, '', this.currentUserId).subscribe(resp =>{
 
+      debugger;
+      this.bettingHistoryData.data = resp.body.items;
     }, error =>{
       // redirect somewhere
     })
+   }
+   
+   loadUsersTransactions(){
+    this.dataService.getTransactions(1, 5, '', '', '', this.currentUserId).subscribe(resp =>{
+      this.transactionsData.data = resp.body.items;
+    }, error =>{
+      // redirect somewhere
+    })
+   }
+
+  ss:Date = new Date();   
+   check(){
+     debugger
+     let zft= this.ss.getFullYear();
+     let zftt= this.ss.toISOString();
+    //  let hfa = this.start.getDate();
+    //  let hfaa = this.start.getMonth();
+    let hfa = this.range.controls.start.value.toDateString()
    }
 
 }

@@ -1,41 +1,50 @@
 <mat-toolbar>
+
   <mat-button-toggle-group
     #profile="matButtonToggleGroup"
     name="profile"
-    aria-label="Profile"
-  >
+    aria-label="Profile">
+
     <mat-button-toggle value="summary" [checked]="true"
-      >Account Summary</mat-button-toggle
-    >
+      >Account Summary</mat-button-toggle>
 
     <mat-button-toggle value="profitLoss" [checked]="true"
-      >Profit & Loss</mat-button-toggle
-    ><mat-button-toggle value="bettingHistory" [checked]="true"
-      >Betting History</mat-button-toggle
-    >
+      >Profit & Loss</mat-button-toggle>
+    
+    <mat-button-toggle value="bettingHistory" [checked]="true"
+      >Betting History</mat-button-toggle>
+
     <mat-button-toggle value="transactions"
-      >System Transactions</mat-button-toggle
-    >
+      >System Transactions</mat-button-toggle>
+
     <mat-button-toggle value="loginHistory">Login History</mat-button-toggle>
+
   </mat-button-toggle-group>
 
-  <h3 class="cs-super-profile-account-name">Account Name</h3>
+  <h3 class="cs-super-profile-account-name" (click)="check()">Account Name</h3>
+
 </mat-toolbar>
 
 <div class="cs-summary-card-container">
+  
   <mat-card>
+
     <div
       [@contentInOut]
       *ngIf="profile.value == 'summary'"
       class="cs-summary-container"
     >
-      <div>Username: &nbsp; <span>discadmin</span></div>
-      <div>Total P&L: &nbsp; <span>-19.4</span></div>
-      <div>Total Balance: &nbsp; <span>190</span></div>
-      <div>Available to Bet: &nbsp; <span>100$</span></div>
-      <div>Current Exposure: &nbsp; <span>100$</span></div>
-      <div>Exposure Limit: &nbsp; <span>1000</span></div>
-      <div>Comment: &nbsp; <span>Hey</span></div>
+      <div>Username: &nbsp; <span> {{currentUser?.userName}} </span></div>
+      <div>Name: &nbsp; <span> {{currentUser?.name}} </span></div>
+      <div>E-mail: &nbsp; <span> {{currentUser?.email}} </span></div>
+      <div>Phone Number: &nbsp; <span> {{currentUser?.phoneNumber}} </span></div>
+      <div>Risk: &nbsp; <span> {{currentUser?.risk}} </span></div>
+      <div>Commission: &nbsp; <span> {{this.sharedService.formatNumber( currentUser?.commission*100)}}% </span></div>
+      <div>Wallet Currency: &nbsp; <span> {{currentUser?.wallet.currency}} </span></div>
+      <div>Wallet Balance: &nbsp; <span> {{this.sharedService.formatNumber( currentUser?.wallet.balance )}} </span></div>
+      <div>Active: &nbsp; <span> {{currentUser?.isActive}} </span></div>
+      <div>Role: &nbsp; <span> {{currentUser?.role}} </span></div>
+      
     </div>
 
     <div [@contentInOut] *ngIf="profile.value == 'profitLoss'">
@@ -107,6 +116,7 @@
 
     <div [@contentInOut] *ngIf="profile.value == 'bettingHistory'">
       <div class="cs-d-flex">
+        
         <mat-form-field appearance="fill">
           <mat-label>Period</mat-label>
           <mat-select name="pl">
@@ -126,8 +136,11 @@
               matStartDate
               formControlName="start"
               placeholder="Start date"
+              
             />
-            <input matEndDate formControlName="end" placeholder="End date" />
+            
+            <input matEndDate formControlName="end" placeholder="End date"  />
+            
           </mat-date-range-input>
           <mat-datepicker-toggle
             matSuffix
@@ -142,6 +155,7 @@
             >Invalid end date</mat-error
           >
         </mat-form-field>
+
       </div>
 
       <table
@@ -287,6 +301,7 @@
       <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
       </mat-paginator>
     </div>
+
     <div [@contentInOut] *ngIf="profile.value == 'loginHistory'">
       <table mat-table [dataSource]="loginHistoryData" style="min-width: 800px">
         <ng-container matColumnDef="ip">
@@ -314,5 +329,6 @@
       <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
       </mat-paginator>
     </div>
+
   </mat-card>
 </div>

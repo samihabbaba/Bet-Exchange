@@ -10,7 +10,7 @@
       class="cs-add-master-btn"
       (click)="openAddMasterDialog()"
     >
-      Add Super 
+      Add Super
     </button>
   </div>
   
@@ -197,12 +197,10 @@
         </button>
         <button mat-menu-item (click)="openActivationDialog(row)">
           <mat-icon>new_releases</mat-icon>
-          <span>Activate</span>
+          <span *ngIf="!row.isActive">Activate</span>
+          <span *ngIf="row.isActive">Deactivate</span>
         </button>
-        <button mat-menu-item>
-          <mat-icon>not_interested</mat-icon>
-          <span>Suspend</span>
-        </button>
+       
         <button mat-menu-item>
           <mat-icon>close</mat-icon>
           <span>Close</span>
