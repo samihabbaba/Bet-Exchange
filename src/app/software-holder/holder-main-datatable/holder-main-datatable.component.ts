@@ -200,7 +200,12 @@ export class HolderMainDatatableComponent implements OnInit {
   }
 
   openAddMasterDialog() {
-    const dialogRef = this.dialog.open(AddSuperModalComponent);
+    const dialogRef = this.dialog.open(AddSuperModalComponent,{
+      data:{
+        roleToCreate:'SuperAdmin',
+        createrRole:'SoftwareHolder'
+      }
+    });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
       this.loadUsers();

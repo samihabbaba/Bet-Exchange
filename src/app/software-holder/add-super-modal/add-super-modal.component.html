@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Add Super Admin</h2>
+<h2 mat-dialog-title>Add {{this.data.roleToCreate}}</h2>
 <mat-dialog-content class="mat-typography">
   <form [formGroup]="addMasterForm">
     <div class="cs-modal-form-field-container">
@@ -75,7 +75,7 @@
 
       
 
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill" *ngIf="this.data.roleToCreate !== 'Client'">
         <mat-label>Commission (0-100%)</mat-label>
         <input
           matInput
@@ -91,7 +91,7 @@
         >
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill" *ngIf="this.data.roleToCreate === 'SuperAdmin'">
         <mat-label>Currency</mat-label>
         <mat-select formControlName="walletCurrency" required>
           <mat-option *ngFor="let item of this.sharedFunctions.currencyList" value="{{item}}">{{item}}</mat-option>

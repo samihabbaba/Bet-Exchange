@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { MasterUser } from 'src/app/models/master-user';
 import { AddMasterModalComponent } from '../add-master-modal/add-master-modal.component';
+import { AddSuperModalComponent } from '../../software-holder/add-super-modal/add-super-modal.component';
 import { ChangePasswordModalComponent } from '../change-password-modal/change-password-modal.component';
 import { DepositMasterModalComponent } from '../deposit-master-modal/deposit-master-modal.component';
 import { EditMasterModalComponent } from '../edit-master-modal/edit-master-modal.component';
@@ -169,7 +170,12 @@ export class MainDatatableComponent implements OnInit {
   }
 
   openAddMasterDialog() {
-    const dialogRef = this.dialog.open(AddMasterModalComponent);
+    const dialogRef = this.dialog.open(AddSuperModalComponent,{
+      data:{
+        roleToCreate:'Admin',
+        createrRole:'SuperAdmin'
+      }
+    });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
     });
