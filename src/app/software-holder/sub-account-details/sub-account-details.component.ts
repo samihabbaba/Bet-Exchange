@@ -18,6 +18,10 @@ export class SubAccountDetailsComponent implements OnInit {
   // start:Date= new Date();
   //  end:Date= new Date();
 
+  length = 0;
+  pageIndex = 1;
+  pageSize = this.sharedService.defaultPageSize;
+  
   range = new FormGroup({
     start: new FormControl(new Date()),
     end: new FormControl(new Date()),
@@ -93,7 +97,7 @@ export class SubAccountDetailsComponent implements OnInit {
    }
 
    loadUsersBet(){
-    this.dataService.getBets(1, 5, '', this.currentUserId).subscribe(resp =>{
+    this.dataService.getBets(this.pageIndex, this.pageSize, '', this.currentUserId).subscribe(resp =>{
 
 
       this.bettingHistoryData.data = resp.body.items;
@@ -110,6 +114,13 @@ export class SubAccountDetailsComponent implements OnInit {
     })
    }
 
+   updatePageBets(page:any) {
+    this.pageSize = page.pageSize;
+    this.pageIndex = page.pageIndex + 1;
+
+    this.loadUsersBet();
+  }
+
   ss:Date = new Date();   
    check(){
      debugger
@@ -119,6 +130,8 @@ export class SubAccountDetailsComponent implements OnInit {
     //  let hfaa = this.start.getMonth();
     let hfa = this.range.controls.start.value.toDateString()
    }
+
+   
 
 }
 
