@@ -126,7 +126,7 @@ export class SubAccountDetailsComponent implements OnInit {
     let end = this.sharedService.formatDate(this.rangeTrans.controls.end.value.getDay(),this.rangeTrans.controls.end.value.getMonth(),this.rangeTrans.controls.end.value.getYear()) 
    
 
-    this.dataService.getTransactions(this.pageIndexTrans, this.pageSize, this.currentUserId, '', '','', '','').subscribe(resp =>{
+    this.dataService.getTransactions(this.pageIndexTrans, this.pageSize, this.currentUserId, '', '','', start,end).subscribe(resp =>{
       this.lengthTrans= resp.body.pagingInfo.totalCount;
       debugger
       this.transactionsData.data = resp.body.items;
