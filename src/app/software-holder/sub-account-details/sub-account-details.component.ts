@@ -113,12 +113,14 @@ export class SubAccountDetailsComponent implements OnInit {
 
    loadUsersBet(){
      let start = this.sharedService.formatDate(this.rangeBets.controls.start.value.getDate(),this.rangeBets.controls.start.value.getMonth()+1,this.rangeBets.controls.start.value.getFullYear()) 
-     let end = this.sharedService.formatDate(this.rangeBets.controls.end.value.getDate(),this.rangeBets.controls.end.value.getMonth()+1,this.rangeBets.controls.end.value.getFullYear()) 
-    
+     let end = this.sharedService.formatDate(this.rangeBets.controls.end.value.getDate(),this.rangeBets.controls.end.value.getMonth()+1,this.rangeBets.controls.end.value.getFullYear(), true) 
+    debugger
      this.dataService.getBets(this.pageIndexBets, this.pageSize, '', this.currentUserId,'','','','','',start,end).subscribe(resp =>{
+       debugger
       this.lengthBets = resp.body.pagingInfo.totalCount
       this.bettingHistoryData.data = resp.body.items;
     }, error =>{
+      debugger
       // redirect somewhere
     })
    }
@@ -127,7 +129,7 @@ export class SubAccountDetailsComponent implements OnInit {
 
      
     let start = this.sharedService.formatDate(this.rangeTrans.controls.start.value.getDate(),this.rangeTrans.controls.start.value.getMonth()+1,this.rangeTrans.controls.start.value.getFullYear()) 
-    let end = this.sharedService.formatDate(this.rangeTrans.controls.end.value.getDate()+1,this.rangeTrans.controls.end.value.getMonth()+1,this.rangeTrans.controls.end.value.getFullYear()) 
+    let end = this.sharedService.formatDate(this.rangeTrans.controls.end.value.getDate()+1,this.rangeTrans.controls.end.value.getMonth()+1,this.rangeTrans.controls.end.value.getFullYear(), true) 
 
     
     this.dataService.getTransactions(this.pageIndexTrans, this.pageSize, this.currentUserId, '', '','', start,end).subscribe(resp =>{

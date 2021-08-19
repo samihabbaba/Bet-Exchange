@@ -368,7 +368,10 @@ export class SharedFunctionsService {
     return true;
   }
 
-  formatDate(day:string, month:string, year:string){
+  formatDate(day:number, month:number, year:number, addOneDay = false){
+    if(addOneDay){
+      day=day+1
+    }
     return month+'/'+day+'/'+year
   }
 

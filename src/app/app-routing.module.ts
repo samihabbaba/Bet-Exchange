@@ -15,8 +15,9 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'software-holder', loadChildren: () => import('./software-holder/software-holder.module').then(m => m.SoftwareHolderModule), canActivate: [SoftwareHolderGuard] },
   { path: 'super', loadChildren: () =>  import('./super-account/super-account.module').then( (m) => m.SuperAccountModule ), canActivate: [SuperGuard] },
-  { path: 'master', loadChildren: () => import('./master-account/master-account.module').then( (m) => m.MasterAccountModule ), canActivate: [MasterGuard]},
   { path: 'admin', loadChildren: () => import('./admin-account/admin-account.module').then(m => m.AdminAccountModule), canActivate: [AdminGuard] },
+  { path: 'master', loadChildren: () => import('./master-account/master-account.module').then( (m) => m.MasterAccountModule ), canActivate: [MasterGuard]},
+
   // { path: 'login', component: LoginComponent, outlet: 'auth' },
   { path: '**', component: MainContentComponent, canActivate: [RouteGuard] },
 
