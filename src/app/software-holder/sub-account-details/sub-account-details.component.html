@@ -116,7 +116,7 @@
     <div [@contentInOut] *ngIf="profile.value == 'bettingHistory'">
       <div class="cs-d-flex">
         
-        <mat-form-field appearance="fill">
+        <!-- <mat-form-field appearance="fill">
           <mat-label>Period</mat-label>
           <mat-select name="pl">
             <mat-option
@@ -126,7 +126,26 @@
               {{ period }}
             </mat-option>
           </mat-select>
-        </mat-form-field>
+        </mat-form-field> -->
+        <!-- <div class="example-button-container">
+          <button mat-fab color="warn" aria-label="Example icon button with a home icon">
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </div> -->
+
+        <div class="example-button-container">
+          <button mat-fab class="reload-btn" (click)="loadUsersBet()"
+          [disabled]="disableReloadBtn(rangeBets.controls)" >
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </div>
+
+        
+
+
+
+
+
 
         <mat-form-field appearance="fill" style="margin-left: 10px">
           <mat-label>Enter a date range</mat-label>
@@ -224,17 +243,13 @@
 
     <div [@contentInOut] *ngIf="profile.value == 'transactions'">
       <div class="cs-d-flex">
-        <mat-form-field appearance="fill">
-          <mat-label>Period</mat-label>
-          <mat-select name="pl">
-            <mat-option
-              *ngFor="let period of transactionTypesSelect"
-              [value]="period"
-            >
-              {{ period }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+
+        <div class="example-button-container">
+          <button mat-fab class="reload-btn" (click)="loadUsersTransactions()" 
+          [disabled]="disableReloadBtn(rangeTrans.controls)" >
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </div>
 
         <mat-form-field appearance="fill" style="margin-left: 10px">
           <mat-label>Enter a date range</mat-label>
