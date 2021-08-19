@@ -161,19 +161,19 @@ export class AuthService {
     else if(this.decodedToken.role == 'SuperAdmin'){
       return{
         re:true,
-        page:'SuperAdmin'
+        page:'super'
       }
     }
     else if(this.decodedToken.role == 'Admin'){
       return{
         re:true,
-        page:'Admin'
+        page:'admin'
       }
     }
     else if(this.decodedToken.role == 'Master'){
       return{
         re:true,
-        page:'Master'
+        page:'master'
       }
     }
     else {

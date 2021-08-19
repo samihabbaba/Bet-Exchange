@@ -13,7 +13,7 @@ const routes: Routes = [
     { path: 'supers', component: HolderMainDatatableComponent },
     { path: 'supers/:id', component: SubAccountDetailsComponent },
     { path: 'details', component: AccountDetailsComponent },
-    { path: '**', component: HolderMainDatatableComponent },
+    // { path: '**', component: HolderMainDatatableComponent },
   ],
   }
 ];

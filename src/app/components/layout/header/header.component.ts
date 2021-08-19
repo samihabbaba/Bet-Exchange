@@ -33,7 +33,11 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {}
 
   goToLoginPage() {
-    this.router.navigateByUrl('login');
+    // this.router.navigateByUrl('login');
+    this.router.navigate(['login'])
+    .then(() => {
+      window.location.reload();
+    });
   }
 
   displayPreGames() {

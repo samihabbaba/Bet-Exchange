@@ -4,12 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { MasterUser } from 'src/app/models/master-user';
-import { AddMasterModalComponent } from '../add-master-modal/add-master-modal.component';
 import { AddSuperModalComponent } from '../../software-holder/add-super-modal/add-super-modal.component';
-import { DepositMasterModalComponent } from '../deposit-master-modal/deposit-master-modal.component';
-import { EditMasterModalComponent } from '../edit-master-modal/edit-master-modal.component';
-import { WithdrawMasterModalComponent } from '../withdraw-master-modal/withdraw-master-modal.component';
 import { ActivationModalComponent } from 'src/app/shared/activation-modal/activation-modal.component';
 import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
 import { DataService } from 'src/app/services/data.service';
@@ -19,15 +14,14 @@ import { ChangePasswordModalComponent } from 'src/app/software-holder/change-pas
 import { EditSuperModalComponent } from 'src/app/software-holder/edit-super-modal/edit-super-modal.component';
 
 @Component({
-  selector: 'app-main-datatable',
-  templateUrl: './main-datatable.component.html',
-  styleUrls: ['./main-datatable.component.css'],
+  selector: 'app-client-datatable',
+  templateUrl: './client-datatable.component.html',
+  styleUrls: ['./client-datatable.component.css']
 })
-export class MainDatatableComponent implements OnInit {
+export class ClientDatatableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | any;
   @ViewChild(MatSort) sort: MatSort | any;
-  dataSource: MatTableDataSource<MasterUser>;
-
+  dataSource: MatTableDataSource<any>;
   
   length = 0;
   pageIndex = 1;
@@ -39,7 +33,7 @@ export class MainDatatableComponent implements OnInit {
     'email',
     'phoneNumber',
     'risk',
-    'commission',
+    // 'commission',
     'wallet balance',
     'isActive',
     'role',
@@ -52,91 +46,91 @@ export class MainDatatableComponent implements OnInit {
     // 'status',
     'actions',
   ];
-  users: any[] = [
-    {
-      id: '1',
-      account: 'Sami',
-      availableBalance: 80,
-      exposure: 90,
-      subAccountBalance: 24,
-      subAccountBalanceWithExposure: 56,
-      totalBalance: 32,
-      status: 'active',
-      actions: '',
-    },
-    {
-      id: '2',
-      account: 'Amro',
-      availableBalance: 50,
-      exposure: 70,
-      subAccountBalance: 29,
-      subAccountBalanceWithExposure: 56,
-      totalBalance: 32,
-      status: 'active',
-      actions: '',
-    },
-    {
-      id: '3',
-      account: 'Ibrahim',
-      availableBalance: 50,
-      exposure: 30,
-      subAccountBalance: 99,
-      subAccountBalanceWithExposure: 56,
-      totalBalance: 22,
-      status: 'active',
-      actions: '',
-    },
-    {
-      id: '4',
-      account: 'Hyeladi',
-      availableBalance: 30,
-      exposure: 20,
-      subAccountBalance: 59,
-      subAccountBalanceWithExposure: 54,
-      totalBalance: 52,
-      status: 'suspended',
-      actions: '',
-    },
+  // users: any[] = [
+  //   {
+  //     id: '1',
+  //     account: 'Sami',
+  //     availableBalance: 80,
+  //     exposure: 90,
+  //     subAccountBalance: 24,
+  //     subAccountBalanceWithExposure: 56,
+  //     totalBalance: 32,
+  //     status: 'active',
+  //     actions: '',
+  //   },
+  //   {
+  //     id: '2',
+  //     account: 'Amro',
+  //     availableBalance: 50,
+  //     exposure: 70,
+  //     subAccountBalance: 29,
+  //     subAccountBalanceWithExposure: 56,
+  //     totalBalance: 32,
+  //     status: 'active',
+  //     actions: '',
+  //   },
+  //   {
+  //     id: '3',
+  //     account: 'Ibrahim',
+  //     availableBalance: 50,
+  //     exposure: 30,
+  //     subAccountBalance: 99,
+  //     subAccountBalanceWithExposure: 56,
+  //     totalBalance: 22,
+  //     status: 'active',
+  //     actions: '',
+  //   },
+  //   {
+  //     id: '4',
+  //     account: 'Hyeladi',
+  //     availableBalance: 30,
+  //     exposure: 20,
+  //     subAccountBalance: 59,
+  //     subAccountBalanceWithExposure: 54,
+  //     totalBalance: 52,
+  //     status: 'suspended',
+  //     actions: '',
+  //   },
 
-    {
-      id: '5',
-      account: 'Faize',
-      availableBalance: 90,
-      exposure: 28,
-      subAccountBalance: 109,
-      subAccountBalanceWithExposure: 54,
-      totalBalance: 62,
-      status: 'suspended',
-      actions: '',
-    },
+  //   {
+  //     id: '5',
+  //     account: 'Faize',
+  //     availableBalance: 90,
+  //     exposure: 28,
+  //     subAccountBalance: 109,
+  //     subAccountBalanceWithExposure: 54,
+  //     totalBalance: 62,
+  //     status: 'suspended',
+  //     actions: '',
+  //   },
 
-    {
-      id: '6',
-      account: 'Isam',
-      availableBalance: 10,
-      exposure: 28,
-      subAccountBalance: 5,
-      subAccountBalanceWithExposure: 34,
-      totalBalance: 62,
-      status: 'inactive',
-      actions: '',
-    },
+  //   {
+  //     id: '6',
+  //     account: 'Isam',
+  //     availableBalance: 10,
+  //     exposure: 28,
+  //     subAccountBalance: 5,
+  //     subAccountBalanceWithExposure: 34,
+  //     totalBalance: 62,
+  //     status: 'inactive',
+  //     actions: '',
+  //   },
 
-    {
-      id: '7',
-      account: 'Khader',
-      availableBalance: 20,
-      exposure: 98,
-      subAccountBalance: 54,
-      subAccountBalanceWithExposure: 8,
-      totalBalance: 82,
-      status: 'active',
-      actions: '',
-    },
-  ];
+  //   {
+  //     id: '7',
+  //     account: 'Khader',
+  //     availableBalance: 20,
+  //     exposure: 98,
+  //     subAccountBalance: 54,
+  //     subAccountBalanceWithExposure: 8,
+  //     totalBalance: 82,
+  //     status: 'active',
+  //     actions: '',
+  //   },
+  // ];
 
   constructor(private router: Router, public dialog: MatDialog, private dataService:DataService, public sharedFunctions:SharedFunctionsService) {
-    this.dataSource = new MatTableDataSource(this.users);
+    this.dataSource = new MatTableDataSource();
   }
 
   ngOnInit() {
@@ -144,12 +138,11 @@ export class MainDatatableComponent implements OnInit {
   }
 
   loadUsers(){
-
     this.dataService.getAllUsers({
-      PageNo:1,
-      PageSize:5,
+      PageNo:this.pageIndex,
+      PageSize:this.pageSize,
       rParentId:'',
-      Role:'Admin'
+      Role:'Client'
     }).subscribe(resp => {
 
       this.dataSource.data = resp.items
@@ -158,16 +151,16 @@ export class MainDatatableComponent implements OnInit {
     })
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
   updatePage(page:any) {
     this.pageSize = page.pageSize;
     this.pageIndex = page.pageIndex + 1;
 
     this.loadUsers();
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   applyFilter(event: Event) {
@@ -210,20 +203,20 @@ export class MainDatatableComponent implements OnInit {
   }
 
   openDetails(id: string) {
-    debugger
-    this.router.navigate([`super/admins/${id}`]);
+
+    this.router.navigate([`master/players/${id}`]);
   }
 
   openAddMasterDialog() {
     const dialogRef = this.dialog.open(AddSuperModalComponent,{
       data:{
-        roleToCreate:'Admin',
-        createrRole:'SuperAdmin'
+        roleToCreate:'Client',
+        createrRole:'Master'
       }
     });
     dialogRef.afterClosed().subscribe((result) => {
-      this.loadUsers();
       console.log(`Dialog result: ${result}`);
+      this.loadUsers();
     });
   }
 
@@ -238,7 +231,6 @@ export class MainDatatableComponent implements OnInit {
     });
   }
 
-  
   openDepositMasterDialog(obj: any) {
 
     const dialogRef = this.dialog.open(DepositSuperModalComponent, {

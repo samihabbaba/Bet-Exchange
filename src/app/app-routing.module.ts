@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'master', loadChildren: () => import('./master-account/master-account.module').then( (m) => m.MasterAccountModule ), canActivate: [MasterGuard]},
   { path: 'admin', loadChildren: () => import('./admin-account/admin-account.module').then(m => m.AdminAccountModule), canActivate: [AdminGuard] },
   // { path: 'login', component: LoginComponent, outlet: 'auth' },
-  // { path: '**', component: MainContentComponent, canActivate: [RouteGuard] },
+  { path: '**', component: MainContentComponent, canActivate: [RouteGuard] },
 
 ];
 

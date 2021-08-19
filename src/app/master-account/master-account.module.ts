@@ -11,6 +11,7 @@ import { AddPlayerModalComponent } from './add-player-modal/add-player-modal.com
 import { ChangePlayerPasswordModalComponent } from './change-player-password-modal/change-player-password-modal.component';
 import { EditPlayerModalComponent } from './edit-player-modal/edit-player-modal.component';
 import { ExposureLimitModalComponent } from './exposure-limit-modal/exposure-limit-modal.component';
+import { ClientDatatableComponent } from './client-datatable/client-datatable.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { ExposureLimitModalComponent } from './exposure-limit-modal/exposure-lim
     AddPlayerModalComponent,
     ChangePlayerPasswordModalComponent,
     EditPlayerModalComponent,
-    ExposureLimitModalComponent
+    ExposureLimitModalComponent,
+    ClientDatatableComponent
   ],
   imports: [
     CommonModule,

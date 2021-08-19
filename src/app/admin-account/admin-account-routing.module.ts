@@ -15,7 +15,7 @@ const routes: Routes = [
       // { path: 'admins/:id', component: SubAccountDetailsComponent },
       { path: 'masters/:id', component: SubAccountDetailsComponent },
       { path: 'details', component: AccountDetailsComponent },
-      { path: '**', component: AdminDatatableComponent },
+      // { path: '**', component: AdminDatatableComponent },
     ],
   },
 ];
