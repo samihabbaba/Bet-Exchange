@@ -55,6 +55,8 @@ export class AddSuperModalComponent implements OnInit {
 
   addSuper(){
     
+debugger
+
     this.dataService.addNewUser({...this.addMasterForm.value, role:this.data.roleToCreate}).subscribe(resp => {
 
       this.notify.success('User Added');
