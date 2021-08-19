@@ -29,6 +29,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
+import { AdminAccountModule } from './admin-account/admin-account.module';
 
 
 
@@ -66,7 +67,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatExpansionModule,
     MatSelectModule,
     MatFormFieldModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    AdminAccountModule
   ],
   providers: [],
   bootstrap: [AppComponent],

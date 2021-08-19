@@ -24,6 +24,7 @@ const routes: Routes = [
       ),
   },
   { path: 'software-holder', loadChildren: () => import('./software-holder/software-holder.module').then(m => m.SoftwareHolderModule) },
+  { path: 'admin', loadChildren: () => import('./admin-account/admin-account.module').then(m => m.AdminAccountModule) },
   // { path: 'login', component: LoginComponent, outlet: 'auth' },
 ];
 
