@@ -6,7 +6,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { contentInOut } from 'src/app/animations/animation';
+import { AuthService } from 'src/app/services/auth.service';
+import { DataService } from 'src/app/services/data.service';
+import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
 
 @Component({
   selector: 'app-account-details',
@@ -28,6 +32,11 @@ export class AccountDetailsComponent implements OnInit {
     start: new FormControl(),
     end: new FormControl(),
   });
+  rangeTrans = new FormGroup({
+    start: new FormControl(new Date()),
+    end: new FormControl(new Date()),
+  });
+
   // Change Password Section
   changePasswordForm?: any;
 
@@ -80,26 +89,120 @@ export class AccountDetailsComponent implements OnInit {
   casinoTotalData = new MatTableDataSource<any>(casinoTotal);
 
   // Transactions Section
-  displayedColumnstTransactions: string[] = [
-    'date',
-    'transactionNo',
-    'transactionTypes',
-    'debits',
-    'credits',
+  displayedColumnsTransactions: string[] = [
+    // 'transactionNo',
+    'type',
+    'user',
+    'amount',
+    'balance change',
     'balance',
+    'currency',
+    'date',
     'comment',
-    'fromTo',
+    // 'exchangeRate',
+    // 'fromTo',
   ];
-  transactionsData = new MatTableDataSource<any>(transactions);
+  transactionsData = new MatTableDataSource<any>();
 
-  constructor(private fb: FormBuilder) {}
+  displayedColumnsBettingHistory: string[] = [
+    'market',
+    'selection',
+    'bidType',
+    'betId',
+    'betPlace',
+    'stake',
+    'matchedSize',
+    'avgOddsMatched',
+    'pl',
+  ];
+
+  myUser:any = {};
+  rangeBets = new FormGroup({
+    start: new FormControl(new Date()),
+    end: new FormControl(new Date()),
+  });
+  lengthBets = 0;
+  pageIndexBets = 1;
+  lengthTrans = 0;
+  pageIndexTrans = 1;
+  pageSize = this.sharedService.defaultPageSize;
+  bettingHistoryData = new MatTableDataSource<any>();
+
+  constructor(private fb: FormBuilder,  private router: Router, private dataService:DataService, public sharedService:SharedFunctionsService, public authService:AuthService) {}
   ngOnInit(): void {
+    this.loadUser()
+    this.loadBets()
+    this.loadUsersTransactions();
+
     this.changePasswordForm = this.fb.group({
       oldPassword: new FormControl(null, Validators.required),
       newPassword: new FormControl(null, Validators.required),
       newPasswordConfirm: new FormControl(null, Validators.required),
     });
+
+
   }
+
+  loadUser(){
+    debugger
+    this.dataService.getUserById(this.authService.decodedToken.id).subscribe(resp =>{
+      debugger
+      this.myUser = resp;
+    },error =>{
+      debugger
+      //redirect to error page
+    })
+  }
+
+  loadBets(){
+    let start = this.sharedService.formatDate(this.rangeBets.controls.start.value.getDate(),this.rangeBets.controls.start.value.getMonth()+1,this.rangeBets.controls.start.value.getFullYear()) 
+    let end = this.sharedService.formatDate(this.rangeBets.controls.end.value.getDate(),this.rangeBets.controls.end.value.getMonth()+1,this.rangeBets.controls.end.value.getFullYear()) 
+   
+    this.dataService.getBets(this.pageIndexBets, this.pageSize, '', '','','','','','',start,end).subscribe(resp =>{
+     this.lengthBets = resp.body.pagingInfo.totalCount
+     this.bettingHistoryData.data = resp.body.items;
+   }, error =>{
+     // redirect somewhere
+   })
+  }
+
+  loadUsersTransactions(){
+
+     
+    let start = this.sharedService.formatDate(this.rangeTrans.controls.start.value.getDate(),this.rangeTrans.controls.start.value.getMonth()+1,this.rangeTrans.controls.start.value.getFullYear()) 
+    let end = this.sharedService.formatDate(this.rangeTrans.controls.end.value.getDate()+1,this.rangeTrans.controls.end.value.getMonth()+1,this.rangeTrans.controls.end.value.getFullYear()) 
+
+    let id = this.authService.decodedToken.id;
+    this.dataService.getTransactions(this.pageIndexTrans, this.pageSize, id, '', '','', start,end).subscribe(resp =>{
+      this.lengthTrans= resp.body.pagingInfo.totalCount;
+       
+      this.transactionsData.data = resp.body.items;
+    }, error =>{
+      // redirect somewhere
+    })
+   }
+
+  disableReloadBtn(form:any){
+    if(form.start.value == null || form.end.value == null){
+      return true;
+    }
+    return false;
+   }
+
+   updatePageBets(page:any) {
+    this.pageSize = page.pageSize;
+    this.pageIndexBets = page.pageIndex + 1;
+
+    this.loadBets();
+  }
+
+  updatePageTrans(page:any) {
+   this.pageSize = page.pageSize;
+   this.pageIndexTrans = page.pageIndex + 1;
+
+   this.loadUsersTransactions();
+ }
+
 }
 
 const FORECAST: any[] = [

@@ -41,12 +41,13 @@ export class SubAccountDetailsComponent implements OnInit {
   });
 
   displayedColumnsTransactions: string[] = [
-    'date',
     // 'transactionNo',
     'type',
     'amount',
-    'currency',
+    'balance change',
     'balance',
+    'currency',
+    'date',
     'comment',
     // 'exchangeRate',
     // 'fromTo',
@@ -79,7 +80,7 @@ export class SubAccountDetailsComponent implements OnInit {
   ];
 
 
-  bettingHistoryData = new MatTableDataSource<any>(bettingHistory);
+  bettingHistoryData = new MatTableDataSource<any>();
   private sub: any;
   currentUserId = '';
   currentUser:any = {};

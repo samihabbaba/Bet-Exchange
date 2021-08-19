@@ -3468,3 +3468,24 @@ body {
 .reload-btn{
   background-color: var(--primary) !important;
 }
+
+.balance-change-container{
+  display: flex;
+  align-items: center;
+  align-content: space-between;
+  justify-content: center;
+}
+
+td, th {
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+
+td, th span {
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+
+.mat-sort-header-container {
+  justify-content: center !important;
+}

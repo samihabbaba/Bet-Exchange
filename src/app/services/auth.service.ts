@@ -144,4 +144,11 @@ export class AuthService {
    });
   }
 
+  setDecodedToken(){
+    let token = localStorage.getItem('token');
+    if(token){
+      this.decodedToken = this.jwtHelper.decodeToken(token);
+    }
+  }
+
 }

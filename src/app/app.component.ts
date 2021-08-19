@@ -34,6 +34,7 @@ export class AppComponent implements OnInit {
   }
 
   initializeSubscriptions() {
+    this.authService.setDecodedToken();
     this.layoutService.mainContentDisplayType.subscribe((value) => {
       this.viewType = value;
     });
