@@ -367,4 +367,10 @@ export class SharedFunctionsService {
   marketAvailable(){
     return true;
   }
+
+  formatDate(day:string, month:string, year:string){
+    return month+'/'+day+'/'+year
+  }
+
+
 }

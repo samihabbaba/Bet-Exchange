@@ -10,9 +10,9 @@ const routes: Routes = [
     path: '',
     component: SuperAccountComponent,
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'masters' },
-      { path: 'masters', component: MainDatatableComponent },
-      { path: 'masters/:id', component: SubAccountDetailsComponent },
+      { path: '', pathMatch: 'full', redirectTo: 'admins' },
+      { path: 'admins', component: MainDatatableComponent },
+      { path: 'admins/:id', component: SubAccountDetailsComponent },
       { path: 'details', component: AccountDetailsComponent },
     ],
   },

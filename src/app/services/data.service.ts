@@ -44,8 +44,8 @@ export class DataService {
   ////// Bet Controller //////
   ///////////////////////////////
 
-  getBets(PageNo:number, PageSize:number, UserId='', ParentId='', BetType='', MarketId='', SelectionId='', EventTypeId='', CompetitionId='', ) {
-    return this.http.get<any>(`${this.baseUrl}bets?PageNo=${PageNo}&PageSize=${PageSize}&UserId=${UserId}&ParentId=${ParentId}&BetType=${BetType}&MarketId=${MarketId}&SelectionId=${SelectionId}&EventTypeId=${EventTypeId}&CompetitionId=${CompetitionId}`, {
+  getBets(PageNo:number, PageSize:number, UserId='', ParentId='', BetType='', MarketId='', SelectionId='', EventTypeId='', CompetitionId='',StartDate='', EndDate='', OnLastActionDate=false) {
+    return this.http.get<any>(`${this.baseUrl}bets?PageNo=${PageNo}&PageSize=${PageSize}&UserId=${UserId}&ParentId=${ParentId}&BetType=${BetType}&MarketId=${MarketId}&SelectionId=${SelectionId}&EventTypeId=${EventTypeId}&CompetitionId=${CompetitionId}&StartDate=${StartDate}&EndDate=${EndDate}&OnLastActionDate=${OnLastActionDate}`, {
       headers: this.httpOptions.headers,
       observe: 'response',
     });
@@ -76,8 +76,8 @@ export class DataService {
   ///// Transaction Controller /////
   //////////////////////////////////
 
-  getTransactions(PageNo:number, PageSize:number, UserId='', ToUserId='', CurrencyCode='', ParentId='',  ) {
-    return this.http.get<any>(`${this.baseUrl}transactions?PageNo=${PageNo}&PageSize=${PageSize}&UserId=${UserId}&ParentId=${ParentId}&ToUserId=${ToUserId}&CurrencyCode=${CurrencyCode}`, {
+  getTransactions(PageNo:number, PageSize:number, UserId='', ToUserId='', CurrencyCode='', ParentId='', StartDate='',EndDate='' ) {
+    return this.http.get<any>(`${this.baseUrl}transactions?PageNo=${PageNo}&PageSize=${PageSize}&UserId=${UserId}&ParentId=${ParentId}&ToUserId=${ToUserId}&CurrencyCode=${CurrencyCode}&StartDate=${StartDate}&EndDate=${EndDate}`, {
       headers: this.httpOptions.headers,
       observe: 'response',
     });

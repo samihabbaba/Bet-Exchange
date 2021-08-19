@@ -18,10 +18,22 @@ export class SubAccountDetailsComponent implements OnInit {
   // start:Date= new Date();
   //  end:Date= new Date();
 
-  length = 0;
-  pageIndex = 1;
+  lengthBets = 0;
+  pageIndexBets = 1;
+  lengthTrans = 0;
+  pageIndexTrans = 1;
   pageSize = this.sharedService.defaultPageSize;
   
+  rangeBets = new FormGroup({
+    start: new FormControl(new Date()),
+    end: new FormControl(new Date()),
+  });
+
+  rangeTrans = new FormGroup({
+    start: new FormControl(new Date()),
+    end: new FormControl(new Date()),
+  });
+
   range = new FormGroup({
     start: new FormControl(new Date()),
     end: new FormControl(new Date()),
@@ -29,13 +41,14 @@ export class SubAccountDetailsComponent implements OnInit {
 
   displayedColumnsTransactions: string[] = [
     'date',
-    'transactionNo',
-    'transactionType',
-    'bet',
-    'debits',
-    'credits',
+    // 'transactionNo',
+    'type',
+    'amount',
+    'currency',
+    'balance',
     'comment',
-    'fromTo',
+    // 'exchangeRate',
+    // 'fromTo',
   ];
 
   transactionsData = new MatTableDataSource<any>(transactions);
@@ -97,9 +110,11 @@ export class SubAccountDetailsComponent implements OnInit {
    }
 
    loadUsersBet(){
-    this.dataService.getBets(this.pageIndex, this.pageSize, '', this.currentUserId).subscribe(resp =>{
-
-
+     let start = this.sharedService.formatDate(this.rangeBets.controls.start.value.getDay(),this.rangeBets.controls.start.value.getMonth(),this.rangeBets.controls.start.value.getYear()) 
+     let end = this.sharedService.formatDate(this.rangeBets.controls.end.value.getDay(),this.rangeBets.controls.end.value.getMonth(),this.rangeBets.controls.end.value.getYear()) 
+    
+     this.dataService.getBets(this.pageIndexBets, this.pageSize, '', this.currentUserId,'','','','','',start,end).subscribe(resp =>{
+      this.lengthBets = resp.body.pagingInfo.totalCount
       this.bettingHistoryData.data = resp.body.items;
     }, error =>{
       // redirect somewhere
@@ -107,7 +122,13 @@ export class SubAccountDetailsComponent implements OnInit {
    }
    
    loadUsersTransactions(){
-    this.dataService.getTransactions(1, 5, '', '', '', this.currentUserId).subscribe(resp =>{
+    let start = this.sharedService.formatDate(this.rangeTrans.controls.start.value.getDay(),this.rangeTrans.controls.start.value.getMonth(),this.rangeTrans.controls.start.value.getYear()) 
+    let end = this.sharedService.formatDate(this.rangeTrans.controls.end.value.getDay(),this.rangeTrans.controls.end.value.getMonth(),this.rangeTrans.controls.end.value.getYear()) 
+   
+
+    this.dataService.getTransactions(this.pageIndexTrans, this.pageSize, this.currentUserId, '', '','', '','').subscribe(resp =>{
+      this.lengthTrans= resp.body.pagingInfo.totalCount;
+      debugger
       this.transactionsData.data = resp.body.items;
     }, error =>{
       // redirect somewhere
@@ -116,10 +137,17 @@ export class SubAccountDetailsComponent implements OnInit {
 
    updatePageBets(page:any) {
     this.pageSize = page.pageSize;
-    this.pageIndex = page.pageIndex + 1;
+    this.pageIndexBets = page.pageIndex + 1;
 
     this.loadUsersBet();
   }
+
+  updatePageTrans(page:any) {
+   this.pageSize = page.pageSize;
+   this.pageIndexTrans = page.pageIndex + 1;
+
+   this.loadUsersTransactions();
+ }
 
   ss:Date = new Date();   
    check(){
@@ -128,7 +156,7 @@ export class SubAccountDetailsComponent implements OnInit {
      let zftt= this.ss.toISOString();
     //  let hfa = this.start.getDate();
     //  let hfaa = this.start.getMonth();
-    let hfa = this.range.controls.start.value.toDateString()
+    // let hfa = this.range.controls.start.value.toDateString()
    }
 
    

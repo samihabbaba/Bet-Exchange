@@ -210,7 +210,7 @@ export class MainDatatableComponent implements OnInit {
   }
 
   openDetails(id: string) {
-    this.router.navigate([`super/masters/${id}`]);
+    this.router.navigate([`super/admins/${id}`]);
   }
 
   openAddMasterDialog() {
