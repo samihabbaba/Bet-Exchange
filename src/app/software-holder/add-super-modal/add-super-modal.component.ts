@@ -30,21 +30,27 @@ export class AddSuperModalComponent implements OnInit {
   }
 
   initalizeForm() {
-    this.addMasterForm = this.fb.group({
+
+    let objValidation:any = {
       email: new FormControl(null, Validators.required),
       username: new FormControl(null, Validators.required),
       name: new FormControl(null, Validators.required),
-
-      // firstName: new FormControl(null, Validators.required),
-      // lastName: new FormControl(null, Validators.required),
       password: new FormControl(null, Validators.required),
-      // confirmPassword: new FormControl(null, Validators.required),
       phoneNumber: new FormControl(null, Validators.required),
-      commission: new FormControl(null, Validators.required),
-      walletCurrency: new FormControl(null, Validators.required),
-      // ptLimit: new FormControl(null, Validators.required),
-      // forcedPt: new FormControl(null, Validators.required),
-    });
+      // commission: new FormControl(null, Validators.required),
+      // walletCurrency: new FormControl(null, Validators.required),
+    }
+
+    if(this.data.roleToCreate !== 'Client'){
+      objValidation = {...objValidation, commission: new FormControl(null, Validators.required)}
+    }
+    
+    if(this.data.roleToCreate === 'SuperAdmin'){
+      objValidation = {...objValidation, walletCurrency: new FormControl(null, Validators.required)}
+    }
+
+    this.addMasterForm = this.fb.group(objValidation);
+
   }
 
   addSuper(){

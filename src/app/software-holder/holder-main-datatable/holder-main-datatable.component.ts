@@ -26,6 +26,10 @@ export class HolderMainDatatableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | any;
   @ViewChild(MatSort) sort: MatSort | any;
   dataSource: MatTableDataSource<any>;
+  
+  length = 0;
+  pageIndex = 1;
+  pageSize = this.sharedFunctions.defaultPageSize;
 
   displayedColumns: string[] = [
     'userName',
@@ -139,8 +143,8 @@ export class HolderMainDatatableComponent implements OnInit {
 
   loadUsers(){
     this.dataService.getAllUsers({
-      PageNo:1,
-      PageSize:5,
+      PageNo:this.pageIndex,
+      PageSize:this.pageSize,
       rParentId:'',
       Role:'SuperAdmin'
     }).subscribe(resp => {
@@ -149,6 +153,13 @@ export class HolderMainDatatableComponent implements OnInit {
     }, error => {
 
     })
+  }
+
+  updatePage(page:any) {
+    this.pageSize = page.pageSize;
+    this.pageIndex = page.pageIndex + 1;
+
+    this.loadUsers();
   }
 
   ngAfterViewInit() {
@@ -234,7 +245,6 @@ export class HolderMainDatatableComponent implements OnInit {
     });
   }
 
-
   openWithdrawMasterDialog(obj: any) {
 
 
@@ -246,7 +256,6 @@ export class HolderMainDatatableComponent implements OnInit {
       this.loadUsers();
     });
   }
-
 
   openChangePasswordDialog(id?: string) {
     const dialogRef = this.dialog.open(ChangePasswordModalComponent, {

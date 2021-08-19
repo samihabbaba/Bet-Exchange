@@ -7,10 +7,16 @@ import { Router } from '@angular/router';
 import { MasterUser } from 'src/app/models/master-user';
 import { AddMasterModalComponent } from '../add-master-modal/add-master-modal.component';
 import { AddSuperModalComponent } from '../../software-holder/add-super-modal/add-super-modal.component';
-import { ChangePasswordModalComponent } from '../change-password-modal/change-password-modal.component';
 import { DepositMasterModalComponent } from '../deposit-master-modal/deposit-master-modal.component';
 import { EditMasterModalComponent } from '../edit-master-modal/edit-master-modal.component';
 import { WithdrawMasterModalComponent } from '../withdraw-master-modal/withdraw-master-modal.component';
+import { ActivationModalComponent } from 'src/app/shared/activation-modal/activation-modal.component';
+import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
+import { DataService } from 'src/app/services/data.service';
+import { DepositSuperModalComponent } from 'src/app/software-holder/deposit-super-modal/deposit-super-modal.component';
+import { WithdrawSuperModalComponent } from 'src/app/software-holder/withdraw-super-modal/withdraw-super-modal.component';
+import { ChangePasswordModalComponent } from 'src/app/software-holder/change-password-modal/change-password-modal.component';
+import { EditSuperModalComponent } from 'src/app/software-holder/edit-super-modal/edit-super-modal.component';
 
 @Component({
   selector: 'app-main-datatable',
@@ -22,14 +28,28 @@ export class MainDatatableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort | any;
   dataSource: MatTableDataSource<MasterUser>;
 
+  
+  length = 0;
+  pageIndex = 1;
+  pageSize = this.sharedFunctions.defaultPageSize;
+
   displayedColumns: string[] = [
-    'account',
-    'availableBalance',
-    'exposure',
-    'subAccountBalance',
-    'subAccountBalanceWithExposure',
-    'totalBalance',
-    'status',
+    'userName',
+    'name',
+    'email',
+    'phoneNumber',
+    'risk',
+    'commission',
+    'wallet balance',
+    'isActive',
+    'role',
+    // 'account',
+    // 'availableBalance',
+    // 'exposure',
+    // 'subAccountBalance',
+    // 'subAccountBalanceWithExposure',
+    // 'totalBalance',
+    // 'status',
     'actions',
   ];
   users: any[] = [
@@ -115,15 +135,39 @@ export class MainDatatableComponent implements OnInit {
     },
   ];
 
-  constructor(private router: Router, public dialog: MatDialog) {
+  constructor(private router: Router, public dialog: MatDialog, private dataService:DataService, public sharedFunctions:SharedFunctionsService) {
     this.dataSource = new MatTableDataSource(this.users);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.loadUsers();
+  }
+
+  loadUsers(){
+    debugger
+    this.dataService.getAllUsers({
+      PageNo:1,
+      PageSize:5,
+      rParentId:'',
+      Role:'Admin'
+    }).subscribe(resp => {
+
+      this.dataSource.data = resp.items
+    }, error => {
+
+    })
+  }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  updatePage(page:any) {
+    this.pageSize = page.pageSize;
+    this.pageIndex = page.pageIndex + 1;
+
+    this.loadUsers();
   }
 
   applyFilter(event: Event) {
@@ -177,45 +221,62 @@ export class MainDatatableComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe((result) => {
+      this.loadUsers();
       console.log(`Dialog result: ${result}`);
     });
   }
 
-  openEditMasterDialog(id?: string) {
-    const dialogRef = this.dialog.open(EditMasterModalComponent, {
-      data: {balance: 100, id: 'Master Id'},
+  openEditMasterDialog(obj:any) {
+    let objToSend = {...obj, commission : obj.commission *100}
+    const dialogRef = this.dialog.open(EditSuperModalComponent, {
+      data: objToSend,
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
+      this.loadUsers();
     });
   }
 
-  openDepositMasterDialog(id?: string) {
-    const dialogRef = this.dialog.open(DepositMasterModalComponent, {
-      data: {balance: 100, id: 'Master Id'},
+  
+  openDepositMasterDialog(obj: any) {
+
+    const dialogRef = this.dialog.open(DepositSuperModalComponent, {
+      data: {...obj},
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
+      this.loadUsers();
     });
   }
 
+  openWithdrawMasterDialog(obj: any) {
 
-  openWithdrawMasterDialog(id?: string) {
-    const dialogRef = this.dialog.open(WithdrawMasterModalComponent, {
-      data: {balance: 100, id: 'Master Id'},
+
+    const dialogRef = this.dialog.open(WithdrawSuperModalComponent, {
+      data: {...obj},
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
+      this.loadUsers();
     });
   }
-
 
   openChangePasswordDialog(id?: string) {
     const dialogRef = this.dialog.open(ChangePasswordModalComponent, {
-      data: {balance: 100, id: 'Master Id'},
+      data: { id: id},
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  openActivationDialog(obj:any){
+    const dialogRef = this.dialog.open(ActivationModalComponent, {
+      data: obj,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+      this.loadUsers();
     });
   }
 }
