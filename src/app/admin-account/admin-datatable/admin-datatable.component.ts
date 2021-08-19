@@ -146,7 +146,6 @@ export class AdminDatatableComponent implements OnInit {
       rParentId:'',
       Role:'Master'
     }).subscribe(resp => {
-      debugger
       this.dataSource.data = resp.items
     }, error => {
 

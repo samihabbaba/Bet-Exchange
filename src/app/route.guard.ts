@@ -14,7 +14,6 @@ export class RouteGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     // return true;
-    debugger
       let canRoute = this.authService.loggedIn();
       if(!canRoute){
         this.router.navigateByUrl('login')

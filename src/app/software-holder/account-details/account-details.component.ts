@@ -144,12 +144,12 @@ export class AccountDetailsComponent implements OnInit {
   }
 
   loadUser(){
-    debugger
+
     this.dataService.getUserById(this.authService.decodedToken.id).subscribe(resp =>{
-      debugger
+
       this.myUser = resp;
     },error =>{
-      debugger
+
       //redirect to error page
     })
   }

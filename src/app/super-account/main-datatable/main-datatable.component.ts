@@ -210,7 +210,6 @@ export class MainDatatableComponent implements OnInit {
   }
 
   openDetails(id: string) {
-    debugger
     this.router.navigate([`super/admins/${id}`]);
   }
 

@@ -12,7 +12,7 @@ export class SuperGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      debugger
+
       if(this.authService.loggedIn() && this.authService.decodedToken.role == 'SuperAdmin'){
         return true;
       }

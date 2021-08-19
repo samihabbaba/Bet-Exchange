@@ -12,8 +12,7 @@ export class AdminGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      debugger
-let hh = this.router.url;
+      
 return true
       if(this.authService.loggedIn() && this.authService.decodedToken.role == 'Admin'){
         return true;
