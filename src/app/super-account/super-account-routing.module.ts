@@ -18,6 +18,8 @@ const routes: Routes = [
       { path: 'admins/:id', component: SubAccountDetailsComponent },
       // { path: 'details', component: AccountDetailsComponent },
       { path: 'details', component: AccountDetailsComponent },
+      { path: '**', component: MainDatatableComponent },
+
     ],
   },
 ];

@@ -10,6 +10,7 @@ import {
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { fadeMenuAndSlip } from 'src/app/animations/animation';
+import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { LayoutService } from 'src/app/services/layout.service';
 import {
@@ -51,8 +52,14 @@ export class MainContentComponent implements OnInit {
     public sharedService: SharedFunctionsService,
     private screenSizeService: ScreenSizeService,
     private layoutService: LayoutService,
+    private authService:AuthService,
+    private router: Router
   ) {
     this.initializeSubscriptions();
+    // let redirect = this.authService.redirectToPage();
+    // if(redirect.re){
+    //   this.router.navigate([redirect.page]);
+    // }
   }
 
   ngOnInit(): void {

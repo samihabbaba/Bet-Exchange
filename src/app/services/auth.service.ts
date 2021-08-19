@@ -151,4 +151,36 @@ export class AuthService {
     }
   }
 
+  redirectToPage(){
+    if(this.decodedToken.role == 'SoftwareHolder'){
+      return{
+        re:true,
+        page:'software-holder'
+      }
+    }
+    else if(this.decodedToken.role == 'SuperAdmin'){
+      return{
+        re:true,
+        page:'SuperAdmin'
+      }
+    }
+    else if(this.decodedToken.role == 'Admin'){
+      return{
+        re:true,
+        page:'Admin'
+      }
+    }
+    else if(this.decodedToken.role == 'Master'){
+      return{
+        re:true,
+        page:'Master'
+      }
+    }
+    else {
+      return{
+        re:false
+      }
+    }
+  }
+
 }

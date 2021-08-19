@@ -49,16 +49,21 @@ export class AppComponent implements OnInit {
   }
 
   checkForRoute() {
-    if (
-      this.router.url.includes('super') ||
-      this.router.url.includes('master') ||
-      this.router.url.includes('admin') ||
-      this.router.url.includes('login')||
-      this.router.url.includes('software-holder')
-    ) {
+    if(this.authService.loggedIn()){
+      return this.authService.decodedToken.role !== 'Client';
+    }else{
       return true;
-    } else {
-      return false;
     }
+    // if (
+    //   this.router.url.includes('super') ||
+    //   this.router.url.includes('master') ||
+    //   this.router.url.includes('admin') ||
+    //   this.router.url.includes('login')||
+    //   this.router.url.includes('software-holder')
+    // ) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
   }
 }

@@ -14,6 +14,7 @@ const routes: Routes = [
       { path: 'players', component: PlayersDatatableComponent },
       { path: 'players/:id', component: PlayerDetailsComponent },
       { path: 'details', component: MasterDetailsComponent },
+      { path: '**', component: PlayersDatatableComponent },
     ],
   },
 ];
