@@ -15,7 +15,7 @@ export class SuperAccountComponent implements OnInit {
   }
 
   goToMastersTable() {
-    this.router.navigate([`super/masters`])
+    this.router.navigate([`super/admins`])
   }
   
   goToLoginPage() {

@@ -637,7 +637,7 @@ this.layoutService.closeMenuChilds();
     }
 
     updateUser(obj:any) {
-      debugger
+
       if(obj.commission){
         obj.commission /= 100.
       }

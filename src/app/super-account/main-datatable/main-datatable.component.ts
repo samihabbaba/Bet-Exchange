@@ -144,7 +144,7 @@ export class MainDatatableComponent implements OnInit {
   }
 
   loadUsers(){
-    debugger
+
     this.dataService.getAllUsers({
       PageNo:1,
       PageSize:5,
