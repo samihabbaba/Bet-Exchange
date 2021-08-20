@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { DataService } from './data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,18 @@ export class SharedFunctionsService {
 
    mainMarkets = ['Match Odds', 'Fight Result', 'Moneyline', 'Match Winner', 'Regular Time Match Odds', ];
 
-   currencyList = ['TRY', 'USD', 'EUR', 'GBP']
-  constructor() { }
+   currencyList = ['TRY', 'USD', 'EUR', 'GBP'];
+   sports:any = []
+
+  constructor(private dataService:DataService) {
+    this.loadSports();
+   }
+
+  loadSports(){
+    this.dataService.getSports().subscribe(resp => {
+      this.sports = resp.body;
+    })
+  }
 
   returnTeamNameFromEvent(eventName:string, isHome = true){
 
@@ -373,6 +384,26 @@ export class SharedFunctionsService {
       day=day+1
     }
     return month+'/'+day+'/'+year
+  }
+
+  getSportNameById(id:string){
+    
+    let index = this.sports.findIndex((x:any)=> x.id == id);
+    if(index == -1){
+      return 'Unkown'
+    }else{
+      return this.sports[index].name;
+    }
+  }
+
+  getMatchedDate(date:any){
+
+    if(date){
+      return date;
+    }
+    else{
+      return 'not Matched'
+    }
   }
 
 

@@ -57,6 +57,7 @@ export class BetSlipComponent implements OnInit {
     .pipe(finalize( () =>       this.stopLoading()
     ))
     .subscribe(resp => {
+      debugger
       this.notificationService.success("Bet(s) added successfully!")
     }, error =>{
       this.notificationService.error("Error while adding Bet(s)!")

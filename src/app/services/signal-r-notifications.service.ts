@@ -53,6 +53,7 @@ export class SignalRNotificationsService {
 
 
   private onNotificationReceive(noti:NotificationPayload) {
+    debugger
 		console.log(`Recieved a notofication`);
     this.recivedNotification.next(noti);
   }

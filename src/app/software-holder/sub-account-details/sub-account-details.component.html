@@ -115,23 +115,6 @@
 
     <div [@contentInOut] *ngIf="profile.value == 'bettingHistory'">
       <div class="cs-d-flex">
-        
-        <!-- <mat-form-field appearance="fill">
-          <mat-label>Period</mat-label>
-          <mat-select name="pl">
-            <mat-option
-              *ngFor="let period of transactionTypesSelect"
-              [value]="period"
-            >
-              {{ period }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field> -->
-        <!-- <div class="example-button-container">
-          <button mat-fab color="warn" aria-label="Example icon button with a home icon">
-            <mat-icon>refresh</mat-icon>
-          </button>
-        </div> -->
 
         <div class="example-button-container">
           <button mat-fab class="reload-btn" (click)="loadUsersBet()"
@@ -139,13 +122,6 @@
             <mat-icon>refresh</mat-icon>
           </button>
         </div>
-
-        
-
-
-
-
-
 
         <mat-form-field appearance="fill" style="margin-left: 10px">
           <mat-label>Enter a date range</mat-label>
@@ -181,31 +157,65 @@
         [dataSource]="bettingHistoryData"
         style="min-width: 870px"
       >
-        <ng-container matColumnDef="market">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+        </ng-container>
+        
+        <ng-container matColumnDef="userName">
+          <th mat-header-cell *matHeaderCellDef>Username</th>
+          <td mat-cell *matCellDef="let row">{{ row.userName }}</td>
+        </ng-container>
+
+        
+        <ng-container matColumnDef="sport">
+          <th mat-header-cell *matHeaderCellDef>Sport</th>
+          <td mat-cell *matCellDef="let row">{{ this.sharedService.getSportNameById(row.selection.eventTypeId) }}</td>
+        </ng-container>
+
+           
+        <ng-container matColumnDef="eventName">
+          <th mat-header-cell *matHeaderCellDef>Event</th>
+          <td mat-cell *matCellDef="let row">{{ row.selection.eventName }}</td>
+        </ng-container>
+
+           
+        <ng-container matColumnDef="marketName">
           <th mat-header-cell *matHeaderCellDef>Market</th>
-          <td mat-cell *matCellDef="let row">{{ row.market }}</td>
+          <td mat-cell *matCellDef="let row">{{ row.selection.marketName }}</td>
         </ng-container>
-        <ng-container matColumnDef="selection">
+
+           
+        <ng-container matColumnDef="selectionName">
           <th mat-header-cell *matHeaderCellDef>Selection</th>
-          <td mat-cell *matCellDef="let row">{{ row.selection }}</td>
-        </ng-container>
-        <ng-container matColumnDef="bidType">
-          <th mat-header-cell *matHeaderCellDef>Bid Type</th>
-          <td mat-cell *matCellDef="let row">{{ row.bidType }}</td>
-        </ng-container>
-        <ng-container matColumnDef="betId">
-          <th mat-header-cell *matHeaderCellDef>Bet Id</th>
-          <td mat-cell *matCellDef="let row">{{ row.betId }}</td>
+          <td mat-cell *matCellDef="let row">{{ row.selection.selectionName }}</td>
         </ng-container>
 
-        <ng-container matColumnDef="betPlace">
-          <th mat-header-cell *matHeaderCellDef>Bet Place</th>
-          <td mat-cell *matCellDef="let row">{{ row.betPlace }}</td>
+           
+        <ng-container matColumnDef="betType">
+          <th mat-header-cell *matHeaderCellDef>Bet Type</th>
+          <td mat-cell *matCellDef="let row">{{ row.selection.betType }}</td>
         </ng-container>
 
+           
+        <ng-container matColumnDef="selectionType">
+          <th mat-header-cell *matHeaderCellDef>Sel. Type</th>
+          <td mat-cell *matCellDef="let row">{{ row.selectionType }}</td>
+        </ng-container>
+           
         <ng-container matColumnDef="stake">
           <th mat-header-cell *matHeaderCellDef>Stake</th>
-          <td mat-cell *matCellDef="let row">{{ row.stake }}</td>
+          <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.stake)  }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="odd">
+          <th mat-header-cell *matHeaderCellDef>Odd</th>
+          <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.odd)  }}</td>
+        </ng-container>
+        
+        <ng-container matColumnDef="payout">
+          <th mat-header-cell *matHeaderCellDef>payout</th>
+          <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.payout)  }}</td>
         </ng-container>
 
         <ng-container matColumnDef="matchedSize">
@@ -213,15 +223,81 @@
           <td mat-cell *matCellDef="let row">{{ row.matchedSize }}</td>
         </ng-container>
 
-        <ng-container matColumnDef="avgOddsMatched">
-          <th mat-header-cell *matHeaderCellDef>avg. Odds Matched</th>
-          <td mat-cell *matCellDef="let row">{{ row.avgOddsMatched }}</td>
+        
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let row">{{ row.status }}</td>
+        </ng-container>
+           
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>Date</th>
+          <td mat-cell *matCellDef="let row">{{ row.date }}</td>
+        </ng-container>
+           
+        <ng-container matColumnDef="lastActionDate">
+          <th mat-header-cell *matHeaderCellDef>Last Action</th>
+          <td mat-cell *matCellDef="let row">{{ row.lastActionDate }}</td>
+        </ng-container>
+           
+        <ng-container matColumnDef="eventDate">
+          <th mat-header-cell *matHeaderCellDef>Event Date</th>
+          <td mat-cell *matCellDef="let row">{{ row.selection.eventDate }}</td>
+        </ng-container>
+           
+        <ng-container matColumnDef="matchedDate">
+          <th mat-header-cell *matHeaderCellDef>Matched Date</th>
+          <td mat-cell *matCellDef="let row">{{ this.sharedService.getMatchedDate(row.matchedDate) }}</td>
         </ng-container>
 
-        <ng-container matColumnDef="pl">
-          <th mat-header-cell *matHeaderCellDef>P&L</th>
-          <td mat-cell *matCellDef="let row">{{ row.pl }}</td>
+       
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let row">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="menu"
+              (click)="$event.stopPropagation()"
+            >
+              <mat-icon>more_vert</mat-icon>
+  
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item >
+                  <mat-icon>edit</mat-icon>
+                  <span>Edit</span>
+                </button>
+                <button mat-menu-item >
+                  <mat-icon>payment</mat-icon>
+                  <span>Deposit</span>
+                </button>
+                <button mat-menu-item >
+                  <mat-icon>attach_money</mat-icon>
+                  <span>Withdraw</span>
+                </button>
+                <button mat-menu-item >
+                  <mat-icon>lock</mat-icon>
+                  <span>Change Password</span>
+                </button>
+                
+               
+                <button mat-menu-item>
+                  <mat-icon>close</mat-icon>
+                  <span>Close</span>
+                </button>
+                    </mat-menu>
+            </button>
+  
+            
+           
+
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
         </ng-container>
+
+         <!-- Master Actions -->
+     
+         
+  
+        <!-- Master Actions -->
 
         <tr
           mat-header-row
@@ -232,6 +308,8 @@
           *matRowDef="let row; columns: displayedColumnsBettingHistory"
         ></tr>
       </table>
+
+
       <mat-paginator 
       [length]="lengthBets"
       [pageSize]="pageSize"

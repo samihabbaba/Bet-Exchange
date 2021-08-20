@@ -68,15 +68,25 @@ export class SubAccountDetailsComponent implements OnInit {
   profitLossData = new MatTableDataSource<any>(profitLoss);
 
   displayedColumnsBettingHistory: string[] = [
-    'market',
-    'selection',
-    'bidType',
-    'betId',
-    'betPlace',
+    'id',
+    'userName',
+    'sport',
+    'eventName',
+    'marketName',
+    'selectionName',
+    'betType', // Lay - Back
+    'selectionType', // Live - Pre
     'stake',
-    'matchedSize',
-    'avgOddsMatched',
-    'pl',
+    'odd',
+    'payout',
+    // 'matchedSize',
+    'status',
+    'date',
+    'lastActionDate',
+    'eventDate',
+    'matchedDate',
+    'actions',
+    // 'avgOddsMatched',
   ];
 
 
@@ -116,7 +126,6 @@ export class SubAccountDetailsComponent implements OnInit {
      let end = this.sharedService.formatDate(this.rangeBets.controls.end.value.getDate(),this.rangeBets.controls.end.value.getMonth()+1,this.rangeBets.controls.end.value.getFullYear(), true) 
 
      this.dataService.getBets(this.pageIndexBets, this.pageSize, '', this.currentUserId,'','','','','',start,end).subscribe(resp =>{
-
       this.lengthBets = resp.body.pagingInfo.totalCount
       this.bettingHistoryData.data = resp.body.items;
     }, error =>{
