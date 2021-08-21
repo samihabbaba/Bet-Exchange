@@ -76,8 +76,9 @@ export class DataService {
   ///// Transaction Controller /////
   //////////////////////////////////
 
-  getTransactions(PageNo:number, PageSize:number, UserId='', ToUserId='', CurrencyCode='', ParentId='', StartDate='',EndDate='' ) {
-    return this.http.get<any>(`${this.baseUrl}transactions?PageNo=${PageNo}&PageSize=${PageSize}&UserId=${UserId}&ParentId=${ParentId}&ToUserId=${ToUserId}&CurrencyCode=${CurrencyCode}&StartDate=${StartDate}&EndDate=${EndDate}`, {
+  getTransactions(PageNo:number, PageSize:number, UserId='', ToUserId='', CurrencyCode='', ParentId='', StartDate='',EndDate='',DirectParent:any='',BettingTransactionsOnly:any='' ) {
+    //BettingTransactionsOnly  [ null (all), true (only bet related), flase (filter out the bet related transactions)]
+    return this.http.get<any>(`${this.baseUrl}transactions?PageNo=${PageNo}&PageSize=${PageSize}&UserId=${UserId}&ParentId=${ParentId}&ToUserId=${ToUserId}&CurrencyCode=${CurrencyCode}&StartDate=${StartDate}&EndDate=${EndDate}&DirectParent=${DirectParent}&BettingTransactionsOnly=${BettingTransactionsOnly}`, {
       headers: this.httpOptions.headers,
       observe: 'response',
     });

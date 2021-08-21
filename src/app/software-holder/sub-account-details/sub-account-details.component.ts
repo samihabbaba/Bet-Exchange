@@ -132,8 +132,12 @@ export class SubAccountDetailsComponent implements OnInit {
    }
 
    loadUsersBet(){
+
+    let endD = new Date(this.rangeBets.controls.end.value);
+    endD.setDate(endD.getDate() + 1);
+    
      let start = this.sharedService.formatDate(this.rangeBets.controls.start.value.getDate(),this.rangeBets.controls.start.value.getMonth()+1,this.rangeBets.controls.start.value.getFullYear()) 
-     let end = this.sharedService.formatDate(this.rangeBets.controls.end.value.getDate(),this.rangeBets.controls.end.value.getMonth()+1,this.rangeBets.controls.end.value.getFullYear(), true) 
+     let end = this.sharedService.formatDate(endD.getDate(),endD.getMonth()+1,endD.getFullYear(), true) 
 
      this.dataService.getBets(this.pageIndexBets, this.pageSize, '', this.currentUserId,'','','','','',start,end).subscribe(resp =>{
       this.lengthBets = resp.body.pagingInfo.totalCount
@@ -146,24 +150,30 @@ export class SubAccountDetailsComponent implements OnInit {
    
    loadUsersTransactions(){
 
-     
+    let endD = new Date(this.rangeTrans.controls.end.value);
+     endD.setDate(endD.getDate() + 1);
+
     let start = this.sharedService.formatDate(this.rangeTrans.controls.start.value.getDate(),this.rangeTrans.controls.start.value.getMonth()+1,this.rangeTrans.controls.start.value.getFullYear()) 
-    let end = this.sharedService.formatDate(this.rangeTrans.controls.end.value.getDate()+1,this.rangeTrans.controls.end.value.getMonth()+1,this.rangeTrans.controls.end.value.getFullYear(), true) 
+    let end = this.sharedService.formatDate(endD.getDate(),endD.getMonth()+1,endD.getFullYear(), true) 
 
     
-    this.dataService.getTransactions(this.pageIndexTrans, this.pageSize, this.currentUserId, '', '','', start,end).subscribe(resp =>{
-      this.lengthTrans= resp.body.pagingInfo.totalCount;
-       
+    this.dataService.getTransactions(this.pageIndexTrans, this.pageSize, this.currentUserId, '', '','', start,end,false,).subscribe(resp =>{
+      debugger
+      this.lengthTrans= resp.body.pagingInfo.totalCount;      
       this.transactionsData.data = resp.body.items;
     }, error =>{
+      debugger
       // redirect somewhere
     })
    }
 
    loadLoginHistory(){
-
+    let endD = new Date(this.rangeLogin.controls.end.value);
+    endD.setDate(endD.getDate() + 1);
+         
     let start = this.sharedService.formatDate(this.rangeLogin.controls.start.value.getDate(),this.rangeLogin.controls.start.value.getMonth()+1,this.rangeLogin.controls.start.value.getFullYear()) 
-    let end = this.sharedService.formatDate(this.rangeLogin.controls.end.value.getDate()+1,this.rangeLogin.controls.end.value.getMonth()+1,this.rangeLogin.controls.end.value.getFullYear(), true) 
+    let end = this.sharedService.formatDate(endD.getDate(),endD.getMonth()+1,endD.getFullYear(), true) 
+
     this.dataService.getLoginHistory( this.currentUserId, start, end , this.pageIndexLogin, this.pageSize).subscribe(resp =>{
 
       this.lengthLogin= resp.body.pagingInfo.totalCount;

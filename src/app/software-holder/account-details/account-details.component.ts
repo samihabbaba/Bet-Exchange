@@ -193,8 +193,12 @@ export class AccountDetailsComponent implements OnInit {
   }
 
   loadBets(){
+
+    let endD = new Date(this.rangeBets.controls.end.value);
+    endD.setDate(endD.getDate() + 1);
+    
     let start = this.sharedService.formatDate(this.rangeBets.controls.start.value.getDate(),this.rangeBets.controls.start.value.getMonth()+1,this.rangeBets.controls.start.value.getFullYear()) 
-    let end = this.sharedService.formatDate(this.rangeBets.controls.end.value.getDate(),this.rangeBets.controls.end.value.getMonth()+1,this.rangeBets.controls.end.value.getFullYear(), true) 
+    let end = this.sharedService.formatDate(endD.getDate(),endD.getMonth()+1,endD.getFullYear(), true) 
    
     this.dataService.getBets(this.pageIndexBets, this.pageSize, '', '','','','','','',start,end).subscribe(resp =>{
      this.lengthBets = resp.body.pagingInfo.totalCount
@@ -206,9 +210,11 @@ export class AccountDetailsComponent implements OnInit {
 
   loadUsersTransactions(){
 
-     
+    let endD = new Date(this.rangeTrans.controls.end.value);
+    endD.setDate(endD.getDate() + 1);
+    
     let start = this.sharedService.formatDate(this.rangeTrans.controls.start.value.getDate(),this.rangeTrans.controls.start.value.getMonth()+1,this.rangeTrans.controls.start.value.getFullYear()) 
-    let end = this.sharedService.formatDate(this.rangeTrans.controls.end.value.getDate()+1,this.rangeTrans.controls.end.value.getMonth()+1,this.rangeTrans.controls.end.value.getFullYear(), true) 
+    let end = this.sharedService.formatDate(endD.getDate(),endD.getMonth()+1,endD.getFullYear(), true) 
 
     let id = this.authService.decodedToken.id;
     let parentId = '';
@@ -216,7 +222,7 @@ export class AccountDetailsComponent implements OnInit {
       parentId = id;
       id = '';
     }
-    this.dataService.getTransactions(this.pageIndexTrans, this.pageSize, id, '', '',parentId, start,end).subscribe(resp =>{
+    this.dataService.getTransactions(this.pageIndexTrans, this.pageSize, id, '', '',parentId, start,end,false,'' ).subscribe(resp =>{
       debugger
       this.lengthTrans= resp.body.pagingInfo.totalCount;
       this.transactionsData.data = resp.body.items;

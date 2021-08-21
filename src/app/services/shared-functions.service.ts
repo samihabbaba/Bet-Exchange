@@ -386,6 +386,7 @@ export class SharedFunctionsService {
     return month+'/'+day+'/'+year
   }
 
+
   getSportNameById(id:string){
     
     let index = this.sports.findIndex((x:any)=> x.id == id);
