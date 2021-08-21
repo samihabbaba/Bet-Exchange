@@ -23,6 +23,8 @@ export class SubAccountDetailsComponent implements OnInit {
   pageIndexBets = 1;
   lengthTrans = 0;
   pageIndexTrans = 1;
+  lengthLogin = 0;
+  pageIndexLogin = 1;
   pageSize = this.sharedService.defaultPageSize;
   
   rangeBets = new FormGroup({
@@ -31,6 +33,11 @@ export class SubAccountDetailsComponent implements OnInit {
   });
 
   rangeTrans = new FormGroup({
+    start: new FormControl(new Date()),
+    end: new FormControl(new Date()),
+  });
+
+  rangeLogin = new FormGroup({
     start: new FormControl(new Date()),
     end: new FormControl(new Date()),
   });
@@ -53,10 +60,10 @@ export class SubAccountDetailsComponent implements OnInit {
     // 'fromTo',
   ];
 
-  transactionsData = new MatTableDataSource<any>(transactions);
+  transactionsData = new MatTableDataSource<any>();
 
   displayedColumnsLoginHistory: string[] = ['ip', 'createdAt', 'isSuccessfull'];
-  loginHistoryData = new MatTableDataSource<any>(loginHistory);
+  loginHistoryData = new MatTableDataSource<any>();
 
   displayedColumnsProfitLoss: string[] = [
     'market',
@@ -106,6 +113,7 @@ export class SubAccountDetailsComponent implements OnInit {
       this.loadUserById();
       this.loadUsersBet();
       this.loadUsersTransactions();
+      this.loadLoginHistory();
    });
 
    
@@ -114,7 +122,6 @@ export class SubAccountDetailsComponent implements OnInit {
   loadUserById()
    {
      this.dataService.getUserById(this.currentUserId).subscribe(resp =>{
-
       this.currentUser = resp;
      }, error =>{
        // redirect somewhere
@@ -145,6 +152,19 @@ export class SubAccountDetailsComponent implements OnInit {
       this.lengthTrans= resp.body.pagingInfo.totalCount;
        
       this.transactionsData.data = resp.body.items;
+    }, error =>{
+      // redirect somewhere
+    })
+   }
+
+   loadLoginHistory(){
+
+    let start = this.sharedService.formatDate(this.rangeLogin.controls.start.value.getDate(),this.rangeLogin.controls.start.value.getMonth()+1,this.rangeLogin.controls.start.value.getFullYear()) 
+    let end = this.sharedService.formatDate(this.rangeLogin.controls.end.value.getDate()+1,this.rangeLogin.controls.end.value.getMonth()+1,this.rangeLogin.controls.end.value.getFullYear(), true) 
+    this.dataService.getLoginHistory( this.currentUserId, start, end , this.pageIndexLogin, this.pageSize).subscribe(resp =>{
+
+      this.lengthLogin= resp.body.pagingInfo.totalCount;
+      this.loginHistoryData.data = resp.body.items;
     }, error =>{
       // redirect somewhere
     })

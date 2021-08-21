@@ -36,6 +36,7 @@
        <div>Phone Number: &nbsp; <span> {{myUser?.phoneNumber}} </span></div>
         <div>Balance: &nbsp; <span> {{this.sharedService.formatNumber( myUser?.wallet?.balance )}} </span></div>
         <div>Wallet Currency: &nbsp; <span> {{myUser?.wallet?.currency}} </span></div>
+       <div>SubAccounts Balance: &nbsp; <span> {{this.sharedService.formatNumber( myUser?.subAccountBalance )}} </span></div>
         <div>Commission: &nbsp; <span>{{this.sharedService.formatNumber( myUser?.commission*100)}}%</span></div>
         <div>Active: &nbsp; <span> {{myUser?.isActive}} </span></div>
         <!-- <div>Role: &nbsp; <span> {{myUser?.role}} </span></div> -->

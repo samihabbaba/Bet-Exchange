@@ -106,6 +106,17 @@ export class DataService {
     });
   }
 
+///////////////////////////////////
+  ///// login history Controller /////
+  //////////////////////////////////
+
+  getLoginHistory(userId:string , startDate:string, endDate:string, PageNo:number, PageSize:number) {
+    return this.http.get<any>(`${this.baseUrl}login-history?userId=${userId}&DateAfter=${startDate}&DateBefore&PageNo=${PageNo}&PageSize=${PageSize}`, {
+      headers: this.httpOptions.headers,
+      observe: 'response',
+    });
+  }
+
   /////////////////////////////////////
   ////// BettingRules Controller //////
   ////////////////////////////////////

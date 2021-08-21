@@ -41,6 +41,8 @@
       <div>Commission: &nbsp; <span> {{this.sharedService.formatNumber( currentUser?.commission*100)}}% </span></div>
       <div>Wallet Currency: &nbsp; <span> {{currentUser?.wallet?.currency}} </span></div>
       <div>Wallet Balance: &nbsp; <span> {{this.sharedService.formatNumber( currentUser?.wallet?.balance )}} </span></div>
+      <div>SubAccounts Balance: &nbsp; <span> {{this.sharedService.formatNumber( currentUser?.subAccountBalance )}} </span></div>
+      
       <div>Active: &nbsp; <span> {{currentUser?.isActive}} </span></div>
       <div>Role: &nbsp; <span> {{currentUser?.role}} </span></div>
       
@@ -420,17 +422,17 @@
       <table mat-table [dataSource]="loginHistoryData" style="min-width: 800px">
         <ng-container matColumnDef="ip">
           <th mat-header-cell *matHeaderCellDef>IP</th>
-          <td mat-cell *matCellDef="let row">{{ row.ip }}</td>
+          <td mat-cell *matCellDef="let row">{{ row.ipAddress }}</td>
         </ng-container>
         <ng-container matColumnDef="createdAt">
           <th mat-header-cell *matHeaderCellDef>Created At</th>
-          <td mat-cell *matCellDef="let row">{{ row.createdAt }}</td>
+          <td mat-cell *matCellDef="let row">{{ row.date | date:'M/d/yy, h:mm a' }}</td>
         </ng-container>
 
         <ng-container matColumnDef="isSuccessfull">
-          <th mat-header-cell *matHeaderCellDef>Is Successfull</th>
+          <th mat-header-cell *matHeaderCellDef>Status</th>
           <td mat-cell *matCellDef="let row">
-            <!-- {{ row.isSuccessfull | titlecase }} -->
+            {{ row.status  }}
           </td>
         </ng-container>
 
