@@ -63,7 +63,7 @@ export class AuthService {
         });
 
         if (user.token) {
-          debugger
+
           this.decodedToken = this.jwtHelper.decodeToken(user.token);
           this.currentUserInfo.balance = this.decodedToken.balance;
           this.currentUserInfo.currency = this.decodedToken.currency;
@@ -199,13 +199,12 @@ export class AuthService {
   }
 
   updateCurrentBalance(){
-    // debugger
+
     this.dataService.getUserById(this.decodedToken.id).subscribe(resp => {
-      // debugger
       this.currentUserInfo.balance = resp.wallet.balance;
     },
     error =>{
-      debugger
+      this.currentUserInfo.balance = 'Unkown';
     })
   }
 }

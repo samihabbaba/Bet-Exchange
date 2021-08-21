@@ -89,14 +89,12 @@ export class LiveFeedService {
 	}
 
 	public onLiveUpdate(games: Match[]) {
-		// debugger
 		console.log(`Recieved information for ${games.length} games`);
     this.events.next(games);
   }
 	
 	private onLiveGameUpdate(game: Match) {
 		console.log(`Recieved information for one game`);
-		// debugger
     this.eventDetail.next(game);
   }
 
