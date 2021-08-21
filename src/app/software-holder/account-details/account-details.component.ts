@@ -5,12 +5,15 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { contentInOut } from 'src/app/animations/animation';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
+import { NotificationService } from 'src/app/services/notification.service';
 import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
+import { BetDetailsComponent } from 'src/app/shared/bet-details/bet-details.component';
 
 @Component({
   selector: 'app-account-details',
@@ -105,15 +108,25 @@ export class AccountDetailsComponent implements OnInit {
   transactionsData = new MatTableDataSource<any>();
 
   displayedColumnsBettingHistory: string[] = [
-    'market',
-    'selection',
-    'bidType',
-    'betId',
-    'betPlace',
+    // 'id',
+    'userName',
+    // 'sport',
+    'eventName',
+    'marketName',
+    'selectionName',
+    'betType', // Lay - Back
+    // 'selectionType', // Live - Pre
     'stake',
-    'matchedSize',
-    'avgOddsMatched',
-    'pl',
+    'odd',
+    'payout',
+    // 'matchedSize',
+    'status',
+    'date',
+    // 'lastActionDate',
+    // 'eventDate',
+    // 'matchedDate',
+    'actions',
+    // 'avgOddsMatched',
   ];
 
   myUser:any = {};
@@ -128,7 +141,9 @@ export class AccountDetailsComponent implements OnInit {
   pageSize = this.sharedService.defaultPageSize;
   bettingHistoryData = new MatTableDataSource<any>();
 
-  constructor(private fb: FormBuilder,  private router: Router, private dataService:DataService, public sharedService:SharedFunctionsService, public authService:AuthService) {}
+  constructor(private fb: FormBuilder,  private router: Router, private dataService:DataService
+    , public sharedService:SharedFunctionsService, public authService:AuthService, 
+    public dialog: MatDialog, private notify:NotificationService) {}
   ngOnInit(): void {
     this.loadUser()
     this.loadBets()
@@ -136,13 +151,36 @@ export class AccountDetailsComponent implements OnInit {
 
     this.changePasswordForm = this.fb.group({
       oldPassword: new FormControl(null, Validators.required),
-      newPassword: new FormControl(null, Validators.required),
-      newPasswordConfirm: new FormControl(null, Validators.required),
-    });
+      newPassword: new FormControl(null, [Validators.required, Validators.minLength(4), Validators.maxLength(8)]),
+      confirmNewPassword: new FormControl(null, Validators.required),
+    }, {validator: this.passwordMatchValidator});
 
 
   }
 
+  passwordMatchValidator(g: any){
+    return g.get('newPassword').value === g.get('confirmNewPassword').value ? null : {'mismatch': true};
+  }
+
+  updatePassword(){
+    this.dataService.updateMyPassword(this.changePasswordForm.value).subscribe(resp =>{
+      this.notify.success('Password Changed Successfully');
+      this.changePasswordForm.reset();
+    }, error => {
+      try{
+        let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
+        if( msg !== undefined){
+          this.notify.error(msg);
+        }else{
+          this.notify.error('Error updating user');
+        }
+      }
+      catch(ex){
+        this.notify.error('Error updating user');
+      }
+    })
+  }
+  
   loadUser(){
 
     this.dataService.getUserById(this.authService.decodedToken.id).subscribe(resp =>{
@@ -173,15 +211,31 @@ export class AccountDetailsComponent implements OnInit {
     let end = this.sharedService.formatDate(this.rangeTrans.controls.end.value.getDate()+1,this.rangeTrans.controls.end.value.getMonth()+1,this.rangeTrans.controls.end.value.getFullYear(), true) 
 
     let id = this.authService.decodedToken.id;
-    this.dataService.getTransactions(this.pageIndexTrans, this.pageSize, id, '', '','', start,end).subscribe(resp =>{
+    let parentId = '';
+    if(this.authService.decodedToken.role == 'SoftwareHolder'){
+      parentId = id;
+      id = '';
+    }
+    this.dataService.getTransactions(this.pageIndexTrans, this.pageSize, id, '', '',parentId, start,end).subscribe(resp =>{
+      debugger
       this.lengthTrans= resp.body.pagingInfo.totalCount;
-       
       this.transactionsData.data = resp.body.items;
     }, error =>{
+      debugger
+
       // redirect somewhere
     })
    }
 
+   openBetDetail(obj:any) {
+    const dialogRef = this.dialog.open(BetDetailsComponent,{
+      data:obj
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+  
   disableReloadBtn(form:any){
     if(form.start.value == null || form.end.value == null){
       return true;
