@@ -726,7 +726,17 @@ this.layoutService.closeMenuChilds();
 
 
 
-
-
-
+    /**
+     * Convert query object to query string representation
+     * @param obj Query object
+     * @returns Query string representation of obj
+     */
+    convertObjectToQueryString(obj: any){
+      let query = "?";
+      for (const [key, value] of Object.entries(obj)) {
+        query += query[query.length - 1] === '?' ? `${key}=${value}` : `&${key}=${value}`;
+      }
+      if (query === "?") return "";
+      return query;
+    }
 }
