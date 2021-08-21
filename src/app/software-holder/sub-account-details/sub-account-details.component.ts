@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { from } from 'rxjs';
 import { contentInOut } from 'src/app/animations/animation';
 import { DataService } from 'src/app/services/data.service';
 import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
+import { BetDetailsComponent } from 'src/app/shared/bet-details/bet-details.component';
 
 @Component({
   selector: 'app-sub-account-details',
@@ -102,7 +104,8 @@ export class SubAccountDetailsComponent implements OnInit {
   currentUserId = '';
   currentUser:any = {};
 
-  constructor(private route: ActivatedRoute, private dataService:DataService, public sharedService: SharedFunctionsService) {}
+  constructor(private route: ActivatedRoute, private dataService:DataService,
+     public sharedService: SharedFunctionsService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
 
@@ -190,6 +193,15 @@ export class SubAccountDetailsComponent implements OnInit {
 
    this.loadUsersTransactions();
  }
+
+ openBetDetail(obj:any) {
+  const dialogRef = this.dialog.open(BetDetailsComponent,{
+    data:obj
+  });
+  dialogRef.afterClosed().subscribe((result) => {
+    console.log(`Dialog result: ${result}`);
+  });
+}
 
   ss:Date = new Date();   
    check(){

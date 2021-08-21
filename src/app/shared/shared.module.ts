@@ -19,10 +19,12 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ActivationModalComponent } from './activation-modal/activation-modal.component';
+import { BetDetailsComponent } from './bet-details/bet-details.component';
 
 @NgModule({
   declarations: [
-    ActivationModalComponent
+    ActivationModalComponent,
+    BetDetailsComponent
   ],
   imports: [
     CommonModule,
