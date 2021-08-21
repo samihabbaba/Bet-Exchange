@@ -20,7 +20,7 @@
 
   </mat-button-toggle-group>
 
-  <h3 class="cs-super-profile-account-name" (click)="check()">Account Name</h3>
+  <h3 class="cs-super-profile-account-name" (click)="check()">{{currentUser?.userName}}</h3>
 
 </mat-toolbar>
 
@@ -419,6 +419,46 @@
     </div>
 
     <div [@contentInOut] *ngIf="profile.value == 'loginHistory'">
+
+      <div class="cs-d-flex">
+
+        <div class="example-button-container">
+          <button mat-fab class="reload-btn" (click)="loadLoginHistory()"
+          [disabled]="disableReloadBtn(rangeLogin.controls)" >
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </div>
+
+        <mat-form-field appearance="fill" style="margin-left: 10px">
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input [formGroup]="rangeLogin" [rangePicker]="picker">
+            <input
+              matStartDate
+              formControlName="start"
+              placeholder="Start date"
+              
+            />
+            
+            <input matEndDate formControlName="end" placeholder="End date"  />
+            
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+          <mat-error
+            *ngIf="rangeLogin.controls.start.hasError('matStartDateInvalid')"
+            >Invalid start date</mat-error
+          >
+          <mat-error *ngIf="rangeLogin.controls.end.hasError('matEndDateInvalid')"
+            >Invalid end date</mat-error
+          >
+        </mat-form-field>
+
+      </div>
+
+
       <table mat-table [dataSource]="loginHistoryData" style="min-width: 800px">
         <ng-container matColumnDef="ip">
           <th mat-header-cell *matHeaderCellDef>IP</th>
