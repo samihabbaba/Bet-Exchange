@@ -96,7 +96,7 @@
         </ng-container>
         <ng-container matColumnDef="settledDate">
           <th mat-header-cell *matHeaderCellDef>Settled Date</th>
-          <td mat-cell *matCellDef="let row">{{ row.settledDate }}</td>
+          <td mat-cell *matCellDef="let row">{{ row.settledDate  | date:'M/d/yy, h:mm a'}}</td>
         </ng-container>
         <ng-container matColumnDef="profitLoss">
           <th mat-header-cell *matHeaderCellDef>Profit/Loss</th>
@@ -231,22 +231,22 @@
            
         <ng-container matColumnDef="date">
           <th mat-header-cell *matHeaderCellDef>Date</th>
-          <td mat-cell *matCellDef="let row">{{ row.date }}</td>
+          <td mat-cell *matCellDef="let row">{{ row.date| date:'M/d/yy, h:mm a' }}</td>
         </ng-container>
            
         <ng-container matColumnDef="lastActionDate">
           <th mat-header-cell *matHeaderCellDef>Last Action</th>
-          <td mat-cell *matCellDef="let row">{{ row.lastActionDate }}</td>
+          <td mat-cell *matCellDef="let row">{{ row.lastActionDate| date:'M/d/yy, h:mm a' }}</td>
         </ng-container>
            
         <ng-container matColumnDef="eventDate">
           <th mat-header-cell *matHeaderCellDef>Event Date</th>
-          <td mat-cell *matCellDef="let row">{{ row.selection.eventDate }}</td>
+          <td mat-cell *matCellDef="let row">{{ row.selection.eventDate| date:'M/d/yy, h:mm a' }}</td>
         </ng-container>
            
         <ng-container matColumnDef="matchedDate">
           <th mat-header-cell *matHeaderCellDef>Matched Date</th>
-          <td mat-cell *matCellDef="let row">{{ this.sharedService.getMatchedDate(row.matchedDate) }}</td>
+          <td mat-cell *matCellDef="let row">{{ this.sharedService.getMatchedDate(row.matchedDate)| date:'M/d/yy, h:mm a' }}</td>
         </ng-container>
 
        
@@ -357,7 +357,7 @@
       <table mat-table [dataSource]="transactionsData" style="min-width: 870px">
         <ng-container matColumnDef="date">
           <th mat-header-cell *matHeaderCellDef>Date</th>
-          <td mat-cell *matCellDef="let row">{{ row.createdAt }}</td>
+          <td mat-cell *matCellDef="let row">{{ row.createdAt| date:'M/d/yy, h:mm a' }}</td>
         </ng-container>
         
         <ng-container matColumnDef="type">

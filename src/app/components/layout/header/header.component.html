@@ -60,6 +60,12 @@
         </ul>
       </div>
     </div>
+
+    <span *ngIf="this.authService.loggedIn()" class="cs-client-balance">
+      Balance: {{this.authService.currentUserInfo.balance}}{{this.authService.currentUserInfo.currency}}
+    </span>
+
+
   </div>
 
 </div>

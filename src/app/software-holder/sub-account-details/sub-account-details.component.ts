@@ -68,23 +68,23 @@ export class SubAccountDetailsComponent implements OnInit {
   profitLossData = new MatTableDataSource<any>(profitLoss);
 
   displayedColumnsBettingHistory: string[] = [
-    'id',
+    // 'id',
     'userName',
-    'sport',
+    // 'sport',
     'eventName',
     'marketName',
     'selectionName',
     'betType', // Lay - Back
-    'selectionType', // Live - Pre
+    // 'selectionType', // Live - Pre
     'stake',
     'odd',
     'payout',
     // 'matchedSize',
     'status',
     'date',
-    'lastActionDate',
-    'eventDate',
-    'matchedDate',
+    // 'lastActionDate',
+    // 'eventDate',
+    // 'matchedDate',
     'actions',
     // 'avgOddsMatched',
   ];

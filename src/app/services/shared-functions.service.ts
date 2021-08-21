@@ -397,7 +397,6 @@ export class SharedFunctionsService {
   }
 
   getMatchedDate(date:any){
-
     if(date){
       return date;
     }

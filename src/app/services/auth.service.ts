@@ -29,6 +29,11 @@ export class AuthService {
   jwtHelper = new JwtHelperService();
   decodedToken: any;
   logInSuccess=false;
+  currentUserInfo:any = {
+    balance:'',
+    currency:'',
+    userName:''
+  }
 
   performLogIn(loginModel?:any) {
     let loginURL = 'https://api.vebobet.com/';
@@ -58,7 +63,12 @@ export class AuthService {
         });
 
         if (user.token) {
+          debugger
           this.decodedToken = this.jwtHelper.decodeToken(user.token);
+          this.currentUserInfo.balance = this.decodedToken.balance;
+          this.currentUserInfo.currency = this.decodedToken.currency;
+          this.currentUserInfo.userName = this.decodedToken.sub;
+
           // const role = this.decodedToken.role;      
           localStorage.setItem("token", user.token);
           
@@ -148,6 +158,11 @@ export class AuthService {
     let token = localStorage.getItem('token');
     if(token){
       this.decodedToken = this.jwtHelper.decodeToken(token);
+      
+      this.updateCurrentBalance();
+      // this.currentUserInfo.balance = this.decodedToken.balance;
+      this.currentUserInfo.currency = this.decodedToken.currency;
+      this.currentUserInfo.userName = this.decodedToken.sub;
     }
   }
 
@@ -183,4 +198,14 @@ export class AuthService {
     }
   }
 
+  updateCurrentBalance(){
+    // debugger
+    this.dataService.getUserById(this.decodedToken.id).subscribe(resp => {
+      // debugger
+      this.currentUserInfo.balance = resp.wallet.balance;
+    },
+    error =>{
+      debugger
+    })
+  }
 }

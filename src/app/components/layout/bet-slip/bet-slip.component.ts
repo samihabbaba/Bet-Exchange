@@ -5,6 +5,7 @@ import { SharedFunctionsService } from 'src/app/services/shared-functions.servic
 import { NotificationService } from 'src/app/services/notification.service';
 import { finalize } from 'rxjs/operators';
 import { DataService } from 'src/app/services/data.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-bet-slip',
@@ -23,6 +24,7 @@ export class BetSlipComponent implements OnInit {
   constructor(
     public betSlipService: BetSlipService,
     public dataService: DataService,
+    private authService:AuthService,
     public sharedFunctionsService: SharedFunctionsService,
     private notificationService: NotificationService
   ) {}
@@ -56,10 +58,14 @@ export class BetSlipComponent implements OnInit {
     this.dataService.submitBets(betsToSend)
     .pipe(finalize( () =>       this.stopLoading()
     ))
-    .subscribe(resp => {
+    .subscribe((resp:any) => {
       debugger
+      // this.authService.updateCurrentBalance();
+      let g = resp.body[0].user.wallet.balance;
+      this.authService.currentUserInfo.balance = resp.body[0].user.wallet.balance;
       this.notificationService.success("Bet(s) added successfully!")
     }, error =>{
+      debugger
       this.notificationService.error("Error while adding Bet(s)!")
     });
     

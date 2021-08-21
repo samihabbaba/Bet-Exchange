@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-software-holder',
@@ -7,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./software-holder.component.css']
 })
 export class SoftwareHolderComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor(private router: Router, public authService:AuthService) {}
   ngOnInit() {}
 
   goToProfile() {
