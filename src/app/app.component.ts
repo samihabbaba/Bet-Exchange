@@ -27,8 +27,11 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.initializeSubscriptions();
 
+    debugger
     if(!this.authService.loggedIn()){
       this.router.navigateByUrl('login');
+    }else if(this.router.url === '/profile'){
+      this.layoutService.displayOther();
     }
     
   }
@@ -49,10 +52,16 @@ export class AppComponent implements OnInit {
   }
 
   checkForRoute() {
+    // if (this.router.url.includes('profile') ){
+    //   return true
+    // }
+    // debugger
     if(this.authService.loggedIn()){
-      return this.authService.decodedToken.role !== 'Client';
+      let role =  this.authService.decodedToken.role;
+      let toRet = role === 'Client';
+      return !toRet;
     }else{
-      return true;
+      return true
     }
     // if (
     //   this.router.url.includes('super') ||

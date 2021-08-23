@@ -38,8 +38,8 @@
        <div>Phone Number: &nbsp; <span> {{myUser?.phoneNumber}} </span></div>
         <div>Balance: &nbsp; <span> {{this.sharedService.formatNumber( myUser?.wallet?.balance )}} </span></div>
         <div>Wallet Currency: &nbsp; <span> {{myUser?.wallet?.currency}} </span></div>
-       <div>SubAccounts Balance: &nbsp; <span> {{this.sharedService.formatNumber( myUser?.subAccountBalance )}} </span></div>
-        <div>Commission: &nbsp; <span>{{this.sharedService.formatNumber( myUser?.commission*100)}}%</span></div>
+       <div *ngIf="myUser.role !== 'Client'">SubAccounts Balance: &nbsp; <span> {{this.sharedService.formatNumber( myUser?.subAccountBalance )}} </span></div>
+        <div *ngIf="myUser.role !== 'Client'">Commission: &nbsp; <span>{{this.sharedService.formatNumber( myUser?.commission*100)}}%</span></div>
         <div>Active: &nbsp; <span> {{myUser?.isActive}} </span></div>
         <!-- <div>Role: &nbsp; <span> {{myUser?.role}} </span></div> -->
 
@@ -57,6 +57,7 @@
               placeholder="Old Password"
               formControlName="oldPassword"
               required
+              autocomplete="off"
             />
             <mat-error *ngIf="changePasswordForm.controls.oldPassword.invalid"
               >This field is required.</mat-error
@@ -70,6 +71,7 @@
               placeholder="New Password"
               formControlName="newPassword"
               required
+              autocomplete="off"
             />
             <mat-error *ngIf="changePasswordForm.controls.newPassword.invalid"
               >This field is required.</mat-error
@@ -83,6 +85,7 @@
               placeholder="New Password Confirm"
               formControlName="confirmNewPassword"
               required
+              autocomplete="off"
             />
             <mat-error
               *ngIf="changePasswordForm.controls.confirmNewPassword.invalid"
@@ -553,7 +556,6 @@
         >
         </mat-paginator>
       </div>
-
       <div [@contentInOut] *ngIf="profile.value == 'transactions'">
         <div class="cs-d-flex">
   

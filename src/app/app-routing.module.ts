@@ -8,10 +8,13 @@ import { SoftwareHolderGuard } from './Guard/software-holder.guard';
 import { MasterGuard } from './Guard/master.guard';
 import { AdminGuard } from './Guard/admin.guard';
 import { SuperGuard } from './Guard/super.guard';
+import { ClientProfileComponent } from './components/client-profile/client-profile.component';
+import { AccountDetailsComponent } from './software-holder/account-details/account-details.component';
 
 const routes: Routes = [
   { path: '', component: MainContentComponent, canActivate: [RouteGuard] },
   { path: 'home', component: MainContentComponent, canActivate: [RouteGuard] },
+  { path: 'profile', pathMatch: 'full', component: AccountDetailsComponent, canActivate: [RouteGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'software-holder', loadChildren: () => import('./software-holder/software-holder.module').then(m => m.SoftwareHolderModule), canActivate: [SoftwareHolderGuard] },
   { path: 'super', loadChildren: () =>  import('./super-account/super-account.module').then( (m) => m.SuperAccountModule ), canActivate: [SuperGuard] },

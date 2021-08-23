@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { contentInOut } from 'src/app/animations/animation';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
+import { LayoutService } from 'src/app/services/layout.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
 import { BetDetailsComponent } from 'src/app/shared/bet-details/bet-details.component';
@@ -129,7 +130,9 @@ export class AccountDetailsComponent implements OnInit {
     // 'avgOddsMatched',
   ];
 
-  myUser:any = {};
+  myUser:any = {
+    role:'Client'
+  };
   rangeBets = new FormGroup({
     start: new FormControl(new Date()),
     end: new FormControl(new Date()),
@@ -143,11 +146,12 @@ export class AccountDetailsComponent implements OnInit {
 
   constructor(private fb: FormBuilder,  private router: Router, private dataService:DataService
     , public sharedService:SharedFunctionsService, public authService:AuthService, 
-    public dialog: MatDialog, private notify:NotificationService) {}
+    public dialog: MatDialog, private notify:NotificationService, private layoutService:LayoutService) {}
   ngOnInit(): void {
     this.loadUser()
     this.loadBets()
     this.loadUsersTransactions();
+    this.layoutService.mainContentDisplayType.next('other');
 
     this.changePasswordForm = this.fb.group({
       oldPassword: new FormControl(null, Validators.required),
@@ -225,7 +229,7 @@ export class AccountDetailsComponent implements OnInit {
       id = '';
     }
     this.dataService.getTransactions(this.pageIndexTrans, this.pageSize, id, '', '',parentId, start,end,directParent,'' ).subscribe(resp =>{
-      debugger
+      // debugger
       this.lengthTrans= resp.body.pagingInfo.totalCount;
       this.transactionsData.data = resp.body.items;
     }, error =>{

@@ -30,6 +30,8 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { AdminAccountModule } from './admin-account/admin-account.module';
+import { MatIconModule } from '@angular/material/icon';
+import { ClientProfileComponent } from './components/client-profile/client-profile.component';
 
 
 
@@ -54,6 +56,7 @@ import { AdminAccountModule } from './admin-account/admin-account.module';
     ScrollShadowDirective,
     CloseAppMenuDirective,
     CloseBetSlipDirective,
+    ClientProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,7 +71,8 @@ import { AdminAccountModule } from './admin-account/admin-account.module';
     MatSelectModule,
     MatFormFieldModule,
     MatNativeDateModule,
-    AdminAccountModule
+    AdminAccountModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent],

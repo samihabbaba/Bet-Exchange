@@ -7,10 +7,12 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { LayoutService } from 'src/app/services/layout.service';
+import { AccountDetailsComponent } from 'src/app/software-holder/account-details/account-details.component';
 
 @Component({
   selector: 'app-header',
@@ -27,7 +29,8 @@ export class HeaderComponent implements OnInit {
     private layoutService: LayoutService,
     private dataService: DataService,
     public authService: AuthService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {}
@@ -50,6 +53,27 @@ export class HeaderComponent implements OnInit {
   displayLiveGames() {
     // this.layoutService.displayLiveGames();
     this.dataService.loadLiveGames();
+  }
+
+  displayProfile(){
+    this.layoutService.displayOther();
+    // this.router.navigate(['/profile']);
+  }
+
+
+  displayProfile2() {
+    const dialogRef = this.dialog.open(AccountDetailsComponent,{
+      height: '400px',
+      width: '1200px',
+      data:{
+        roleToCreate:'SuperAdmin',
+        createrRole:'SoftwareHolder'
+      }
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+      // this.loadUsers();
+    });
   }
 
   handleFlagClick(event: any) {

@@ -11,7 +11,7 @@
     >
       <div
         class="header-menu-item-text"
-        [ngClass]="{ active: viewType == 'pre' }"
+      [ngClass]="{ active: viewType == 'pre' }"
       >
         Pre-games
       </div>
@@ -28,8 +28,14 @@
         In-play
       </div>
     </div>
-    <div class="header-menu-item" [ngClass]="{ loading: isLoading }">
-      <div class="header-menu-item-text">Other</div>
+
+    <div class="header-menu-item" 
+    [ngClass]="{ loading: isLoading }"
+     (click)="displayProfile()">
+      <div class="header-menu-item-text"
+      [ngClass]="{ active: viewType == 'other' }">
+      Other
+    </div>
     </div>
   </div>
 

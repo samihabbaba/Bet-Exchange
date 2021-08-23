@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -14,18 +15,32 @@ export class LayoutService {
   currentRegion = new BehaviorSubject<any>(null);
   currentLeague = new BehaviorSubject<any>(null);
 
-  constructor() {}
+  constructor(private router:Router) {}
 
   displayPreGames() {
+    if(this.isItInRoute('profile')){
+      this.router.navigate(['/home']);
+    }
     this.mainContentDisplayType.next('pre');
   }
 
   displayLiveGames() {
+    if(this.isItInRoute('profile')){
+      this.router.navigate(['/home']);
+    }
     this.mainContentDisplayType.next('live');
   }
 
   displayGameDetails() {
     this.mainContentDisplayType.next('details');
+  }
+  
+  displayOther() {
+    if(!this.isItInRoute('profile')){
+      this.router.navigate(['/profile']);
+    }
+
+    this.mainContentDisplayType.next('other');
   }
 
   getHeaderValue() {
@@ -72,6 +87,12 @@ export class LayoutService {
   }
   getCurrentLeague(){
     return this.currentLeague.value;
+  }
+
+  isItInRoute(route:string){
+    debugger;
+    let url = this.router.url;
+    return url == '/profile';
   }
 
 
