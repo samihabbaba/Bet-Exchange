@@ -27,12 +27,12 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.initializeSubscriptions();
 
-    debugger
     if(!this.authService.loggedIn()){
       this.router.navigateByUrl('login');
-    }else if(this.router.url === '/profile'){
-      this.layoutService.displayOther();
     }
+    // else if(this.router.url === '/profile'){
+    //   this.layoutService.displayOther();
+    // }
     
   }
 

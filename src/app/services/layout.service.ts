@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class LayoutService {
-  mainContentDisplayType = new BehaviorSubject<string>('pre');
+  mainContentDisplayType = new BehaviorSubject<string>('');
   MainLoading = new BehaviorSubject<boolean>(false);
   menuLoading = new BehaviorSubject<boolean>(false);
   closeMenuChild = new BehaviorSubject<string>('');
@@ -37,7 +37,10 @@ export class LayoutService {
   
   displayOther() {
     if(!this.isItInRoute('profile')){
-      this.router.navigate(['/profile']);
+      // this.router.navigate(['/profile']);
+      this.router.navigateByUrl('profile').then(() => {
+        window.location.reload();
+      });;
     }
 
     this.mainContentDisplayType.next('other');
