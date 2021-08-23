@@ -217,12 +217,14 @@ export class AccountDetailsComponent implements OnInit {
     let end = this.sharedService.formatDate(endD.getDate(),endD.getMonth()+1,endD.getFullYear(), true) 
 
     let id = this.authService.decodedToken.id;
+    let directParent = false;
     let parentId = '';
     if(this.authService.decodedToken.role == 'SoftwareHolder'){
       parentId = id;
+      directParent = true;
       id = '';
     }
-    this.dataService.getTransactions(this.pageIndexTrans, this.pageSize, id, '', '',parentId, start,end,false,'' ).subscribe(resp =>{
+    this.dataService.getTransactions(this.pageIndexTrans, this.pageSize, id, '', '',parentId, start,end,directParent,'' ).subscribe(resp =>{
       debugger
       this.lengthTrans= resp.body.pagingInfo.totalCount;
       this.transactionsData.data = resp.body.items;

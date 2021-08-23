@@ -78,10 +78,17 @@ export class DataService {
 
   getTransactions(PageNo:number, PageSize:number, UserId='', ToUserId='', CurrencyCode='', ParentId='', StartDate='',EndDate='',DirectParent:any='',BettingTransactionsOnly:any='' ) {
     //BettingTransactionsOnly  [ null (all), true (only bet related), flase (filter out the bet related transactions)]
-    return this.http.get<any>(`${this.baseUrl}transactions?PageNo=${PageNo}&PageSize=${PageSize}&UserId=${UserId}&ParentId=${ParentId}&ToUserId=${ToUserId}&CurrencyCode=${CurrencyCode}&StartDate=${StartDate}&EndDate=${EndDate}&DirectParent=${DirectParent}&BettingTransactionsOnly=${BettingTransactionsOnly}`, {
+    let query = this.convertObjectToQueryString({
+      PageNo:PageNo, PageSize:PageSize, UserId:UserId, ToUserId:ToUserId, CurrencyCode:CurrencyCode, ParentId:ParentId, StartDate:StartDate,EndDate:EndDate, DirectParent:DirectParent, BettingTransactionsOnly:BettingTransactionsOnly
+    })
+    return this.http.get<any>(`${this.baseUrl}transactions${query}`, {
       headers: this.httpOptions.headers,
       observe: 'response',
     });
+    // return this.http.get<any>(`${this.baseUrl}transactions?PageNo=${PageNo}&PageSize=${PageSize}&UserId=${UserId}&ParentId=${ParentId}&ToUserId=${ToUserId}&CurrencyCode=${CurrencyCode}&StartDate=${StartDate}&EndDate=${EndDate}&DirectParent=${DirectParent}&BettingTransactionsOnly=${BettingTransactionsOnly}`, {
+    //   headers: this.httpOptions.headers,
+    //   observe: 'response',
+    // });
   }
     
   getTransactionById(id:string) {
@@ -734,6 +741,10 @@ this.layoutService.closeMenuChilds();
     convertObjectToQueryString(obj: any){
       let query = "?";
       for (const [key, value] of Object.entries(obj)) {
+
+        if(value === '' || value === null){
+          continue;
+        }
         query += query[query.length - 1] === '?' ? `${key}=${value}` : `&${key}=${value}`;
       }
       if (query === "?") return "";
