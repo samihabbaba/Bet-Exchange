@@ -91,74 +91,77 @@
     >
       <mat-form-field appearance="legacy" class="open-bets-select">
         <!-- <mat-label>Favorite food</mat-label> -->
-        <mat-select [(ngModel)]="selectedOpenBet" name="food">
+        <mat-select [(ngModel)]="this.betSlipService.selectedOpenBet" name="food"  (selectionChange)="this.betSlipService.updateOpenBets($event)">
           <mat-option
-            *ngFor="let selectedBet of openBetsSelectOptions"
+            *ngFor="let selectedBet of this.betSlipService.openBetsSelectOptions"
             [value]="selectedBet"
           >
             {{ selectedBet }}
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <div class="unmatched-bets"><span>WAITING (UNMATCHED)</span></div>
-      <div
-        *ngFor="
-          let openBet of this.betSlipService.currentOpenBets;
-          let i = index
-        "
-      >
-        <div class="open-bets-waiting-match back">
-          <div class="top-row">
-            <div class="remove-bet-btn">
-              <fa-icon
-                [icon]="fontAwesomeIcons.exit"
-                class="delete-icon"
-              ></fa-icon>
-            </div>
-            <div class="open-bets-title">
-              <h1>Belgium vs Brazil</h1>
-              <h2>Match Odds</h2>
-            </div>
-            <div class="open-bets-odds">
-              <input type="number" value="2" />
-              <span><p>2</p> </span>
-              <span><p>25</p> </span>
-            </div>
-          </div>
-          <div class="bottom-row">
-            <h1>At In-Play</h1>
-            <div class="cancel-checkbox">
-              <input type="radio" id="cancel" name="cancel" />
-              <label for="cancel">Cancel</label>
-            </div>
 
-            <div class="keep-checkbox">
-              <input type="radio" id="keep" name="keep" />
-              <label for="keep">Keep</label>
+      <div class="unmatched-bets" *ngIf="this.betSlipService.openBetsToViewUnmatched.length > 0"><span>WAITING (UNMATCHED)</span></div>
+        <div *ngFor="
+        let openBet of this.betSlipService.openBetsToViewUnmatched;
+        let i = index
+      ">
+          <div class="open-bets-waiting-match"
+          [ngClass]="{'back': openBet.selection.betType == 'BACK',
+          'lay': openBet.selection.betType == 'LAY'}">
+            <div class="top-row">
+              <div class="remove-bet-btn">
+                <fa-icon
+                  [icon]="fontAwesomeIcons.exit"
+                  class="delete-icon"
+                ></fa-icon>
+              </div>
+              <div class="open-bets-title">
+                <h1>{{openBet.selection.eventName}}</h1>
+                <h2>{{openBet.selection.marketName}} - {{openBet.selection.selectionName}}</h2>
+              </div>
+              <div class="open-bets-odds">
+                <input type="number" value="2" />
+                <span><p>2</p> </span>
+                <span><p>25</p> </span>
+              </div>
+            </div>
+            <div class="bottom-row">
+              <h1>{{this.openBet.selectionType == 'Live'? ('At In-Play'):'At Pre-Match'}}</h1>
+              <div class="cancel-checkbox">
+                <input type="radio" id="cancel" name="cancel" />
+                <label for="cancel">Cancel</label>
+              </div>
+
+              <div class="keep-checkbox">
+                <input type="radio" id="keep" name="keep" />
+                <label for="keep">Keep</label>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="matched-bets"><span>PLACED (MATCHED)</span></div>
-      <div
-        *ngFor="
-          let openBet of this.betSlipService.currentOpenBets;
-          let i = index
-        "
-      >
-        <div class="open-bets-placed-match lay">
-          <div class="matched-bet-title">
-            <h1>Amro vs Ibrahim</h1>
-            <h2>UFC</h2>
-          </div>
-          <div class="matched-bet-odds">
-            <span><p>2</p></span>
-            <span><p>2</p></span>
-            <span><p>20</p></span>
+        <div class="matched-bets" *ngIf="this.betSlipService.openBetsToViewMatched.length > 0"><span>PLACED (MATCHED)</span></div>
+        <div *ngFor="
+        let openBet of this.betSlipService.openBetsToViewMatched;
+        let i = index
+      ">
+          <!-- openBet.status == 'PENDING' -->
+          <div class="open-bets-placed-match"
+          [ngClass]="{'back': openBet.selection.betType == 'BACK',
+          'lay': openBet.selection.betType == 'LAY'}">
+            <div class="matched-bet-title">
+              <h1>{{openBet.selection.eventName}}</h1>
+              <h2>{{openBet.selection.marketName}} - {{openBet.selection.selectionName}}</h2>
+            </div>
+            <div class="matched-bet-odds">
+              <span><p>2</p></span>
+              <span><p>2</p></span>
+              <span><p>20</p></span>
+            </div>
           </div>
         </div>
-      </div>
+
     </div>
 
     <div *ngIf="this.tabToDisplay == 'Singles'">

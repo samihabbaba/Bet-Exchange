@@ -12,10 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './bet-slip.component.html',
   styleUrls: ['./bet-slip.component.css'],
 })
-export class BetSlipComponent implements OnInit {
-  openBetsSelectOptions: any[] = ['Bet1', 'Bet2'];
-  selectedOpenBet: any = 'Bet1';
-  tabToDisplay: any = 'Singles';
+export class BetSlipComponent implements OnInit {  tabToDisplay: any = 'Singles';
   @ViewChild('singles') singlesTab?: ElementRef;
   @ViewChild('openBets') openBetsTab?: ElementRef;
   @ViewChild('loaderWrapper') loaderWrapper?: ElementRef;
@@ -69,6 +66,7 @@ export class BetSlipComponent implements OnInit {
         this.betSlipService.currentOpenBets.push(bet)
       });
 
+      this.betSlipService.updateOpenBetsOptions();
       this.notificationService.success("Bet(s) added successfully!")
     }, error =>{
       debugger
@@ -76,6 +74,11 @@ export class BetSlipComponent implements OnInit {
     });
     
   }
+
+  
+
+  
+
 
   removeFromSelectedBets(betIndex: number) {
     this.betSlipService.selectedBets.splice(betIndex, 1);

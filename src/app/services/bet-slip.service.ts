@@ -9,8 +9,17 @@ import { BetSlip } from '../models/bet-slip';
 })
 export class BetSlipService {
   selectedBets: BetSlip[] = [];
-  currentOpenBets: any[] = ['1', '12'];
+  currentOpenBets: any[] = [];
   minStakeForBet = 1;
+
+
+  openBetsToView: any[] = [];
+  openBetsToViewMatched: any[] = [];
+  openBetsToViewUnmatched: any[] = [];
+
+  openBetsSelectOptions: any[] = ['Bet1', 'Bet2'];
+  selectedOpenBet: any = 'Bet1';
+
 
   constructor(private http: HttpClient) {}
 
@@ -192,6 +201,23 @@ export class BetSlipService {
 
   }
 
+  updateOpenBets(event?:any){
+    this.openBetsToView = this.currentOpenBets.filter(x=> x.selection.eventName === this.selectedOpenBet);
+    this.openBetsToViewMatched = this.currentOpenBets.filter(x=> x.selection.eventName === this.selectedOpenBet && x.status == 'UNMATCHED');
+    this.openBetsToViewUnmatched = this.currentOpenBets.filter(x=> x.selection.eventName === this.selectedOpenBet && x.status == 'PENDING');
+  }
+
+  updateOpenBetsOptions(){
+    debugger
+    this.openBetsSelectOptions = this.currentOpenBets.map(function(i) {
+      return i.selection.eventName;
+    });
+    this.openBetsSelectOptions = [...new Set(this.openBetsSelectOptions)];
+    if(this.openBetsSelectOptions.length > 0){
+      this.selectedOpenBet = this.openBetsSelectOptions[0];
+    }
+    this.updateOpenBets();
+  }
 
 
   ///////////////// API requests ////////////////////////
