@@ -3,6 +3,7 @@ import { DebugElement, Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { BetSlip } from '../models/bet-slip';
+import { SignalRNotificationsService } from './signal-r-notifications.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,25 @@ export class BetSlipService {
   selectedOpenBet: any = 'Bet1';
 
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private notiSignalR:SignalRNotificationsService) {
+    this.notiSignalR.notification.subscribe(noti => {
+      if(!noti){
+        return
+      }
+      
+      //bet id should be in .message or .payload (not sure)
+      else if(noti.type == 'BET_MATCHED'){
+        if(this.currentOpenBets.some(x=>x.id == noti.message)){
+          let index = this.currentOpenBets.findIndex(x=>x.id == noti.message)
+          if(index > -1){
+            this.currentOpenBets[index].status = 'PENDING';
+            this.updateOpenBets();
+          }
+        }
+      }
+
+    })
+  }
 
   pushToSelectedBets(
     event: any,
