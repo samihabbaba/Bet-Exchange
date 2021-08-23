@@ -63,6 +63,12 @@ export class BetSlipComponent implements OnInit {
       // this.authService.updateCurrentBalance();
       let g = resp.body[0].user.wallet.balance;
       this.authService.currentUserInfo.balance = resp.body[0].user.wallet.balance;
+
+      this.betSlipService.selectedBets = [];
+      resp.body.forEach((bet:any) => {
+        this.betSlipService.currentOpenBets.push(bet)
+      });
+
       this.notificationService.success("Bet(s) added successfully!")
     }, error =>{
       debugger
