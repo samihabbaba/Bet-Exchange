@@ -145,6 +145,7 @@ export class DataService {
 
   // GET​/bettingrules
   getBettingRules(PageNo:any, PageSize:any, SortBy:any=null,) {
+    debugger
     return this.http.get<any>(
       `${this.baseUrl}bettingrules?PageNo=${
         PageNo ? PageNo : ''
@@ -214,8 +215,15 @@ export class DataService {
 
   // GET​/leagues
   getAllLeagues(sportId:string,regionCode: string, HasInPlay:any =null) {
+
+    let query = this.convertObjectToQueryString({
+      sportId:sportId,
+      regionCode:regionCode,
+      HasInPlay:HasInPlay
+    })
+    debugger
     return this.http.get<any>(
-      `${this.baseUrl}leagues?EventTypeId=${sportId ? sportId : ''}&regionCode=${regionCode ? regionCode : ''}&HasInPlay=${HasInPlay ? HasInPlay : false}`,
+      `${this.baseUrl}leagues${query}`,
       {
         headers: this.httpOptions.headers,
         observe: 'response',

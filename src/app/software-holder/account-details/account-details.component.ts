@@ -300,6 +300,7 @@ export class AccountDetailsComponent implements OnInit {
    }
 
    loadBettingRules(){
+     debugger
     this.dataService.getBettingRules(this.pageIndexBettingRules, this.pageSize ).subscribe(resp =>{
       // debugger
       this.lengthBettingRules= resp.body.pagingInfo.totalCount;
@@ -327,7 +328,8 @@ export class AccountDetailsComponent implements OnInit {
     this.dataService.getAllRegions('',null).subscribe(resp =>{
       this.regionsList = resp.body;
       this.regionsData.data = resp.body;
-      this.currentRegionIdForLeagues = resp.body[0].regionCode;
+      debugger
+      this.currentRegionIdForLeagues = resp.body[0].countryCode;
       if(loadAfter){
         this.loadLeagues();
       }

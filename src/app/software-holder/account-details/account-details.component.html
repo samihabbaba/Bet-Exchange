@@ -935,8 +935,24 @@
 
       <div [@contentInOut] *ngIf="profile.value == 'regions'">
         <div class="cs-d-flex">
-          
+
         
+
+          <mat-form-field appearance="fill">
+            <mat-label>Sport</mat-label>
+            <mat-select name="pl"
+            [value]="currentSportIdForRegions"
+            >
+              <mat-option
+                *ngFor="let sport of sportsList"
+                [value]="sport.id"
+              >
+                {{ sport.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+       
         </div>
   
         <table mat-table [dataSource]="regionsData" style="min-width: 870px">
@@ -1009,8 +1025,43 @@
 
       
       <div [@contentInOut] *ngIf="profile.value == 'leagues'">
+       
         <div class="cs-d-flex">
           
+          <div class="example-button-container">
+            <button mat-fab class="reload-btn" (click)="loadLeagues()"
+            >
+              <mat-icon>refresh</mat-icon>
+            </button>
+          </div>
+          
+          <mat-form-field appearance="fill" >
+            <mat-label>Sport</mat-label>
+            <mat-select name="pl"
+            [value]="currentSportIdForLeagues"
+            >
+              <mat-option
+                *ngFor="let sport of sportsList"
+                [value]="sport.id"
+              >
+                {{ sport.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Region</mat-label>
+            <mat-select name="pl"
+            [value]="currentRegionIdForLeagues"
+            >
+              <mat-option
+                *ngFor="let region of regionsList"
+                [value]="region.countryCode"
+              >
+                {{ region.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         
         </div>
   
