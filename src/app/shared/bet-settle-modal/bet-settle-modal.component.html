@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>
+    <ng-container >
+      Bet Settle - {{this.data.settleType}}
+    </ng-container>
+    
+    
+  </h2>
+  <mat-dialog-content class="mat-typography">
+    <div class="cs-modal-form-field-container">
+  
+        Are You Sure you want to set the bet as {{this.data.settleType}}?
+
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button
+      color="primary"
+      mat-button
+      [mat-dialog-close]="true"
+      cdkFocusInitial
+      (click)="settleBet()"
+    >
+      Confirm
+    </button>
+  </mat-dialog-actions>
+  

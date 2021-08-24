@@ -1,3 +1,4 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -5,9 +6,11 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { from } from 'rxjs';
 import { contentInOut } from 'src/app/animations/animation';
+import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
 import { BetDetailsComponent } from 'src/app/shared/bet-details/bet-details.component';
+import { BetSettleModalComponent } from 'src/app/shared/bet-settle-modal/bet-settle-modal.component';
 
 @Component({
   selector: 'app-sub-account-details',
@@ -105,7 +108,7 @@ export class SubAccountDetailsComponent implements OnInit {
   currentUser:any = {};
 
   constructor(private route: ActivatedRoute, private dataService:DataService,
-     public sharedService: SharedFunctionsService, public dialog: MatDialog) {}
+     public sharedService: SharedFunctionsService, public dialog: MatDialog, public authService:AuthService) {}
 
   ngOnInit(): void {
 
@@ -211,6 +214,25 @@ export class SubAccountDetailsComponent implements OnInit {
   dialogRef.afterClosed().subscribe((result) => {
     console.log(`Dialog result: ${result}`);
   });
+}
+
+   openBetSettleDialog(obj:any, type:string){
+    let dataToSend = {
+      ...obj,
+      settleType:type
+    }
+    const dialogRef = this.dialog.open(BetSettleModalComponent,{
+      data:dataToSend
+    });
+
+    dialogRef.afterClosed().subscribe( async (result) => {
+      await this.delay(1000);
+      this.loadUsersBet();
+    });
+  }
+
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
 }
 
   ss:Date = new Date();   

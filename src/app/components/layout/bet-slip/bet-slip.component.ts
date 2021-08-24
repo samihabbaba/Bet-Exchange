@@ -69,8 +69,20 @@ export class BetSlipComponent implements OnInit {  tabToDisplay: any = 'Singles'
       this.betSlipService.updateOpenBetsOptions();
       this.notificationService.success("Bet(s) added successfully!")
     }, error =>{
+      try{
+        let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
+        if( msg !== undefined){
+          this.notificationService.error(msg);
+        }else{
+          this.notificationService.error("Error while adding Bet(s)!")
+        }
+      }
+      catch(ex){
+        this.notificationService.error("Error while adding Bet(s)!")
+      }
+
       debugger
-      this.notificationService.error("Error while adding Bet(s)!")
+      
     });
     
   }

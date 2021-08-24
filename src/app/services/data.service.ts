@@ -66,11 +66,25 @@ export class DataService {
   }
 
   voidBets(id:string){        
-    return this.http.post(`${environment.apiUrl}bets/${id}`,{}, {
+    return this.http.post(`${environment.apiUrl}bets/${id}/void`,{}, {
       headers: this.httpOptions.headers,
       observe: "response",
     });
  }
+ 
+  winBets(id:string){        
+    return this.http.post(`${environment.apiUrl}bets/${id}/win`,{}, {
+      headers: this.httpOptions.headers,
+      observe: "response",
+    });
+  }
+
+  loseBets(id:string){        
+      return this.http.post(`${environment.apiUrl}bets/${id}/lose`,{}, {
+        headers: this.httpOptions.headers,
+        observe: "response",
+      });
+    }
 
   ///////////////////////////////////
   ///// Transaction Controller /////
