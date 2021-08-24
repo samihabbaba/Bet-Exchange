@@ -144,12 +144,12 @@ export class DataService {
   ////////////////////////////////////
 
   // GET​/bettingrules
-  getBettingRules(pars: any) {
+  getBettingRules(PageNo:any, PageSize:any, SortBy:any=null,) {
     return this.http.get<any>(
       `${this.baseUrl}bettingrules?PageNo=${
-        pars.PageNo ? pars.PageNo : ''
-      }&PageSize=${pars.PageSize ? pars.PageSize : ''}&SortBy=${
-        pars.SortBy ? pars.SortBy : ''
+        PageNo ? PageNo : ''
+      }&PageSize=${PageSize ? PageSize : ''}&SortBy=${
+        SortBy ? SortBy : ''
       }&SortingType=1`,
       {
         headers: this.httpOptions.headers,

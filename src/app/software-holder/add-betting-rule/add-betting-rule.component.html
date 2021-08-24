@@ -1,0 +1,156 @@
+<h2 mat-dialog-title>Add Betting Rule</h2>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="addMasterForm">
+    <div class="cs-modal-form-field-container">
+     
+      <mat-form-field appearance="fill">
+        <mat-label>Sport</mat-label>
+        <mat-select formControlName="eventTypeId" required>
+          <mat-option *ngFor="let item of this.sportsList" value="{{item.id}}">{{item.name}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.eventTypeId.invalid">This field is required.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Bet Type</mat-label>
+        <mat-select formControlName="betType" required>
+          <mat-option value="{{'BACK'}}">BACK</mat-option>
+          <mat-option value="{{'LAY'}}">Lay</mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.betType.invalid">This field is required.</mat-error>
+      </mat-form-field>
+
+      
+      <mat-form-field appearance="fill">
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="category" required>
+          <mat-option value="{{'A'}}">A</mat-option>
+          <mat-option value="{{'B'}}">B</mat-option>
+          <mat-option value="{{'C'}}">C</mat-option>
+          <mat-option value="{{'D'}}">D</mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.category.invalid">This field is required.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Min Amount</mat-label>
+        <input
+        type="number"
+        max="{{form.maxAmount.value}}"
+          matInput
+          placeholder="minAmount"
+          formControlName="minAmount"
+          required
+        />
+        <mat-error *ngIf="form.minAmount.invalid"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Max Amount</mat-label>
+        <input
+        type="number"
+        min="{{form.minAmount.value}}"
+          matInput
+          placeholder="maxAmount"
+          formControlName="maxAmount"
+          required
+        />
+        <mat-error *ngIf="form.maxAmount.invalid"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+      
+      <mat-form-field appearance="fill">
+        <mat-label>Multiplier</mat-label>
+        <input
+        type="number"
+          matInput
+          placeholder="multiplier"
+          formControlName="multiplier"
+          required
+        />
+        <mat-error *ngIf="form.multiplier.invalid"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+      
+      <mat-form-field appearance="fill">
+        <mat-label>Min Figure</mat-label>
+        <input
+        type="number"
+          matInput
+          placeholder="minFigure"
+          formControlName="minFigure"
+          required
+        />
+        <mat-error *ngIf="form.minFigure.invalid"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+      
+      <mat-form-field appearance="fill">
+        <mat-label>Max Margin</mat-label>
+        <input
+        type="number"
+          matInput
+          placeholder="maxMargin"
+          formControlName="maxMargin"
+          required
+        />
+        <mat-error *ngIf="form.maxMargin.invalid"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+
+
+      <mat-form-field appearance="fill">
+        <mat-label>Min Match</mat-label>
+        <input
+        type="number"
+          matInput
+          placeholder="minMatch"
+          formControlName="minMatch"
+          required
+        />
+        <mat-error *ngIf="form.minMatch.invalid"
+          >This field is required.</mat-error
+        >
+      </mat-form-field>
+      
+
+      
+     
+        <mat-slide-toggle formControlName="isActive">Active</mat-slide-toggle>
+        <mat-slide-toggle formControlName="disableOnFalse">Disable On False</mat-slide-toggle>
+        <mat-slide-toggle formControlName="forceRule">Force Rule</mat-slide-toggle>
+
+
+    
+
+
+
+      
+      
+
+
+     
+      
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button
+    color="primary"
+    mat-button
+    [mat-dialog-close]="true"
+    cdkFocusInitial
+    [disabled]="!this.addMasterForm.valid"
+    (click)="addRule()"
+  >
+    Add
+  </button>
+</mat-dialog-actions>

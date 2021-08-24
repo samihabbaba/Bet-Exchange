@@ -3506,3 +3506,12 @@ td, th span {
 .mat-sort-header-container {
   justify-content: center !important;
 }
+
+
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+  background-color: var(--primary-light);
+}
+
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+  background-color: var(--primary);
+}

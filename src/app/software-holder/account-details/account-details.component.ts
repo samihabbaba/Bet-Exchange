@@ -16,6 +16,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
 import { BetDetailsComponent } from 'src/app/shared/bet-details/bet-details.component';
 import { BetSettleModalComponent } from 'src/app/shared/bet-settle-modal/bet-settle-modal.component';
+import { AddBettingRuleComponent } from '../add-betting-rule/add-betting-rule.component';
 
 @Component({
   selector: 'app-account-details',
@@ -108,6 +109,22 @@ export class AccountDetailsComponent implements OnInit {
     // 'fromTo',
   ];
   transactionsData = new MatTableDataSource<any>();
+  
+  // bettingRule Section
+  displayedColumnsBettingRules: string[] = [
+    // 'transactionNo',
+    'type',
+    'user',
+    'amount',
+    'balance change',
+    'balance',
+    'currency',
+    'date',
+    'comment',
+    // 'exchangeRate',
+    // 'fromTo',
+  ];
+  bettingRulesData = new MatTableDataSource<any>();
 
   displayedColumnsBettingHistory: string[] = [
     // 'id',
@@ -142,6 +159,8 @@ export class AccountDetailsComponent implements OnInit {
   pageIndexBets = 1;
   lengthTrans = 0;
   pageIndexTrans = 1;
+  lengthBettingRules = 0;
+  pageIndexBettingRules = 1;
   pageSize = this.sharedService.defaultPageSize;
   bettingHistoryData = new MatTableDataSource<any>();
 
@@ -152,6 +171,7 @@ export class AccountDetailsComponent implements OnInit {
     this.loadUser()
     this.loadBets()
     this.loadUsersTransactions();
+    this.loadBettingRules();
     this.layoutService.mainContentDisplayType.next('other');
 
     this.changePasswordForm = this.fb.group({
@@ -159,7 +179,6 @@ export class AccountDetailsComponent implements OnInit {
       newPassword: new FormControl(null, [Validators.required, Validators.minLength(4), Validators.maxLength(8)]),
       confirmNewPassword: new FormControl(null, Validators.required),
     }, {validator: this.passwordMatchValidator});
-
 
   }
 
@@ -240,6 +259,18 @@ export class AccountDetailsComponent implements OnInit {
     })
    }
 
+   loadBettingRules(){
+    this.dataService.getBettingRules(this.pageIndexBettingRules, this.pageSize ).subscribe(resp =>{
+      // debugger
+      this.lengthBettingRules= resp.body.pagingInfo.totalCount;
+      this.bettingRulesData.data = resp.body.items;
+    }, error =>{
+      debugger
+
+      // redirect somewhere
+    })
+   }
+
    openBetDetail(obj:any) {
     const dialogRef = this.dialog.open(BetDetailsComponent,{
       data:obj
@@ -270,6 +301,12 @@ export class AccountDetailsComponent implements OnInit {
    this.loadUsersTransactions();
  }
 
+ updatePageBettingRules(page:any){
+  this.pageSize = page.pageSize;
+  this.pageIndexBettingRules = page.pageIndex + 1;
+
+  this.loadBettingRules();
+ }
  openBetSettleDialog(obj:any, type:string){
   let dataToSend = {
     ...obj,
@@ -287,6 +324,17 @@ export class AccountDetailsComponent implements OnInit {
 
   delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
+  addBettingRule(){
+    debugger
+    const dialogRef = this.dialog.open(AddBettingRuleComponent, {
+      
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+      this.loadBettingRules();
+    });
   }
 }
 

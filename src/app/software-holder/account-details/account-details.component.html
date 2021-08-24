@@ -22,6 +22,9 @@
       <!-- <mat-button-toggle value="totalPl">Total P&L</mat-button-toggle> -->
       <!-- <mat-button-toggle value="casinoTotal">Casino Total P&L</mat-button-toggle> -->
       <mat-button-toggle value="transactions">Transactions</mat-button-toggle>
+
+
+      <mat-button-toggle *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'" value="bettingRules">Betting Rules</mat-button-toggle>
     </mat-button-toggle-group>
   
     <h3 class="cs-super-profile-account-name">{{myUser?.userName}}</h3>
@@ -671,6 +674,90 @@
         [pageSize]="pageSize"
         [pageSizeOptions]="this.sharedService.pageSizeOptions"
         (page)="updatePageTrans($event)"
+        >
+        </mat-paginator>
+      </div>
+
+
+
+      <div [@contentInOut] *ngIf="profile.value == 'bettingRules'">
+        <div class="cs-d-flex">
+          <!-- <mat-form-field appearance="standard" class="cs-super-table-filter">
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Filter" #input />
+          </mat-form-field> -->
+        
+          <button
+            color="theme-primary"
+            mat-raised-button
+            class="cs-add-master-btn"
+            (click)="addBettingRule()"
+          >
+            Add New Rule
+          </button>
+        </div>
+  
+        <table mat-table [dataSource]="bettingRulesData" style="min-width: 870px">
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef>Date</th>
+            <td mat-cell *matCellDef="let row">{{ row.createdAt }}</td>
+          </ng-container>
+          
+          <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef>Transaction Type</th>
+            <td mat-cell *matCellDef="let row">{{ row.type }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="user">
+            <th mat-header-cell *matHeaderCellDef>Username</th>
+            <td mat-cell *matCellDef="let row">{{ row.user.userName }}</td>
+          </ng-container>
+
+          
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef>Amount</th>
+            <td mat-cell *matCellDef="let row">{{ row.amount }}</td>
+          </ng-container>
+          
+          <ng-container matColumnDef="balance change">
+            <th mat-header-cell *matHeaderCellDef>Balance Change</th>
+            <td mat-cell *matCellDef="let row"> 
+            <span class="balance-change-container">
+              {{ row.balanceBefore }} <mat-icon>arrow_right_alt</mat-icon> {{ row.balanceAfter }}
+            </span>  
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="currency">
+            <th mat-header-cell *matHeaderCellDef>Currency</th>
+            <td mat-cell *matCellDef="let row">{{ row.currencyCode }}</td>
+          </ng-container>
+          <ng-container matColumnDef="balance">
+            <th mat-header-cell *matHeaderCellDef>Current alance</th>
+            <td mat-cell *matCellDef="let row">{{ row.user.wallet.balance }}</td>
+          </ng-container>
+          <ng-container matColumnDef="comment">
+            <th mat-header-cell *matHeaderCellDef>Comment</th>
+            <td mat-cell *matCellDef="let row">{{ row.comment }}</td>
+          </ng-container>
+  
+          <ng-container matColumnDef="exchangeRate">
+            <th mat-header-cell *matHeaderCellDef>Exchange Rate</th>
+            <td mat-cell *matCellDef="let row">{{ row.exchangeRate }}</td>
+          </ng-container>
+  
+  
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsBettingRules"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumnsBettingRules"
+          ></tr>
+        </table>
+        <mat-paginator 
+        [length]="lengthBettingRules"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="this.sharedService.pageSizeOptions"
+        (page)="updatePageBettingRules($event)"
         >
         </mat-paginator>
       </div>

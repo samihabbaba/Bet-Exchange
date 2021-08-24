@@ -12,6 +12,8 @@ import { DepositSuperModalComponent } from './deposit-super-modal/deposit-super-
 import { EditSuperModalComponent } from './edit-super-modal/edit-super-modal.component';
 import { WithdrawSuperModalComponent } from './withdraw-super-modal/withdraw-super-modal.component';
 import { SubAccountDetailsComponent } from './sub-account-details/sub-account-details.component';
+import { AddBettingRuleComponent } from './add-betting-rule/add-betting-rule.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 
 @NgModule({
@@ -24,12 +26,14 @@ import { SubAccountDetailsComponent } from './sub-account-details/sub-account-de
     DepositSuperModalComponent,
     EditSuperModalComponent,
     WithdrawSuperModalComponent,
-    SubAccountDetailsComponent
+    SubAccountDetailsComponent,
+    AddBettingRuleComponent
   ],
   imports: [
     CommonModule,
     SoftwareHolderRoutingModule,
-    SharedModule
+    SharedModule,
+    MatSlideToggleModule
   ]
 })
 export class SoftwareHolderModule { }
