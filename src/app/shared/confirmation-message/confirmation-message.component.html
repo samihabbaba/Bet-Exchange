@@ -10,13 +10,8 @@
   </h2>
   <mat-dialog-content class="mat-typography">
     <div class="cs-modal-form-field-container">
-      <span *ngIf="this.data.isActive">
-        Are You Sure you want to deactivate {{this.data.userName}}?
-      </span>
+        {{data.confirmMsg}}
   
-      <span *ngIf="!this.data.isActive">
-        Are You Sure you want to activate {{this.data.userName}}?
-      </span>
     </div>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
