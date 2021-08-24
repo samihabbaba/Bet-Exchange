@@ -204,7 +204,7 @@ export class DataService {
         pars.SortBy ? pars.SortBy : ''
       }&SortingType=1&regionCode=${
         pars.regionCode ? pars.regionCode : ''
-      }&EventTypeId=${pars.SportId ? pars.SportId : ''}`,
+      }&EventTypeId=${pars.SportId ? pars.SportId : ''}&HasInPlay=${pars.HasInPlay ? pars.HasInPlay : false}`,
       {
         headers: this.httpOptions.headers,
         observe: 'response',
@@ -213,9 +213,9 @@ export class DataService {
   }
 
   // GET​/leagues
-  getAllLeagues(sportId:string,regionCode: string) {
+  getAllLeagues(sportId:string,regionCode: string, HasInPlay:any =null) {
     return this.http.get<any>(
-      `${this.baseUrl}leagues?EventTypeId=${sportId ? sportId : ''}&regionCode=${regionCode ? regionCode : ''}`,
+      `${this.baseUrl}leagues?EventTypeId=${sportId ? sportId : ''}&regionCode=${regionCode ? regionCode : ''}&HasInPlay=${HasInPlay ? HasInPlay : false}`,
       {
         headers: this.httpOptions.headers,
         observe: 'response',
@@ -290,7 +290,7 @@ export class DataService {
         pars.SortBy ? pars.SortBy : ''
       }&SortingType=1&EventTypeId=${
         pars.SportId ? pars.SportId : ''
-      }`,
+      }&HasInPlay=${pars.HasInPlay ? pars.HasInPlay : false}`,
       {
         headers: this.httpOptions.headers,
         observe: 'response',
@@ -298,8 +298,8 @@ export class DataService {
     );
   }
 
-  getAllRegions(sportId: number) {
-    return this.http.get<any>(`${this.baseUrl}regions?EventTypeId=${sportId}`, {
+  getAllRegions(sportId: number,HasInPlay:any=null) {
+    return this.http.get<any>(`${this.baseUrl}regions?EventTypeId=${sportId}&HasInPlay=${HasInPlay ? HasInPlay : false}`, {
       headers: this.httpOptions.headers,
       observe: 'response',
     });
