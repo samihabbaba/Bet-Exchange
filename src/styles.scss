@@ -659,6 +659,7 @@ body {
   height: 17px;
   width: 17px;
   margin-right: 5px;
+
 }
 
 .menu-sub-header {
@@ -687,6 +688,10 @@ body {
 
     .arrow-area .item-arrow {
       color: var(--white);
+    }
+
+    .sport-menu-icon {
+      filter: invert(100%);
     }
   }
 
@@ -1490,7 +1495,7 @@ input {
   }
 
   padding: 4px 8px;
-  height: 60px;
+  height: 65px;
   width: 100%;
   border-bottom: 1px solid var(--border-color);
   display: flex;
@@ -1515,11 +1520,13 @@ input {
       flex: 1;
       display: flex;
       flex-direction: column;
+      max-width: 50%;
       h1 {
         font-weight: 700;
         font-size: 15px;
         overflow: hidden;
         text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
       h2 {
@@ -1535,12 +1542,13 @@ input {
       justify-content: space-between;
       align-items: center;
       text-align: center;
+      margin-left: 4px;
       input {
         flex: 1;
         border: none;
         outline: 0;
         border-radius: 4px;
-        height: 80%;
+        height: 70%;
         &:focus {
           border: 1px solid var(--primary);
         }
@@ -3271,7 +3279,7 @@ is smaller */
   font-size: 14px;
   padding-right: 12px;
   font-weight: 700;
-  // vertical-align: middle; 
+  // vertical-align: middle;
   line-height: 20px;
 }
 
