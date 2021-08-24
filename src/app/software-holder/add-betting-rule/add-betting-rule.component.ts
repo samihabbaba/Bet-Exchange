@@ -1,3 +1,4 @@
+import { registerLocaleData } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -29,6 +30,10 @@ export class AddBettingRuleComponent implements OnInit {
     this.initalizeForm();
     this.loadSports();
     this.form = this.addMasterForm.controls;
+
+    if(this.data.update){
+      this.addMasterForm.value = this.data.obj;
+    }
   }
 
   initalizeForm() {

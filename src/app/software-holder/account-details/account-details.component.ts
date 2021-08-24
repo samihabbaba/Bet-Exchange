@@ -17,6 +17,7 @@ import { SharedFunctionsService } from 'src/app/services/shared-functions.servic
 import { BetDetailsComponent } from 'src/app/shared/bet-details/bet-details.component';
 import { BetSettleModalComponent } from 'src/app/shared/bet-settle-modal/bet-settle-modal.component';
 import { AddBettingRuleComponent } from '../add-betting-rule/add-betting-rule.component';
+import { DeleteBettingRuleComponent } from '../delete-betting-rule/delete-betting-rule.component';
 
 @Component({
   selector: 'app-account-details',
@@ -112,17 +113,20 @@ export class AccountDetailsComponent implements OnInit {
   
   // bettingRule Section
   displayedColumnsBettingRules: string[] = [
-    // 'transactionNo',
-    'type',
-    'user',
-    'amount',
-    'balance change',
-    'balance',
-    'currency',
-    'date',
-    'comment',
-    // 'exchangeRate',
-    // 'fromTo',
+    'id',
+    'eventTypeId',
+    'category',
+    'betType',
+    'minAmount',
+    'maxAmount',
+    'multiplier',
+    'minMatch',
+    'minFigure',
+    'maxMargin',
+    'isActive',
+    'disableOnFalse',
+    'forceRule',
+    'actions',
   ];
   bettingRulesData = new MatTableDataSource<any>();
 
@@ -326,16 +330,36 @@ export class AccountDetailsComponent implements OnInit {
     return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
-  addBettingRule(){
+  addBettingRule(obj?:any){
     debugger
+
+    let dataToSend:any = {update:false}
+    if(obj){
+      dataToSend = {
+        update:true,
+        obj:obj
+      };
+    }
+
     const dialogRef = this.dialog.open(AddBettingRuleComponent, {
-      
+      data:dataToSend,
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
       this.loadBettingRules();
     });
   }
+
+  deleteBettingRule(obj?:any){
+    const dialogRef = this.dialog.open(DeleteBettingRuleComponent, {
+      data:obj,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+      this.loadBettingRules();
+    });
+  }
+
 }
 
 const FORECAST: any[] = [

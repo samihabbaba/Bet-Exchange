@@ -14,6 +14,7 @@ import { WithdrawSuperModalComponent } from './withdraw-super-modal/withdraw-sup
 import { SubAccountDetailsComponent } from './sub-account-details/sub-account-details.component';
 import { AddBettingRuleComponent } from './add-betting-rule/add-betting-rule.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { DeleteBettingRuleComponent } from './delete-betting-rule/delete-betting-rule.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     EditSuperModalComponent,
     WithdrawSuperModalComponent,
     SubAccountDetailsComponent,
-    AddBettingRuleComponent
+    AddBettingRuleComponent,
+    DeleteBettingRuleComponent
   ],
   imports: [
     CommonModule,

@@ -698,53 +698,141 @@
         </div>
   
         <table mat-table [dataSource]="bettingRulesData" style="min-width: 870px">
-          <ng-container matColumnDef="date">
-            <th mat-header-cell *matHeaderCellDef>Date</th>
-            <td mat-cell *matCellDef="let row">{{ row.createdAt }}</td>
+
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let row">{{ row.id }}</td>
           </ng-container>
           
-          <ng-container matColumnDef="type">
-            <th mat-header-cell *matHeaderCellDef>Transaction Type</th>
-            <td mat-cell *matCellDef="let row">{{ row.type }}</td>
+          <ng-container matColumnDef="eventTypeId">
+            <th mat-header-cell *matHeaderCellDef>Sport</th>
+            <td mat-cell *matCellDef="let row">{{ this.sharedService.getSportNameById( row.eventTypeId )}}</td>
           </ng-container>
 
-          <ng-container matColumnDef="user">
-            <th mat-header-cell *matHeaderCellDef>Username</th>
-            <td mat-cell *matCellDef="let row">{{ row.user.userName }}</td>
+          <ng-container matColumnDef="category">
+            <th mat-header-cell *matHeaderCellDef>Category</th>
+            <td mat-cell *matCellDef="let row">{{ row.category }}</td>
           </ng-container>
 
           
-          <ng-container matColumnDef="amount">
-            <th mat-header-cell *matHeaderCellDef>Amount</th>
-            <td mat-cell *matCellDef="let row">{{ row.amount }}</td>
+          <ng-container matColumnDef="betType">
+            <th mat-header-cell *matHeaderCellDef>Bet Type</th>
+            <td mat-cell *matCellDef="let row">{{ row.betType }}</td>
           </ng-container>
           
-          <ng-container matColumnDef="balance change">
-            <th mat-header-cell *matHeaderCellDef>Balance Change</th>
+          <ng-container matColumnDef="minAmount">
+            <th mat-header-cell *matHeaderCellDef>Min Amount</th>
             <td mat-cell *matCellDef="let row"> 
-            <span class="balance-change-container">
-              {{ row.balanceBefore }} <mat-icon>arrow_right_alt</mat-icon> {{ row.balanceAfter }}
-            </span>  
+              {{ row.balanceAfter }}
+            </td>
+          </ng-container>
+
+          
+          <ng-container matColumnDef="maxAmount">
+            <th mat-header-cell *matHeaderCellDef>Max Amount</th>
+            <td mat-cell *matCellDef="let row"> 
+              {{ row.maxAmount }}
+            </td>
+          </ng-container>
+
+          
+          <ng-container matColumnDef="multiplier">
+            <th mat-header-cell *matHeaderCellDef>Multiplier</th>
+            <td mat-cell *matCellDef="let row"> 
+              {{ row.multiplier }}
+            </td>
+          </ng-container>
+
+          
+          <ng-container matColumnDef="minMatch">
+            <th mat-header-cell *matHeaderCellDef>Min Match</th>
+            <td mat-cell *matCellDef="let row"> 
+              {{ row.minMatch }}
+            </td>
+          </ng-container>
+
+          
+          <ng-container matColumnDef="minFigure">
+            <th mat-header-cell *matHeaderCellDef>Min Figure</th>
+            <td mat-cell *matCellDef="let row"> 
+              {{ row.minFigure }}
+            </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="maxMargin">
+            <th mat-header-cell *matHeaderCellDef>Max Margin</th>
+            <td mat-cell *matCellDef="let row"> 
+              {{ row.maxMargin }}
+            </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="isActive">
+            <th mat-header-cell *matHeaderCellDef>Active</th>
+            <td mat-cell *matCellDef="let row">
+              <mat-icon *ngIf="!row.isActive" class="wrong-sign">dangerous</mat-icon>
+              <mat-icon *ngIf="row.isActive" class="tick-sign">check_circle</mat-icon>  
+            </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="disableOnFalse">
+            <th mat-header-cell *matHeaderCellDef>Disable On False</th>
+            <td mat-cell *matCellDef="let row">
+              <mat-icon *ngIf="!row.disableOnFalse" class="wrong-sign">dangerous</mat-icon>
+              <mat-icon *ngIf="row.disableOnFalse" class="tick-sign">check_circle</mat-icon>  
+            </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="forceRule">
+            <th mat-header-cell *matHeaderCellDef>Force Rule</th>
+            <td mat-cell *matCellDef="let row">
+              <mat-icon *ngIf="!row.forceRule" class="wrong-sign">dangerous</mat-icon>
+              <mat-icon *ngIf="row.forceRule" class="tick-sign">check_circle</mat-icon>  
             </td>
           </ng-container>
   
-          <ng-container matColumnDef="currency">
-            <th mat-header-cell *matHeaderCellDef>Currency</th>
-            <td mat-cell *matCellDef="let row">{{ row.currencyCode }}</td>
-          </ng-container>
-          <ng-container matColumnDef="balance">
-            <th mat-header-cell *matHeaderCellDef>Current alance</th>
-            <td mat-cell *matCellDef="let row">{{ row.user.wallet.balance }}</td>
-          </ng-container>
-          <ng-container matColumnDef="comment">
-            <th mat-header-cell *matHeaderCellDef>Comment</th>
-            <td mat-cell *matCellDef="let row">{{ row.comment }}</td>
-          </ng-container>
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let row">
+              <button
+                mat-icon-button
+                [matMenuTriggerFor]="menu"
+                (click)="$event.stopPropagation()"
+              >
+                <mat-icon>more_vert</mat-icon>
+    
+                <mat-menu #menu="matMenu">
+                  
   
-          <ng-container matColumnDef="exchangeRate">
-            <th mat-header-cell *matHeaderCellDef>Exchange Rate</th>
-            <td mat-cell *matCellDef="let row">{{ row.exchangeRate }}</td>
+                  <button mat-menu-item (click)="this.addBettingRule(row)">
+                    <mat-icon>delete_outline</mat-icon>
+                    <span>Update</span>
+                  </button>
+
+                  <button mat-menu-item (click)="this.deleteBettingRule(row)">
+                    <mat-icon>delete_outline</mat-icon>
+                    <span>Delete</span>
+                  </button>
+
+                  <button mat-menu-item >
+                    <mat-icon>delete_outline</mat-icon>
+                    <span>Cancel</span>
+                  </button>
+                                 
+                 
+                </mat-menu>
+              </button>
+    
+              
+             
+  
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
           </ng-container>
+          
   
   
           <tr mat-header-row *matHeaderRowDef="displayedColumnsBettingRules"></tr>
