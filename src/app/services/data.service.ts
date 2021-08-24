@@ -368,7 +368,7 @@ export class DataService {
       .pipe(finalize(() => this.layoutService.stopMainLoading()))
       .subscribe(
         (resp) => {
-
+debugger
           this.layoutService.displayLiveGames();
 
             let sorted = resp.body/*.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null)*/.sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0)
