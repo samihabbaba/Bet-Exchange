@@ -249,7 +249,7 @@ export class DataService {
         pars.IncludeDisabled ? pars.IncludeDisabled : false
       }&PageNo=${pars.PageNo ? pars.PageNo : ''}&PageSize=${
         pars.PageSize ? pars.PageSize : ''
-      }&SortBy=${pars.SortBy ? pars.SortBy : ''}&SortingType=1`,
+      }&SortBy=OpenDate&SortingType=1`,
       {
         headers: this.httpOptions.headers,
         observe: 'response',
@@ -263,7 +263,7 @@ export class DataService {
         pars.RegionCode ? pars.RegionCode : ''
       }&CompetitionId=${pars.LeagueId ? pars.LeagueId : ''}&IncludeDisabled=${
         pars.IncludeDisabled ? pars.IncludeDisabled : false
-      }`,
+      }&SortBy=OpenDate`,
       {
         headers: this.httpOptions.headers,
         observe: 'response',
@@ -330,9 +330,7 @@ export class DataService {
         pars.RegionCode ? pars.RegionCode : ''
       }&CompetitionId=${pars.LeagueId ? pars.LeagueId : ''}&PageNo=${
         pars.PageNo ? pars.PageNo : ''
-      }&PageSize=${pars.PageSize ? pars.PageSize : ''}&SortBy=${
-        pars.SortBy ? pars.SortBy : ''
-      }&SortingType=1&EventTypeId=${pars.sportId ? pars.sportId : ''}`,
+      }&PageSize=${pars.PageSize ? pars.PageSize : ''}&SortBy=OpenDate&SortingType=1&EventTypeId=${pars.sportId ? pars.sportId : ''}`,
       {
         headers: this.httpOptions.headers,
         observe: 'response',
@@ -344,7 +342,7 @@ export class DataService {
     return this.http.get<any>(
       `${this.baseUrl}upcoming?RegionCode=${
         pars.RegionCode ? pars.RegionCode : ''
-      }&CompetitionId=${pars.LeagueId ? pars.LeagueId : ''}&EventTypeId=${pars.sportId ? pars.sportId : ''}`,
+      }&CompetitionId=${pars.LeagueId ? pars.LeagueId : ''}&EventTypeId=${pars.sportId ? pars.sportId : ''}&SortBy=OpenDate`,
       {
         headers: this.httpOptions.headers,
         observe: 'response',
