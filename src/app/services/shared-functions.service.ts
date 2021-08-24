@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AuthService } from './auth.service';
 import { DataService } from './data.service';
 
 @Injectable({
@@ -17,7 +18,7 @@ export class SharedFunctionsService {
    currencyList = ['TRY', 'USD', 'EUR', 'GBP'];
    sports:any = []
 
-  constructor(private dataService:DataService) {
+  constructor(private dataService:DataService, private authService:AuthService) {
     this.loadSports();
    }
 
@@ -405,6 +406,24 @@ export class SharedFunctionsService {
       return 'not Matched'
     }
   }
+
+  showCancelBet(bet:any){
+    if(this.authService.decodedToken.role === 'SoftwareHolder'){
+      return true;
+    }
+    else if(this.authService.decodedToken.role === 'SuperAdmin' || this.authService.decodedToken.role === 'Client'){
+      if(bet.status == 'UNMATCHED'){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+    else{
+      return false;
+    }
+  }
+
 
 
 }

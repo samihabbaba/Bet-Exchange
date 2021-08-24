@@ -35,7 +35,7 @@ export class BetSettleModalComponent implements OnInit {
     this.dataService.voidBets(this.data.id).subscribe(resp => {
       this.notify.success('Bet Updated');
     }, error => {
-
+      debugger
         try{
           let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
           if( msg !== undefined){

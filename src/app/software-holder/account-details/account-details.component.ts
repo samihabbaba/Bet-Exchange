@@ -15,6 +15,7 @@ import { LayoutService } from 'src/app/services/layout.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
 import { BetDetailsComponent } from 'src/app/shared/bet-details/bet-details.component';
+import { BetSettleModalComponent } from 'src/app/shared/bet-settle-modal/bet-settle-modal.component';
 
 @Component({
   selector: 'app-account-details',
@@ -269,6 +270,24 @@ export class AccountDetailsComponent implements OnInit {
    this.loadUsersTransactions();
  }
 
+ openBetSettleDialog(obj:any, type:string){
+  let dataToSend = {
+    ...obj,
+    settleType:type
+  }
+  const dialogRef = this.dialog.open(BetSettleModalComponent,{
+    data:dataToSend
+  });
+
+  dialogRef.afterClosed().subscribe( async (result) => {
+    await this.delay(1000);
+    this.loadBets();
+  });
+  }
+
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
 }
 
 const FORECAST: any[] = [

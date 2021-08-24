@@ -4,6 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { from } from 'rxjs';
 import { contentInOut } from 'src/app/animations/animation';
 import { AuthService } from 'src/app/services/auth.service';
@@ -231,9 +232,10 @@ export class SubAccountDetailsComponent implements OnInit {
     });
   }
 
+  
   delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
-}
+  }
 
   ss:Date = new Date();   
    check(){
