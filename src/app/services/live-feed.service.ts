@@ -88,9 +88,18 @@ export class LiveFeedService {
 			}
 	}
 
-	public onLiveUpdate(games: Match[]) {
+	public onLiveUpdate(games: any) {
+		// debugger
+		
 		console.log(`Recieved information for ${games.length} games`);
-    this.events.next(games);
+    	this.events.next(games);
+
+		// console.log({
+		// 	name:games[0].name,
+		// 	odd:games[0].markets[0].runners[0].exchangePrices.availableToBack[0].size,
+		// 	odd2:games[0].markets[0].runners[0].exchangePrices.availableToBack[0].price
+		// })
+
   }
 	
 	private onLiveGameUpdate(game: Match) {

@@ -21,7 +21,6 @@ export class BetSettleModalComponent implements OnInit {
 
   settleBet(){
       // win , lose , cancel
-      debugger
       if(this.data.settleType == 'win'){
         this.winBet();
       } else if(this.data.settleType == 'lose'){
@@ -35,7 +34,6 @@ export class BetSettleModalComponent implements OnInit {
     this.dataService.voidBets(this.data.id).subscribe(resp => {
       this.notify.success('Bet Updated');
     }, error => {
-      debugger
         try{
           let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
           if( msg !== undefined){

@@ -21,12 +21,14 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ActivationModalComponent } from './activation-modal/activation-modal.component';
 import { BetDetailsComponent } from './bet-details/bet-details.component';
 import { BetSettleModalComponent } from './bet-settle-modal/bet-settle-modal.component';
+import { ConfirmationMessageComponent } from './confirmation-message/confirmation-message.component';
 
 @NgModule({
   declarations: [
     ActivationModalComponent,
     BetDetailsComponent,
-    BetSettleModalComponent
+    BetSettleModalComponent,
+    ConfirmationMessageComponent
   ],
   imports: [
     CommonModule,

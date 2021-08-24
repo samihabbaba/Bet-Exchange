@@ -235,7 +235,6 @@ export class HolderMainDatatableComponent implements OnInit {
   }
 
   openDepositMasterDialog(obj: any) {
-debugger
     const dialogRef = this.dialog.open(DepositSuperModalComponent, {
       data: {...obj},
     });

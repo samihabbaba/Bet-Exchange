@@ -162,7 +162,7 @@ export class SubAccountDetailsComponent implements OnInit {
 
     
     this.dataService.getTransactions(this.pageIndexTrans, this.pageSize, this.currentUserId, '', '','', start,end,'','').subscribe(resp =>{
-      debugger
+
       this.lengthTrans= resp.body.pagingInfo.totalCount;      
       this.transactionsData.data = resp.body.items;
     }, error =>{

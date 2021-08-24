@@ -227,7 +227,6 @@ export class BetSlipService {
   }
 
   updateOpenBetsOptions(){
-    debugger
     this.openBetsSelectOptions = this.currentOpenBets.map(function(i) {
       return i.selection.eventName;
     });

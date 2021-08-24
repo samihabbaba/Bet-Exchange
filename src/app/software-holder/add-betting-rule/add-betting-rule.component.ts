@@ -76,7 +76,6 @@ export class AddBettingRuleComponent implements OnInit {
       this.notify.success('Rule Added');
 
     }, error => {
-      debugger
         try{
           let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
           if( msg !== undefined){

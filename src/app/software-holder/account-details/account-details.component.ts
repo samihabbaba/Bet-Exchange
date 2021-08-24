@@ -16,6 +16,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
 import { BetDetailsComponent } from 'src/app/shared/bet-details/bet-details.component';
 import { BetSettleModalComponent } from 'src/app/shared/bet-settle-modal/bet-settle-modal.component';
+import { ConfirmationMessageComponent } from 'src/app/shared/confirmation-message/confirmation-message.component';
 import { AddBettingRuleComponent } from '../add-betting-rule/add-betting-rule.component';
 import { DeleteBettingRuleComponent } from '../delete-betting-rule/delete-betting-rule.component';
 
@@ -152,6 +153,33 @@ export class AccountDetailsComponent implements OnInit {
     // 'avgOddsMatched',
   ];
 
+
+  sportsData = new MatTableDataSource<any>();
+  displayedColumnsSports: string[] = [
+    'id',
+    'name',
+    'isActive',
+    'actions',
+  ];
+  
+  regionsData = new MatTableDataSource<any>();
+  displayedColumnsRegions: string[] = [
+    'countryCode',
+    'name',
+    'isActive',
+    'actions',
+  ];
+
+  
+  leaguesData = new MatTableDataSource<any>();
+  displayedColumnsLeagues: string[] = [
+    'id',
+    'name',
+    'category',
+    'isActive',
+    'actions',
+  ];
+
   myUser:any = {
     role:'Client'
   };
@@ -168,6 +196,13 @@ export class AccountDetailsComponent implements OnInit {
   pageSize = this.sharedService.defaultPageSize;
   bettingHistoryData = new MatTableDataSource<any>();
 
+  sportsList:any =[]
+  regionsList:any =[]
+  leaguesList:any =[]
+  currentSportIdForRegions = ''
+  currentSportIdForLeagues = ''
+  currentRegionIdForLeagues = ''
+
   constructor(private fb: FormBuilder,  private router: Router, private dataService:DataService
     , public sharedService:SharedFunctionsService, public authService:AuthService, 
     public dialog: MatDialog, private notify:NotificationService, private layoutService:LayoutService) {}
@@ -176,6 +211,7 @@ export class AccountDetailsComponent implements OnInit {
     this.loadBets()
     this.loadUsersTransactions();
     this.loadBettingRules();
+    this.loadSports(true);
     this.layoutService.mainContentDisplayType.next('other');
 
     this.changePasswordForm = this.fb.group({
@@ -275,6 +311,38 @@ export class AccountDetailsComponent implements OnInit {
     })
    }
 
+   loadSports(loadAfter = false){
+     this.dataService.getSports().subscribe(resp => {
+       this.sportsList = resp.body;
+       this.sportsData.data = resp.body;
+       this.currentSportIdForRegions = resp.body[0].id;
+       this.currentSportIdForLeagues = resp.body[0].id;
+       if(loadAfter){
+         this.loadRegions(true);
+       }
+     })
+   }
+
+   loadRegions(loadAfter = false){
+    this.dataService.getAllRegions('',null).subscribe(resp =>{
+      this.regionsList = resp.body;
+      this.regionsData.data = resp.body;
+      this.currentRegionIdForLeagues = resp.body[0].regionCode;
+      if(loadAfter){
+        this.loadLeagues();
+      }
+    })
+   }
+
+   loadLeagues(){
+     this.dataService.getAllLeagues(this.currentSportIdForLeagues,this.currentRegionIdForLeagues).subscribe(resp =>{
+       this.leaguesList = resp.body;
+       this.leaguesData.data = resp.body;
+     })
+   
+    }
+
+
    openBetDetail(obj:any) {
     const dialogRef = this.dialog.open(BetDetailsComponent,{
       data:obj
@@ -311,6 +379,7 @@ export class AccountDetailsComponent implements OnInit {
 
   this.loadBettingRules();
  }
+ 
  openBetSettleDialog(obj:any, type:string){
   let dataToSend = {
     ...obj,
@@ -326,12 +395,57 @@ export class AccountDetailsComponent implements OnInit {
   });
   }
 
+  
+ openConfirmDialog(obj:any,functionToCall:number){
+ 
+  let confirmMsg= '';
+  let successMsg= '';
+  let errorMsg= '';
+  if(functionToCall == 1){
+     confirmMsg= 'Are You Sure You want to toggle activation ?';
+     successMsg= 'Sport updated';
+     errorMsg= 'Error on sport update';
+  }
+  else if(functionToCall == 2){
+    confirmMsg= 'Are You Sure You want to toggle activation ?';
+     successMsg= 'Region updated';
+     errorMsg= 'Error on region update';
+  }
+  else if(functionToCall == 3){
+    confirmMsg= 'Are You Sure You want to toggle activation ?';
+     successMsg= 'League updated';
+     errorMsg= 'Error on league update';
+  }
+
+  const dialogRef = this.dialog.open(ConfirmationMessageComponent,{
+    data:{
+      obj:obj,
+      functionToCall:functionToCall,
+      confirmMsg:confirmMsg,
+      successMsg:successMsg,
+      errorMsg:errorMsg
+    }
+  });
+
+  dialogRef.afterClosed().subscribe( async (result) => {
+    await this.delay(1000);
+    if(functionToCall == 1){
+      this.loadSports();
+    }
+    else if(functionToCall == 2){
+      this.loadRegions();
+    } 
+    else if(functionToCall == 3){
+      this.loadLeagues();
+    } 
+  });
+  }
+
   delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
   addBettingRule(obj?:any){
-    debugger
 
     let dataToSend:any = {update:false}
     if(obj){

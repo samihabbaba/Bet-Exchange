@@ -93,7 +93,6 @@ export class LayoutService {
   }
 
   isItInRoute(route:string){
-    debugger;
     let url = this.router.url;
     return url == '/profile';
   }

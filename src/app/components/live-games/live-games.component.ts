@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faFutbol, faLock, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
@@ -19,7 +19,8 @@ export class LiveGamesComponent implements OnInit, OnDestroy {
     public sharedService: SharedFunctionsService,
     private router: Router,
     private layoutService: LayoutService,
-    public betSlipService: BetSlipService
+    public betSlipService: BetSlipService,
+    private ref: ChangeDetectorRef
   ) {
     
     this.subscription = this.dataService.selectedEvents.subscribe((resp) => {
@@ -30,6 +31,7 @@ export class LiveGamesComponent implements OnInit, OnDestroy {
         // Use `key` and `value`
     }
       this.games = arrOfGames;
+      
     });
   }
 
