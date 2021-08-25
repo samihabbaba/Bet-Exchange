@@ -108,7 +108,7 @@ export class AccountDetailsComponent implements OnInit {
     'amount',
     'balance change',
     'balance',
-    'currency',
+    // 'currency',
     'date',
     'comment',
     // 'exchangeRate',
