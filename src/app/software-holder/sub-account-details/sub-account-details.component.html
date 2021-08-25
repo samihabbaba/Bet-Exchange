@@ -485,7 +485,7 @@
         </mat-form-field>
 
         
-        <mat-form-field appearance="fill" class="table-filter">
+        <mat-form-field appearance="fill" class="table-filter" *ngIf="this.authService.decodedToken.role !== 'Master'">
           <mat-label>Sub level </mat-label>
           <mat-select 
           [(ngModel)]="directParentTrans"
