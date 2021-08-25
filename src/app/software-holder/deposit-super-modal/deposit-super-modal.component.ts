@@ -5,6 +5,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { NotificationService } from 'src/app/services/notification.service';
 
@@ -21,7 +22,8 @@ export class DepositSuperModalComponent implements OnInit {
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dataService:DataService,
-    private notify:NotificationService
+    private notify:NotificationService,
+    private authService:AuthService
   ) {}
 
   ngOnInit(): void {
@@ -46,7 +48,8 @@ export class DepositSuperModalComponent implements OnInit {
 
     if(this.data.role == "SuperAdmin"){
       this.dataService.depositUser(objToSend).subscribe(resp => {
-        this.notify.success('Deposit added to the user')
+        this.notify.success('Deposit added to the user');
+        this.authService.updateCurrentBalance();
       },
       error => {
         try{

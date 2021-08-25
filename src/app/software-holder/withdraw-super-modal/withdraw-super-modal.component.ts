@@ -5,6 +5,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { NotificationService } from 'src/app/services/notification.service';
 
@@ -22,7 +23,8 @@ export class WithdrawSuperModalComponent implements OnInit {
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dataService:DataService,
-    private notify:NotificationService
+    private notify:NotificationService,
+    private authService:AuthService
   ) {}
 
   ngOnInit(): void {
@@ -47,7 +49,8 @@ export class WithdrawSuperModalComponent implements OnInit {
     objToSend.toUserId = this.data.id;
 
     this.dataService.withdrawUser(objToSend).subscribe(resp => {
-      this.notify.success('changes done successfully')
+      this.notify.success('changes done successfully');
+      this.authService.updateCurrentBalance();
     },
     error => {
       try{
