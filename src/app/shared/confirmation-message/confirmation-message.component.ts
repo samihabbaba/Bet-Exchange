@@ -61,7 +61,7 @@ export class ConfirmationMessageComponent implements OnInit {
   }
 
   toggleRegionActivation(){
-    this.dataService.toggleUserActive(this.data.obj.id).subscribe(resp => {
+    this.dataService.toggleRegionActivation(this.data.obj.id).subscribe(resp => {
 
       this.notify.success(this.successMsg);
 
@@ -83,7 +83,7 @@ export class ConfirmationMessageComponent implements OnInit {
   }
 
   toggleLeagueActivation(){
-    this.dataService.updateLeague(this.data.obj.id).subscribe(resp => {
+    this.dataService.toggleLeagueActivation(this.data.obj.id).subscribe(resp => {
 
       this.notify.success(this.successMsg);
 
