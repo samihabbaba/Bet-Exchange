@@ -43,7 +43,7 @@
 
   <div class="login-and-language">
     <span *ngIf="this.authService.loggedIn()" class="cs-client-balance">
-      Balance: {{this.authService.currentUserInfo.balance}}{{this.authService.currentUserInfo.currency}}
+      Balance: {{ this.sharedService.formatNumber(this.authService.currentUserInfo.balance) }}{{this.authService.currentUserInfo.currency}}
     </span>
     
     <button (click)="goToLoginPage()" class="login-btn">

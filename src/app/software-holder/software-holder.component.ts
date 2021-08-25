@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { SharedFunctionsService } from '../services/shared-functions.service';
 
 @Component({
   selector: 'app-software-holder',
@@ -8,7 +9,7 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./software-holder.component.css']
 })
 export class SoftwareHolderComponent implements OnInit {
-  constructor(private router: Router, public authService:AuthService) {}
+  constructor(private router: Router, public authService:AuthService, public sharedService:SharedFunctionsService) {}
   ngOnInit() {}
 
   goToProfile() {

@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DataService } from 'src/app/services/data.service';
 import { NotificationService } from 'src/app/services/notification.service';
 
@@ -13,7 +13,10 @@ export class BetSettleModalComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dataService:DataService,
-    private notify:NotificationService) { }
+    private notify:NotificationService,
+    private dialogRef: MatDialogRef<BetSettleModalComponent>) { 
+      dialogRef.disableClose = true;
+    }
 
   ngOnInit(): void {
 
@@ -33,7 +36,9 @@ export class BetSettleModalComponent implements OnInit {
   voidBet(){
     this.dataService.voidBets(this.data.id).subscribe(resp => {
       this.notify.success('Bet Updated');
+      this.dialogRef.close();
     }, error => {
+      this.dialogRef.close();
         try{
           let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
           if( msg !== undefined){
@@ -52,8 +57,9 @@ export class BetSettleModalComponent implements OnInit {
   winBet(){
     this.dataService.winBets(this.data.id).subscribe(resp => {
       this.notify.success('Bet Updated');
+      this.dialogRef.close();
     }, error => {
-
+      this.dialogRef.close();
         try{
           let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
           if( msg !== undefined){
@@ -72,8 +78,9 @@ export class BetSettleModalComponent implements OnInit {
   loseBet(){
     this.dataService.loseBets(this.data.id).subscribe(resp => {
       this.notify.success('Bet Updated');
+      this.dialogRef.close();
     }, error => {
-
+      this.dialogRef.close();
         try{
           let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
           if( msg !== undefined){

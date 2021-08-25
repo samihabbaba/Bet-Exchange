@@ -10,7 +10,7 @@
       class="logo cs-super-toolbar-logo"
   /></span>
   <span class="cs-toolbar-spacer"></span>
-  <span class="cs-super-balance">Balance: {{this.authService.currentUserInfo.balance}}{{this.authService.currentUserInfo.currency}}</span>
+  <span class="cs-super-balance">Balance: {{ this.sharedService.formatNumber(this.authService.currentUserInfo.balance) }}{{this.authService.currentUserInfo.currency}}</span>
   <button mat-icon-button matTooltip="Home" (click)="goToMastersTable()">
     <mat-icon>home</mat-icon>
   </button>

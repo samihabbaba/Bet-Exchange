@@ -12,6 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { LayoutService } from 'src/app/services/layout.service';
+import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
 import { AccountDetailsComponent } from 'src/app/software-holder/account-details/account-details.component';
 
 @Component({
@@ -30,7 +31,7 @@ export class HeaderComponent implements OnInit {
     private dataService: DataService,
     public authService: AuthService,
     private activatedRoute: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog, public sharedService:SharedFunctionsService
   ) {}
 
   ngOnInit(): void {}

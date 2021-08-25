@@ -4,7 +4,7 @@ import {
   FormControl,
   Validators,
 } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -23,8 +23,11 @@ export class DepositSuperModalComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dataService:DataService,
     private notify:NotificationService,
-    private authService:AuthService
-  ) {}
+    private authService:AuthService,
+    private dialogRef: MatDialogRef<DepositSuperModalComponent>
+  ) {
+    dialogRef.disableClose = true;
+  }
 
   ngOnInit(): void {
     this.initalizeForm();
@@ -50,6 +53,7 @@ export class DepositSuperModalComponent implements OnInit {
       this.dataService.depositUser(objToSend).subscribe(resp => {
         this.notify.success('Deposit added to the user');
         this.authService.updateCurrentBalance();
+        this.dialogRef.close();
       },
       error => {
         try{

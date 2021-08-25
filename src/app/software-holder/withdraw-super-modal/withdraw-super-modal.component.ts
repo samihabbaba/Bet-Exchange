@@ -4,7 +4,7 @@ import {
   FormControl,
   Validators,
 } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -24,8 +24,11 @@ export class WithdrawSuperModalComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dataService:DataService,
     private notify:NotificationService,
-    private authService:AuthService
-  ) {}
+    private authService:AuthService,
+    private dialogRef: MatDialogRef<WithdrawSuperModalComponent>
+  ) {
+    dialogRef.disableClose = true;
+  }
 
   ngOnInit(): void {
     
@@ -51,6 +54,7 @@ export class WithdrawSuperModalComponent implements OnInit {
     this.dataService.withdrawUser(objToSend).subscribe(resp => {
       this.notify.success('changes done successfully');
       this.authService.updateCurrentBalance();
+      this.dialogRef.close();
     },
     error => {
       try{

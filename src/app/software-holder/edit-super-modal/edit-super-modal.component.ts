@@ -4,7 +4,7 @@ import {
   FormControl,
   Validators,
 } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DataService } from 'src/app/services/data.service';
 import { NotificationService } from 'src/app/services/notification.service';
 
@@ -21,8 +21,11 @@ export class EditSuperModalComponent implements OnInit {
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dataService:DataService,
-    private notify:NotificationService
-  ) {}
+    private notify:NotificationService,
+    private dialogRef: MatDialogRef<EditSuperModalComponent>
+  ) {
+    dialogRef.disableClose = true;
+  }
 
   ngOnInit(): void {
     this.initalizeForm();
@@ -49,7 +52,7 @@ export class EditSuperModalComponent implements OnInit {
     this.dataService.updateUser({...this.editMasterForm.value, id:this.data.id}).subscribe(resp => {
 
       this.notify.success('User Updated');
-
+      this.dialogRef.close();
     }, error => {
 
         try{

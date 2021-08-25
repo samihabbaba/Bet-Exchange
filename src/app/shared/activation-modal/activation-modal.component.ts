@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DataService } from 'src/app/services/data.service';
 import { NotificationService } from 'src/app/services/notification.service';
 
@@ -13,7 +13,10 @@ export class ActivationModalComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dataService:DataService,
-    private notify:NotificationService) { }
+    private notify:NotificationService,
+    private dialogRef: MatDialogRef<ActivationModalComponent>) {
+      dialogRef.disableClose = true;
+     }
 
   ngOnInit(): void {
 
@@ -21,9 +24,8 @@ export class ActivationModalComponent implements OnInit {
 
   toggleActivate(){
     this.dataService.toggleUserActive(this.data.id).subscribe(resp => {
-
       this.notify.success('User Updated');
-
+      this.dialogRef.close();
     }, error => {
 
         try{
