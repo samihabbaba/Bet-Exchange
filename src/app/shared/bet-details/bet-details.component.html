@@ -18,12 +18,12 @@
         <div>Selection Type: &nbsp; <span> {{ data.selectionType }} </span></div>
         <div>Stake: &nbsp; <span> {{ this.sharedService.formatNumber(data.stake)  }} </span></div>
         <div>Odd: &nbsp; <span> {{ this.sharedService.formatNumber(data.odd)  }} </span></div>
-        <div>payout: &nbsp; <span> {{ this.sharedService.formatNumber(data.payout)  }} </span></div>
-        <div>status: &nbsp; <span> {{ data.status }} </span></div>
-        <div>date: &nbsp; <span> {{ data.date| date:'d/M/yyyy, h:mm a' }} </span></div>
-        <div>lastActionDate: &nbsp; <span> {{ data.lastActionDate| date:'d/M/yyyy, h:mm a' }} </span></div>
-        <div>eventDate: &nbsp; <span> {{ data.selection.eventDate| date:'d/M/yyyy, h:mm a' }} </span></div>
-        <div>matchedDate: &nbsp; <span> {{ data.matchedDate == null ? (this.sharedService.getMatchedDate(data.matchedDate)| date:'d/M/yyyy, h:mm a'): ('Not Matched') }} </span></div>
+        <div>Payout: &nbsp; <span> {{ this.sharedService.formatNumber(data.payout)  }} </span></div>
+        <div>Status: &nbsp; <span> {{ data.status }} </span></div>
+        <div>Sate: &nbsp; <span> {{ data.date| date:'d/M/yyyy, h:mm a' }} </span></div>
+        <div>Last Action Date: &nbsp; <span> {{ data.lastActionDate| date:'d/M/yyyy, h:mm a' }} </span></div>
+        <div>Event Date: &nbsp; <span> {{ data.selection.eventDate| date:'d/M/yyyy, h:mm a' }} </span></div>
+        <div>Matched Date: &nbsp; <span> {{ data.matchedDate == null ? (this.sharedService.getMatchedDate(data.matchedDate)| date:'d/M/yyyy, h:mm a'): ('Not Matched') }} </span></div>
         
         
       </div>

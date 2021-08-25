@@ -107,7 +107,7 @@ export class AccountDetailsComponent implements OnInit {
     'user',
     'amount',
     'balance change',
-    'balance',
+    // 'balance',
     // 'currency',
     'date',
     'comment',
