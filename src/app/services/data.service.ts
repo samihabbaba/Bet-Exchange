@@ -128,6 +128,13 @@ export class DataService {
     });
   }
 
+  toggleSportActive(id:string) {
+    return this.http.post(`${environment.apiUrl}sports/${id}/active/toggle`, {}, {
+      headers: this.httpOptions.headers,
+      observe: 'response',
+    });
+  }
+
 ///////////////////////////////////
   ///// login history Controller /////
   //////////////////////////////////
@@ -243,8 +250,8 @@ export class DataService {
     });
   }
   
-  toggleLeagueActivation(obj: any) {
-    return this.http.put<any>(`${this.baseUrl}leagues/${obj.id}/active/toggle`, {}, {
+  toggleLeagueActivation(id: any) {
+    return this.http.post<any>(`${this.baseUrl}leagues/${id}/active/toggle`, {}, {
       headers: this.httpOptions.headers,
       observe: 'response',
     });
@@ -333,7 +340,15 @@ export class DataService {
   }
   
   toggleRegionActivation(obj: any) {
-    return this.http.put<any>(`${this.baseUrl}regions/${obj.id}/active/toggle`, obj, {
+    return this.http.post<any>(`${this.baseUrl}regions/${obj.id}/active/toggle`, obj, {
+      headers: this.httpOptions.headers,
+      observe: 'response',
+    });
+  }
+  
+  toggleRegionActivationForSport(sportId: any,regionId:any) {
+    
+    return this.http.post<any>(`${this.baseUrl}sports/${sportId}/regions/${regionId}/active/toggle`, {}, {
       headers: this.httpOptions.headers,
       observe: 'response',
     });

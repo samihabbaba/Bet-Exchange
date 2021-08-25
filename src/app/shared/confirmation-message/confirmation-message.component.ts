@@ -42,7 +42,7 @@ export class ConfirmationMessageComponent implements OnInit {
   }
 
   toggleSportActivation(){
-    this.dataService.toggleUserActive(this.data.obj.id).subscribe(resp => {
+    this.dataService.toggleSportActive(this.data.obj.id).subscribe(resp => {
 
       this.notify.success(this.successMsg);
       this.dialogRef.close();
@@ -65,12 +65,13 @@ export class ConfirmationMessageComponent implements OnInit {
   }
 
   toggleRegionActivation(){
-    this.dataService.toggleRegionActivation(this.data.obj.id).subscribe(resp => {
+    debugger
+    this.dataService.toggleRegionActivationForSport(this.data.sportId,this.data.obj.countryCode).subscribe(resp => {
 
       this.notify.success(this.successMsg);
-
+      this.dialogRef.close();
     }, error => {
-
+      this.dialogRef.close();
         try{
           let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
           if( msg !== undefined){
@@ -87,12 +88,13 @@ export class ConfirmationMessageComponent implements OnInit {
   }
 
   toggleLeagueActivation(){
+    debugger
     this.dataService.toggleLeagueActivation(this.data.obj.id).subscribe(resp => {
 
       this.notify.success(this.successMsg);
-
+      this.dialogRef.close();
     }, error => {
-
+      this.dialogRef.close();
         try{
           let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
           if( msg !== undefined){

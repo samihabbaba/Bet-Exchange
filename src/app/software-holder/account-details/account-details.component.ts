@@ -363,8 +363,13 @@ export class AccountDetailsComponent implements OnInit {
      this.dataService.getSports().subscribe(resp => {
        this.sportsList = resp.body;
        this.sportsData.data = resp.body;
-       this.currentSportIdForRegions = resp.body[0].id;
-       this.currentSportIdForLeagues = resp.body[0].id;
+       if(this.currentSportIdForRegions === ''){
+         this.currentSportIdForRegions = resp.body[0].id;
+       }
+       if(this.currentSportIdForLeagues === ''){
+         this.currentSportIdForLeagues = resp.body[0].id;
+       }
+       this.sportForRegionChange()
        if(loadAfter){
          this.loadRegions(true);
        }
@@ -472,7 +477,8 @@ export class AccountDetailsComponent implements OnInit {
       functionToCall:functionToCall,
       confirmMsg:confirmMsg,
       successMsg:successMsg,
-      errorMsg:errorMsg
+      errorMsg:errorMsg,
+      sportId:this.currentSportIdForRegions
     }
   });
 
@@ -482,6 +488,7 @@ export class AccountDetailsComponent implements OnInit {
       this.loadSports();
     }
     else if(functionToCall == 2){
+      this.loadSports();
       this.loadRegions();
     } 
     else if(functionToCall == 3){
@@ -523,6 +530,17 @@ export class AccountDetailsComponent implements OnInit {
       await this.delay(1000);
       this.loadBettingRules();
     });
+  }
+
+  notActiveRegions:any =[]
+  sportForRegionChange(){
+debugger
+    let index = this.sportsList.findIndex((x:any)=> x.id == this.currentSportIdForRegions)
+    this.notActiveRegions = this.sportsList[index].deactivatedRegions;
+  }
+
+  isRegionActive(code:any){
+    return !this.notActiveRegions.some((x:any)=> x.countryCode == code);
   }
 
 }

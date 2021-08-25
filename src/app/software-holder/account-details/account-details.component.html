@@ -1086,6 +1086,7 @@
             <mat-label>Sport</mat-label>
             <mat-select name="pl"
             [(ngModel)]="currentSportIdForRegions"
+            (selectionChange)="this.sportForRegionChange()"
             >
               <mat-option
                 *ngFor="let sport of sportsList"
@@ -1115,8 +1116,8 @@
           <ng-container matColumnDef="isActive">
             <th mat-header-cell *matHeaderCellDef>Active</th>
             <td mat-cell *matCellDef="let row">
-              <mat-icon *ngIf="!row.isActive" class="wrong-sign">dangerous</mat-icon>
-              <mat-icon *ngIf="row.isActive" class="tick-sign">check_circle</mat-icon>  
+              <mat-icon *ngIf="!isRegionActive(row.countryCode)" class="wrong-sign">dangerous</mat-icon>
+              <mat-icon *ngIf="isRegionActive(row.countryCode)" class="tick-sign">check_circle</mat-icon>  
             </td>
           </ng-container>
           
@@ -1138,10 +1139,10 @@
                     <span>Update</span>
                   </button>
 
-                  <button mat-menu-item (click)="this.openConfirmDialog(row,1)">
+                  <button mat-menu-item (click)="this.openConfirmDialog(row,2)">
                     <mat-icon>new_releases</mat-icon>
-                    <span *ngIf="!row.isActive">Activate</span>
-                    <span *ngIf="row.isActive">Deactivate</span>
+                    <span *ngIf="!isRegionActive(row.countryCode)">Activate</span>
+                    <span *ngIf="isRegionActive(row.countryCode)">Deactivate</span>
                   </button>
 
                                  
@@ -1254,7 +1255,7 @@
                     <span>Update</span>
                   </button>
 
-                  <button mat-menu-item (click)="this.openConfirmDialog(row,1)">
+                  <button mat-menu-item (click)="this.openConfirmDialog(row,3)">
                     <mat-icon>new_releases</mat-icon>
                     <span *ngIf="!row.isActive">Activate</span>
                     <span *ngIf="row.isActive">Deactivate</span>
