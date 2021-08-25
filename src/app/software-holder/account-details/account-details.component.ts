@@ -44,6 +44,10 @@ export class AccountDetailsComponent implements OnInit {
     start: new FormControl(new Date()),
     end: new FormControl(new Date()),
   });
+  rangeTransSub = new FormGroup({
+    start: new FormControl(new Date()),
+    end: new FormControl(new Date()),
+  });
 
   // Change Password Section
   changePasswordForm?: any;
@@ -111,6 +115,8 @@ export class AccountDetailsComponent implements OnInit {
     // 'fromTo',
   ];
   transactionsData = new MatTableDataSource<any>();
+  transactionsSubData = new MatTableDataSource<any>();
+
   
   // bettingRule Section
   displayedColumnsBettingRules: string[] = [
@@ -191,6 +197,8 @@ export class AccountDetailsComponent implements OnInit {
   pageIndexBets = 1;
   lengthTrans = 0;
   pageIndexTrans = 1;
+  lengthTransSub = 0;
+  pageIndexTransSub = 1;
   lengthBettingRules = 0;
   pageIndexBettingRules = 1;
   pageSize = this.sharedService.defaultPageSize;
@@ -202,6 +210,10 @@ export class AccountDetailsComponent implements OnInit {
   currentSportIdForRegions = ''
   currentSportIdForLeagues = ''
   currentRegionIdForLeagues = ''
+  
+  transactionType1=''
+  transactionType2=''
+  directParentTrans=false
 
   constructor(private fb: FormBuilder,  private router: Router, private dataService:DataService
     , public sharedService:SharedFunctionsService, public authService:AuthService, 
@@ -214,6 +226,11 @@ export class AccountDetailsComponent implements OnInit {
       this.loadBettingRules();
       this.loadSports(true);
     }
+
+    if(this.authService.decodedToken.role !== 'Client'){
+      this.loadUsersTransactionsSub();
+    }
+
     
     this.layoutService.mainContentDisplayType.next('other');
 
@@ -291,7 +308,7 @@ export class AccountDetailsComponent implements OnInit {
       directParent = true;
       id = '';
     }
-    this.dataService.getTransactions(this.pageIndexTrans, this.pageSize, id, '', '',parentId, start,end,directParent,'' ).subscribe(resp =>{
+    this.dataService.getTransactions(this.pageIndexTrans, this.pageSize, id, '', '',parentId, start,end,directParent,this.transactionType1 ).subscribe(resp =>{
       this.lengthTrans= resp.body.pagingInfo.totalCount;
       this.transactionsData.data = resp.body.items;
     }, error =>{
@@ -300,6 +317,34 @@ export class AccountDetailsComponent implements OnInit {
       // redirect somewhere
     })
    }
+
+   
+  loadUsersTransactionsSub(){
+
+    let endD = new Date(this.rangeTransSub.controls.end.value);
+    endD.setDate(endD.getDate() + 1);
+    
+    let start = this.sharedService.formatDate(this.rangeTransSub.controls.start.value.getDate(),this.rangeTransSub.controls.start.value.getMonth()+1,this.rangeTransSub.controls.start.value.getFullYear()) 
+    let end = this.sharedService.formatDate(endD.getDate(),endD.getMonth()+1,endD.getFullYear(), true) 
+
+    let id = this.authService.decodedToken.id;
+
+    this.dataService.getTransactions(this.pageIndexTransSub , this.pageSize, '', '', '',id, start,end,this.directParentTrans, this.transactionType2 ).subscribe(resp =>{
+      this.lengthTransSub= resp.body.pagingInfo.totalCount;
+      this.transactionsSubData.data = resp.body.items;
+    }, error =>{
+      debugger
+
+      // redirect somewhere
+    })
+   }
+
+   updatePageTransSub(page:any) {
+    this.pageSize = page.pageSize;
+    this.pageIndexTransSub = page.pageIndex + 1;
+ 
+    this.loadUsersTransactionsSub();
+  }
 
    loadBettingRules(){
 

@@ -25,7 +25,8 @@
       <!-- <mat-button-toggle value="totalPl">Total P&L</mat-button-toggle> -->
       <!-- <mat-button-toggle value="casinoTotal">Casino Total P&L</mat-button-toggle> -->
       <mat-button-toggle value="transactions">Transactions</mat-button-toggle>
-
+      <mat-button-toggle value="sub-accounts-transactions" *ngIf="this.authService.decodedToken.role !== undefined && this.authService.decodedToken.role !== 'Client'"
+      >SubAccounts Transactions</mat-button-toggle>
 
       <mat-button-toggle *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'" value="bettingRules">Betting Rules</mat-button-toggle>
 
@@ -601,7 +602,7 @@
             </button>
           </div>
   
-          <mat-form-field appearance="fill" style="margin-left: 10px">
+          <mat-form-field appearance="fill" class="table-filter" style="margin-left: 10px">
             <mat-label>Enter a date range</mat-label>
             <mat-date-range-input [formGroup]="rangeTrans" [rangePicker]="picker">
               <input
@@ -624,6 +625,18 @@
               >Invalid end date</mat-error
             >
           </mat-form-field>
+
+          <mat-form-field appearance="fill" class="table-filter" *ngIf="this.authService.decodedToken.role == 'Client'">
+            <mat-label>Type </mat-label>
+            <mat-select 
+            [(ngModel)]="transactionType1"
+            >
+              <mat-option [value]="''" > All </mat-option>
+              <mat-option [value]="true" > Bet Only </mat-option>
+              <mat-option [value]="false" > Money Only </mat-option>
+            </mat-select>
+          </mat-form-field>
+
         </div>
   
         <table mat-table [dataSource]="transactionsData" style="min-width: 870px">
@@ -691,6 +704,132 @@
         [pageSize]="pageSize"
         [pageSizeOptions]="this.sharedService.pageSizeOptions"
         (page)="updatePageTrans($event)"
+        >
+        </mat-paginator>
+      </div>
+
+
+
+      <div [@contentInOut] *ngIf="profile.value == 'sub-accounts-transactions'">
+        <div class="cs-d-flex">
+  
+          <div class="refresh-button-container">
+            <button mat-fab class="reload-btn" (click)="loadUsersTransactionsSub()" 
+            [disabled]="disableReloadBtn(rangeTransSub.controls)" >
+              <mat-icon>refresh</mat-icon>
+            </button>
+          </div>
+  
+          <mat-form-field appearance="fill" style="margin-left: 10px" class="table-filter">
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [formGroup]="rangeTransSub" [rangePicker]="picker">
+              <input
+                matStartDate
+                formControlName="start"
+                placeholder="Start date"
+              />
+              <input matEndDate formControlName="end" placeholder="End date" />
+            </mat-date-range-input>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+            <mat-error
+              *ngIf="rangeTransSub.controls.start.hasError('matStartDateInvalid')"
+              >Invalid start date</mat-error
+            >
+            <mat-error *ngIf="rangeTransSub.controls.end.hasError('matEndDateInvalid')"
+              >Invalid end date</mat-error
+            >
+          </mat-form-field>
+  
+  
+          <mat-form-field appearance="fill" class="table-filter">
+            <mat-label>Type </mat-label>
+            <mat-select 
+            [(ngModel)]="transactionType2"
+            >
+              <mat-option [value]="''" > All </mat-option>
+              <mat-option [value]="true" > Bet Only </mat-option>
+              <mat-option [value]="false" > Money Only </mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          
+          <mat-form-field appearance="fill" class="table-filter" *ngIf="this.authService.decodedToken.role !== 'Master'">
+            <mat-label>Sub level </mat-label>
+            <mat-select 
+            [(ngModel)]="directParentTrans"
+            >
+              <mat-option [value]="false" > All </mat-option>
+              <mat-option [value]="true" > Direct </mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+  
+  
+        </div>
+  
+        <table mat-table [dataSource]="transactionsSubData" style="min-width: 870px">
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef>Date</th>
+            <td mat-cell *matCellDef="let row">{{ row.createdAt| date:'d/M/yyyy, h:mm a' }}</td>
+          </ng-container>
+          
+          <ng-container matColumnDef="user">
+            <th mat-header-cell *matHeaderCellDef>Username</th>
+            <td mat-cell *matCellDef="let row">{{ row.user.userName }}</td>
+          </ng-container>
+          
+          <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef>Transaction Type</th>
+            <td mat-cell *matCellDef="let row">{{ row.type }}</td>
+          </ng-container>
+  
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef>Amount</th>
+            <td mat-cell *matCellDef="let row">{{ row.amount }}</td>
+          </ng-container>
+          
+          <ng-container matColumnDef="balance change">
+            <th mat-header-cell *matHeaderCellDef>Balance Change</th>
+            <td mat-cell *matCellDef="let row"> 
+            <span class="balance-change-container">
+              {{ row.balanceBefore }} <mat-icon>arrow_right_alt</mat-icon> {{ row.balanceAfter }}
+            </span>  
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="currency">
+            <th mat-header-cell *matHeaderCellDef>Currency</th>
+            <td mat-cell *matCellDef="let row">{{ row.currencyCode }}</td>
+          </ng-container>
+          <ng-container matColumnDef="balance">
+            <th mat-header-cell *matHeaderCellDef>Current alance</th>
+            <td mat-cell *matCellDef="let row">{{ row.user.wallet.balance }}</td>
+          </ng-container>
+          <ng-container matColumnDef="comment">
+            <th mat-header-cell *matHeaderCellDef>Comment</th>
+            <td mat-cell *matCellDef="let row">{{ row.comment }}</td>
+          </ng-container>
+  
+          <ng-container matColumnDef="exchangeRate">
+            <th mat-header-cell *matHeaderCellDef>Exchange Rate</th>
+            <td mat-cell *matCellDef="let row">{{ row.exchangeRate }}</td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsTransactions"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumnsTransactions"
+          ></tr>
+        </table>
+        <mat-paginator 
+        [length]="lengthTransSub"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="this.sharedService.pageSizeOptions"
+        (page)="updatePageTransSub($event)"
         >
         </mat-paginator>
       </div>
