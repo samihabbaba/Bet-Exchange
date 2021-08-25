@@ -18,16 +18,7 @@
       >Betting History</mat-button-toggle>
       
 
-      <mat-button-toggle value="sports" [checked]="false"
-      >Sports</mat-button-toggle>
       
-
-      <mat-button-toggle value="regions" [checked]="false"
-      >Regions</mat-button-toggle>
-      
-
-      <mat-button-toggle value="leagues" [checked]="false"
-      >Leagues</mat-button-toggle>
 
       <!-- <mat-button-toggle value="forecast">Forecast</mat-button-toggle -->
       <!-- ><mat-button-toggle value="pl">P&L</mat-button-toggle> -->
@@ -37,6 +28,20 @@
 
 
       <mat-button-toggle *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'" value="bettingRules">Betting Rules</mat-button-toggle>
+
+      <mat-button-toggle value="sports" [checked]="false" *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'"
+      >Sports</mat-button-toggle>
+      
+
+      <mat-button-toggle value="regions" [checked]="false"
+      *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'"
+      >Regions</mat-button-toggle>
+      
+
+      <mat-button-toggle value="leagues" [checked]="false"
+      *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'"
+      >Leagues</mat-button-toggle>
+      
     </mat-button-toggle-group>
   
     <h3 class="cs-super-profile-account-name">{{myUser?.userName}}</h3>

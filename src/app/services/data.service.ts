@@ -242,6 +242,13 @@ export class DataService {
       observe: 'response',
     });
   }
+  
+  toggleLeagueActivation(obj: any) {
+    return this.http.put<any>(`${this.baseUrl}leagues/${obj.id}/active/toggle`, {}, {
+      headers: this.httpOptions.headers,
+      observe: 'response',
+    });
+  }
 
   //////////////////////////////
   ////// Live Controller //////
@@ -320,6 +327,13 @@ export class DataService {
 
   updateRegions(obj: any) {
     return this.http.put<any>(`${this.baseUrl}regions/${obj.id}`, obj, {
+      headers: this.httpOptions.headers,
+      observe: 'response',
+    });
+  }
+  
+  toggleRegionActivation(obj: any) {
+    return this.http.put<any>(`${this.baseUrl}regions/${obj.id}/active/toggle`, obj, {
       headers: this.httpOptions.headers,
       observe: 'response',
     });

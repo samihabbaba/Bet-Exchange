@@ -210,8 +210,11 @@ export class AccountDetailsComponent implements OnInit {
     this.loadUser()
     this.loadBets()
     this.loadUsersTransactions();
-    this.loadBettingRules();
-    this.loadSports(true);
+    if(this.authService.decodedToken.role == 'SoftwareHolder'){
+      this.loadBettingRules();
+      this.loadSports(true);
+    }
+    
     this.layoutService.mainContentDisplayType.next('other');
 
     this.changePasswordForm = this.fb.group({
