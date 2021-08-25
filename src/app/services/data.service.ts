@@ -215,7 +215,7 @@ export class DataService {
   getAllLeagues(sportId:string,regionCode: string, HasInPlay:any =null) {
 
     let query = this.convertObjectToQueryString({
-      sportId:sportId,
+      EventTypeId:sportId,
       regionCode:regionCode,
       HasInPlay:HasInPlay
     })

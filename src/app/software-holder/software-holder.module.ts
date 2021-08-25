@@ -15,6 +15,7 @@ import { SubAccountDetailsComponent } from './sub-account-details/sub-account-de
 import { AddBettingRuleComponent } from './add-betting-rule/add-betting-rule.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { DeleteBettingRuleComponent } from './delete-betting-rule/delete-betting-rule.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { DeleteBettingRuleComponent } from './delete-betting-rule/delete-betting
     CommonModule,
     SoftwareHolderRoutingModule,
     SharedModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    FormsModule
   ]
 })
 export class SoftwareHolderModule { }

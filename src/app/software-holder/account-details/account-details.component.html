@@ -390,7 +390,7 @@
       <div [@contentInOut] *ngIf="profile.value == 'bettingHistory'">
         <div class="cs-d-flex">
   
-          <div class="example-button-container">
+          <div class="refresh-button-container">
             <button mat-fab class="reload-btn" (click)="loadBets()"
             [disabled]="disableReloadBtn(rangeBets.controls)" >
               <mat-icon>refresh</mat-icon>
@@ -594,7 +594,7 @@
       <div [@contentInOut] *ngIf="profile.value == 'transactions'">
         <div class="cs-d-flex">
   
-          <div class="example-button-container">
+          <div class="refresh-button-container">
             <button mat-fab class="reload-btn" (click)="loadUsersTransactions()" 
             [disabled]="disableReloadBtn(rangeTrans.controls)" >
               <mat-icon>refresh</mat-icon>
@@ -946,7 +946,7 @@
           <mat-form-field appearance="fill">
             <mat-label>Sport</mat-label>
             <mat-select name="pl"
-            [value]="currentSportIdForRegions"
+            [(ngModel)]="currentSportIdForRegions"
             >
               <mat-option
                 *ngFor="let sport of sportsList"
@@ -1033,7 +1033,7 @@
        
         <div class="cs-d-flex">
           
-          <div class="example-button-container">
+          <div class="refresh-button-container">
             <button mat-fab class="reload-btn" (click)="loadLeagues()"
             >
               <mat-icon>refresh</mat-icon>
@@ -1043,7 +1043,7 @@
           <mat-form-field appearance="fill" >
             <mat-label>Sport</mat-label>
             <mat-select name="pl"
-            [value]="currentSportIdForLeagues"
+            [(ngModel)]="currentSportIdForLeagues"
             >
               <mat-option
                 *ngFor="let sport of sportsList"
@@ -1057,7 +1057,7 @@
           <mat-form-field appearance="fill">
             <mat-label>Region</mat-label>
             <mat-select name="pl"
-            [value]="currentRegionIdForLeagues"
+            [(ngModel)]="currentRegionIdForLeagues"
             >
               <mat-option
                 *ngFor="let region of regionsList"

@@ -29,6 +29,8 @@ export class SubAccountDetailsComponent implements OnInit {
   pageIndexBets = 1;
   lengthTrans = 0;
   pageIndexTrans = 1;
+  lengthTransSub = 0;
+  pageIndexTransSub = 1;
   lengthLogin = 0;
   pageIndexLogin = 1;
   pageSize = this.sharedService.defaultPageSize;
@@ -39,6 +41,11 @@ export class SubAccountDetailsComponent implements OnInit {
   });
 
   rangeTrans = new FormGroup({
+    start: new FormControl(new Date()),
+    end: new FormControl(new Date()),
+  });
+  
+  rangeTransSub = new FormGroup({
     start: new FormControl(new Date()),
     end: new FormControl(new Date()),
   });
@@ -66,7 +73,22 @@ export class SubAccountDetailsComponent implements OnInit {
     // 'fromTo',
   ];
 
+  displayedColumnsTransactionsSub: string[] = [
+    // 'transactionNo',
+    'userName',
+    'type',
+    'amount',
+    'balance change',
+    'balance',
+    'currency',
+    'date',
+    'comment',
+    // 'exchangeRate',
+    // 'fromTo',
+  ];
+
   transactionsData = new MatTableDataSource<any>();
+  transactionsSubData = new MatTableDataSource<any>();
 
   displayedColumnsLoginHistory: string[] = ['ip', 'createdAt', 'isSuccessfull'];
   loginHistoryData = new MatTableDataSource<any>();
@@ -107,19 +129,23 @@ export class SubAccountDetailsComponent implements OnInit {
   private sub: any;
   currentUserId = '';
   currentUser:any = {};
+  transactionType1=''
+  transactionType2=''
+  directParentTrans=false
 
   constructor(private route: ActivatedRoute, private dataService:DataService,
      public sharedService: SharedFunctionsService, public dialog: MatDialog, public authService:AuthService) {}
 
   ngOnInit(): void {
 
-
+    
 
     this.sub = this.route.params.subscribe(params => {
       this.currentUserId = params['id']; 
       this.loadUserById();
       this.loadUsersBet();
       this.loadUsersTransactions();
+      this.loadUsersTransactionsSub();
       this.loadLoginHistory();
    });
 
@@ -160,11 +186,32 @@ export class SubAccountDetailsComponent implements OnInit {
     let start = this.sharedService.formatDate(this.rangeTrans.controls.start.value.getDate(),this.rangeTrans.controls.start.value.getMonth()+1,this.rangeTrans.controls.start.value.getFullYear()) 
     let end = this.sharedService.formatDate(endD.getDate(),endD.getMonth()+1,endD.getFullYear(), true) 
 
-    
-    this.dataService.getTransactions(this.pageIndexTrans, this.pageSize, this.currentUserId, '', '','', start,end,'','').subscribe(resp =>{
+    debugger
+    this.dataService.getTransactions(this.pageIndexTrans, this.pageSize, this.currentUserId, '', '','', start,end,'',this.transactionType1).subscribe(resp =>{
 
       this.lengthTrans= resp.body.pagingInfo.totalCount;      
       this.transactionsData.data = resp.body.items;
+    }, error =>{
+      debugger
+      // redirect somewhere
+    })
+   }
+
+   
+   loadUsersTransactionsSub(){
+
+    let endD = new Date(this.rangeTransSub.controls.end.value);
+     endD.setDate(endD.getDate() + 1);
+
+    let start = this.sharedService.formatDate(this.rangeTransSub.controls.start.value.getDate(),this.rangeTransSub.controls.start.value.getMonth()+1,this.rangeTransSub.controls.start.value.getFullYear()) 
+    let end = this.sharedService.formatDate(endD.getDate(),endD.getMonth()+1,endD.getFullYear(), true) 
+
+    debugger
+    this.dataService.getTransactions(this.pageIndexTransSub, this.pageSize, '', '', '', this.currentUserId, start,end,this.directParentTrans,this.transactionType2).subscribe(resp =>{
+      debugger
+
+      this.lengthTransSub= resp.body.pagingInfo.totalCount;      
+      this.transactionsSubData.data = resp.body.items;
     }, error =>{
       debugger
       // redirect somewhere
@@ -202,11 +249,18 @@ export class SubAccountDetailsComponent implements OnInit {
   }
 
   updatePageTrans(page:any) {
-   this.pageSize = page.pageSize;
-   this.pageIndexTrans = page.pageIndex + 1;
-
-   this.loadUsersTransactions();
- }
+    this.pageSize = page.pageSize;
+    this.pageIndexTrans = page.pageIndex + 1;
+ 
+    this.loadUsersTransactions();
+  }
+  
+  updatePageTransSub(page:any) {
+    this.pageSize = page.pageSize;
+    this.pageIndexTransSub = page.pageIndex + 1;
+ 
+    this.loadUsersTransactionsSub();
+  }
 
  openBetDetail(obj:any) {
   const dialogRef = this.dialog.open(BetDetailsComponent,{
