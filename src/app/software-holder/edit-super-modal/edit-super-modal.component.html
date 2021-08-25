@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Edit Master</h2>
+<h2 mat-dialog-title>Edit</h2>
 <mat-dialog-content class="mat-typography">
   <form [formGroup]="editMasterForm">
     <div class="cs-modal-form-field-container">
@@ -33,7 +33,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="fill">
-        <mat-label>Commission (0-100)%</mat-label>
+        <mat-label>Commission (0-10)%</mat-label>
         <input
           matInput
           placeholder="Commission"
@@ -41,10 +41,10 @@
           required
           type="number"
           min="0"
-          max="100"
+          max="10"
         />
         <mat-error *ngIf="form.commission.invalid"
-          >This field is required.</mat-error
+          >This field is required. (0 - 10)</mat-error
         >
       </mat-form-field>
 

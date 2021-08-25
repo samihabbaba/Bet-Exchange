@@ -5,9 +5,13 @@
       <span class="title">  <span>{{returnEventName(event?.name)}}</span> - {{event?.eventType.name}}</span>
       <!-- <div class="event-date">Fri 2 Jul, 17:00</div> -->
       <div class="event-date">{{event?.openDate | date:"EEEE, MMMM d, h:mm a"}} -     
-        <img src="../../../../assets/flags/{{event?.region.name.toLowerCase()}}.svg"
+        <img *ngIf="event?.region.name" 
+        src="../../../../assets/flags/{{event?.region.name.toLowerCase()}}.svg"
               class="sport-menu-icon flag-header"/>
-        {{event?.region.name}} - {{event?.competition.name}}</div>
+        <!-- {{event?.region?.name}} 
+        - 
+        {{event?.competition?.name}} -->
+      </div>
     </div>
     <div class="event-buttons">
       <div class="buttons-container">

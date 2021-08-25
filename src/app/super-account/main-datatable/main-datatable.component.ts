@@ -43,6 +43,7 @@ export class MainDatatableComponent implements OnInit {
     'wallet balance',
     'isActive',
     'role',
+    'currency',
     // 'account',
     // 'availableBalance',
     // 'exposure',

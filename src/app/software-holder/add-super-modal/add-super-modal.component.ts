@@ -42,7 +42,7 @@ export class AddSuperModalComponent implements OnInit {
     }
 
     if(this.data.roleToCreate !== 'Client'){
-      objValidation = {...objValidation, commission: new FormControl(null, Validators.required)}
+      objValidation = {...objValidation, commission: new FormControl(null, [Validators.required,Validators.max(10)])}
     }
     
     if(this.data.roleToCreate === 'SuperAdmin'){

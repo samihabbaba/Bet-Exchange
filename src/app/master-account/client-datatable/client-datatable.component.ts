@@ -37,6 +37,7 @@ export class ClientDatatableComponent implements OnInit {
     'wallet balance',
     'isActive',
     'role',
+    'currency',
     // 'account',
     // 'availableBalance',
     // 'exposure',

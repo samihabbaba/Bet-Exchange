@@ -84,14 +84,21 @@
         <td mat-footer-cell *matFooterCellDef> </td>
       </ng-container>
       
-      <ng-container matColumnDef="role">
+      <!-- <ng-container matColumnDef="role">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
           role
         </th>
         <td mat-cell *matCellDef="let row">{{ row.role }}</td>
         <td mat-footer-cell *matFooterCellDef> </td>
-      </ng-container>
+      </ng-container> -->
 
+      <ng-container matColumnDef="currency">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Currency
+        </th>
+        <td mat-cell *matCellDef="let row">{{ row.wallet.currency }}</td>
+        <td mat-footer-cell *matFooterCellDef> </td>
+      </ng-container>
 
 
 
