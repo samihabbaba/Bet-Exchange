@@ -289,7 +289,6 @@ export class AccountDetailsComponent implements OnInit {
       id = '';
     }
     this.dataService.getTransactions(this.pageIndexTrans, this.pageSize, id, '', '',parentId, start,end,directParent,'' ).subscribe(resp =>{
-      // debugger
       this.lengthTrans= resp.body.pagingInfo.totalCount;
       this.transactionsData.data = resp.body.items;
     }, error =>{
@@ -300,9 +299,9 @@ export class AccountDetailsComponent implements OnInit {
    }
 
    loadBettingRules(){
-     debugger
+
     this.dataService.getBettingRules(this.pageIndexBettingRules, this.pageSize ).subscribe(resp =>{
-      // debugger
+
       this.lengthBettingRules= resp.body.pagingInfo.totalCount;
       this.bettingRulesData.data = resp.body.items;
     }, error =>{
@@ -328,7 +327,7 @@ export class AccountDetailsComponent implements OnInit {
     this.dataService.getAllRegions('',null).subscribe(resp =>{
       this.regionsList = resp.body;
       this.regionsData.data = resp.body;
-      debugger
+
       this.currentRegionIdForLeagues = resp.body[0].countryCode;
       if(loadAfter){
         this.loadLeagues();
@@ -460,8 +459,9 @@ export class AccountDetailsComponent implements OnInit {
     const dialogRef = this.dialog.open(AddBettingRuleComponent, {
       data:dataToSend,
     });
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(async (result) => {
       console.log(`Dialog result: ${result}`);
+      await this.delay(1000);
       this.loadBettingRules();
     });
   }
@@ -470,8 +470,9 @@ export class AccountDetailsComponent implements OnInit {
     const dialogRef = this.dialog.open(DeleteBettingRuleComponent, {
       data:obj,
     });
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(async (result) => {
       console.log(`Dialog result: ${result}`);
+      await this.delay(1000);
       this.loadBettingRules();
     });
   }

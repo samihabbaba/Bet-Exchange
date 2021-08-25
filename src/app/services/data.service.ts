@@ -145,13 +145,11 @@ export class DataService {
 
   // GET​/bettingrules
   getBettingRules(PageNo:any, PageSize:any, SortBy:any=null,) {
-    debugger
+
     return this.http.get<any>(
       `${this.baseUrl}bettingrules?PageNo=${
         PageNo ? PageNo : ''
-      }&PageSize=${PageSize ? PageSize : ''}&SortBy=${
-        SortBy ? SortBy : ''
-      }&SortingType=1`,
+      }&PageSize=${PageSize ? PageSize : ''}&SortingType=1`,
       {
         headers: this.httpOptions.headers,
         observe: 'response',
@@ -221,7 +219,7 @@ export class DataService {
       regionCode:regionCode,
       HasInPlay:HasInPlay
     })
-    debugger
+
     return this.http.get<any>(
       `${this.baseUrl}leagues${query}`,
       {

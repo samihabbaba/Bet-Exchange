@@ -80,8 +80,6 @@ export class BetSlipComponent implements OnInit {  tabToDisplay: any = 'Singles'
       catch(ex){
         this.notificationService.error("Error while adding Bet(s)!")
       }
-
-      debugger
       
     });
     

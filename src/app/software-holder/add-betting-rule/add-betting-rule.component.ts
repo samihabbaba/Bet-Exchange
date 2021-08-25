@@ -32,7 +32,8 @@ export class AddBettingRuleComponent implements OnInit {
     this.form = this.addMasterForm.controls;
 
     if(this.data.update){
-      this.addMasterForm.value = this.data.obj;
+      // this.addMasterForm.value = this.data.obj;
+      this.addMasterForm.reset(this.data.obj);
     }
   }
 
