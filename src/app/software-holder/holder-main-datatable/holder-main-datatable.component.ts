@@ -25,7 +25,7 @@ import { WithdrawSuperModalComponent } from '../withdraw-super-modal/withdraw-su
 export class HolderMainDatatableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | any;
   @ViewChild(MatSort) sort: MatSort | any;
-  dataSource: MatTableDataSource<any>;
+  dataSource: MatTableDataSource<any>  = new MatTableDataSource<any>();
   
   length = 0;
   pageIndex = 1;
