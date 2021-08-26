@@ -204,6 +204,7 @@
             matInput
             placeholder="Username"
             [(ngModel)]="usernameForBets"
+            (ngModelChange)="this.userQuestionUpdate.next($event)"
           />
         </mat-form-field>
 
@@ -256,7 +257,7 @@
         
         <ng-container matColumnDef="userName">
           <th mat-header-cell *matHeaderCellDef>Username</th>
-          <td mat-cell *matCellDef="let row" (click)="setUserIdForBet(row.userName, row.id)" class="underline-text">{{ row.userName }}</td>
+          <td mat-cell *matCellDef="let row" (click)="setUserIdForBet(row.userName, row.userId)" class="underline-text">{{ row.userName }}</td>
         </ng-container>
 
         

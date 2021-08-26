@@ -8,6 +8,8 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { contentInOut } from 'src/app/animations/animation';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
@@ -225,9 +227,19 @@ export class AccountDetailsComponent implements OnInit {
   statusForBets='';
   usernameForBets='';
 
+  userQuestionUpdate = new Subject<string>();
+
+  
   constructor(private fb: FormBuilder,  private router: Router, private dataService:DataService
     , public sharedService:SharedFunctionsService, public authService:AuthService, 
-    public dialog: MatDialog, private notify:NotificationService, private layoutService:LayoutService) {}
+    public dialog: MatDialog, private notify:NotificationService, private layoutService:LayoutService) {
+      this.userQuestionUpdate.pipe(
+        debounceTime(800),
+        distinctUntilChanged())
+        .subscribe(value => {
+          this.loadBets();
+        });
+    }
   ngOnInit(): void {
     this.loadUser()
     this.loadBets()
@@ -558,6 +570,8 @@ export class AccountDetailsComponent implements OnInit {
     this.usernameForBets = '';
     this.userIdForBets = userId;
     this.usernameForIdForBets = 'User: ' + username;
+
+    this.loadBets();
   }
 
 }

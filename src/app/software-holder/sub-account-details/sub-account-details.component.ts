@@ -6,7 +6,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { stat } from 'fs';
-import { from } from 'rxjs';
+import { from, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { contentInOut } from 'src/app/animations/animation';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
@@ -145,8 +146,18 @@ export class SubAccountDetailsComponent implements OnInit {
   statusForBets='';
   usernameForBets='';
 
+  userQuestionUpdate = new Subject<string>();
+
+  
   constructor(private route: ActivatedRoute, private dataService:DataService,
-     public sharedService: SharedFunctionsService, public dialog: MatDialog, public authService:AuthService) {}
+     public sharedService: SharedFunctionsService, public dialog: MatDialog, public authService:AuthService) {
+      this.userQuestionUpdate.pipe(
+        debounceTime(800),
+        distinctUntilChanged())
+        .subscribe(value => {
+          this.loadUsersBet();
+        });
+     }
 
   ngOnInit(): void {
 
@@ -318,10 +329,12 @@ export class SubAccountDetailsComponent implements OnInit {
       this.parentIdForBets = this.currentUserId;
     }
     else{
-      // this.parentIdForBets = '';
+      this.parentIdForBets = '';
     }
     this.userIdForBets = userId;
     this.usernameForIdForBets = 'User: ' + username;
+
+    this.loadUsersBet();
   }
 
   ss:Date = new Date();   
