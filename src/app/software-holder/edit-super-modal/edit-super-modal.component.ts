@@ -5,6 +5,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { NotificationService } from 'src/app/services/notification.service';
 
@@ -22,13 +23,25 @@ export class EditSuperModalComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dataService:DataService,
     private notify:NotificationService,
+    private authService:AuthService,
     private dialogRef: MatDialogRef<EditSuperModalComponent>
   ) {
     dialogRef.disableClose = true;
   }
 
   ngOnInit(): void {
+
+    if(this.data.profitCommission){
+      this.data.profitCommission *= 100;
+    }
+    
+    if(!this.data.maxCommission){
+      this.data.maxCommission = 10 - this.authService.currentUserInfo.parentCommission;
+    }
+
     this.initalizeForm();
+
+
     // this.data.commission = this.data.commission*100;
     
     this.editMasterForm.value =  this.data;
@@ -39,13 +52,44 @@ export class EditSuperModalComponent implements OnInit {
   }
 
   initalizeForm() {
-    this.editMasterForm = this.fb.group({
-      email: new FormControl(this.data.email, Validators.required),
-      name: new FormControl(this.data.name, Validators.required),
-      phoneNumber: new FormControl(this.data.phoneNumber, Validators.required),
-      commission: new FormControl(this.data.commission, Validators.required),
-      
-    });
+    let objToBuild:any = {};
+
+    if(this.data.role == 'SuperAdmin'){
+      objToBuild = this.fb.group({
+        email: new FormControl(this.data.email, Validators.required),
+        name: new FormControl(this.data.name, Validators.required),
+        phoneNumber: new FormControl(this.data.phoneNumber, Validators.required),
+        commission: new FormControl(this.data.commission, [Validators.required,Validators.max(this.data.maxCommission)]),
+        // risk: new FormControl(this.data.risk, [Validators.required, Validators.max(100), Validators.min(0)]),
+        profitCommission: new FormControl(this.data.profitCommission, [Validators.required, Validators.max(25), Validators.min(0)]),
+      });
+    }
+
+    else if(this.data.role == 'Client'){
+      objToBuild = this.fb.group({
+        email: new FormControl(this.data.email, Validators.required),
+        name: new FormControl(this.data.name, Validators.required),
+        phoneNumber: new FormControl(this.data.phoneNumber, Validators.required),
+        // commission: new FormControl(this.data.commission, [Validators.required,Validators.max(this.data.maxCommission)]),
+        risk: new FormControl(this.data.risk, [Validators.required, Validators.max(100), Validators.min(0)]),
+        // profitCommission: new FormControl(this.data.profitCommission, [Validators.required, Validators.max(25), Validators.min(0)]),
+      });
+    }
+    else{
+      objToBuild = this.fb.group({
+        email: new FormControl(this.data.email, Validators.required),
+        name: new FormControl(this.data.name, Validators.required),
+        phoneNumber: new FormControl(this.data.phoneNumber, Validators.required),
+        commission: new FormControl(this.data.commission, [Validators.required,Validators.max(this.data.maxCommission)]),
+        risk: new FormControl(this.data.risk, [Validators.required, Validators.max(100), Validators.min(0)]),
+        // profitCommission: new FormControl(this.data.profitCommission, [Validators.required, Validators.max(25), Validators.min(0)]),
+      });
+    }
+
+    
+
+
+    this.editMasterForm = objToBuild;
   }
 
   updateSuper(){

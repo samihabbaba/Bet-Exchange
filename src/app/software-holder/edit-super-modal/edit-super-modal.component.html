@@ -32,8 +32,8 @@
         >
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Commission (0-10)%</mat-label>
+      <mat-form-field appearance="fill" *ngIf="this.data.role !== 'Client'">
+        <mat-label>Commission (0-{{this.data.maxCommission}})% </mat-label>
         <input
           matInput
           placeholder="Commission"
@@ -41,10 +41,42 @@
           required
           type="number"
           min="0"
-          max="10"
+          max="{{this.data.maxCommission}}"
         />
         <mat-error *ngIf="form.commission.invalid"
-          >This field is required. (0 - 10)</mat-error
+          >This field is required. (0 - {{this.data.maxCommission}})</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" *ngIf="this.data.role !== 'SuperAdmin'">
+        <mat-label>Risk (0-100)%</mat-label>
+        <input
+          matInput
+          placeholder="risk"
+          formControlName="risk"
+          required
+          type="number"
+          min="0"
+          max="100"
+        />
+        <mat-error *ngIf="form.risk.invalid"
+          >This field is required. (0 - 100)%</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" *ngIf="this.data.role === 'SuperAdmin'">
+        <mat-label>Profit Commission (0-25)%</mat-label>
+        <input
+          matInput
+          placeholder="profitCommission"
+          formControlName="profitCommission"
+          required
+          type="number"
+          min="0"
+          max="25"
+        />
+        <mat-error *ngIf="form.profitCommission.invalid"
+          >This field is required. (0 - 25)%</mat-error
         >
       </mat-form-field>
 
