@@ -44,11 +44,32 @@ export class DataService {
   ////// Bet Controller //////
   ///////////////////////////////
 
-  getBets(PageNo:number, PageSize:number, UserId='', ParentId='', BetType='', MarketId='', SelectionId='', EventTypeId='', CompetitionId='',StartDate='', EndDate='', OnLastActionDate=false) {
-    return this.http.get<any>(`${this.baseUrl}bets?PageNo=${PageNo}&PageSize=${PageSize}&UserId=${UserId}&ParentId=${ParentId}&BetType=${BetType}&MarketId=${MarketId}&SelectionId=${SelectionId}&EventTypeId=${EventTypeId}&CompetitionId=${CompetitionId}&StartDate=${StartDate}&EndDate=${EndDate}&OnLastActionDate=${OnLastActionDate}`, {
+  getBets(PageNo:number, PageSize:number, UserId='', ParentId='', BetType='', MarketId='', SelectionId='', EventTypeId='', CompetitionId='',StartDate='', EndDate='', OnLastActionDate=false,UserName='',BetStatus='') {
+   let query = this.convertObjectToQueryString({
+    PageNo:PageNo,
+    PageSize:PageSize,
+    UserId:UserId,
+    ParentId:ParentId,
+    BetType:BetType, 
+    MarketId: MarketId, 
+    SelectionId: SelectionId, 
+    EventTypeId: EventTypeId, 
+    CompetitionId: CompetitionId,
+    StartDate: StartDate, 
+    EndDate: EndDate, 
+    OnLastActionDate:OnLastActionDate,
+    UserName: UserName,
+    BetStatus: BetStatus
+   })
+    return this.http.get<any>(`${this.baseUrl}bets${query}`, {
       headers: this.httpOptions.headers,
       observe: 'response',
     });
+
+    // return this.http.get<any>(`${this.baseUrl}bets?PageNo=${PageNo}&PageSize=${PageSize}&UserId=${UserId}&ParentId=${ParentId}&BetType=${BetType}&MarketId=${MarketId}&SelectionId=${SelectionId}&EventTypeId=${EventTypeId}&CompetitionId=${CompetitionId}&StartDate=${StartDate}&EndDate=${EndDate}&OnLastActionDate=${OnLastActionDate}&UserName=${UserName}&BetStatus=${BetStatus}`, {
+    //   headers: this.httpOptions.headers,
+    //   observe: 'response',
+    // });
   }
 
   submitBets(bets:any){        

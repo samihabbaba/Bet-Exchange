@@ -377,28 +377,25 @@
   
         <div class="cs-d-flex">
 
-          <span appearance="fill" class="table-filter"  *ngIf="userIdForBets !== ''" style="cursor: pointer;">
-            <mat-form-field appearance="fill" class="table-filter" (click)="setUserIdForBet()" >
-              <!-- <mat-label>Username</mat-label> -->
-              <input
-              type="text"
-              matInput
-              placeholder="usernameForIdForBets"
-              [(ngModel)]="this.usernameForIdForBets"
-              style="text-align:center;"
-              (ngModelChange)="setUserIdForBet()"
-              />
-            </mat-form-field>
-          </span>
+          <mat-form-field appearance="fill" class="table-filter" (click)="setUserIdForBet()" *ngIf="userIdForBets !== ''" style="cursor: pointer;" >
+            <!-- <mat-label>Username</mat-label> -->
+            <input
+            type="text"
+            matInput
+            placeholder="usernameForIdForBets"
+            [(ngModel)]="this.usernameForIdForBets"
+            style="text-align:center;"
+            (ngModelChange)="setUserIdForBet()"
+            />
+          </mat-form-field>
 
-          <mat-form-field appearance="fill" class="table-filter">
+          <mat-form-field appearance="fill" class="table-filter" *ngIf="userIdForBets === ''">
             <mat-label>Username</mat-label>
             <input
             type="text"
               matInput
               placeholder="Username"
-              formControlName="Username"
-              [(ngModel)]="this.usernameForBets"
+              [(ngModel)]="usernameForBets"
             />
           </mat-form-field>
 
@@ -408,9 +405,14 @@
             [(ngModel)]="statusForBets"
             >
               <mat-option [value]="''" > All </mat-option>
-              <mat-option [value]="'Win'" > Win </mat-option>
-              <mat-option [value]="'Lose'" > Lose </mat-option>
-              <mat-option [value]="'more ..'" > more .. </mat-option>
+              <mat-option [value]="'WIN'" > Win </mat-option>
+              <mat-option [value]="'LOSE'" > Lose </mat-option>
+              <mat-option [value]="'PENDING'" > Pending </mat-option>
+              <mat-option [value]="'VOID'" > Void </mat-option>
+              <mat-option [value]="'UNMATCHED'" > Unmatched </mat-option>
+              <mat-option [value]="'EXPIRED'" > Expired </mat-option>
+              <mat-option [value]="'SETTLED'" > Settled </mat-option>
+              <mat-option [value]="'UNSETTLED'" > Unsettled </mat-option>
             </mat-select>
           </mat-form-field>
 

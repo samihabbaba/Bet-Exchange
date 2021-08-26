@@ -207,4 +207,21 @@ export class AuthService {
       this.currentUserInfo.balance = 'Unkown';
     })
   }
+
+  checkTokenValidity(){
+    let loginURL = environment.apiUrl+'auth/check-token';
+    let token = localStorage.getItem('token');
+
+    this.http.post(loginURL+'?token='+token,{} , {
+      observe: 'response',
+    }).subscribe(resp => {
+      if(resp.status !== 200){
+        this.logut()
+      }
+    },
+    error =>{
+      this.logut()
+    });
+  
+  }
 }

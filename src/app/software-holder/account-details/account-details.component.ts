@@ -293,8 +293,8 @@ export class AccountDetailsComponent implements OnInit {
     
     let start = this.sharedService.formatDate(this.rangeBets.controls.start.value.getDate(),this.rangeBets.controls.start.value.getMonth()+1,this.rangeBets.controls.start.value.getFullYear()) 
     let end = this.sharedService.formatDate(endD.getDate(),endD.getMonth()+1,endD.getFullYear(), true) 
-   
-    this.dataService.getBets(this.pageIndexBets, this.pageSize, this.userIdForBets, this.parentIdForBets, this.betTypeForBets,'','',this.sportIdForBets,'',start,end, this.onActionDateForBets).subscribe(resp =>{
+   debugger
+    this.dataService.getBets(this.pageIndexBets, this.pageSize, this.userIdForBets, this.parentIdForBets, this.betTypeForBets,'','',this.sportIdForBets,'',start,end, this.onActionDateForBets, this.usernameForBets, this.statusForBets).subscribe(resp =>{
      this.lengthBets = resp.body.pagingInfo.totalCount
      this.bettingHistoryData.data = resp.body.items;
    }, error =>{
@@ -555,6 +555,7 @@ export class AccountDetailsComponent implements OnInit {
   }
 
   setUserIdForBet(username='', userId=''){
+    this.usernameForBets = '';
     this.userIdForBets = userId;
     this.usernameForIdForBets = 'User: ' + username;
   }
