@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { stat } from 'fs';
 import { from } from 'rxjs';
 import { contentInOut } from 'src/app/animations/animation';
 import { AuthService } from 'src/app/services/auth.service';
@@ -132,6 +133,17 @@ export class SubAccountDetailsComponent implements OnInit {
   transactionType1=''
   transactionType2=''
   directParentTrans=false
+  sportsList:any = [];
+
+  //bet filter parameters
+  sportIdForBets=''; //EventTypeId
+  betTypeForBets='';  // BACK / LAY
+  onActionDateForBets=false;
+  parentIdForBets='';
+  userIdForBets='';
+  usernameForIdForBets='';
+  statusForBets='';
+  usernameForBets='';
 
   constructor(private route: ActivatedRoute, private dataService:DataService,
      public sharedService: SharedFunctionsService, public dialog: MatDialog, public authService:AuthService) {}
@@ -142,11 +154,13 @@ export class SubAccountDetailsComponent implements OnInit {
 
     this.sub = this.route.params.subscribe(params => {
       this.currentUserId = params['id']; 
+      this.parentIdForBets = this.currentUserId;
       this.loadUserById();
       this.loadUsersBet();
       this.loadUsersTransactions();
       this.loadUsersTransactionsSub();
       this.loadLoginHistory();
+      this.loadSports();
    });
 
    
@@ -169,7 +183,7 @@ export class SubAccountDetailsComponent implements OnInit {
      let start = this.sharedService.formatDate(this.rangeBets.controls.start.value.getDate(),this.rangeBets.controls.start.value.getMonth()+1,this.rangeBets.controls.start.value.getFullYear()) 
      let end = this.sharedService.formatDate(endD.getDate(),endD.getMonth()+1,endD.getFullYear(), true) 
 
-     this.dataService.getBets(this.pageIndexBets, this.pageSize, '', this.currentUserId,'','','','','',start,end).subscribe(resp =>{
+     this.dataService.getBets(this.pageIndexBets, this.pageSize, this.userIdForBets, this.parentIdForBets, this.betTypeForBets,'','',this.sportIdForBets,'',start,end, this.onActionDateForBets,this.usernameForBets,this.statusForBets).subscribe(resp =>{
       this.lengthBets = resp.body.pagingInfo.totalCount
       this.bettingHistoryData.data = resp.body.items;
     }, error =>{
@@ -197,7 +211,6 @@ export class SubAccountDetailsComponent implements OnInit {
     })
    }
 
-   
    loadUsersTransactionsSub(){
 
     let endD = new Date(this.rangeTransSub.controls.end.value);
@@ -240,6 +253,14 @@ export class SubAccountDetailsComponent implements OnInit {
     }
     return false;
    }
+
+   loadSports(loadAfter = false){
+    this.dataService.getSports().subscribe(resp => {
+
+      this.sportsList = resp.body.sort((a:any, b:any) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+      
+    })
+  }
 
    updatePageBets(page:any) {
     this.pageSize = page.pageSize;
@@ -289,6 +310,18 @@ export class SubAccountDetailsComponent implements OnInit {
   
   delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
+  setUserIdForBet(username='', userId=''){
+    this.usernameForBets = '';
+    if(userId == ''){
+      this.parentIdForBets = this.currentUserId;
+    }
+    else{
+      // this.parentIdForBets = '';
+    }
+    this.userIdForBets = userId;
+    this.usernameForIdForBets = 'User: ' + username;
   }
 
   ss:Date = new Date();   

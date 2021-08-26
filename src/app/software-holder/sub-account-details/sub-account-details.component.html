@@ -121,12 +121,14 @@
     <div [@contentInOut] *ngIf="profile.value == 'bettingHistory'">
       <div class="cs-d-flex">
 
+        
         <div class="refresh-button-container">
           <button mat-fab class="reload-btn" (click)="loadUsersBet()"
           [disabled]="disableReloadBtn(rangeBets.controls)" >
             <mat-icon>refresh</mat-icon>
           </button>
         </div>
+
 
         <mat-form-field appearance="fill" style="margin-left: 10px">
           <mat-label>Enter a date range</mat-label>
@@ -155,6 +157,91 @@
           >
         </mat-form-field>
 
+        <mat-form-field appearance="fill" class="table-filter">
+          <mat-label>Sport </mat-label>
+          <mat-select 
+          [(ngModel)]="sportIdForBets"
+          >
+            <mat-option [value]="''" > All </mat-option>
+            <mat-option *ngFor="let sport of sportsList" [value]="sport.id" > {{sport.name}} </mat-option>
+          </mat-select>
+        </mat-form-field>
+        
+        <mat-form-field appearance="fill" class="table-filter">
+          <mat-label>Bet Type</mat-label>
+          <mat-select 
+          [(ngModel)]="sportIdForBets"
+          >
+            <mat-option [value]="''" > All </mat-option>
+            <mat-option [value]="'BACK'" > BACK </mat-option>
+            <mat-option [value]="'LAY'" > Lay </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        
+        
+
+      </div>
+
+      <div class="cs-d-flex">
+
+        <mat-form-field appearance="fill" class="table-filter" (click)="setUserIdForBet()" *ngIf="userIdForBets !== ''" style="cursor: pointer;" >
+          <!-- <mat-label>Username</mat-label> -->
+          <input
+          type="text"
+          matInput
+          placeholder="usernameForIdForBets"
+          [(ngModel)]="this.usernameForIdForBets"
+          style="text-align:center;"
+          (ngModelChange)="setUserIdForBet()"
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="table-filter" *ngIf="userIdForBets === ''">
+          <mat-label>Username</mat-label>
+          <input
+          type="text"
+            matInput
+            placeholder="Username"
+            [(ngModel)]="usernameForBets"
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="table-filter">
+          <mat-label>Status</mat-label>
+          <mat-select 
+          [(ngModel)]="statusForBets"
+          >
+            <mat-option [value]="''" > All </mat-option>
+            <mat-option [value]="'WIN'" > Win </mat-option>
+            <mat-option [value]="'LOSE'" > Lose </mat-option>
+            <mat-option [value]="'PENDING'" > Pending </mat-option>
+            <mat-option [value]="'VOID'" > Void </mat-option>
+            <mat-option [value]="'UNMATCHED'" > Unmatched </mat-option>
+            <mat-option [value]="'EXPIRED'" > Expired </mat-option>
+            <mat-option [value]="'SETTLED'" > Settled </mat-option>
+            <mat-option [value]="'UNSETTLED'" > Unsettled </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        
+        <span appearance="fill" class="table-filter" style="height: 100%;">
+          <mat-slide-toggle [(ngModel)]="onActionDateForBets" style="transform: translateY(60%); "> Action Date</mat-slide-toggle>
+        </span>
+        
+        <!-- <div class="col-xl-12" *ngIf="usernameAlert != null">
+          <p>
+            <ngb-alert
+              style="text-align: center"
+              [type]="usernameAlert.type"
+              (closed)="closeAlert()"
+              (close)="closeAlert()"
+              >{{ usernameAlert.message }}</ngb-alert
+            >
+          </p>
+        </div> -->
+
+
       </div>
 
       <table
@@ -169,7 +256,7 @@
         
         <ng-container matColumnDef="userName">
           <th mat-header-cell *matHeaderCellDef>Username</th>
-          <td mat-cell *matCellDef="let row">{{ row.userName }}</td>
+          <td mat-cell *matCellDef="let row" (click)="setUserIdForBet(row.userName, row.id)" class="underline-text">{{ row.userName }}</td>
         </ng-container>
 
         
@@ -285,13 +372,10 @@
                   <mat-icon>delete_outline</mat-icon>
                   <span>Cancel</span>
                 </button>
-
-               </mat-menu>
-
+                               
+               
+              </mat-menu>
             </button>
-
-
-
   
             
            
@@ -313,6 +397,8 @@
         <tr
           mat-row
           *matRowDef="let row; columns: displayedColumnsBettingHistory"
+          [ngClass]="{'Back-bet-selection': row.selection.betType == 'BACK',
+                      'Lay-bet-selection': row.selection.betType == 'LAY'}"
         ></tr>
       </table>
 
