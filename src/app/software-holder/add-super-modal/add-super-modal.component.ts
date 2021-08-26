@@ -5,6 +5,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
@@ -22,12 +23,17 @@ export class AddSuperModalComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
      public sharedFunctions:SharedFunctionsService,
      private dataService:DataService,
-      private notify:NotificationService,
-      private dialogRef: MatDialogRef<AddSuperModalComponent>) {
+     private authService:AuthService,
+     private notify:NotificationService,
+     private dialogRef: MatDialogRef<AddSuperModalComponent>) {
         dialogRef.disableClose = true;
       }
 
   ngOnInit(): void {
+    debugger
+    if(!this.data.maxCommission){
+      this.data.maxCommission = 10 - this.authService.currentUserInfo.parentCommission;
+    }
     this.initalizeForm();
     this.form = this.addMasterForm.controls;
   }
@@ -45,11 +51,16 @@ export class AddSuperModalComponent implements OnInit {
     }
 
     if(this.data.roleToCreate !== 'Client'){
-      objValidation = {...objValidation, commission: new FormControl(null, [Validators.required,Validators.max(10)])}
+      objValidation = {...objValidation, commission: new FormControl(null, [Validators.required,Validators.max(this.data.maxCommission)])}
     }
     
     if(this.data.roleToCreate === 'SuperAdmin'){
       objValidation = {...objValidation, walletCurrency: new FormControl(null, Validators.required)}
+      objValidation = {...objValidation, profitCommission: new FormControl(null, [Validators.required, Validators.max(25), Validators.min(0)])}
+    }
+    else
+    {
+      objValidation = {...objValidation, risk: new FormControl(null, [Validators.required, Validators.max(100), Validators.min(0)])}
     }
 
     this.addMasterForm = this.fb.group(objValidation);

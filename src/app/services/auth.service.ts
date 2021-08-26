@@ -32,7 +32,8 @@ export class AuthService {
   currentUserInfo:any = {
     balance:'',
     currency:'',
-    userName:''
+    userName:'',
+    parentCommission:0
   }
 
   performLogIn(loginModel?:any) {
@@ -80,6 +81,7 @@ export class AuthService {
             this.logInSuccess = false;
             this.notificationService.error('Error while Logging to the system',5000);  
           }
+          this.updateCurrentBalance();
         }
         else{
           this.logInSuccess = false;
@@ -202,6 +204,7 @@ export class AuthService {
 
     this.dataService.getUserById(this.decodedToken.id).subscribe(resp => {
       this.currentUserInfo.balance = resp.wallet.balance;
+      this.currentUserInfo.parentCommission = (resp.parentCommission + resp.commission)*100;
     },
     error =>{
       this.currentUserInfo.balance = 'Unkown';

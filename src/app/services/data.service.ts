@@ -727,6 +727,13 @@ this.layoutService.closeMenuChilds();
       if(obj.commission){
         obj.commission /= 100.
       }
+      if(obj.profitCommission){
+        obj.profitCommission /= 100.
+      }
+      if(obj.risk){
+        obj.risk /= 100.
+      }
+      
       return this.http.put(
         `${environment.apiUrl}users/${obj.id}`,
         obj,
@@ -738,6 +745,12 @@ this.layoutService.closeMenuChilds();
       if(obj.commission){
         obj.commission /= 100.
       }
+      if(obj.profitCommission){
+        obj.profitCommission /= 100.
+      }
+      if(obj.risk){
+        obj.risk /= 100.
+      }
 
       return this.http.post(`${environment.apiUrl}users`, obj, {
         headers: this.httpOptions.headers,
@@ -746,6 +759,7 @@ this.layoutService.closeMenuChilds();
     }
   
     updatePassword(id:string , password:string) {
+      
       return this.http.put(
         `${environment.apiUrl}users/${id}/password`,
         {newPassword:password},
