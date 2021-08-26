@@ -215,6 +215,16 @@ export class AccountDetailsComponent implements OnInit {
   transactionType2=''
   directParentTrans=false
 
+  //bet filter parameters
+  sportIdForBets=''; //EventTypeId
+  betTypeForBets='';  // BACK / LAY
+  onActionDateForBets=false;
+  parentIdForBets='';
+  userIdForBets='';
+  usernameForIdForBets='';
+  statusForBets='';
+  usernameForBets='';
+
   constructor(private fb: FormBuilder,  private router: Router, private dataService:DataService
     , public sharedService:SharedFunctionsService, public authService:AuthService, 
     public dialog: MatDialog, private notify:NotificationService, private layoutService:LayoutService) {}
@@ -284,7 +294,7 @@ export class AccountDetailsComponent implements OnInit {
     let start = this.sharedService.formatDate(this.rangeBets.controls.start.value.getDate(),this.rangeBets.controls.start.value.getMonth()+1,this.rangeBets.controls.start.value.getFullYear()) 
     let end = this.sharedService.formatDate(endD.getDate(),endD.getMonth()+1,endD.getFullYear(), true) 
    
-    this.dataService.getBets(this.pageIndexBets, this.pageSize, '', '','','','','','',start,end).subscribe(resp =>{
+    this.dataService.getBets(this.pageIndexBets, this.pageSize, this.userIdForBets, this.parentIdForBets, this.betTypeForBets,'','',this.sportIdForBets,'',start,end, this.onActionDateForBets).subscribe(resp =>{
      this.lengthBets = resp.body.pagingInfo.totalCount
      this.bettingHistoryData.data = resp.body.items;
    }, error =>{
@@ -361,8 +371,10 @@ export class AccountDetailsComponent implements OnInit {
 
    loadSports(loadAfter = false){
      this.dataService.getSports().subscribe(resp => {
-       this.sportsList = resp.body;
-       this.sportsData.data = resp.body;
+
+       this.sportsList = resp.body.sort((a:any, b:any) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+       this.sportsData.data = resp.body.sort((a:any, b:any) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+       
        if(this.currentSportIdForRegions === ''){
          this.currentSportIdForRegions = resp.body[0].id;
        }
@@ -534,13 +546,17 @@ export class AccountDetailsComponent implements OnInit {
 
   notActiveRegions:any =[]
   sportForRegionChange(){
-debugger
     let index = this.sportsList.findIndex((x:any)=> x.id == this.currentSportIdForRegions)
     this.notActiveRegions = this.sportsList[index].deactivatedRegions;
   }
 
   isRegionActive(code:any){
     return !this.notActiveRegions.some((x:any)=> x.countryCode == code);
+  }
+
+  setUserIdForBet(username='', userId=''){
+    this.userIdForBets = userId;
+    this.usernameForIdForBets = 'User: ' + username;
   }
 
 }

@@ -3544,3 +3544,16 @@ td, th span {
 .mat-button-toggle-group{
   overflow: auto !important;
 }
+
+.underline-text
+{
+  text-decoration: underline;
+}
+
+.Back-bet-selection{
+  background-color: var(--light-blue);
+}
+
+.Lay-bet-selection{
+  background-color: var(--light-red);
+}
