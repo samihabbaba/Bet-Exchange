@@ -222,8 +222,8 @@ export class BetSlipService {
 
   updateOpenBets(event?:any){
     this.openBetsToView = this.currentOpenBets.filter(x=> x.selection.eventName === this.selectedOpenBet);
-    this.openBetsToViewMatched = this.currentOpenBets.filter(x=> x.selection.eventName === this.selectedOpenBet && x.status == 'UNMATCHED');
-    this.openBetsToViewUnmatched = this.currentOpenBets.filter(x=> x.selection.eventName === this.selectedOpenBet && x.status == 'PENDING');
+    this.openBetsToViewUnmatched= this.currentOpenBets.filter(x=> x.selection.eventName === this.selectedOpenBet && x.status == 'UNMATCHED');
+    this.openBetsToViewMatched = this.currentOpenBets.filter(x=> x.selection.eventName === this.selectedOpenBet && x.status == 'PENDING');
   }
 
   updateOpenBetsOptions(){

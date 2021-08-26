@@ -41,7 +41,7 @@ export class MenuComponent implements OnInit {
   ngOnInit(): void {
 
     this.menu =[];
-    this.dataService.getSports().subscribe(resp => {
+    this.dataService.getSports(true).subscribe(resp => {
       
       resp.body.forEach((element:any) => {
         this.menu.push({
@@ -138,7 +138,7 @@ export class MenuComponent implements OnInit {
         // item.id = 'International';
   
         this.dataService
-          .getAllLeagues(item.sportId, item.id)
+          .getAllLeagues(item.sportId, item.id,'',true)
           .pipe(finalize(() => this.layoutService.stopMenuLoading()))
           .subscribe(
             (resp) => {

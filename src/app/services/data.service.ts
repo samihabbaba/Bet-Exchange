@@ -5,6 +5,7 @@ import { finalize, map } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { LayoutService } from './layout.service';
 import { LiveFeedService } from './live-feed.service';
+import { isatty } from 'tty';
 
 @Injectable({
   providedIn: 'root',
@@ -142,8 +143,11 @@ export class DataService {
   ///// Sports Controller /////
   //////////////////////////////////
 
-  getSports() {
-    return this.http.get<any>(`${this.baseUrl}sports`, {
+  getSports(isActive:any = '') {
+    let query = this.convertObjectToQueryString({
+      isActive:isActive
+    })
+    return this.http.get<any>(`${this.baseUrl}sports${query}`, {
       headers: this.httpOptions.headers,
       observe: 'response',
     });
@@ -240,12 +244,13 @@ export class DataService {
   }
 
   // GET​/leagues
-  getAllLeagues(sportId:string,regionCode: string, HasInPlay:any =null) {
+  getAllLeagues(sportId:string,regionCode: string, HasInPlay:any =null, isActive:any = '') {
 
     let query = this.convertObjectToQueryString({
       EventTypeId:sportId,
       regionCode:regionCode,
-      HasInPlay:HasInPlay
+      HasInPlay:HasInPlay,
+      isActive:isActive
     })
 
     return this.http.get<any>(
