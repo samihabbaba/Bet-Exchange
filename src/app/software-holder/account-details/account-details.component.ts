@@ -305,7 +305,6 @@ export class AccountDetailsComponent implements OnInit {
     
     let start = this.sharedService.formatDate(this.rangeBets.controls.start.value.getDate(),this.rangeBets.controls.start.value.getMonth()+1,this.rangeBets.controls.start.value.getFullYear()) 
     let end = this.sharedService.formatDate(endD.getDate(),endD.getMonth()+1,endD.getFullYear(), true) 
-   debugger
     this.dataService.getBets(this.pageIndexBets, this.pageSize, this.userIdForBets, this.parentIdForBets, this.betTypeForBets,'','',this.sportIdForBets,'',start,end, this.onActionDateForBets, this.usernameForBets, this.statusForBets).subscribe(resp =>{
      this.lengthBets = resp.body.pagingInfo.totalCount
      this.bettingHistoryData.data = resp.body.items;
@@ -334,7 +333,6 @@ export class AccountDetailsComponent implements OnInit {
       this.lengthTrans= resp.body.pagingInfo.totalCount;
       this.transactionsData.data = resp.body.items;
     }, error =>{
-      debugger
 
       // redirect somewhere
     })
@@ -355,7 +353,6 @@ export class AccountDetailsComponent implements OnInit {
       this.lengthTransSub= resp.body.pagingInfo.totalCount;
       this.transactionsSubData.data = resp.body.items;
     }, error =>{
-      debugger
 
       // redirect somewhere
     })
@@ -375,7 +372,6 @@ export class AccountDetailsComponent implements OnInit {
       this.lengthBettingRules= resp.body.pagingInfo.totalCount;
       this.bettingRulesData.data = resp.body.items;
     }, error =>{
-      debugger
 
       // redirect somewhere
     })

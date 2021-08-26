@@ -65,7 +65,6 @@ export class ConfirmationMessageComponent implements OnInit {
   }
 
   toggleRegionActivation(){
-    debugger
     this.dataService.toggleRegionActivationForSport(this.data.sportId,this.data.obj.countryCode).subscribe(resp => {
 
       this.notify.success(this.successMsg);
@@ -88,7 +87,6 @@ export class ConfirmationMessageComponent implements OnInit {
   }
 
   toggleLeagueActivation(){
-    debugger
     this.dataService.toggleLeagueActivation(this.data.obj.id).subscribe(resp => {
 
       this.notify.success(this.successMsg);

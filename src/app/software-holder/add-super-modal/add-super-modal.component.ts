@@ -30,7 +30,6 @@ export class AddSuperModalComponent implements OnInit {
       }
 
   ngOnInit(): void {
-    debugger
     if(!this.data.maxCommission){
       this.data.maxCommission = 10 - this.authService.currentUserInfo.parentCommission;
     }

@@ -211,13 +211,11 @@ export class SubAccountDetailsComponent implements OnInit {
     let start = this.sharedService.formatDate(this.rangeTrans.controls.start.value.getDate(),this.rangeTrans.controls.start.value.getMonth()+1,this.rangeTrans.controls.start.value.getFullYear()) 
     let end = this.sharedService.formatDate(endD.getDate(),endD.getMonth()+1,endD.getFullYear(), true) 
 
-    debugger
     this.dataService.getTransactions(this.pageIndexTrans, this.pageSize, this.currentUserId, '', '','', start,end,'',this.transactionType1).subscribe(resp =>{
 
       this.lengthTrans= resp.body.pagingInfo.totalCount;      
       this.transactionsData.data = resp.body.items;
     }, error =>{
-      debugger
       // redirect somewhere
     })
    }
@@ -230,14 +228,12 @@ export class SubAccountDetailsComponent implements OnInit {
     let start = this.sharedService.formatDate(this.rangeTransSub.controls.start.value.getDate(),this.rangeTransSub.controls.start.value.getMonth()+1,this.rangeTransSub.controls.start.value.getFullYear()) 
     let end = this.sharedService.formatDate(endD.getDate(),endD.getMonth()+1,endD.getFullYear(), true) 
 
-    debugger
     this.dataService.getTransactions(this.pageIndexTransSub, this.pageSize, '', '', '', this.currentUserId, start,end,this.directParentTrans,this.transactionType2).subscribe(resp =>{
-      debugger
 
       this.lengthTransSub= resp.body.pagingInfo.totalCount;      
       this.transactionsSubData.data = resp.body.items;
     }, error =>{
-      debugger
+
       // redirect somewhere
     })
    }

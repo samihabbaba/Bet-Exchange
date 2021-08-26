@@ -8,6 +8,7 @@ import { SignalRNotificationsService } from './signal-r-notifications.service';
 export class NotificationService {
   constructor(private _snackBar: MatSnackBar, private zone: NgZone, private notiSignalR:SignalRNotificationsService) {
     this.notiSignalR.notification.subscribe(noti => {
+      debugger
       if(!noti){
         return
       }
