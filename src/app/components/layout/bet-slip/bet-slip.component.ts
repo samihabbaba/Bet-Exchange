@@ -56,7 +56,7 @@ export class BetSlipComponent implements OnInit {  tabToDisplay: any = 'Singles'
     .pipe(finalize( () =>       this.stopLoading()
     ))
     .subscribe((resp:any) => {
-      debugger
+      // debugger
       // this.authService.updateCurrentBalance();
       let g = resp.body[0].user.wallet.balance;
       this.authService.currentUserInfo.balance = resp.body[0].user.wallet.balance;
@@ -69,6 +69,7 @@ export class BetSlipComponent implements OnInit {  tabToDisplay: any = 'Singles'
       this.betSlipService.updateOpenBetsOptions();
       this.notificationService.success("Bet(s) added successfully!")
     }, error =>{
+      debugger
       try{
         let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
         if( msg !== undefined){
@@ -78,7 +79,17 @@ export class BetSlipComponent implements OnInit {  tabToDisplay: any = 'Singles'
         }
       }
       catch(ex){
-        this.notificationService.error("Error while adding Bet(s)!")
+        try{
+          let msg = error.error; 
+          if( msg !== undefined){
+            this.notificationService.error(msg);
+          }else{
+            this.notificationService.error("Error while adding Bet(s)!")
+          }
+        }
+        catch(exx){
+          this.notificationService.error("Error while adding Bet(s)!")
+        }
       }
       
     });

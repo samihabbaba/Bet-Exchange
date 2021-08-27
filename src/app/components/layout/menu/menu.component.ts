@@ -142,8 +142,8 @@ export class MenuComponent implements OnInit {
           .pipe(finalize(() => this.layoutService.stopMenuLoading()))
           .subscribe(
             (resp) => {
-              
-  
+
+              item.children=[];
               for (let i = 0; i < resp.body.length; i++) {
                 item.children?.push({
                   id: resp.body[i].id,
