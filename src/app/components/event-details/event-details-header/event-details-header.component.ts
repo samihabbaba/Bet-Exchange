@@ -17,9 +17,8 @@ export class EventDetailsHeaderComponent implements OnInit {
   }
   
   returnEventName(eventName:string){
-
     if(eventName == null || eventName == undefined){
-      eventName;
+      return '';
     }
 
     if(eventName.includes(" v ")){

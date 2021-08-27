@@ -495,6 +495,7 @@ export class DataService {
     } else {
       this.layoutService.startMainLoading();
     }
+
     this.eventDetails.next([]);
     this.layoutService.displayGameDetails();
 
@@ -503,9 +504,9 @@ export class DataService {
       .subscribe(
         (resp) => {
 
-          if(resp.body.market.length > 0){
-            this.layoutService.displayGameDetails();
+          if(resp.body.markets.length > 0){
             this.eventDetails.next({ ...resp.body, isLive: true });
+            // this.layoutService.displayGameDetails();
             if (!ignoreListen) {
               this.liveFeed.listenToEvent(eventId);
             }
@@ -640,6 +641,7 @@ this.layoutService.closeMenuChilds();
     } else {
       this.layoutService.startMainLoading();
     }
+
     this.eventDetails.next([]);
     this.layoutService.displayGameDetails();
 
@@ -647,8 +649,7 @@ this.layoutService.closeMenuChilds();
       .pipe(finalize(() => this.layoutService.stopMainLoading()))
       .subscribe(
         (resp) => {
-
-          if(resp.body.market.length > 0){
+          if(resp.body.markets.length > 0){
             this.layoutService.displayGameDetails();
             this.eventDetails.next(resp.body);
           }
