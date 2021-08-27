@@ -11,7 +11,7 @@ export class SharedFunctionsService {
   defaultPageSize = 50;
 
   popularMarkets = ['Match Odds', 'Half Time', 'Both teams to Score?', 'Over/Under 1.5 Goals', 'First Half Goals 1.5', 'Series Winner', 'Regular Time Match Odds',
-   'Match Winner', 'Moneyline', 'Fight Result']
+   'Match Winner', 'Moneyline', 'Fight Result', 'Winner']
 
    mainMarkets = ['Match Odds', 'Fight Result', 'Moneyline', 'Match Winner', 'Regular Time Match Odds', ];
 
@@ -30,7 +30,7 @@ export class SharedFunctionsService {
 
   returnTeamNameFromEvent(eventName:string, isHome = true){
 
-    if(eventName === undefined || eventName === null || (!eventName.includes(" v ") && !eventName.includes(" @ "))){
+    if(eventName === undefined || eventName === null || (!eventName.includes(" v ") && !eventName.includes(" @ ")&& !eventName.includes(" vs "))){
       if(isHome){
         return eventName;
       }else{
@@ -50,6 +50,13 @@ export class SharedFunctionsService {
         return eventName.split(" @ ")[0].trim();
       }else{
         return eventName.split(" @ ")[1].trim();
+      }
+    }
+    else if(eventName.includes(" vs ")){
+      if(isHome){
+        return eventName.split(" vs ")[0].trim();
+      }else{
+        return eventName.split(" vs ")[1].trim();
       }
     }
     else{
