@@ -77,7 +77,8 @@ export class AuthService {
           if(dataLoaded){
             this.logInSuccess = true;
             this.route.navigateByUrl('home')
-            .then(() => {
+            .then(async () =>  {
+              await this.delay(300);
               window.location.reload();
             });
           }else{
@@ -230,4 +231,10 @@ export class AuthService {
     });
   
   }
+
+
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
 }
