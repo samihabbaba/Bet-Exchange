@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { LayoutService } from './layout.service';
 import { LiveFeedService } from './live-feed.service';
 import { isatty } from 'tty';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +29,8 @@ export class DataService {
   constructor(
     private http: HttpClient,
     private layoutService: LayoutService,
-    public liveFeed: LiveFeedService
+    public liveFeed: LiveFeedService,
+    private noti:NotificationService
   ) {
     this.liveFeed.selectedEvents.subscribe((resp) => {
       this.handleLiveFeed(resp);
@@ -500,10 +502,17 @@ export class DataService {
       .pipe(finalize(() => this.layoutService.stopMainLoading()))
       .subscribe(
         (resp) => {
-          this.layoutService.displayGameDetails();
-          this.eventDetails.next({ ...resp.body, isLive: true });
-          if (!ignoreListen) {
-            this.liveFeed.listenToEvent(eventId);
+
+          if(resp.body.market.length > 0){
+            this.layoutService.displayGameDetails();
+            this.eventDetails.next({ ...resp.body, isLive: true });
+            if (!ignoreListen) {
+              this.liveFeed.listenToEvent(eventId);
+            }
+          }
+          else{
+            this.layoutService.displayLiveGames();
+            this.noti.info('Can\'t load the requested event at the moment');
           }
         },
         (error) => {
@@ -638,9 +647,15 @@ this.layoutService.closeMenuChilds();
       .pipe(finalize(() => this.layoutService.stopMainLoading()))
       .subscribe(
         (resp) => {
-          this.layoutService.displayGameDetails();
 
-          this.eventDetails.next(resp.body);
+          if(resp.body.market.length > 0){
+            this.layoutService.displayGameDetails();
+            this.eventDetails.next(resp.body);
+          }
+          else{
+            this.layoutService.displayPreGames();
+            this.noti.info('Can\'t load the requested event at the moment');
+          }
         },
         (error) => {
           this.eventDetails.next([]);
