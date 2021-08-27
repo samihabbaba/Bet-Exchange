@@ -29,23 +29,29 @@ export class SignalRNotificationsService {
     let token:any = localStorage.getItem('token');
      
 		this._connection = new HubConnectionBuilder()
-			.withUrl(notificationsEndpoint, {
-				withCredentials: true,
-				headers: { authorization: 'bearer '+token },
+			.withUrl(notificationsEndpoint + `?access_token=Bearer ${token}`, {
+				// withCredentials: true,
+        // accessTokenFactory: () => token,
+        // skipNegotiation: true
+        logMessageContent: true
 			})
 			.withAutomaticReconnect()
 			.build();
+
 		this._connection
 			.start()
 			.then(() => {
-        debugger
         console.log("SignalR Notifications connected");
         if(this.router.url !== '/login')
         {
           this.startNotificationListen();
+          this._connection.invoke("GetMyId")
+            .then(id => console.log("My ID from invokation is " + id))
+            .catch(console.error);
         }
       })
-      .catch((err) => { debugger;
+      .catch((err) => {
+        debugger;
          console.log("SIGMA", err)})
       
 	}
