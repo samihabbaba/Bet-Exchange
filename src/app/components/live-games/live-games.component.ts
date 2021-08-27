@@ -17,8 +17,6 @@ export class LiveGamesComponent implements OnInit, OnDestroy {
   constructor(
     public dataService: DataService,
     public sharedService: SharedFunctionsService,
-    private router: Router,
-    private layoutService: LayoutService,
     public betSlipService: BetSlipService,
     private ref: ChangeDetectorRef
   ) {

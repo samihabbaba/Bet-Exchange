@@ -108,6 +108,7 @@ export class LiveFeedService {
   }
 
 	startLiveUpdate(){
+		this.stopLiveUpdate();
 		this._connection.on("liveUpdate", this.onLiveUpdate.bind(this));
 	}
 	
