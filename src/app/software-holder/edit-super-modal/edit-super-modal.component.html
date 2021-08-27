@@ -4,7 +4,7 @@
     <div class="cs-modal-form-field-container">
 
       <mat-form-field appearance="fill">
-        <mat-label>Email</mat-label>
+        <mat-label><mat-icon>email</mat-icon> Email</mat-label>
         <input matInput placeholder="Email" formControlName="email" required />
         <mat-error *ngIf="form.email.invalid"
           >This field is required.</mat-error
@@ -12,7 +12,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="fill">
-        <mat-label>Name</mat-label>
+        <mat-label><mat-icon>person</mat-icon> Name</mat-label>
         <input
           matInput
           placeholder="name"
@@ -25,7 +25,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="fill">
-        <mat-label>Phone</mat-label>
+        <mat-label><mat-icon>phone</mat-icon> Phone</mat-label>
         <input matInput placeholder="Phone" formControlName="phoneNumber" required />
         <mat-error *ngIf="form.phoneNumber.invalid"
           >This field is required.</mat-error
@@ -33,7 +33,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="fill" *ngIf="this.data.role !== 'Client'">
-        <mat-label>Commission (0-{{this.data.maxCommission}})% </mat-label>
+        <mat-label><mat-icon>paid</mat-icon> Commission (0-{{this.data.maxCommission}})% </mat-label>
         <input
         matTooltip="{{10-this.data.maxCommission}}% of the commission is taken by parents accounts"
           matInput
@@ -50,7 +50,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="fill" *ngIf="this.data.role !== 'SuperAdmin'">
-        <mat-label>Risk (0-100)%</mat-label>
+        <mat-label><mat-icon>warning</mat-icon> Risk (0-100)%</mat-label>
         <input
           matInput
           placeholder="risk"
@@ -66,7 +66,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="fill" *ngIf="this.data.role === 'SuperAdmin'">
-        <mat-label>Profit Commission (0-25)%</mat-label>
+        <mat-label><mat-icon>price_check</mat-icon> Profit Commission (0-25)%</mat-label>
         <input
           matInput
           placeholder="profitCommission"

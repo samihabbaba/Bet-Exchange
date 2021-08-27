@@ -5,7 +5,7 @@
      
 
       <mat-form-field appearance="fill">
-        <mat-label>Username</mat-label>
+        <mat-label> <mat-icon>person_add_alt</mat-icon> Username</mat-label>
         <input
           matInput
           placeholder="Username"
@@ -18,7 +18,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="fill">
-        <mat-label>name</mat-label>
+        <mat-label><mat-icon>person</mat-icon> name</mat-label>
         <input
           matInput
           placeholder="name"
@@ -31,7 +31,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="fill">
-        <mat-label>E-mail</mat-label>
+        <mat-label><mat-icon>email</mat-icon> E-mail</mat-label>
         <input matInput placeholder="E-mail" formControlName="email" required />
         <mat-error *ngIf="form.email.invalid"
           >This field is required.</mat-error
@@ -39,7 +39,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="fill">
-        <mat-label>Phone</mat-label>
+        <mat-label><mat-icon>phone</mat-icon> Phone</mat-label>
         <input matInput placeholder="Phone" formControlName="phoneNumber" required />
         <mat-error *ngIf="form.phoneNumber.invalid"
           >This field is required.</mat-error
@@ -47,7 +47,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="fill">
-        <mat-label>Password</mat-label>
+        <mat-label><mat-icon>lock</mat-icon> Password</mat-label>
         <input
           matInput
           placeholder="Password"
@@ -76,7 +76,7 @@
       
 
       <mat-form-field appearance="fill" *ngIf="this.data.roleToCreate !== 'Client'" >
-        <mat-label  >Commission (0-{{this.data.maxCommission}})% </mat-label >
+        <mat-label  ><mat-icon>paid</mat-icon> Commission (0-{{this.data.maxCommission}})% </mat-label >
           <input
           matTooltip="{{10-this.data.maxCommission}}% of the commission is taken by parents accounts"
           matInput
@@ -93,7 +93,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="fill" *ngIf="this.data.roleToCreate !== 'SuperAdmin'">
-        <mat-label >Risk (0-100)%</mat-label>
+        <mat-label ><mat-icon>warning</mat-icon> Risk (0-100)%</mat-label>
         <input
           matInput
           placeholder="risk"
@@ -110,7 +110,7 @@
 
       
       <mat-form-field appearance="fill" *ngIf="this.data.roleToCreate === 'SuperAdmin'">
-        <mat-label>Profit Commission (0-25)%</mat-label>
+        <mat-label><mat-icon>price_check</mat-icon> Profit Commission (0-25)%</mat-label>
         <input
           matInput
           placeholder="profitCommission"
@@ -126,7 +126,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="fill" *ngIf="this.data.roleToCreate === 'SuperAdmin'">
-        <mat-label>Currency</mat-label>
+        <mat-label><mat-icon>price_change</mat-icon> Currency</mat-label>
         <mat-select formControlName="walletCurrency" required>
           <mat-option *ngFor="let item of this.sharedFunctions.currencyList" value="{{item}}">{{item}}</mat-option>
         </mat-select>
