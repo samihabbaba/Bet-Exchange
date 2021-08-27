@@ -1,26 +1,42 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Inject, Injectable, Injector, NgZone } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { AuthService } from './auth.service';
 import { SignalRNotificationsService } from './signal-r-notifications.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NotificationService {
-  constructor(private _snackBar: MatSnackBar, private zone: NgZone, private notiSignalR:SignalRNotificationsService) {
+  constructor(private _snackBar: MatSnackBar, private zone: NgZone
+    , private notiSignalR:SignalRNotificationsService, @Inject(Injector) private injector: Injector) {
     this.notiSignalR.notification.subscribe(noti => {
-      // debugger
+      debugger
       if(!noti){
         return
       }
       
-      if(noti.type == 'ACCOUNT_SUSPENDED'){
+      if(noti.type == 'ACCOUNT_SUSPENDED' || noti.type == 0){
         this.error(noti.message);
       }
+      
       else if(noti.type == 'BET_MATCHED'){
         this.info(noti.message);
       }
 
+      else if(noti.type == 'BET_VOIDED'){
+        this.info(noti.message);
+      }
+
+      else if(noti.type == 'FORCE_LOGOUT'){
+        this.info(noti.message);
+        this.authService.logut();
+      }
+
     })
+  }
+
+  private get authService(): AuthService {
+    return this.injector.get(AuthService);
   }
 
   success(message: string, duration?: number) {

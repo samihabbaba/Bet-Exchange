@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DataService } from 'src/app/services/data.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
 
 @Component({
   selector: 'app-confirmation-message',
@@ -14,6 +15,7 @@ export class ConfirmationMessageComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dataService:DataService,
     private notify:NotificationService,
+    private sharedService:SharedFunctionsService,
     private dialogRef: MatDialogRef<ConfirmationMessageComponent>) {
       dialogRef.disableClose = true;
      }
@@ -48,7 +50,7 @@ export class ConfirmationMessageComponent implements OnInit {
     this.dataService.toggleSportActive(this.data.obj.id).subscribe(resp => {
 
       this.notify.success(this.successMsg);
-      this.dialogRef.close();
+      this.closeDialog();
 
     }, error => {
       this.dialogRef.close();
@@ -71,7 +73,7 @@ export class ConfirmationMessageComponent implements OnInit {
     this.dataService.toggleRegionActivationForSport(this.data.sportId,this.data.obj.countryCode).subscribe(resp => {
 
       this.notify.success(this.successMsg);
-      this.dialogRef.close();
+      this.closeDialog();
     }, error => {
       this.dialogRef.close();
         try{
@@ -93,7 +95,7 @@ export class ConfirmationMessageComponent implements OnInit {
     this.dataService.toggleLeagueActivation(this.data.obj.id).subscribe(resp => {
 
       this.notify.success(this.successMsg);
-      this.dialogRef.close();
+      this.closeDialog();
     }, error => {
       this.dialogRef.close();
         try{
@@ -116,7 +118,7 @@ export class ConfirmationMessageComponent implements OnInit {
     this.dataService.toggleUserSuspend(this.data.obj.id).subscribe(resp => {
 
       this.notify.success(this.successMsg);
-      this.dialogRef.close();
+      this.closeDialog();
     }, error => {
       this.dialogRef.close();
         try{
@@ -132,5 +134,11 @@ export class ConfirmationMessageComponent implements OnInit {
         }
 
     })
+  }
+
+
+  async closeDialog(){
+    await this.sharedService.delay(400);
+    this.dialogRef.close();
   }
 }

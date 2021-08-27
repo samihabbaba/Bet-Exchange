@@ -431,6 +431,8 @@ export class SharedFunctionsService {
     }
   }
 
-
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
 
 }
