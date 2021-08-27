@@ -63,6 +63,7 @@
         <div *ngIf="myUser.role !== 'Client'">Commission: &nbsp; <span>{{this.sharedService.formatNumber( myUser?.commission*100)}}%</span></div>
         <div *ngIf="myUser?.role !== 'SuperAdmin' && myUser?.role !== 'SoftwareHolder'">Parents Commission: &nbsp; <span>{{this.sharedService.formatNumber( myUser?.parentCommission*100)}}%</span></div>
         <div *ngIf="myUser?.role === 'SuperAdmin'">Profit Commission: &nbsp; <span>{{this.sharedService.formatNumber( myUser?.profitCommission*100)}}%</span></div>
+        <div *ngIf="myUser?.role !== 'SoftwareHolder'">Risk: &nbsp; <span>{{this.sharedService.formatNumber( myUser?.risk)}}%</span></div>
 
         <div>Active: &nbsp; <span> 
         {{myUser?.isActive ? 'True' : 'False'}}
