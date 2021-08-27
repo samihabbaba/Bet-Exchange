@@ -77,6 +77,9 @@ export class AuthService {
           if(dataLoaded){
             this.logInSuccess = true;
             this.route.navigateByUrl('home')
+            .then(() => {
+              window.location.reload();
+            });
           }else{
             this.logInSuccess = false;
             this.notificationService.error('Error while Logging to the system',5000);  

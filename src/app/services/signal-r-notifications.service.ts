@@ -23,27 +23,30 @@ export class SignalRNotificationsService {
 
   recivedNotification = new BehaviorSubject<any>(null);
   notification = this.recivedNotification.asObservable();
-
+  
 
 	constructor(public router: Router) {
+    let token:any = localStorage.getItem('token');
+     
 		this._connection = new HubConnectionBuilder()
 			.withUrl(notificationsEndpoint, {
 				withCredentials: true,
-				headers: { authorization: environment.apiKey },
+				headers: { authorization: 'bearer '+token },
 			})
 			.withAutomaticReconnect()
 			.build();
 		this._connection
 			.start()
 			.then(() => {
-
+        debugger
         console.log("SignalR Notifications connected");
         if(this.router.url !== '/login')
         {
           this.startNotificationListen();
         }
       })
-      .catch((err) => { console.log("SIGMA", err)})
+      .catch((err) => { debugger;
+         console.log("SIGMA", err)})
       
 	}
 
@@ -60,7 +63,7 @@ export class SignalRNotificationsService {
 	startNotificationListen(){
 
     console.log('noti on')
-		this._connection.on("Notification", this.onNotificationReceive.bind(this));
+		this._connection.on("onNotification", this.onNotificationReceive.bind(this));
 	}
 	
 	stopNotificationListen(){
