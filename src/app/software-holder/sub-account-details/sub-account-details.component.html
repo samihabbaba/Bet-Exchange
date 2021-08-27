@@ -47,10 +47,21 @@
       <div>Wallet Currency: &nbsp; <span> {{currentUser?.wallet?.currency}} </span></div>
       <div>Wallet Balance: &nbsp; <span> {{this.sharedService.formatNumber( currentUser?.wallet?.balance )}} </span></div>
       <div *ngIf="currentUser?.role !== 'Client'" >SubAccounts Balance: &nbsp; <span> {{this.sharedService.formatNumber( currentUser?.subAccountBalance )}} </span></div>
-      
-      <div>Active: &nbsp; <span> {{currentUser?.isActive}} </span></div>
       <div>Role: &nbsp; <span> {{currentUser?.role}} </span></div>
       
+      <div>Active: &nbsp; <span> 
+        {{currentUser?.isActive ? 'True' : 'False'}}
+          <!-- <mat-icon *ngIf="!myUser?.isActive" class="wrong-sign">dangerous</mat-icon>
+          <mat-icon *ngIf="myUser?.isActive" class="tick-sign">check_circle</mat-icon>   -->
+        
+        </span></div>
+        <div>Suspended: &nbsp; <span>
+        {{currentUser?.isSuspended ? 'True' : 'False'}}
+          <!-- <mat-icon *ngIf="!myUser?.isSuspended" class="wrong-sign">dangerous</mat-icon>
+          <mat-icon *ngIf="myUser?.isSuspended" class="tick-sign">check_circle</mat-icon>   -->
+        
+        </span></div>
+
     </div>
 
     <div [@contentInOut] *ngIf="profile.value == 'profitLoss'">

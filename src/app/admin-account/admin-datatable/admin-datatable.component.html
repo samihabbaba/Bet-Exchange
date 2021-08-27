@@ -84,6 +84,18 @@
         <td mat-footer-cell *matFooterCellDef> </td>
       </ng-container>
       
+      <ng-container matColumnDef="isSuspended">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Suspended
+        </th>
+            
+            <td mat-cell *matCellDef="let row">
+              <mat-icon *ngIf="!row.isSuspended" class="wrong-sign">dangerous</mat-icon>
+              <mat-icon *ngIf="row.isSuspended" class="tick-sign">check_circle</mat-icon>  
+            </td>
+        <td mat-footer-cell *matFooterCellDef> </td>
+      </ng-container>
+      
       <!-- <ng-container matColumnDef="role">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
           role
@@ -206,6 +218,13 @@
           <mat-icon>new_releases</mat-icon>
           <span *ngIf="!row.isActive">Activate</span>
           <span *ngIf="row.isActive">Deactivate</span>
+        </button>
+
+        <button mat-menu-item (click)="openConfirmDialog(row,4)">
+          <mat-icon *ngIf="!row.isSuspended">block</mat-icon>
+          <mat-icon *ngIf="row.isSuspended">accessibility_new</mat-icon>
+          <span *ngIf="!row.isSuspended">Suspend</span>
+          <span *ngIf="row.isSuspended">Unsuspend</span>
         </button>
        
         <button mat-menu-item>

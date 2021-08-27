@@ -12,6 +12,7 @@ import { DepositSuperModalComponent } from 'src/app/software-holder/deposit-supe
 import { WithdrawSuperModalComponent } from 'src/app/software-holder/withdraw-super-modal/withdraw-super-modal.component';
 import { ChangePasswordModalComponent } from 'src/app/software-holder/change-password-modal/change-password-modal.component';
 import { EditSuperModalComponent } from 'src/app/software-holder/edit-super-modal/edit-super-modal.component';
+import { ConfirmationMessageComponent } from 'src/app/shared/confirmation-message/confirmation-message.component';
 
 @Component({
   selector: 'app-admin-datatable',
@@ -37,6 +38,7 @@ export class AdminDatatableComponent implements OnInit {
     'commission',
     'wallet balance',
     'isActive',
+    'isSuspended',
     // 'role',
     // 'currency',
     // 'account',
@@ -193,4 +195,34 @@ export class AdminDatatableComponent implements OnInit {
       this.loadUsers();
     });
   }
+
+  openConfirmDialog(obj:any,functionToCall:number){
+ 
+    let confirmMsg= '';
+    let successMsg= '';
+    let errorMsg= '';
+    if(functionToCall == 4){
+
+       confirmMsg= obj.isSuspended? 'Are You Sure You want to unsuspend user ?': 'Are You Sure You want to suspend user ?';
+       successMsg= 'User Updated';
+       errorMsg= 'Error on user update';
+    }
+  
+    const dialogRef = this.dialog.open(ConfirmationMessageComponent,{
+      data:{
+        obj:obj,
+        functionToCall:functionToCall,
+        confirmMsg:confirmMsg,
+        successMsg:successMsg,
+        errorMsg:errorMsg,
+      }
+    });
+  
+    dialogRef.afterClosed().subscribe( async (result) => {
+      if(functionToCall == 4){
+        this.loadUsers();
+      }
+    });
+  }
+  
 }
