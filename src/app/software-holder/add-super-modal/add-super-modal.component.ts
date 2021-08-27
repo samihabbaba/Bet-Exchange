@@ -33,6 +33,11 @@ export class AddSuperModalComponent implements OnInit {
     if(!this.data.maxCommission){
       this.data.maxCommission = 10 - this.authService.currentUserInfo.parentCommission;
     }
+
+    if(this.data.maxCommission > 10 || this.data.maxCommission<0){
+      this.data.maxCommission = 0
+    }
+
     this.initalizeForm();
     this.form = this.addMasterForm.controls;
   }
@@ -50,7 +55,7 @@ export class AddSuperModalComponent implements OnInit {
     }
 
     if(this.data.roleToCreate !== 'Client'){
-      objValidation = {...objValidation, commission: new FormControl(null, [Validators.required,Validators.max(this.data.maxCommission)])}
+      objValidation = {...objValidation, commission: new FormControl(null, [Validators.required,Validators.max(this.data.maxCommission),Validators.min(0)])}
     }
     
     if(this.data.roleToCreate === 'SuperAdmin'){

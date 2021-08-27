@@ -35,6 +35,7 @@
       <mat-form-field appearance="fill" *ngIf="this.data.role !== 'Client'">
         <mat-label>Commission (0-{{this.data.maxCommission}})% </mat-label>
         <input
+        matTooltip="{{10-this.data.maxCommission}}% of the commission is taken by parents accounts"
           matInput
           placeholder="Commission"
           formControlName="commission"

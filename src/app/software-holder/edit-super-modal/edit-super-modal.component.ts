@@ -39,6 +39,10 @@ export class EditSuperModalComponent implements OnInit {
       this.data.maxCommission = 10 - this.authService.currentUserInfo.parentCommission;
     }
 
+    if(this.data.maxCommission > 10 || this.data.maxCommission<0){
+      this.data.maxCommission = 0
+    }
+
     this.initalizeForm();
 
 
@@ -59,7 +63,7 @@ export class EditSuperModalComponent implements OnInit {
         email: new FormControl(this.data.email, Validators.required),
         name: new FormControl(this.data.name, Validators.required),
         phoneNumber: new FormControl(this.data.phoneNumber, Validators.required),
-        commission: new FormControl(this.data.commission, [Validators.required,Validators.max(this.data.maxCommission)]),
+        commission: new FormControl(this.data.commission, [Validators.required,Validators.max(this.data.maxCommission),Validators.min(0)]),
         // risk: new FormControl(this.data.risk, [Validators.required, Validators.max(100), Validators.min(0)]),
         profitCommission: new FormControl(this.data.profitCommission, [Validators.required, Validators.max(25), Validators.min(0)]),
       });

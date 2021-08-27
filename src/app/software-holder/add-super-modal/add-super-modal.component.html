@@ -75,9 +75,10 @@
 
       
 
-      <mat-form-field appearance="fill" *ngIf="this.data.roleToCreate !== 'Client'">
-        <mat-label>Commission (0-{{this.data.maxCommission}})% </mat-label>
-        <input
+      <mat-form-field appearance="fill" *ngIf="this.data.roleToCreate !== 'Client'" >
+        <mat-label  >Commission (0-{{this.data.maxCommission}})% </mat-label >
+          <input
+          matTooltip="{{10-this.data.maxCommission}}% of the commission is taken by parents accounts"
           matInput
           placeholder="Commission"
           formControlName="commission"
@@ -92,7 +93,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="fill" *ngIf="this.data.roleToCreate !== 'SuperAdmin'">
-        <mat-label>Risk (0-100)%</mat-label>
+        <mat-label >Risk (0-100)%</mat-label>
         <input
           matInput
           placeholder="risk"
@@ -149,4 +150,5 @@
   >
     Add
   </button>
+
 </mat-dialog-actions>
