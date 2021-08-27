@@ -24,14 +24,15 @@ export class BetSlipService {
 
   constructor(private http: HttpClient, private notiSignalR:SignalRNotificationsService) {
     this.notiSignalR.notification.subscribe(noti => {
+
       if(!noti){
         return
       }
       
       //bet id should be in .message or .payload (not sure)
       else if(noti.type == 'BET_MATCHED'){
-        if(this.currentOpenBets.some(x=>x.id == noti.message)){
-          let index = this.currentOpenBets.findIndex(x=>x.id == noti.message)
+        if(this.currentOpenBets.some(x=>x.id == noti.payload)){
+          let index = this.currentOpenBets.findIndex(x=>x.id == noti.payload)
           if(index > -1){
             this.currentOpenBets[index].status = 'PENDING';
             this.updateOpenBets();

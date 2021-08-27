@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
     // if (this.router.url.includes('profile') ){
     //   return true
     // }
-    // debugger
+
     if(this.authService.loggedIn()){
       let role =  this.authService.decodedToken.role;
       let toRet = role === 'Client';

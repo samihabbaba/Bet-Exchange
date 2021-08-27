@@ -10,7 +10,7 @@ export class NotificationService {
   constructor(private _snackBar: MatSnackBar, private zone: NgZone
     , private notiSignalR:SignalRNotificationsService, @Inject(Injector) private injector: Injector) {
     this.notiSignalR.notification.subscribe(noti => {
-      debugger
+
       if(!noti){
         return
       }
