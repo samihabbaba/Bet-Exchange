@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
 import { ActivationModalComponent } from 'src/app/shared/activation-modal/activation-modal.component';
+import { ConfirmationMessageComponent } from 'src/app/shared/confirmation-message/confirmation-message.component';
 // import { MasterUser } from 'src/app/models/master-user';
 import { AddSuperModalComponent } from '../add-super-modal/add-super-modal.component';
 import { ChangePasswordModalComponent } from '../change-password-modal/change-password-modal.component';
@@ -40,6 +41,7 @@ export class HolderMainDatatableComponent implements OnInit {
     'commission',
     'wallet balance',
     'isActive',
+    'isSuspended',
     // 'role',
     'currency',
     // 'account',
@@ -267,6 +269,7 @@ export class HolderMainDatatableComponent implements OnInit {
   }
 
   openActivationDialog(obj:any){
+
     const dialogRef = this.dialog.open(ActivationModalComponent, {
       data: obj,
     });
@@ -275,4 +278,34 @@ export class HolderMainDatatableComponent implements OnInit {
       this.loadUsers();
     });
   }
+
+  openConfirmDialog(obj:any,functionToCall:number){
+ 
+    let confirmMsg= '';
+    let successMsg= '';
+    let errorMsg= '';
+    if(functionToCall == 4){
+
+       confirmMsg= obj.isSuspended? 'Are You Sure You want to unsuspend user ?': 'Are You Sure You want to suspend user ?';
+       successMsg= 'User Updated';
+       errorMsg= 'Error on user update';
+    }
+  
+    const dialogRef = this.dialog.open(ConfirmationMessageComponent,{
+      data:{
+        obj:obj,
+        functionToCall:functionToCall,
+        confirmMsg:confirmMsg,
+        successMsg:successMsg,
+        errorMsg:errorMsg,
+      }
+    });
+  
+    dialogRef.afterClosed().subscribe( async (result) => {
+      if(functionToCall == 4){
+        this.loadUsers();
+      }
+    });
+  }
+  
 }

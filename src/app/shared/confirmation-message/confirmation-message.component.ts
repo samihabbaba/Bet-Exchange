@@ -39,6 +39,9 @@ export class ConfirmationMessageComponent implements OnInit {
     else if(this.functionToCall == 3){
       this.toggleLeagueActivation();
     }
+    else if(this.functionToCall == 4){
+      this.toggleUserSuspend();
+    }
   }
 
   toggleSportActivation(){
@@ -88,6 +91,29 @@ export class ConfirmationMessageComponent implements OnInit {
 
   toggleLeagueActivation(){
     this.dataService.toggleLeagueActivation(this.data.obj.id).subscribe(resp => {
+
+      this.notify.success(this.successMsg);
+      this.dialogRef.close();
+    }, error => {
+      this.dialogRef.close();
+        try{
+          let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
+          if( msg !== undefined){
+            this.notify.error(msg);
+          }else{
+            this.notify.error(this.errorMsg);
+          }
+        }
+        catch(ex){
+          this.notify.error(this.errorMsg);
+        }
+
+    })
+  }
+
+  
+  toggleUserSuspend(){
+    this.dataService.toggleUserSuspend(this.data.obj.id).subscribe(resp => {
 
       this.notify.success(this.successMsg);
       this.dialogRef.close();

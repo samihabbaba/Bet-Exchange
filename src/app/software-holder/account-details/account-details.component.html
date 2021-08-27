@@ -63,7 +63,19 @@
         <div *ngIf="myUser.role !== 'Client'">Commission: &nbsp; <span>{{this.sharedService.formatNumber( myUser?.commission*100)}}%</span></div>
         <div *ngIf="myUser?.role !== 'SuperAdmin' && myUser?.role !== 'SoftwareHolder'">Parents Commission: &nbsp; <span>{{this.sharedService.formatNumber( myUser?.parentCommission*100)}}%</span></div>
         <div *ngIf="myUser?.role === 'SuperAdmin'">Profit Commission: &nbsp; <span>{{this.sharedService.formatNumber( myUser?.profitCommission*100)}}%</span></div>
-        <div>Active: &nbsp; <span> {{myUser?.isActive}} </span></div>
+
+        <div>Active: &nbsp; <span> 
+        {{myUser?.isActive ? 'True' : 'False'}}
+          <!-- <mat-icon *ngIf="!myUser?.isActive" class="wrong-sign">dangerous</mat-icon>
+          <mat-icon *ngIf="myUser?.isActive" class="tick-sign">check_circle</mat-icon>   -->
+        
+        </span></div>
+        <div>Suspended: &nbsp; <span>
+        {{myUser?.isSuspended ? 'True' : 'False'}}
+          <!-- <mat-icon *ngIf="!myUser?.isSuspended" class="wrong-sign">dangerous</mat-icon>
+          <mat-icon *ngIf="myUser?.isSuspended" class="tick-sign">check_circle</mat-icon>   -->
+        
+        </span></div>
         <!-- <div>Role: &nbsp; <span> {{myUser?.role}} </span></div> -->
 
 

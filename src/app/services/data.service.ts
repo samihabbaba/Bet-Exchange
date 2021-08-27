@@ -786,6 +786,13 @@ this.layoutService.closeMenuChilds();
         observe: 'response',
       });
     }
+    
+    toggleUserSuspend(id:string) {
+      return this.http.post(`${environment.apiUrl}users/${id}/suspended/toggle`, {}, {
+        headers: this.httpOptions.headers,
+        observe: 'response',
+      });
+    }
 
     changeUserRisk(id:string, newRisk:number) {
       return this.http.post(`${environment.apiUrl}users/${id}/risk`, {newRisk:newRisk}, {
