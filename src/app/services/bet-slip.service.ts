@@ -3,6 +3,7 @@ import { DebugElement, Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { BetSlip } from '../models/bet-slip';
+import { SharedFunctionsService } from './shared-functions.service';
 import { SignalRNotificationsService } from './signal-r-notifications.service';
 
 @Injectable({
@@ -22,7 +23,7 @@ export class BetSlipService {
   selectedOpenBet: any = 'Bet1';
 
 
-  constructor(private http: HttpClient, private notiSignalR:SignalRNotificationsService) {
+  constructor(private http: HttpClient, private notiSignalR:SignalRNotificationsService, private sharedService:SharedFunctionsService) {
     this.notiSignalR.notification.subscribe(noti => {
 
       if(!noti){
@@ -50,6 +51,9 @@ export class BetSlipService {
     runners?: any,
     run?: any
   ) {
+// debugger
+
+    console.log(market.status)
 
     if(!this.validOdd(market, runners, run)){
       return;
@@ -57,7 +61,7 @@ export class BetSlipService {
 
     let selection = {
       isBack: isBack,
-      eventName: event.name,
+      eventName: this.sharedService.returnEventName(event.name),
       eventId: event.id,
       liability:0,
       market: {

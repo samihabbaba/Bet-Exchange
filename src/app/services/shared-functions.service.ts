@@ -435,4 +435,21 @@ export class SharedFunctionsService {
     return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
+
+  returnEventName(eventName:string){
+    if(eventName == null || eventName == undefined){
+      return '';
+    }
+
+    if(eventName.includes(" v ")){
+      return eventName.replace(' v ',' vs ')
+    }
+    else if(eventName.includes(" @ ")){
+      return eventName.replace(' @ ',' vs ')
+    }
+    else{
+      return eventName;
+    }
+  }
+  
 }

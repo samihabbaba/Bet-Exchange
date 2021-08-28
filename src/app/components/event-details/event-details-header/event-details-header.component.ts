@@ -30,7 +30,6 @@ export class EventDetailsHeaderComponent implements OnInit {
     else{
       return eventName;
     }
-
   }
 
 }

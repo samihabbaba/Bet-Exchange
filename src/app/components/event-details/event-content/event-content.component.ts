@@ -222,7 +222,6 @@ export class EventContentComponent implements OnInit {
 
   returnSecondPartRunName(run: any, marketName: string) {
     if(!marketName){
-      
       return ''
     }
     let showSign = marketName.toLowerCase().includes('handicap');
