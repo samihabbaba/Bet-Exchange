@@ -63,6 +63,9 @@ export class AppComponent implements OnInit {
       let toRet = role === 'Client';
       return !toRet;
     }else{
+      if(this.router.url != '/login'){
+        this.authService.logut();
+      }
       return true
     }
     // if (
