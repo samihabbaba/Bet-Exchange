@@ -63,8 +63,8 @@
             [ngClass]="{
               selected: this.betSlipService.checkIfBetIsSelected(
                 event.id,
-                event.markets[0].id,
-                event.markets[0].runners[0]?.selectionId,
+                event.markets[0]?.id,
+                event.markets[0]?.runners[0]?.selectionId,
                 true
               )
             }"
@@ -73,7 +73,7 @@
                 event,
                 true,
                 event.markets[0],
-                event.markets[0].runners[0],
+                event.markets[0]?.runners[0],
                 this.sharedService.returnHighestBet(
                   this.sharedService.getBackObj(event, 0)
                 )
@@ -119,8 +119,8 @@
             [ngClass]="{
               selected: this.betSlipService.checkIfBetIsSelected(
                 event.id,
-                event.markets[0].id,
-                event.markets[0].runners[0]?.selectionId,
+                event.markets[0]?.id,
+                event.markets[0]?.runners[0]?.selectionId,
                 false
               )
             }"
@@ -129,7 +129,7 @@
                 event,
                 false,
                 event.markets[0],
-                event.markets[0].runners[0],
+                event.markets[0]?.runners[0],
                 this.sharedService.returnHighestBet(
                   this.sharedService.getLayObj(event, 0),
                   false
@@ -176,13 +176,13 @@
   
         <div class="odds-x" >
           <div
-          *ngIf="event.markets[0].numberOfRunners == 3"
+          *ngIf="event.markets[0]?.numberOfRunners == 3"
             class="blue-square"
             [ngClass]="{
               selected: this.betSlipService.checkIfBetIsSelected(
                 event.id,
-                event.markets[0].id,
-                event.markets[0].runners[2]?.selectionId,
+                event.markets[0]?.id,
+                event.markets[0]?.runners[2]?.selectionId,
                 true
               )
             }"
@@ -191,7 +191,7 @@
                 event,
                 true,
                 event.markets[0],
-                event.markets[0].runners[2],
+                event.markets[0]?.runners[2],
                 this.sharedService.returnHighestBet(
                   this.sharedService.getBackObj(event, 2)
                 )
@@ -229,13 +229,13 @@
           </div>
   
           <div
-          *ngIf="event.markets[0].numberOfRunners == 3"
+          *ngIf="event.markets[0]?.numberOfRunners == 3"
             class="red-square"
             [ngClass]="{
               selected: this.betSlipService.checkIfBetIsSelected(
                 event.id,
-                event.markets[0].id,
-                event.markets[0].runners[2]?.selectionId,
+                event.markets[0]?.id,
+                event.markets[0]?.runners[2]?.selectionId,
                 false
               )
             }"
@@ -244,7 +244,7 @@
                 event,
                 false,
                 event.markets[0],
-                event.markets[0].runners[2],
+                event.markets[0]?.runners[2],
                 this.sharedService.returnHighestBet(
                   this.sharedService.getLayObj(event, 2),
                   false
@@ -292,8 +292,8 @@
             [ngClass]="{
               selected: this.betSlipService.checkIfBetIsSelected(
                 event.id,
-                event.markets[0].id,
-                event.markets[0].runners[1]?.selectionId,
+                event.markets[0]?.id,
+                event.markets[0]?.runners[1]?.selectionId,
                 true
               )
             }"
@@ -302,7 +302,7 @@
                 event,
                 true,
                 event.markets[0],
-                event.markets[0].runners[1],
+                event.markets[0]?.runners[1],
                 this.sharedService.returnHighestBet(
                   this.sharedService.getBackObj(event, 1)
                 )
@@ -348,8 +348,8 @@
             [ngClass]="{
               selected: this.betSlipService.checkIfBetIsSelected(
                 event.id,
-                event.markets[0].id,
-                event.markets[0].runners[1]?.selectionId,
+                event.markets[0]?.id,
+                event.markets[0]?.runners[1]?.selectionId,
                 false
               )
             }"
@@ -358,7 +358,7 @@
                 event,
                 false,
                 event.markets[0],
-                event.markets[0].runners[1],
+                event.markets[0]?.runners[1],
                 this.sharedService.returnHighestBet(
                   this.sharedService.getLayObj(event, 1),
                   false
