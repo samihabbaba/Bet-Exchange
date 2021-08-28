@@ -62,7 +62,7 @@ export class AddSuperModalComponent implements OnInit {
       objValidation = {...objValidation, walletCurrency: new FormControl(null, Validators.required)}
       objValidation = {...objValidation, profitCommission: new FormControl(null, [Validators.required, Validators.max(25), Validators.min(0)])}
     }
-    else
+    else if(this.data.roleToCreate !== 'Client')
     {
       objValidation = {...objValidation, risk: new FormControl(null, [Validators.required, Validators.max(100), Validators.min(0)])}
     }

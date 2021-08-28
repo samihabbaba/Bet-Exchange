@@ -75,7 +75,7 @@ export class EditSuperModalComponent implements OnInit {
         name: new FormControl(this.data.name, Validators.required),
         phoneNumber: new FormControl(this.data.phoneNumber, Validators.required),
         // commission: new FormControl(this.data.commission, [Validators.required,Validators.max(this.data.maxCommission)]),
-        risk: new FormControl(this.data.risk, [Validators.required, Validators.max(100), Validators.min(0)]),
+        // risk: new FormControl(this.data.risk, [Validators.required, Validators.max(100), Validators.min(0)]),
         // profitCommission: new FormControl(this.data.profitCommission, [Validators.required, Validators.max(25), Validators.min(0)]),
       });
     }

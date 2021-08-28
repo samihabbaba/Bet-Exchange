@@ -49,7 +49,7 @@
         >
       </mat-form-field>
 
-      <mat-form-field appearance="fill" *ngIf="this.data.role !== 'SuperAdmin'">
+      <mat-form-field appearance="fill" *ngIf="this.data.role !== 'SuperAdmin' && this.data.role !== 'Client'">
         <mat-label><mat-icon>warning</mat-icon> Risk (0-100)%</mat-label>
         <input
           matInput
