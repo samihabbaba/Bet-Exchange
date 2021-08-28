@@ -12,7 +12,8 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './bet-slip.component.html',
   styleUrls: ['./bet-slip.component.css'],
 })
-export class BetSlipComponent implements OnInit {  tabToDisplay: any = 'Singles';
+export class BetSlipComponent implements OnInit {
+  tabToDisplay: any = 'Singles';
   @ViewChild('singles') singlesTab?: ElementRef;
   @ViewChild('openBets') openBetsTab?: ElementRef;
   @ViewChild('loaderWrapper') loaderWrapper?: ElementRef;
@@ -21,7 +22,7 @@ export class BetSlipComponent implements OnInit {  tabToDisplay: any = 'Singles'
   constructor(
     public betSlipService: BetSlipService,
     public dataService: DataService,
-    private authService:AuthService,
+    private authService: AuthService,
     public sharedFunctionsService: SharedFunctionsService,
     private notificationService: NotificationService
   ) {}
@@ -41,65 +42,60 @@ export class BetSlipComponent implements OnInit {  tabToDisplay: any = 'Singles'
   submitBets() {
     // console.log(this.betSlipService.selectedBets);
     this.startLoading();
-    let betsToSend:any = []
-    this.betSlipService.selectedBets.forEach(bet => {
+    let betsToSend: any = [];
+    this.betSlipService.selectedBets.forEach((bet) => {
       betsToSend.push({
-        stake:bet.stake,
-        odd:bet.market.run.price,
-        marketId:bet.market.marketId,
-        selectionId:bet.market.run.selectionId,
-        betType:bet.isBack?'BACK':'LAY'
-      })
+        stake: bet.stake,
+        odd: bet.market.run.price,
+        marketId: bet.market.marketId,
+        selectionId: bet.market.run.selectionId,
+        betType: bet.isBack ? 'BACK' : 'LAY',
+      });
     });
 
-    this.dataService.submitBets(betsToSend)
-    .pipe(finalize( () =>       this.stopLoading()
-    ))
-    .subscribe((resp:any) => {
-      // debugger
-      // this.authService.updateCurrentBalance();
-      let g = resp.body[0].user.wallet.balance;
-      this.authService.currentUserInfo.balance = resp.body[0].user.wallet.balance;
+    this.dataService
+      .submitBets(betsToSend)
+      .pipe(finalize(() => this.stopLoading()))
+      .subscribe(
+        (resp: any) => {
+          // debugger
+          // this.authService.updateCurrentBalance();
+          let g = resp.body[0].user.wallet.balance;
+          this.authService.currentUserInfo.balance =
+            resp.body[0].user.wallet.balance;
 
-      this.betSlipService.selectedBets = [];
-      resp.body.forEach((bet:any) => {
-        this.betSlipService.currentOpenBets.push(bet)
-      });
+          this.betSlipService.selectedBets = [];
+          resp.body.forEach((bet: any) => {
+            this.betSlipService.currentOpenBets.push(bet);
+          });
 
-      this.betSlipService.updateOpenBetsOptions();
-      this.notificationService.success("Bet(s) added successfully!")
-    }, error =>{
-      debugger
-      try{
-        let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
-        if( msg !== undefined){
-          this.notificationService.error(msg);
-        }else{
-          this.notificationService.error("Error while adding Bet(s)!")
-        }
-      }
-      catch(ex){
-        try{
-          let msg = error.error; 
-          if( msg !== undefined){
-            this.notificationService.error(msg);
-          }else{
-            this.notificationService.error("Error while adding Bet(s)!")
+          this.betSlipService.updateOpenBetsOptions();
+          this.notificationService.success('Bet(s) added successfully!');
+        },
+        (error) => {
+          debugger;
+          try {
+            let msg = error.error.fields[Object.keys(error.error.fields)[0]];
+            if (msg !== undefined) {
+              this.notificationService.error(msg);
+            } else {
+              this.notificationService.error('Error while adding Bet(s)!');
+            }
+          } catch (ex) {
+            try {
+              let msg = error.error;
+              if (msg !== undefined) {
+                this.notificationService.error(msg);
+              } else {
+                this.notificationService.error('Error while adding Bet(s)!');
+              }
+            } catch (exx) {
+              this.notificationService.error('Error while adding Bet(s)!');
+            }
           }
         }
-        catch(exx){
-          this.notificationService.error("Error while adding Bet(s)!")
-        }
-      }
-      
-    });
-    
+      );
   }
-
-  
-
-  
-
 
   removeFromSelectedBets(betIndex: number) {
     this.betSlipService.selectedBets.splice(betIndex, 1);
@@ -107,6 +103,7 @@ export class BetSlipComponent implements OnInit {  tabToDisplay: any = 'Singles'
 
   handleTabClick(event: any) {
     let text = event.target.textContent;
+    console.log(text);
     text = text.trim();
     text = text.split(' ')[0];
     if (text !== this.tabToDisplay) {
@@ -139,17 +136,31 @@ export class BetSlipComponent implements OnInit {  tabToDisplay: any = 'Singles'
     this.loader?.nativeElement.classList.remove('loader');
   }
 
-  disableSlipSubmit(){
-    if(this.betSlipService.selectedBets.length < 1){
+  disableSlipSubmit() {
+    if (this.betSlipService.selectedBets.length < 1) {
       return true;
     }
 
-    if(this.betSlipService.selectedBets.some(x=>x.stake == undefined || x.stake == null || x.stake < this.betSlipService.minStakeForBet)){
+    if (
+      this.betSlipService.selectedBets.some(
+        (x) =>
+          x.stake == undefined ||
+          x.stake == null ||
+          x.stake < this.betSlipService.minStakeForBet
+      )
+    ) {
       return true;
     }
-    
+
     let hh = this.betSlipService.selectedBets[0].market.run.price;
-    if(this.betSlipService.selectedBets.some(x=>x.market.run.price == undefined || x.market.run.price == null || x.market.run.price < 1.01)){
+    if (
+      this.betSlipService.selectedBets.some(
+        (x) =>
+          x.market.run.price == undefined ||
+          x.market.run.price == null ||
+          x.market.run.price < 1.01
+      )
+    ) {
       return true;
     }
 
