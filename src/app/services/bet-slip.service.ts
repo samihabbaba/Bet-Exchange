@@ -53,9 +53,8 @@ export class BetSlipService {
   ) {
 // debugger
 
-    console.log(market.status)
 
-    if(!this.validOdd(market, runners, run)){
+    if(!this.validOdd(market, runners, run) || !this.sharedService.marketAvailable(market)){
       return;
     }
 

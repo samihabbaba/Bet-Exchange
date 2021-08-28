@@ -560,7 +560,6 @@ export class DataService {
   
             this.layoutService.displayPreGames();
             
-  
             let sorted = resp.body/*.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null)*/.sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0)
             let result = sorted.reduce(function (r:any, a:any) {
               r[a.eventTypeId] = r[a.eventTypeId] || [];

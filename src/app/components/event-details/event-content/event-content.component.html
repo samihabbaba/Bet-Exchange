@@ -76,10 +76,10 @@
         </table>
       </div>
 
-      <div class="runners-list-wrapper" [ngClass]="{lowLiquidity : !this.sharedService.marketAvailable()}">
+      <div class="runners-list-wrapper" [ngClass]="{lowLiquidity : !this.sharedService.marketAvailable(topMarket)}">
 
 
-                <div class="disabled-mini-market-runners-list" *ngIf="!this.sharedService.marketAvailable()">
+                <div class="disabled-mini-market-runners-list" *ngIf="!this.sharedService.marketAvailable(topMarket)">
 
                   <h1>Low Liquidity</h1>
                 </div>
@@ -356,8 +356,8 @@
                 </thead>
               </table>
 
-              <div class="mini-market-runners-list" [ngClass]="{lowLiquidity : !this.sharedService.marketAvailable()}">
-                <div class="disabled-mini-market-runners-list" *ngIf="!this.sharedService.marketAvailable()">
+              <div class="mini-market-runners-list" [ngClass]="{lowLiquidity : !this.sharedService.marketAvailable(item)}">
+                <div class="disabled-mini-market-runners-list" *ngIf="!this.sharedService.marketAvailable(item)">
                   <h1>Low Liquidity</h1>
                 </div>
                 <div class="mini-market-runners-list-container">
@@ -605,8 +605,8 @@
                 </thead>
               </table>
 
-              <div class="mini-market-runners-list" [ngClass]="{lowLiquidity : !this.sharedService.marketAvailable()}">
-                <div class="disabled-mini-market-runners-list" *ngIf="!this.sharedService.marketAvailable()">
+              <div class="mini-market-runners-list" [ngClass]="{lowLiquidity : !this.sharedService.marketAvailable(item)}">
+                <div class="disabled-mini-market-runners-list" *ngIf="!this.sharedService.marketAvailable(item)">
                   <h1>Low Liquidity</h1>
                 </div>
                 <div class="mini-market-runners-list-container">

@@ -74,23 +74,35 @@ export class AddSuperModalComponent implements OnInit {
   addSuper(){
     
     this.dataService.addNewUser({...this.addMasterForm.value, role:this.data.roleToCreate}).subscribe(resp => {
-
       this.notify.success('User Added');
       this.dialogRef.close();
-    }, error => {
-
-        try{
-          let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
-          if( msg !== undefined){
+    },
+     error => {
+      try{
+        let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
+        if( msg !== undefined && msg){
+          this.notify.error(msg);
+        }else{
+          msg = error.error.errorMessage
+          if(msg !== undefined && msg){
             this.notify.error(msg);
           }else{
             this.notify.error('Error adding user');
           }
         }
-        catch(ex){
+      }
+      catch(exx){
+        try {
+          let msg = error.error.errorMessage;
+          if (msg !== undefined && msg) {
+            this.notify.error(msg);
+          } else {
+            this.notify.error('Error while adding Bet(s)!');
+          }
+        } catch (exx) {
           this.notify.error('Error adding user');
         }
-
+      }
     })
   }
 

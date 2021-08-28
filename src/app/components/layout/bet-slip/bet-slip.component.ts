@@ -76,15 +76,22 @@ export class BetSlipComponent implements OnInit {
           debugger;
           try {
             let msg = error.error.fields[Object.keys(error.error.fields)[0]];
+            
             if (msg !== undefined) {
               this.notificationService.error(msg);
-            } else {
-              this.notificationService.error('Error while adding Bet(s)!');
+            } 
+            else {
+              let msg = error.error;
+              if (msg !== undefined && msg) {
+                this.notificationService.error(msg);
+              } else {
+                this.notificationService.error('Error while adding Bet(s)!');
+              }
             }
           } catch (ex) {
             try {
               let msg = error.error;
-              if (msg !== undefined) {
+              if (msg !== undefined && msg) {
                 this.notificationService.error(msg);
               } else {
                 this.notificationService.error('Error while adding Bet(s)!');

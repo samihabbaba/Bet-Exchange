@@ -383,8 +383,18 @@ export class SharedFunctionsService {
 
 }
 
-  marketAvailable(){
-    return true;
+  marketAvailable(market:any){
+    try{
+      if(market.status == 'SUSPENDED'){
+        return false;
+      }
+      else{
+        return true;
+      }
+    }
+    catch(ex){
+      return false;
+    }
   }
 
   formatDate(day:number, month:number, year:number, addOneDay = false){
