@@ -136,7 +136,8 @@
           }"
         >
           <div class="top-row">
-            <div class="remove-bet-btn">
+            <div class="remove-bet-btn"
+             (click)="this.openConfirmDialog(openBet, 5)">
               <fa-icon
                 [icon]="fontAwesomeIcons.exit"
                 class="delete-icon"
@@ -150,9 +151,10 @@
               </h2>
             </div>
             <div class="open-bets-odds">
-              <input type="number" value="2" />
-              <span><p>2</p> </span>
-              <span><p>25</p> </span>
+              <!-- <input type="number" value="2" /> -->
+              <span><p>{{ this.sharedFunctionsService.formatNumber(openBet.stake) }}</p> </span>
+              <span><p>{{ this.sharedFunctionsService.formatNumber(openBet.odd) }}</p> </span>
+              <span><p>{{ this.sharedFunctionsService.formatNumber(openBet.payout) }}</p> </span>
             </div>
           </div>
           <div class="bottom-row">
@@ -163,15 +165,15 @@
                   : "At Pre-Match"
               }}
             </h1>
-            <div class="cancel-checkbox">
-              <input type="radio" id="cancel" name="cancel" />
+            <div class="cancel-checkbox openBet-cancel-btn" (click)='this.openConfirmDialog(openBet, 5)'>
+              <!-- <input type="radio" id="cancel" name="cancel" /> -->
               <label for="cancel">Cancel</label>
             </div>
 
-            <div class="keep-checkbox">
+            <!-- <div class="keep-checkbox">
               <input type="radio" id="keep" name="keep" />
               <label for="keep">Keep</label>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -204,9 +206,9 @@
             </h2>
           </div>
           <div class="matched-bet-odds">
-            <span><p>2</p></span>
-            <span><p>2</p></span>
-            <span><p>20</p></span>
+            <span><p>{{ this.sharedFunctionsService.formatNumber(openBet.stake) }}</p> </span>
+            <span><p>{{ this.sharedFunctionsService.formatNumber(openBet.odd) }}</p> </span>
+            <span><p>{{ this.sharedFunctionsService.formatNumber(openBet.payout) }}</p> </span>
           </div>
         </div>
       </div>
@@ -251,7 +253,7 @@
     </div>
 
     <div class="bet-slip-buttons" *ngIf="this.tabToDisplay == 'Open'">
-      <button class="reset-btn">Cancel All Unmatched</button>
+      <button class="reset-btn" (click)='this.openConfirmDialog({}, 6)' [disabled]="this.betSlipService.selectedOpenBet === ''">Cancel All Unmatched</button>
       <button class="submit-btn">Update</button>
     </div>
   </div>

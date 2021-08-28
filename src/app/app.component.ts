@@ -9,7 +9,7 @@ import { LayoutService } from './services/layout.service';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [BetSlipService],
+  providers: [],
 })
 export class AppComponent implements OnInit {
   title = 'angular-exchange';

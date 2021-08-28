@@ -19,8 +19,8 @@ export class BetSlipService {
   openBetsToViewMatched: any[] = [];
   openBetsToViewUnmatched: any[] = [];
 
-  openBetsSelectOptions: any[] = ['Bet1', 'Bet2'];
-  selectedOpenBet: any = 'Bet1';
+  openBetsSelectOptions: any[] = ['', ''];
+  selectedOpenBet: any = '';
 
 
   constructor(private http: HttpClient, private notiSignalR:SignalRNotificationsService, private sharedService:SharedFunctionsService) {
@@ -237,10 +237,23 @@ export class BetSlipService {
     this.openBetsSelectOptions = [...new Set(this.openBetsSelectOptions)];
     if(this.openBetsSelectOptions.length > 0){
       this.selectedOpenBet = this.openBetsSelectOptions[0];
+    }else{
+      this.selectedOpenBet = '';
     }
     this.updateOpenBets();
   }
 
+  cancelAllOpenBetsForEventId(eventId:string){
+    this.currentOpenBets = this.currentOpenBets.filter(x=> x.selection.eventId !== eventId || (x.selection.eventId === eventId && x.status === 'PENDING') )
+    this.updateOpenBetsOptions();
+  }
+  
+  cancelOpenBetById(id:string){
+    this.currentOpenBets = this.currentOpenBets.filter(x=> x.id !== id)
+    this.updateOpenBetsOptions();
+  }
+
+  
 
   ///////////////// API requests ////////////////////////
   

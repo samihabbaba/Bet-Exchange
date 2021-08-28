@@ -95,6 +95,14 @@ export class DataService {
       observe: "response",
     });
  }
+
+ 
+ voidBetsMulti(obj:any){        
+  return this.http.post(`${environment.apiUrl}bets/void`, obj , {
+    headers: this.httpOptions.headers,
+    observe: "response",
+  });
+}
  
   winBets(id:string){        
     return this.http.post(`${environment.apiUrl}bets/${id}/win`,{}, {
@@ -559,7 +567,7 @@ export class DataService {
           (resp) => {
   
             this.layoutService.displayPreGames();
-            
+
             let sorted = resp.body/*.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null)*/.sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0)
             let result = sorted.reduce(function (r:any, a:any) {
               r[a.eventTypeId] = r[a.eventTypeId] || [];

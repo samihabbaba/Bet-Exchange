@@ -6,6 +6,8 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { finalize } from 'rxjs/operators';
 import { DataService } from 'src/app/services/data.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationMessageComponent } from 'src/app/shared/confirmation-message/confirmation-message.component';
 
 @Component({
   selector: 'app-bet-slip',
@@ -24,7 +26,8 @@ export class BetSlipComponent implements OnInit {
     public dataService: DataService,
     private authService: AuthService,
     public sharedFunctionsService: SharedFunctionsService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService, 
+    private dialog: MatDialog
   ) {}
 
   stakeOptions = [10, 20, 50, 100, 200, 500];
@@ -173,4 +176,54 @@ export class BetSlipComponent implements OnInit {
 
     return false;
   }
+
+
+
+
+  openConfirmDialog(obj:any,functionToCall:number){
+    let confirmMsg= '';
+    let successMsg= '';
+    let errorMsg= '';
+    let id = '';
+    if(functionToCall == 5){
+      
+       confirmMsg=  'Are You Sure You want to cancel the bet ?';
+       successMsg= 'Bet canceled';
+       errorMsg= 'Error on bet update';
+    }
+    
+    if(functionToCall == 6){
+      let index = this.betSlipService.currentOpenBets.findIndex(x=> x.selection.eventName === this.betSlipService.selectedOpenBet);
+      if(index < 0){
+        this.notificationService.error('Error canceling the requested event')
+        return
+      }
+      else{
+        obj.id = this.betSlipService.currentOpenBets[index].selection.eventId;
+      }
+      confirmMsg=  'Are You Sure You want to cancel all unmatched bets for this event?';
+       successMsg= 'Bets canceled';
+       errorMsg= 'Error on bets update';
+   }
+  
+    const dialogRef = this.dialog.open(ConfirmationMessageComponent,{
+      data:{
+        obj:obj,
+        functionToCall:functionToCall,
+        confirmMsg:confirmMsg,
+        successMsg:successMsg,
+        errorMsg:errorMsg,
+      }
+    });
+  
+    dialogRef.afterClosed().subscribe( async (result) => {
+      if(functionToCall == 5){
+        this.betSlipService.updateOpenBets();
+      }
+      else if(functionToCall == 6){
+        this.betSlipService.updateOpenBetsOptions();
+      }
+    });
+  }
+
 }

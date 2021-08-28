@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { BetSlipService } from 'src/app/services/bet-slip.service';
 import { DataService } from 'src/app/services/data.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
@@ -16,6 +17,7 @@ export class ConfirmationMessageComponent implements OnInit {
     private dataService:DataService,
     private notify:NotificationService,
     private sharedService:SharedFunctionsService,
+    private betSlipService:BetSlipService,
     private dialogRef: MatDialogRef<ConfirmationMessageComponent>) {
       dialogRef.disableClose = true;
      }
@@ -43,6 +45,12 @@ export class ConfirmationMessageComponent implements OnInit {
     }
     else if(this.functionToCall == 4){
       this.toggleUserSuspend();
+    }
+    else if(this.functionToCall == 5){
+      this.cancelSingleBet();
+    }
+    else if(this.functionToCall == 6){
+      this.cancelUnmatchedBetsForEvent();
     }
   }
 
@@ -135,6 +143,65 @@ export class ConfirmationMessageComponent implements OnInit {
 
     })
   }
+
+
+  cancelSingleBet(){
+    this.betSlipService.currentOpenBets;
+    this.dataService.voidBets(this.data.obj.id).subscribe(resp => {
+      this.betSlipService.currentOpenBets;
+
+      this.notify.success(this.successMsg);
+      this.betSlipService.cancelOpenBetById(this.data.obj.id);
+      this.closeDialog();
+    }, error => {
+      this.dialogRef.close();
+        try{
+          let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
+          if( msg !== undefined){
+            this.notify.error(msg);
+          }else{
+            this.notify.error(this.errorMsg);
+          }
+        }
+        catch(ex){
+          this.notify.error(this.errorMsg);
+        }
+
+    })
+  }
+
+  cancelUnmatchedBetsForEvent(){
+
+    this.dataService.voidBetsMulti({
+      eventId:this.data.obj.id,
+      marketId: null,
+      betIds: null
+    
+    }).subscribe(resp => {
+
+      this.notify.success(this.successMsg);
+      this.betSlipService.cancelAllOpenBetsForEventId(this.data.obj.id);
+      this.closeDialog();
+    }, error => {
+
+      this.dialogRef.close();
+        try{
+          let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
+          if( msg !== undefined){
+            this.notify.error(msg);
+          }else{
+            this.notify.error(this.errorMsg);
+          }
+        }
+        catch(ex){
+          this.notify.error(this.errorMsg);
+        }
+
+    })
+  }
+
+
+
 
 
   async closeDialog(){
