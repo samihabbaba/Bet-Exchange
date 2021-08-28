@@ -23,7 +23,7 @@
         <div>Sate: &nbsp; <span> {{ data.date| date:'d/M/yyyy, h:mm a' }} </span></div>
         <div>Last Action Date: &nbsp; <span> {{ data.lastActionDate| date:'d/M/yyyy, h:mm a' }} </span></div>
         <div>Event Date: &nbsp; <span> {{ data.selection.eventDate| date:'d/M/yyyy, h:mm a' }} </span></div>
-        <div>Matched Date: &nbsp; <span> {{ data.matchedDate == null ? (this.sharedService.getMatchedDate(data.matchedDate)| date:'d/M/yyyy, h:mm a'): ('Not Matched') }} </span></div>
+        <div>Matched Date: &nbsp; <span> {{ data.matchedDate? (this.sharedService.getMatchedDate(data.matchedDate)| date:'d/M/yyyy, h:mm a'): ('Not Matched') }} </span></div>
         
         
       </div>
