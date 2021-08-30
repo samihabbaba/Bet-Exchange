@@ -49,7 +49,8 @@ export class DepositSuperModalComponent implements OnInit {
     let objToSend = this.depositMasterForm.value;
     objToSend.toUserId = this.data.id;
 
-    if(this.data.role == "SuperAdmin"){
+    // if(this.data.role == "SuperAdmin"){
+
       this.dataService.depositUser(objToSend).subscribe(resp => {
         this.notify.success('Deposit added to the user');
         this.authService.updateCurrentBalance();
@@ -68,27 +69,27 @@ export class DepositSuperModalComponent implements OnInit {
           this.notify.error('Error adding deposit');
         }
       })
-    }
-    else{
+    // }
 
-      this.dataService.exchangeUser(objToSend).subscribe(resp => {
-        this.notify.success('Deposit added to the user')
-      },
-      error => {
-        try{
-          let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
-          if( msg !== undefined){
-            this.notify.error(msg);
-          }else{
-            this.notify.error('Error adding deposit');
-          }
-        }
-        catch(ex){
-          this.notify.error('Error adding deposit');
-        }
-      })
+    // else{
+    //   this.dataService.exchangeUser(objToSend).subscribe(resp => {
+    //     this.notify.success('Deposit added to the user')
+    //   },
+    //   error => {
+    //     try{
+    //       let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
+    //       if( msg !== undefined){
+    //         this.notify.error(msg);
+    //       }else{
+    //         this.notify.error('Error adding deposit');
+    //       }
+    //     }
+    //     catch(ex){
+    //       this.notify.error('Error adding deposit');
+    //     }
+    //   })
 
-    }
+    // }
 
   }
 }
