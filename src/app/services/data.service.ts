@@ -122,7 +122,7 @@ export class DataService {
   ///// Transaction Controller /////
   //////////////////////////////////
 
-  getTransactions(PageNo:number, PageSize:number, UserId='', ToUserId='', CurrencyCode='', ParentId='', StartDate='',EndDate='',DirectParent:any='',BettingTransactionsOnly:any='' ) {
+  getTransactions(PageNo:number, PageSize:number, UserId='', ToUserId='', CurrencyCode='', ParentId='', StartDate='',EndDate='',DirectParent:any='',BettingTransactionsOnly:any='',SortBy='CreatedAt',SortingType='-1' ) {
     //BettingTransactionsOnly  [ null (all), true (only bet related), flase (filter out the bet related transactions)]
     let query = this.convertObjectToQueryString({
       PageNo:PageNo, PageSize:PageSize, UserId:UserId, ToUserId:ToUserId, CurrencyCode:CurrencyCode, ParentId:ParentId, StartDate:StartDate,EndDate:EndDate, DirectParent:DirectParent, BettingTransactionsOnly:BettingTransactionsOnly
