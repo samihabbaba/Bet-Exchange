@@ -299,7 +299,6 @@ export class AccountDetailsComponent implements OnInit {
   }
 
   loadBets(){
-debugger
     let endD = new Date(this.rangeBets.controls.end.value);
     endD.setDate(endD.getDate() + 1);
     
