@@ -838,12 +838,12 @@ this.layoutService.closeMenuChilds();
       });
     }
     
-    exchangeUser( obj:any) {
-      return this.http.post(`${environment.apiUrl}users/exchange`, obj, {
-        headers: this.httpOptions.headers,
-        observe: 'response',
-      });
-    }
+    // exchangeUser( obj:any) {
+    //   return this.http.post(`${environment.apiUrl}users/exchange`, obj, {
+    //     headers: this.httpOptions.headers,
+    //     observe: 'response',
+    //   });
+    // }
 
 
 
