@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { NotificationService } from './notification.service';
 import { environment } from 'src/environments/environment';
 import { SignalRNotificationsService } from './signal-r-notifications.service';
+import { SharedFunctionsService } from './shared-functions.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,8 @@ export class AuthService {
   constructor(private http:HttpClient, private dataService:DataService,
     private route:Router,
     private signalRNoti:SignalRNotificationsService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private sharedService:SharedFunctionsService
     ) { }
 
   
@@ -95,7 +97,8 @@ export class AuthService {
       },
       (error) => {
         this.logInSuccess = false;
-        this.notificationService.error('Wrong Username Or Password',5000);
+        // this.notificationService.error('Wrong Username Or Password',5000);
+        this.sharedService.showErrorMsg(error,'Wrong Username Or Password')
       }
     );
   }

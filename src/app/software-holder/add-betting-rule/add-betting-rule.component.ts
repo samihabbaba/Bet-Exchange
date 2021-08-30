@@ -80,18 +80,8 @@ export class AddBettingRuleComponent implements OnInit {
       this.notify.success('Rule Added');
       this.dialogRef.close();
     }, error => {
-        try{
-          let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
-          if( msg !== undefined){
-            this.notify.error(msg);
-          }else{
-            this.notify.error('Error adding rule');
-          }
-        }
-        catch(ex){
-          this.notify.error('Error adding rule');
-        }
-
+      this.sharedFunctions.showErrorMsg(error,'Error adding rule')
+        
     })
   }
 

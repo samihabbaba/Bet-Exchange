@@ -273,17 +273,7 @@ export class AccountDetailsComponent implements OnInit {
       this.notify.success('Password Changed Successfully');
       this.changePasswordForm.reset();
     }, error => {
-      try{
-        let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
-        if( msg !== undefined){
-          this.notify.error(msg);
-        }else{
-          this.notify.error('Error updating user');
-        }
-      }
-      catch(ex){
-        this.notify.error('Error updating user');
-      }
+      this.sharedService.showErrorMsg(error, 'Error updating user')
     })
   }
   

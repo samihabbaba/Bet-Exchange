@@ -8,6 +8,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
 
 @Component({
   selector: 'app-withdraw-super-modal',
@@ -25,6 +26,7 @@ export class WithdrawSuperModalComponent implements OnInit {
     private dataService:DataService,
     private notify:NotificationService,
     private authService:AuthService,
+    private sharedService:SharedFunctionsService,
     private dialogRef: MatDialogRef<WithdrawSuperModalComponent>
   ) {
     dialogRef.disableClose = true;
@@ -57,17 +59,8 @@ export class WithdrawSuperModalComponent implements OnInit {
       this.dialogRef.close();
     },
     error => {
-      try{
-        let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
-        if( msg !== undefined){
-          this.notify.error(msg);
-        }else{
-          this.notify.error('Error while withdraw attempt');
-        }
-      }
-      catch(ex){
-        this.notify.error('Error while withdraw attempt');
-      }
+      this.sharedService.showErrorMsg(error,'Error while withdraw attempt')
+     
     })
 
   }

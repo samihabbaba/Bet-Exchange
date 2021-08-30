@@ -78,33 +78,7 @@ export class AddSuperModalComponent implements OnInit {
       this.dialogRef.close();
     },
      error => {
-      try{
-        let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
-        if( msg !== undefined && msg){
-          this.notify.error(msg);
-        }else{
-          msg = error.error.errorMessage
-          if(msg !== undefined && msg){
-            this.notify.error(msg);
-          }else{
-            this.notify.error('Error adding user');
-          }
-        }
-      }
-      catch(exx){
-        try {
-          let msg = error.error.errorMessage;
-          if (msg !== undefined && msg) {
-            this.notify.error(msg);
-          } else {
-            this.notify.error('Error while adding Bet(s)!');
-          }
-        } catch (exx) {
-          this.notify.error('Error adding user');
-        }
-      }
-
-      
+      this.sharedFunctions.showErrorMsg(error,'Error adding user')
       this.dialogRef.close();
     })
   }

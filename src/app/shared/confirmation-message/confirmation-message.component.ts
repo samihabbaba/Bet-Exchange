@@ -62,18 +62,7 @@ export class ConfirmationMessageComponent implements OnInit {
 
     }, error => {
       this.dialogRef.close();
-        try{
-          let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
-          if( msg !== undefined){
-            this.notify.error(msg);
-          }else{
-            this.notify.error(this.errorMsg);
-          }
-        }
-        catch(ex){
-          this.notify.error(this.errorMsg);
-        }
-
+      this.sharedService.showErrorMsg(error, this.errorMsg)
     })
   }
 
@@ -84,18 +73,7 @@ export class ConfirmationMessageComponent implements OnInit {
       this.closeDialog();
     }, error => {
       this.dialogRef.close();
-        try{
-          let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
-          if( msg !== undefined){
-            this.notify.error(msg);
-          }else{
-            this.notify.error(this.errorMsg);
-          }
-        }
-        catch(ex){
-          this.notify.error(this.errorMsg);
-        }
-
+      this.sharedService.showErrorMsg(error, this.errorMsg)
     })
   }
 
@@ -106,17 +84,8 @@ export class ConfirmationMessageComponent implements OnInit {
       this.closeDialog();
     }, error => {
       this.dialogRef.close();
-        try{
-          let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
-          if( msg !== undefined){
-            this.notify.error(msg);
-          }else{
-            this.notify.error(this.errorMsg);
-          }
-        }
-        catch(ex){
-          this.notify.error(this.errorMsg);
-        }
+      this.sharedService.showErrorMsg(error, this.errorMsg)
+
 
     })
   }
@@ -129,17 +98,7 @@ export class ConfirmationMessageComponent implements OnInit {
       this.closeDialog();
     }, error => {
       this.dialogRef.close();
-        try{
-          let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
-          if( msg !== undefined){
-            this.notify.error(msg);
-          }else{
-            this.notify.error(this.errorMsg);
-          }
-        }
-        catch(ex){
-          this.notify.error(this.errorMsg);
-        }
+      this.sharedService.showErrorMsg(error, this.errorMsg)
 
     })
   }
@@ -155,17 +114,7 @@ export class ConfirmationMessageComponent implements OnInit {
       this.closeDialog();
     }, error => {
       this.dialogRef.close();
-        try{
-          let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
-          if( msg !== undefined){
-            this.notify.error(msg);
-          }else{
-            this.notify.error(this.errorMsg);
-          }
-        }
-        catch(ex){
-          this.notify.error(this.errorMsg);
-        }
+      this.sharedService.showErrorMsg(error, this.errorMsg)
 
     })
   }
@@ -183,19 +132,8 @@ export class ConfirmationMessageComponent implements OnInit {
       this.betSlipService.cancelAllOpenBetsForEventId(this.data.obj.id);
       this.closeDialog();
     }, error => {
-
       this.dialogRef.close();
-        try{
-          let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
-          if( msg !== undefined){
-            this.notify.error(msg);
-          }else{
-            this.notify.error(this.errorMsg);
-          }
-        }
-        catch(ex){
-          this.notify.error(this.errorMsg);
-        }
+      this.sharedService.showErrorMsg(error, this.errorMsg)
 
     })
   }

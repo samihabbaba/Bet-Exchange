@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { DataService } from './data.service';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class SharedFunctionsService {
    currencyList = ['TRY', 'USD', 'EUR', 'GBP'];
    sports:any = []
 
-  constructor(private dataService:DataService, private authService:AuthService) {
+  constructor(private dataService:DataService, private authService:AuthService, private notify:NotificationService) {
     this.loadSports();
    }
 
@@ -462,4 +463,23 @@ export class SharedFunctionsService {
     }
   }
   
+  showErrorMsg(error:any, defaultMsg:any){
+    if(error.error.errorMessage){
+      this.notify.error(error.error.errorMessage);
+      return
+    }
+
+    try{
+      let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
+      if( msg !== undefined){
+        this.notify.error(msg);
+      }else{
+        this.notify.error(defaultMsg);
+      }
+    }
+    catch(ex){
+      this.notify.error(defaultMsg);
+    }
+  }
+
 }

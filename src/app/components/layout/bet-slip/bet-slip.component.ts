@@ -77,32 +77,33 @@ export class BetSlipComponent implements OnInit {
         },
         (error) => {
           debugger;
-          try {
-            let msg = error.error.fields[Object.keys(error.error.fields)[0]];
+          this.sharedFunctionsService.showErrorMsg(error,'Error while adding Bet(s)!')
+          // try {
+          //   let msg = error.error.fields[Object.keys(error.error.fields)[0]];
             
-            if (msg !== undefined) {
-              this.notificationService.error(msg);
-            } 
-            else {
-              let msg = error.error;
-              if (msg !== undefined && msg) {
-                this.notificationService.error(msg);
-              } else {
-                this.notificationService.error('Error while adding Bet(s)!');
-              }
-            }
-          } catch (ex) {
-            try {
-              let msg = error.error;
-              if (msg !== undefined && msg) {
-                this.notificationService.error(msg);
-              } else {
-                this.notificationService.error('Error while adding Bet(s)!');
-              }
-            } catch (exx) {
-              this.notificationService.error('Error while adding Bet(s)!');
-            }
-          }
+          //   if (msg !== undefined) {
+          //     this.notificationService.error(msg);
+          //   } 
+          //   else {
+          //     let msg = error.error;
+          //     if (msg !== undefined && msg) {
+          //       this.notificationService.error(msg);
+          //     } else {
+          //       this.notificationService.error('Error while adding Bet(s)!');
+          //     }
+          //   }
+          // } catch (ex) {
+          //   try {
+          //     let msg = error.error;
+          //     if (msg !== undefined && msg) {
+          //       this.notificationService.error(msg);
+          //     } else {
+          //       this.notificationService.error('Error while adding Bet(s)!');
+          //     }
+          //   } catch (exx) {
+          //     this.notificationService.error('Error while adding Bet(s)!');
+          //   }
+          // }
         }
       );
   }
