@@ -567,6 +567,23 @@ export class AccountDetailsComponent implements OnInit {
     })
   }
 
+  showCancelBet(bet:any){
+    if(this.authService.decodedToken.role === 'SoftwareHolder'){
+      return true;
+    }
+    else if(this.authService.decodedToken.role === 'SuperAdmin' || this.authService.decodedToken.role === 'Client'){
+      if(bet.status == 'UNMATCHED'){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+    else{
+      return false;
+    }
+  }
+
 }
 
 const FORECAST: any[] = [

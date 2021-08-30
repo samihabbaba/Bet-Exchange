@@ -19,7 +19,7 @@ export class SharedFunctionsService {
    currencyList = ['TRY', 'USD', 'EUR', 'GBP'];
    sports:any = []
 
-  constructor(private dataService:DataService, private authService:AuthService, private notify:NotificationService) {
+  constructor(private dataService:DataService , private notify:NotificationService) {
     this.loadSports();
    }
 
@@ -425,22 +425,7 @@ export class SharedFunctionsService {
     }
   }
 
-  showCancelBet(bet:any){
-    if(this.authService.decodedToken.role === 'SoftwareHolder'){
-      return true;
-    }
-    else if(this.authService.decodedToken.role === 'SuperAdmin' || this.authService.decodedToken.role === 'Client'){
-      if(bet.status == 'UNMATCHED'){
-        return true;
-      }
-      else{
-        return false;
-      }
-    }
-    else{
-      return false;
-    }
-  }
+  
 
   delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
@@ -466,6 +451,10 @@ export class SharedFunctionsService {
   showErrorMsg(error:any, defaultMsg:any){
     if(error.error.errorMessage){
       this.notify.error(error.error.errorMessage);
+      return
+    }
+    else{
+      this.notify.error(defaultMsg);
       return
     }
 
