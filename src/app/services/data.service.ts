@@ -47,7 +47,7 @@ export class DataService {
   ////// Bet Controller //////
   ///////////////////////////////
 
-  getBets(PageNo:number, PageSize:number, UserId='', ParentId='', BetType='', MarketId='', SelectionId='', EventTypeId='', CompetitionId='',StartDate='', EndDate='', OnLastActionDate=false,UserName='',BetStatus='') {
+  getBets(PageNo:number, PageSize:number, UserId='', ParentId='', BetType='', MarketId='', SelectionId='', EventTypeId='', CompetitionId='',StartDate='', EndDate='', OnLastActionDate=false,UserName='',BetStatus='',  SortBy='Date',SortingType='-1') {
    let query = this.convertObjectToQueryString({
     PageNo:PageNo,
     PageSize:PageSize,
@@ -62,7 +62,9 @@ export class DataService {
     EndDate: EndDate, 
     OnLastActionDate:OnLastActionDate,
     UserName: UserName,
-    BetStatus: BetStatus
+    BetStatus: BetStatus,
+    SortBy:SortBy,
+    SortingType:SortingType
    })
     return this.http.get<any>(`${this.baseUrl}bets${query}`, {
       headers: this.httpOptions.headers,
@@ -122,10 +124,10 @@ export class DataService {
   ///// Transaction Controller /////
   //////////////////////////////////
 
-  getTransactions(PageNo:number, PageSize:number, UserId='', ToUserId='', CurrencyCode='', ParentId='', StartDate='',EndDate='',DirectParent:any='',BettingTransactionsOnly:any='',SortBy='CreatedAt',SortingType='-1' ) {
+  getTransactions(PageNo:number, PageSize:number, UserId='', ToUserId='', CurrencyCode='', ParentId='', StartDate='',EndDate='',DirectParent:any='',BettingTransactionsOnly:any='', SortBy='CreatedAt',SortingType='-1' ) {
     //BettingTransactionsOnly  [ null (all), true (only bet related), flase (filter out the bet related transactions)]
     let query = this.convertObjectToQueryString({
-      PageNo:PageNo, PageSize:PageSize, UserId:UserId, ToUserId:ToUserId, CurrencyCode:CurrencyCode, ParentId:ParentId, StartDate:StartDate,EndDate:EndDate, DirectParent:DirectParent, BettingTransactionsOnly:BettingTransactionsOnly
+      PageNo:PageNo, PageSize:PageSize, UserId:UserId, ToUserId:ToUserId, CurrencyCode:CurrencyCode, ParentId:ParentId, StartDate:StartDate,EndDate:EndDate, DirectParent:DirectParent, BettingTransactionsOnly:BettingTransactionsOnly,SortBy:SortBy,SortingType:SortingType
     })
     return this.http.get<any>(`${this.baseUrl}transactions${query}`, {
       headers: this.httpOptions.headers,
@@ -857,7 +859,7 @@ this.layoutService.closeMenuChilds();
     convertObjectToQueryString(obj: any){
       let query = "?";
       for (const [key, value] of Object.entries(obj)) {
-
+        
         if(value === '' || value === null){
           continue;
         }
