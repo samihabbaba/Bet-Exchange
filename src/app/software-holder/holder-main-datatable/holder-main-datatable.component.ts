@@ -220,7 +220,8 @@ export class HolderMainDatatableComponent implements OnInit {
         createrRole:'SoftwareHolder'
       }
     });
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(async (result) => {
+      await this.sharedFunctions.delay(500);
       console.log(`Dialog result: ${result}`);
       this.loadUsers();
     });
@@ -231,7 +232,8 @@ export class HolderMainDatatableComponent implements OnInit {
     const dialogRef = this.dialog.open(EditSuperModalComponent, {
       data: objToSend,
     });
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(async (result) => {
+      await this.sharedFunctions.delay(500);
       console.log(`Dialog result: ${result}`);
       this.loadUsers();
     });

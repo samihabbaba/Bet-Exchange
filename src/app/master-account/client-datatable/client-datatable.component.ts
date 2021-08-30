@@ -136,7 +136,8 @@ export class ClientDatatableComponent implements OnInit {
         createrRole:'Master'
       }
     });
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(async (result) => {
+      await this.sharedFunctions.delay(500);
       console.log(`Dialog result: ${result}`);
       this.loadUsers();
     });
@@ -147,7 +148,8 @@ export class ClientDatatableComponent implements OnInit {
     const dialogRef = this.dialog.open(EditSuperModalComponent, {
       data: objToSend,
     });
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(async (result) => {
+      await this.sharedFunctions.delay(500);
       console.log(`Dialog result: ${result}`);
       this.loadUsers();
     });

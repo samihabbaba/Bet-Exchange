@@ -103,6 +103,9 @@ export class AddSuperModalComponent implements OnInit {
           this.notify.error('Error adding user');
         }
       }
+
+      
+      this.dialogRef.close();
     })
   }
 

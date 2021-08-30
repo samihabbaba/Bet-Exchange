@@ -136,7 +136,8 @@ export class AdminDatatableComponent implements OnInit {
         createrRole:'Admin'
       }
     });
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(async (result) => {
+      await this.sharedFunctions.delay(500);
       this.loadUsers();
       console.log(`Dialog result: ${result}`);
     });
@@ -147,7 +148,8 @@ export class AdminDatatableComponent implements OnInit {
     const dialogRef = this.dialog.open(EditSuperModalComponent, {
       data: objToSend,
     });
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(async (result) => {
+      await this.sharedFunctions.delay(500);
       console.log(`Dialog result: ${result}`);
       this.loadUsers();
     });
