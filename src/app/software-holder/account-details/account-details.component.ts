@@ -569,6 +569,14 @@ export class AccountDetailsComponent implements OnInit {
     this.loadBets();
   }
 
+  updateLeague(league:any){
+    this.dataService.updateLeague(league).subscribe(resp => {
+      this.notify.success('League updated')
+    }, error =>{
+      this.notify.error('Error updating league')
+    })
+  }
+
 }
 
 const FORECAST: any[] = [

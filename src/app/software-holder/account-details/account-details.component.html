@@ -896,7 +896,11 @@
 
           <ng-container matColumnDef="category">
             <th mat-header-cell *matHeaderCellDef>Category</th>
-            <td mat-cell *matCellDef="let row">{{ row.category }}</td>
+            <td mat-cell *matCellDef="let row">
+
+              {{ row.category }}
+            
+            </td>
           </ng-container>
 
           
@@ -1071,10 +1075,10 @@
                 <mat-menu #menu="matMenu">
                   
   
-                  <button mat-menu-item >
+                  <!-- <button mat-menu-item >
                     <mat-icon>feed</mat-icon>
                     <span>Update</span>
-                  </button>
+                  </button> -->
 
                   <button mat-menu-item (click)="this.openConfirmDialog(row,1)">
                     <mat-icon>new_releases</mat-icon>
@@ -1163,10 +1167,10 @@
                 <mat-menu #menu="matMenu">
                   
   
-                  <button mat-menu-item >
+                  <!-- <button mat-menu-item >
                     <mat-icon>feed</mat-icon>
                     <span>Update</span>
-                  </button>
+                  </button> -->
 
                   <button mat-menu-item (click)="this.openConfirmDialog(row,2)">
                     <mat-icon>new_releases</mat-icon>
@@ -1254,7 +1258,43 @@
           
           <ng-container matColumnDef="category">
             <th mat-header-cell *matHeaderCellDef>Category</th>
-            <td mat-cell *matCellDef="let row">{{ row.category }}</td>
+            <td mat-cell *matCellDef="let row">
+            
+              <!-- {{ row.category }} -->
+
+              <mat-form-field class="category-options-table">
+                <!-- <mat-label>Category</mat-label> -->
+                <mat-select name="pl"
+                (selectionChange)="updateLeague(row)"
+                [(ngModel)]="row.category"
+                >
+                <mat-option
+                  [value]="'A'"
+                >
+                  A
+                </mat-option>
+                
+                <mat-option
+                [value]="'B'"
+                >
+                  B
+                </mat-option>
+              
+                <mat-option
+                [value]="'C'"
+                >
+                  C
+                </mat-option>
+              
+                <mat-option
+                [value]="'D'"
+                >
+                  D
+                </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+            </td>
           </ng-container>
 
           
@@ -1279,10 +1319,10 @@
                 <mat-menu #menu="matMenu">
                   
   
-                  <button mat-menu-item >
+                  <!-- <button mat-menu-item >
                     <mat-icon>feed</mat-icon>
                     <span>Update</span>
-                  </button>
+                  </button> -->
 
                   <button mat-menu-item (click)="this.openConfirmDialog(row,3)">
                     <mat-icon>new_releases</mat-icon>
