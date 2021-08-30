@@ -126,10 +126,14 @@ export class ConfirmationMessageComponent implements OnInit {
       marketId: null,
       betIds: null
     
-    }).subscribe(resp => {
-
-      this.notify.success(this.successMsg);
-      this.betSlipService.cancelAllOpenBetsForEventId(this.data.obj.id);
+    }).subscribe((resp:any) => {
+      if(resp.body.length > 0){
+        this.notify.success(this.successMsg);
+        this.betSlipService.cancelAllOpenBetsForEventId(resp.body);
+      }
+      else{
+        this.notify.error('No bets were canceled')
+      }
       this.closeDialog();
     }, error => {
       this.dialogRef.close();

@@ -99,13 +99,11 @@ export class EditSuperModalComponent implements OnInit {
   }
 
   updateSuper(){
-    debugger
     this.dataService.updateUser({...this.editMasterForm.value, id:this.data.id}).subscribe(resp => {
-      debugger
-    this.notify.success('User Updated');
+
+      this.notify.success('User Updated');
       this.dialogRef.close();
     }, error => {
-      debugger
       this.sharedService.showErrorMsg(error,'Error updating user')
 
         this.dialogRef.close();

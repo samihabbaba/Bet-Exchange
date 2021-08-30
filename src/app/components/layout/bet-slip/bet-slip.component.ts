@@ -219,10 +219,10 @@ export class BetSlipComponent implements OnInit {
   
     dialogRef.afterClosed().subscribe( async (result) => {
       if(functionToCall == 5){
-        this.betSlipService.updateOpenBets();
+        // this.betSlipService.updateOpenBets();
       }
       else if(functionToCall == 6){
-        this.betSlipService.updateOpenBetsOptions();
+        // this.betSlipService.updateOpenBetsOptions();
       }
     });
   }

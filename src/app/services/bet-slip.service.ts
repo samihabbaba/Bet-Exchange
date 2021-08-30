@@ -230,28 +230,34 @@ export class BetSlipService {
     this.openBetsToViewMatched = this.currentOpenBets.filter(x=> x.selection.eventName === this.selectedOpenBet && x.status == 'PENDING').sort((a:any, b:any) => a.selection.betType < b.selection.betType ? -1 : a.selection.betType > b.selection.betType ? 1 : 0);
   }
 
-  updateOpenBetsOptions(){
+  updateOpenBetsOptions(keepEvent = false){
     this.openBetsSelectOptions = this.currentOpenBets.map(function(i) {
       return i.selection.eventName;
     });
-    
+
     this.openBetsSelectOptions = [...new Set(this.openBetsSelectOptions)];
-    if(this.openBetsSelectOptions.length > 0){
-      this.selectedOpenBet = this.openBetsSelectOptions[0];
-    }else{
-      this.selectedOpenBet = '';
+    if(keepEvent && this.openBetsSelectOptions.some(x=>x == this.selectedOpenBet)){
     }
+    else{
+      if(this.openBetsSelectOptions.length > 0){
+        this.selectedOpenBet = this.openBetsSelectOptions[0];
+      }else{
+        this.selectedOpenBet = '';
+      }
+    }
+
     this.updateOpenBets();
   }
 
-  cancelAllOpenBetsForEventId(eventId:string){
-    this.currentOpenBets = this.currentOpenBets.filter(x=> x.selection.eventId !== eventId || (x.selection.eventId === eventId && x.status === 'PENDING') )
-    this.updateOpenBetsOptions();
+  cancelAllOpenBetsForEventId(betIds:any){
+    // this.currentOpenBets = this.currentOpenBets.filter(x=> x.selection.eventId !== eventId || (x.selection.eventId === eventId && x.status === 'PENDING') )
+    this.currentOpenBets = this.currentOpenBets.filter(x=> !betIds.some((y:any)=> y == x.id) )
+    this.updateOpenBetsOptions(true);
   }
   
   cancelOpenBetById(id:string){
     this.currentOpenBets = this.currentOpenBets.filter(x=> x.id !== id)
-    this.updateOpenBetsOptions();
+    this.updateOpenBetsOptions(true);
   }
 
   
