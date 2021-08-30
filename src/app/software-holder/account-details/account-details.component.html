@@ -56,11 +56,12 @@
       >
         <div>Email: &nbsp; <span>{{myUser.email}}</span> </div>
         <div>Username: &nbsp; <span>{{myUser.userName}}</span></div>
-       <div>Phone Number: &nbsp; <span> {{myUser?.phoneNumber}} </span></div>
+        <div>Phone Number: &nbsp; <span> {{myUser?.phoneNumber}} </span></div>
         <div>Balance: &nbsp; <span> {{this.sharedService.formatNumber( myUser?.wallet?.balance )}} </span></div>
         <div>Wallet Currency: &nbsp; <span> {{myUser?.wallet?.currency}} </span></div>
-       <div *ngIf="myUser.role !== 'Client'">SubAccounts Balance: &nbsp; <span> {{this.sharedService.formatNumber( myUser?.subAccountBalance )}} </span></div>
+        <div *ngIf="myUser.role !== 'Client'">SubAccounts Balance: &nbsp; <span> {{this.sharedService.formatNumber( myUser?.subAccountBalance )}} </span></div>
         <div *ngIf="myUser.role !== 'Client'">Commission: &nbsp; <span>{{this.sharedService.formatNumber( myUser?.commission*100)}}%</span></div>
+        <div *ngIf="myUser?.role === 'SuperAdmin'">Unsettled Commission: &nbsp; <span> {{this.sharedService.formatNumber( myUser?.unsettledCommission)}} </span></div>
         <div *ngIf="myUser?.role !== 'SuperAdmin' && myUser?.role !== 'SoftwareHolder'">Parents Commission: &nbsp; <span>{{this.sharedService.formatNumber( myUser?.parentCommission*100)}}%</span></div>
         <div *ngIf="myUser?.role === 'SuperAdmin'">Profit Commission: &nbsp; <span>{{this.sharedService.formatNumber( myUser?.profitCommission*100)}}%</span></div>
         <div *ngIf="myUser?.role !== 'SoftwareHolder' && myUser.role !== 'Client'">Risk: &nbsp; <span>{{this.sharedService.formatNumber( myUser?.risk)}}%</span></div>
