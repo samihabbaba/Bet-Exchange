@@ -8,6 +8,7 @@ import { NotificationService } from './notification.service';
 import { environment } from 'src/environments/environment';
 import { SignalRNotificationsService } from './signal-r-notifications.service';
 import { SharedFunctionsService } from './shared-functions.service';
+import { BetSlipService } from './bet-slip.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,8 @@ export class AuthService {
     private route:Router,
     private signalRNoti:SignalRNotificationsService,
     private notificationService: NotificationService,
-    private sharedService:SharedFunctionsService
+    private sharedService:SharedFunctionsService,
+    private betSlipService:BetSlipService
     ) { }
 
   
@@ -144,7 +146,8 @@ export class AuthService {
   async initializeData(){
 
     this.signalRNoti.startNotificationListen();
-    
+    this.loadOpenBets();
+
     return new Promise((resolve, reject) => {
       resolve(true);
       return;
@@ -235,6 +238,17 @@ export class AuthService {
   
   }
 
+  loadOpenBets(){
+    if(this.decodedToken.role !== 'Client')
+    {
+      return;
+    }
+
+    this.dataService.getBets(1,5000,'','','','','','','','','',false,'','UNMATCHED','','').subscribe(resp =>{
+      this.betSlipService.currentOpenBets = resp.body.items;
+      this.betSlipService.updateOpenBetsOptions();
+    })
+  }
 
   delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
