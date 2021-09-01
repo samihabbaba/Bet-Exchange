@@ -31,6 +31,7 @@ export class AppComponent implements OnInit {
       this.router.navigateByUrl('login');
     }else{
       this.authService.checkTokenValidity();
+      this.authService.initializeData();
     }
     // else if(this.router.url === '/profile'){
     //   this.layoutService.displayOther();
