@@ -357,7 +357,11 @@ export class DataService {
   }
 
   getAllRegions(sportId: any,HasInPlay:any=null) {
-    return this.http.get<any>(`${this.baseUrl}regions?EventTypeId=${sportId}&HasInPlay=${HasInPlay ? HasInPlay : false}`, {
+    let query = this.convertObjectToQueryString(
+      {EventTypeId:sportId,
+      HasInPlay:HasInPlay}
+    )
+    return this.http.get<any>(`${this.baseUrl}regions${query}`, {
       headers: this.httpOptions.headers,
       observe: 'response',
     });
