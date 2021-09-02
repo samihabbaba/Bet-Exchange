@@ -80,7 +80,7 @@ export class MenuComponent implements OnInit {
         this.layoutService.currentSport.next(item);
       }
       this.dataService
-        .getAllRegions(item.id)
+        .getAllRegions(item.id, false)
         .pipe(finalize(() => this.layoutService.stopMenuLoading()))
         .subscribe(
           (resp) => {
@@ -138,7 +138,7 @@ export class MenuComponent implements OnInit {
         // item.id = 'International';
   
         this.dataService
-          .getAllLeagues(item.sportId, item.id,'',true)
+          .getAllLeagues(item.sportId, item.id,false,true)
           .pipe(finalize(() => this.layoutService.stopMenuLoading()))
           .subscribe(
             (resp) => {

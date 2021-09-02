@@ -1128,6 +1128,11 @@ body {
   }
 }
 
+.eye-icon{
+  align-self: center;
+  // font-size: 15px;
+}
+
 .bet-item-inputs-container {
   display: flex;
   justify-content: space-around;
@@ -3566,6 +3571,9 @@ td, th span {
 .openBet-cancel-btn{
   font-weight: bold;
   cursor: pointer;
+  :hover{
+    cursor: pointer;
+  }
 }
 
 .mat-column-category {

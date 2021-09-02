@@ -8,6 +8,7 @@ import { DataService } from 'src/app/services/data.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationMessageComponent } from 'src/app/shared/confirmation-message/confirmation-message.component';
+import { BetDetailsComponent } from 'src/app/shared/bet-details/bet-details.component';
 
 @Component({
   selector: 'app-bet-slip',
@@ -224,6 +225,15 @@ export class BetSlipComponent implements OnInit {
       else if(functionToCall == 6){
         // this.betSlipService.updateOpenBetsOptions();
       }
+    });
+  }
+
+  openBetDetail(obj:any) {
+    const dialogRef = this.dialog.open(BetDetailsComponent,{
+      data:obj
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
     });
   }
 
