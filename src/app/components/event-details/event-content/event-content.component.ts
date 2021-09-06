@@ -18,6 +18,7 @@ import { SharedFunctionsService } from 'src/app/services/shared-functions.servic
 export class EventContentComponent implements OnInit {
   @Input() event: any = null;
   screenObserver$?: Subscription;
+  subscription?: Subscription;
 
   tabItems: any[] = [
     {
@@ -81,6 +82,13 @@ export class EventContentComponent implements OnInit {
     this.screenObserver$ = this.screenSizeService.currentScreenSize.subscribe(
       this.setTabs.bind(this)
     );
+
+    // this.subscription = this.dataService.selectedEventDetails.subscribe(
+    //   (resp) => {
+    //     // this.game = resp;
+    //     this.getMarketsToDisplay();
+    //   }
+    // );
   }
 
   ngOnInit(): void {
@@ -95,6 +103,7 @@ export class EventContentComponent implements OnInit {
 
   ngOnDestroy() {
     this.screenObserver$?.unsubscribe();
+    // this.subscription?.unsubscribe();
   }
 
 
