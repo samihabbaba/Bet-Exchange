@@ -83,12 +83,12 @@ export class EventContentComponent implements OnInit {
       this.setTabs.bind(this)
     );
 
-    // this.subscription = this.dataService.selectedEventDetails.subscribe(
-    //   (resp) => {
-    //     // this.game = resp;
-    //     this.getMarketsToDisplay();
-    //   }
-    // );
+    this.subscription = this.dataService.selectedEventDetails.subscribe(
+      (resp) => {
+        // this.game = resp;
+        this.getMarketsToDisplay();
+      }
+    );
   }
 
   ngOnInit(): void {
@@ -103,22 +103,35 @@ export class EventContentComponent implements OnInit {
 
   ngOnDestroy() {
     this.screenObserver$?.unsubscribe();
-    // this.subscription?.unsubscribe();
+    this.subscription?.unsubscribe();
   }
 
 
-  setTopMarket(){
+  setTopMarket(refresh= false){
     
     if (this.event.markets.length > 0) {
 
-      if(this.event.markets.some((x:any)=> this.sharedService.mainMarkets.some(y=> y == x.name))){
-        this.topMarket = this.event.markets[this.event.markets.findIndex((x:any)=>this.sharedService.mainMarkets.some(y=> y == x.name))]
-      }
-      else{
-        this.topMarket = this.event.markets[0];
-      }
+        if(refresh){
+          if(this.topMarket && this.event.markets.some((x:any)=> x.id == this.topMarket.id)){
+            this.topMarket = this.event.markets[this.event.markets.findIndex((x:any)=> x.id == this.topMarket.id)]
+          }
+          else{
+            this.topMarket = this.event.markets[0];
+          }
+        }
 
-    } else {
+        else
+        {
+          if(this.event.markets.some((x:any)=> this.sharedService.mainMarkets.some(y=> y == x.name))){
+            this.topMarket = this.event.markets[this.event.markets.findIndex((x:any)=>this.sharedService.mainMarkets.some(y=> y == x.name))]
+          }
+          else{
+            this.topMarket = this.event.markets[0];
+          }
+        }
+
+    }
+     else {
       this.topMarket = {};
     }
   }
@@ -252,7 +265,9 @@ export class EventContentComponent implements OnInit {
   }
 
   getMarketsToDisplay() {
-    
+    if(!this.event){
+      return
+    }
     if (this.selectedTab == 'Popular') {
       this.copyOfMarkets = this.event.markets.filter((x: any) =>
         this.sharedService.isMarketPopular(x.name)
@@ -295,6 +310,7 @@ export class EventContentComponent implements OnInit {
     else {
       this.copyOfMarkets = [];
     }
+    this.setTopMarket(true);
   }
 
 
