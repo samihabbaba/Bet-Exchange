@@ -75,6 +75,7 @@ export class BetSlipComponent implements OnInit {
 
           this.betSlipService.updateOpenBetsOptions();
           this.notificationService.success('Bet(s) added successfully!');
+          this.betSlipService.loadTopMarketBets(this.betSlipService.latestTopMarketId);
         },
         (error) => {
           debugger;

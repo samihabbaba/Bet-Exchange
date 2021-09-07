@@ -26,6 +26,7 @@ export class BetSlipService {
 
   constructor(private http: HttpClient, private notiSignalR:SignalRNotificationsService, private sharedService:SharedFunctionsService, private dataService:DataService) {
     this.notiSignalR.notification.subscribe(noti => {
+      debugger
 
       if(!noti){
         return
@@ -40,6 +41,7 @@ export class BetSlipService {
             this.updateOpenBets();
           }
         }
+        this.loadTopMarketBets(this.latestTopMarketId);
       }
 
     })
@@ -267,8 +269,12 @@ export class BetSlipService {
 
 
   betsForMarket:any = [];
-
+  latestTopMarketId = '';
   loadTopMarketBets(marketId:any){
+    if(marketId == ''){
+      return
+    }
+    this.latestTopMarketId = marketId;
     // add bet to the array if came as matched from signalR or on bet place
     // maybe just make an obs variable and trigger it when ever it's needed to reload it
     this.dataService.getBets(1, 5000, '', '','',marketId,'','','','','',false, '', 'Pending', '','').subscribe(resp => {
