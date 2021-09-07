@@ -68,7 +68,6 @@ export class EventContentComponent implements OnInit {
 
   topMarket: any = null;
   eventIsLive = false;
-  betsForMarket:any = [];
 
   fontAwesomeIcons = {
     lock: faLock,
@@ -131,56 +130,16 @@ export class EventContentComponent implements OnInit {
           }
         }
 
-        this.loadTopMarketBets(this.topMarket.id);
+        this.betSlipService.loadTopMarketBets(this.topMarket.id);
     }
      else {
       this.topMarket = {};
-      this.betsForMarket = [];
+      this.betSlipService.betsForMarket = [];
     }
   }
 
-  loadTopMarketBets(marketId:any){
-    // add bet to the array if came as matched from signalR or on bet place
-    // maybe just make an obs variable and trigger it when ever it's needed to reload it
-    this.dataService.getBets(1, 5000, '', '','',marketId,'','','','','',false, '', 'Pending', '','').subscribe(resp => {
-      this.betsForMarket = resp.body.items;
-    }, erorr => {
-      this.betsForMarket = [];
-    })
-  }
+  
 
-  getRunMoney(marketId:any, selectionId:any){ // maybe take run name also ?
-
-    if(this.betsForMarket.length == 0 || this.betsForMarket[0].selection.marketId !== marketId){
-      return 0;
-    }
-    // how much each run will cost, either as winning money or losing ()
-    // get all events for the user with the needed market id
-    // take only the pending bets - no unmatched or settled 
-// debugger
-
-    let runBack = this.betsForMarket.filter((x:any)=>x.selection.selectionId == selectionId && x.selection.betType == 'BACK')    
-    let runLay = this.betsForMarket.filter((x:any)=>x.selection.selectionId == selectionId && x.selection.betType == 'LAY')    
-    
-    let notRunBack = this.betsForMarket.filter((x:any)=>x.selection.selectionId != selectionId && x.selection.betType == 'BACK')    
-    let notRunLay = this.betsForMarket.filter((x:any)=>x.selection.selectionId != selectionId && x.selection.betType == 'LAY')    
-
-    // (run back - run lay) + (not run lay - not run back) 
-    let runBackProfit = runBack.reduce((runBackProfit:any, b:any) => runBackProfit + (b.payout - b.stake),0);
-    let runLayLiability = runLay.reduce((runLayLiability:any, b:any) => runLayLiability + ((b.odd-1)*b.stake),0);
-    
-    let notRunBackStake = notRunBack.reduce((notRunBackStake:any, b:any) => notRunBackStake + b.stake,0);
-    let notRunLayStake = notRunLay.reduce((notRunLayStake:any, b:any) => notRunLayStake + b.stake,0);
-    // let runMoney = this.betsForMarket.filter((x:any)=>x.selection.selectionId == selectionId).reduce((runMoney:any, b:any) => runMoney + b.payout,0);
-    // let notRunMoney = this.betsForMarket.filter((x:any)=>x.selection.selectionId != selectionId).reduce((notRunMoney:any, b:any) => notRunMoney + b.payout,0);
-
-    //calculate the winning money (stake + profit/liability) for the bets with runner id --> minus liability of the others
-
-    let num =  (runBackProfit - runLayLiability) + (notRunLayStake - notRunBackStake);
-    return this.sharedService.formatNumber(num)
-    
-    // return (runBackProfit - runLayLiability) + (notRunLayStake - notRunBackStake);
-  }
 
   handleTabClick(tab: any) {
     if (tab.children) {
