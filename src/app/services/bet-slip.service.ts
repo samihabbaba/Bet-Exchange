@@ -26,7 +26,6 @@ export class BetSlipService {
 
   constructor(private http: HttpClient, private notiSignalR:SignalRNotificationsService, private sharedService:SharedFunctionsService, private dataService:DataService) {
     this.notiSignalR.notification.subscribe(noti => {
-      debugger
 
       if(!noti){
         return
