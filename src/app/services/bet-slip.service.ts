@@ -226,6 +226,11 @@ export class BetSlipService {
 
   }
 
+  clearMatchedBets(){
+    this.currentOpenBets = this.currentOpenBets.filter(x=> x.status == 'UNMATCHED');
+    this.updateOpenBetsOptions();
+  }
+
   updateOpenBets(event?:any){
     this.openBetsToView = this.currentOpenBets.filter(x=> x.selection.eventName === this.selectedOpenBet).sort((a:any, b:any) => a.selection.betType < b.selection.betType ? -1 : a.selection.betType > b.selection.betType ? 1 : 0);
     this.openBetsToViewUnmatched= this.currentOpenBets.filter(x=> x.selection.eventName === this.selectedOpenBet && x.status == 'UNMATCHED').sort((a:any, b:any) => a.selection.betType < b.selection.betType ? -1 : a.selection.betType > b.selection.betType ? 1 : 0);
