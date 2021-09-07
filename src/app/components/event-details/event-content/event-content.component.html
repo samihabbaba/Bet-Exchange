@@ -111,7 +111,18 @@
                                   topMarket?.name
                                 )
                               }}
+
+                              &nbsp;
+                              <span
+                              *ngIf="getRunMoney(topMarket.id, item.selectionId)!=0"
+                              [ngClass]="{'win-money': getRunMoney(topMarket.id, item.selectionId)>=0,
+                                          'loss-money': getRunMoney(topMarket.id, item.selectionId)<0}">
+                                {{getRunMoney(topMarket.id, item.selectionId)}}
+                              </span>
+
+
                             </h3>
+
                           </div>
                         </div>
                       </div>

@@ -244,7 +244,7 @@ export class AuthService {
       return;
     }
 
-    this.dataService.getBets(1,5000,this.decodedToken.id,'','','','','','','','',false,'','UNMATCHED','','').subscribe(resp =>{
+    this.dataService.getBets(1,5000,this.decodedToken.id,'','','','','','','','',false,'','UNSETTLED','','').subscribe(resp =>{
       this.betSlipService.currentOpenBets = resp.body.items;
       this.betSlipService.updateOpenBetsOptions();
     },
