@@ -316,6 +316,20 @@ export class BetSlipService {
     // return (runBackProfit - runLayLiability) + (notRunLayStake - notRunBackStake);
   }
 
+  returnBetsProfit(bet:any){
+debugger
+    if(bet.selection.betType == 'BACK'){
+      return bet.payout - bet.stake;
+    }
+    else if(bet.selection.betType == 'LAY'){
+      return bet.stake;
+    }
+    else{
+      return -1;
+    }
+
+  }
+
   
 
   ///////////////// API requests ////////////////////////
