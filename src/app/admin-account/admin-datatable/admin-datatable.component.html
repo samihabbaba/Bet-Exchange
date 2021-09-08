@@ -211,6 +211,12 @@
           <mat-icon>edit</mat-icon>
           <span>Edit</span>
         </button>
+        
+        <button mat-menu-item (click)="openRiskUpdateDialog(row)">
+          <mat-icon>edit</mat-icon>
+          <span>Risk</span>
+        </button>
+
         <button mat-menu-item (click)="openDepositMasterDialog(row)">
           <mat-icon>payment</mat-icon>
           <span>Deposit</span>

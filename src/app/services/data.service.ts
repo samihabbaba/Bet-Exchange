@@ -799,6 +799,13 @@ this.layoutService.closeMenuChilds();
         observe: 'response',
       });
     }
+
+    getRisk(id:any) {
+      return this.http.get(`${environment.apiUrl}users/${id}/risk`, {
+        headers: this.httpOptions.headers,
+        observe: 'response',
+      });
+    }
   
     updatePassword(id:string , password:string) {
       

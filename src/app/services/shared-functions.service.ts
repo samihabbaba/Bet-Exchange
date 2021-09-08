@@ -471,11 +471,11 @@ export class SharedFunctionsService {
     }
   }
 
-  getUserParentId(user:any){
+  getUserParent(user:any){
     try{
       let parents = user.parentHeirarchy;
       parents = parents.sort((a:any, b:any) => a.depth < b.depth ? -1 : a.depth > b.depth ? 1 : 0);
-      return parents[0].id;
+      return parents[0];
     }
     catch(ex){
       return null

@@ -22,13 +22,15 @@ import { ActivationModalComponent } from './activation-modal/activation-modal.co
 import { BetDetailsComponent } from './bet-details/bet-details.component';
 import { BetSettleModalComponent } from './bet-settle-modal/bet-settle-modal.component';
 import { ConfirmationMessageComponent } from './confirmation-message/confirmation-message.component';
+import { UpdateRiskComponent } from './update-risk/update-risk.component';
 
 @NgModule({
   declarations: [
     ActivationModalComponent,
     BetDetailsComponent,
     BetSettleModalComponent,
-    ConfirmationMessageComponent
+    ConfirmationMessageComponent,
+    UpdateRiskComponent
   ],
   imports: [
     CommonModule,

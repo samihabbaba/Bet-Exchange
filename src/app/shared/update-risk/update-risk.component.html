@@ -1,0 +1,62 @@
+<h2 mat-dialog-title>Update Risk</h2>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="editRiskForm">
+      <!-- <div class="cs-modal-form-field-container"> -->
+    <div class="">
+     
+
+
+
+      <mat-form-field appearance="fill" >
+        <mat-label ><mat-icon>warning</mat-icon> Admin Risk ({{this.minRisk}} - {{this.maxRisk}})%</mat-label>
+        <input
+          matInput
+          placeholder="adminRisk"
+          formControlName="adminRisk"
+          required
+          type="number"
+          min="{{this.minRisk - form.masterRisk.value}}"
+          max="{{this.maxRisk - form.masterRisk.value}}"
+        />
+        <mat-error *ngIf="form.adminRisk.invalid"
+          >Admin + Master Risk. ({{minRisk}} - {{maxRisk}})%</mat-error
+        >
+      </mat-form-field>
+      
+      <mat-form-field appearance="fill">
+        <mat-label ><mat-icon>warning</mat-icon> Master Risk ({{this.minRisk}} - {{this.maxRisk}})%</mat-label>
+        <input
+          matInput
+          placeholder="masterRisk"
+          formControlName="masterRisk"
+          required
+          type="number"
+          min="{{this.minRisk - form.adminRisk.value}}"
+          max="{{this.maxRisk - form.adminRisk.value}}"
+        />
+        <mat-error *ngIf="form.masterRisk.invalid"
+          >Admin + Master Risk. ({{minRisk}} - {{maxRisk}})%</mat-error
+        >
+      </mat-form-field>
+
+      
+   
+     
+      
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button
+    color="primary"
+    mat-button
+    [mat-dialog-close]="true"
+    cdkFocusInitial
+    [disabled]="!this.editRiskForm.valid"
+    (click)="updateRisk()"
+  >
+    Update
+  </button>
+
+</mat-dialog-actions>

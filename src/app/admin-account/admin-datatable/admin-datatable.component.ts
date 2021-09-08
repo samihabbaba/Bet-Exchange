@@ -13,6 +13,7 @@ import { WithdrawSuperModalComponent } from 'src/app/software-holder/withdraw-su
 import { ChangePasswordModalComponent } from 'src/app/software-holder/change-password-modal/change-password-modal.component';
 import { EditSuperModalComponent } from 'src/app/software-holder/edit-super-modal/edit-super-modal.component';
 import { ConfirmationMessageComponent } from 'src/app/shared/confirmation-message/confirmation-message.component';
+import { UpdateRiskComponent } from 'src/app/shared/update-risk/update-risk.component';
 
 @Component({
   selector: 'app-admin-datatable',
@@ -156,6 +157,38 @@ export class AdminDatatableComponent implements OnInit {
     });
   }
 
+  openRiskUpdateDialog(obj:any){
+    this.dataService.getRisk(obj.id).subscribe((resp:any) => {
+
+      debugger
+      let masterRisk = resp.body[0].risks[resp.body[0].risks.findIndex((x:any)=>x.userId == obj.id)].risk
+      let parent = this.sharedFunctions.getUserParent(obj);
+      let adminRisk = resp.body[0].risks[resp.body[0].risks.findIndex((x:any)=>x.userId == parent.id)].risk
+      let minRisk = parent.minRisk;
+      let maxRisk = parent.maxRisk;
+
+      let objToSend = {
+        masterId : obj.id,
+        adminRisk:adminRisk,
+        masterRisk:masterRisk,
+        minRisk:minRisk,
+        maxRisk:maxRisk,
+      }
+    const dialogRef = this.dialog.open(UpdateRiskComponent, {
+      data: objToSend,
+    });
+    dialogRef.afterClosed().subscribe(async (result) => {
+      await this.sharedFunctions.delay(500);
+      console.log(`Dialog result: ${result}`);
+      this.loadUsers();
+    });
+
+    }, error =>{
+      // notify error
+    })
+
+    
+  }
   
   openDepositMasterDialog(obj: any) {
 
