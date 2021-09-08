@@ -40,7 +40,10 @@
       <div>Name: &nbsp; <span> {{currentUser?.name}} </span></div>
       <div>E-mail: &nbsp; <span> {{currentUser?.email}} </span></div>
       <div>Phone Number: &nbsp; <span> {{currentUser?.phoneNumber}} </span></div>
-      <div *ngIf="currentUser?.role !== 'Client'">Risk: &nbsp; <span> {{this.sharedService.formatNumber( currentUser?.risk)}}% </span></div>
+      <!-- <div *ngIf="currentUser?.role !== 'Client'">Risk: &nbsp; <span> {{this.sharedService.formatNumber( currentUser?.risk)}}% </span></div> -->
+      <div *ngIf="currentUser?.role === 'Admin'">Min Risk: &nbsp; <span>{{this.sharedService.formatNumber( currentUser?.minRisk)}}%</span></div>
+      <div *ngIf="currentUser?.role === 'Admin'">Max Risk: &nbsp; <span>{{this.sharedService.formatNumber( currentUser?.maxRisk)}}%</span></div>
+
       <div>Commission: &nbsp; <span> {{this.sharedService.formatNumber( currentUser?.commission*100)}}% </span></div>
       <div *ngIf="currentUser?.role === 'SuperAdmin'">Unsettled Commission: &nbsp; <span> {{this.sharedService.formatNumber( currentUser?.unsettledCommission)}} </span></div>
       <div *ngIf="currentUser?.role !== 'SuperAdmin'">Parents Commission: &nbsp; <span>{{this.sharedService.formatNumber( currentUser?.parentCommission*100)}}%</span></div>

@@ -36,7 +36,7 @@ export class AdminDatatableComponent implements OnInit {
     'name',
     'email',
     'phoneNumber',
-    'risk',
+    // 'risk',
     'commission',
     'wallet balance',
     'isActive',
