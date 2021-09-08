@@ -14,7 +14,7 @@ export class EventDetailsHeaderComponent implements OnInit {
   constructor(public layoutService:LayoutService) { }
 
   ngOnInit(): void {
-    debugger
+    // debugger
     this.event
   }
   
