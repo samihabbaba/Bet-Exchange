@@ -5,6 +5,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { finalize } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -32,7 +33,6 @@ export class EditSuperModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     if(this.data.profitCommission){
       this.data.profitCommission *= 100;
     }
@@ -116,7 +116,18 @@ export class EditSuperModalComponent implements OnInit {
   }
 
   updateSuper(){
-    this.dataService.updateUser({...this.editMasterForm.value, id:this.data.id}).subscribe(resp => {
+    this.dataService.updateUser({...this.editMasterForm.value, id:this.data.id})
+    .pipe(finalize( () =>    {
+        if(this.data.role == 'Master'){
+          // let parentId = this.sharedService.getUserParentId(this.data)
+          this.dataService.updateRisk(this.data.id,{
+            adminRisk: this.editMasterForm.adminRisk,
+            masterRisk: this.editMasterForm.masterRisk
+          })
+        }    
+      }
+    ))
+    .subscribe(resp => {
 
       this.notify.success('User Updated');
       this.dialogRef.close();
@@ -126,7 +137,7 @@ export class EditSuperModalComponent implements OnInit {
         this.dialogRef.close();
     })
   }
-
-
 }
+
+
 

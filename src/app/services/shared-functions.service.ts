@@ -449,7 +449,6 @@ export class SharedFunctionsService {
   }
   
   showErrorMsg(error:any, defaultMsg:any){
-    debugger
     if(error.error.errorMessage){
       this.notify.error(error.error.errorMessage);
       return
@@ -472,4 +471,15 @@ export class SharedFunctionsService {
     }
   }
 
+  getUserParentId(user:any){
+    try{
+      let parents = user.parentHeirarchy;
+      parents = parents.sort((a:any, b:any) => a.depth < b.depth ? -1 : a.depth > b.depth ? 1 : 0);
+      return parents[0].id;
+    }
+    catch(ex){
+      return null
+    }
+  }
 }
+

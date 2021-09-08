@@ -30,6 +30,7 @@ export class AdminDatatableComponent implements OnInit {
   pageSize = this.sharedFunctions.defaultPageSize;
 
   displayedColumns: string[] = [
+    // 'id',
     'userName',
     'name',
     'email',

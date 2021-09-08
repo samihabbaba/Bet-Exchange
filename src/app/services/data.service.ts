@@ -740,7 +740,7 @@ this.layoutService.closeMenuChilds();
 
 
 
- getAllUsers(pars:any) {
+   getAllUsers(pars:any) {
       return this.http.get<any>( `${this.baseUrl}users?PageNo=${
         pars.PageNo ? pars.PageNo : ''
       }&PageSize=${pars.PageSize ? pars.PageSize : ''}&ParentId=${
@@ -787,6 +787,14 @@ this.layoutService.closeMenuChilds();
       }
 
       return this.http.post(`${environment.apiUrl}users`, obj, {
+        headers: this.httpOptions.headers,
+        observe: 'response',
+      });
+    }
+
+    
+    updateRisk(masterId:any, riskObj:any) {
+      return this.http.post(`${environment.apiUrl}users/${masterId}/risk`, riskObj, {
         headers: this.httpOptions.headers,
         observe: 'response',
       });

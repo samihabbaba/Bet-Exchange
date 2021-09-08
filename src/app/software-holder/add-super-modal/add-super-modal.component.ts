@@ -72,7 +72,6 @@ export class AddSuperModalComponent implements OnInit {
     }
     else if(this.data.roleToCreate === 'Master')
     {
-      debugger
       objValidation = {...objValidation, adminRisk: new FormControl(null, [Validators.required, Validators.max(100), Validators.min(0)])}
       objValidation = {...objValidation, masterRisk: new FormControl(null, [Validators.required, Validators.max(100), Validators.min(0)])}
       this.minRisk = this.authService.currentUserInfo.minRisk;
@@ -84,7 +83,6 @@ export class AddSuperModalComponent implements OnInit {
   }
 
   addSuper(){
-    
     this.dataService.addNewUser({...this.addMasterForm.value, role:this.data.roleToCreate}).subscribe(resp => {
       this.notify.success('User Added');
       this.dialogRef.close();
