@@ -3594,3 +3594,16 @@ td, th span {
 .win-money{
   color: green;
 }
+
+.update-risk-field{
+  min-width: 350px;
+}
+
+
+.clickable{
+  cursor: pointer;
+  text-decoration: underline;
+  &:hover {
+    cursor: pointer;
+  }
+}

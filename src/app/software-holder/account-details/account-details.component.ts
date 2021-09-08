@@ -19,6 +19,7 @@ import { SharedFunctionsService } from 'src/app/services/shared-functions.servic
 import { BetDetailsComponent } from 'src/app/shared/bet-details/bet-details.component';
 import { BetSettleModalComponent } from 'src/app/shared/bet-settle-modal/bet-settle-modal.component';
 import { ConfirmationMessageComponent } from 'src/app/shared/confirmation-message/confirmation-message.component';
+import { UpdateRiskComponent } from 'src/app/shared/update-risk/update-risk.component';
 import { AddBettingRuleComponent } from '../add-betting-rule/add-betting-rule.component';
 import { DeleteBettingRuleComponent } from '../delete-betting-rule/delete-betting-rule.component';
 
@@ -61,7 +62,7 @@ export class AccountDetailsComponent implements OnInit {
     'liability',
     'profit',
   ];
-  forecastData = new MatTableDataSource<any>(FORECAST);
+  forecastData = new MatTableDataSource<any>();
 
   // PL Section
   displayedColumnsPL: string[] = [
@@ -74,7 +75,7 @@ export class AccountDetailsComponent implements OnInit {
     'total',
     'mTotal',
   ];
-  pLData = new MatTableDataSource<any>(PL);
+  pLData = new MatTableDataSource<any>();
 
   // Total PL Section
   displayedColumnstotalPL: string[] = [
@@ -87,7 +88,7 @@ export class AccountDetailsComponent implements OnInit {
     'total',
     'mTotal',
   ];
-  totalPLData = new MatTableDataSource<any>(totalPL);
+  totalPLData = new MatTableDataSource<any>();
 
   // Total Casino Section
   displayedColumnsCasinoTotal: string[] = [
@@ -100,7 +101,7 @@ export class AccountDetailsComponent implements OnInit {
     'total',
     'mTotal',
   ];
-  casinoTotalData = new MatTableDataSource<any>(casinoTotal);
+  casinoTotalData = new MatTableDataSource<any>();
 
   // Transactions Section
   displayedColumnsTransactions: string[] = [
@@ -589,60 +590,39 @@ export class AccountDetailsComponent implements OnInit {
     }
   }
 
+  openRiskUpdateDialog(obj:any){
+    debugger
+    this.dataService.getRisk(obj.id).subscribe((resp:any) => {
+
+      debugger
+      let masterRisk = resp.body[0].risks[resp.body[0].risks.findIndex((x:any)=>x.userId == obj.id)].risk
+      let parent = this.sharedService.getUserParent(obj);
+      let adminRisk = resp.body[0].risks[resp.body[0].risks.findIndex((x:any)=>x.userId == parent.id)].risk
+      let minRisk = parent.minRisk;
+      let maxRisk = parent.maxRisk;
+
+      let objToSend = {
+        masterId : obj.id,
+        adminRisk:adminRisk,
+        masterRisk:masterRisk,
+        minRisk:minRisk,
+        maxRisk:maxRisk,
+      }
+    const dialogRef = this.dialog.open(UpdateRiskComponent, {
+      data: objToSend,
+    });
+    dialogRef.afterClosed().subscribe(async (result) => {
+      await this.sharedService.delay(500);
+      console.log(`Dialog result: ${result}`);
+      this.loadUser();
+    });
+
+    }, error =>{
+      debugger
+      this.notify.error("Error getting Risk")
+    })
+
+    
+  }
+
 }
-
-const FORECAST: any[] = [
-  { market: 1, startDate: '28/07/2021', liability: 1.0079, profit: 500 },
-];
-
-const PL: any[] = [
-  {
-    user: 'Sami',
-    pl: 20.5,
-    mpl: 1.0079,
-    pt: 50,
-    commission: 0.5,
-    currentCommission: 4,
-    total: 18.5,
-    mTotal: 19,
-  },
-];
-
-const totalPL: any[] = [
-  {
-    user: 'Amro',
-    pl: 20.5,
-    mpl: 1.0079,
-    pt: 50,
-    commission: 0.5,
-    currentCommission: 4,
-    total: 18.5,
-    mTotal: 19,
-  },
-];
-
-const casinoTotal: any[] = [
-  {
-    user: 'Some',
-    pl: 20.5,
-    mpl: 1.0079,
-    pt: 50,
-    commission: 0.5,
-    currentCommission: 4,
-    total: 18.5,
-    mTotal: 19,
-  },
-];
-
-const transactions: any[] = [
-  {
-    date: '29/07/2001',
-    transactionNo: 21421,
-    transactionTypes: 'System/Internal',
-    debits: 200,
-    credits: 500,
-    balance: 220,
-    comment: 'test',
-    fromTo: 'test -> testing',
-  },
-];

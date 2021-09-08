@@ -23,7 +23,7 @@
         >
       </mat-form-field>
       
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill" *ngIf="this.authService.decodedToken.role !== 'Master'">
         <mat-label ><mat-icon>warning</mat-icon> Master Risk ({{this.minRisk}} - {{this.maxRisk}})%</mat-label>
         <input
           matInput
@@ -33,6 +33,23 @@
           type="number"
           min="{{this.minRisk - form.adminRisk.value}}"
           max="{{this.maxRisk - form.adminRisk.value}}"
+        />
+        <mat-error *ngIf="form.masterRisk.invalid"
+          >Admin + Master Risk. ({{minRisk}} - {{maxRisk}})%</mat-error
+        >
+      </mat-form-field>
+
+      
+      <mat-form-field appearance="fill" *ngIf="this.authService.decodedToken.role === 'Master'" class="update-risk-field">
+        <mat-label ><mat-icon>warning</mat-icon> Master Risk ({{this.minRisk}} - {{this.maxRisk}})%</mat-label>
+        <input
+          matInput
+          placeholder="masterRisk"
+          formControlName="masterRisk"
+          required
+          type="number"
+          min="{{this.minRisk - data.adminRisk}}"
+          max="{{this.maxRisk - data.adminRisk}}"
         />
         <mat-error *ngIf="form.masterRisk.invalid"
           >Admin + Master Risk. ({{minRisk}} - {{maxRisk}})%</mat-error
