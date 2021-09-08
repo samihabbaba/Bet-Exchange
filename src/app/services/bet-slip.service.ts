@@ -316,6 +316,33 @@ export class BetSlipService {
     // return (runBackProfit - runLayLiability) + (notRunLayStake - notRunBackStake);
   }
 
+  getPendingRunMoney(marketId:any, selectionId:any){
+
+    let normalMoney = this.getRunMoney(marketId,selectionId);
+    let marketBets = this.selectedBets.filter(x=> x.market.marketId == marketId && x.stake !== undefined && x.stake !== 0 && x.stake !== null);
+    // let marketBetss = this.selectedBets.filter(x=> (x.stake - x.market.run.price));
+debugger
+    let runBack = marketBets.filter((x:any)=>x.market.run.selectionId == selectionId && x.isBack)    
+    let runLay = marketBets.filter((x:any)=>x.market.run.selectionId == selectionId && !x.isBack)    
+    let notRunBack = marketBets.filter((x:any)=>x.market.run.selectionId != selectionId && x.isBack)    
+    let notRunLay = marketBets.filter((x:any)=>x.market.run.selectionId != selectionId && !x.isBack)    
+
+    let runBackProfit = runBack.reduce((runBackProfit:any, b:any) => runBackProfit + (b.stake * b.market.run.price - b.stake),0);
+    let runLayLiability = runLay.reduce((runLayLiability:any, b:any) => runLayLiability + ((b.market.run.price-1)*b.stake),0);    
+    let notRunBackStake = notRunBack.reduce((notRunBackStake:any, b:any) => notRunBackStake + b.stake,0);
+    let notRunLayStake = notRunLay.reduce((notRunLayStake:any, b:any) => notRunLayStake + b.stake,0);
+
+    let num =  (runBackProfit - runLayLiability) + (notRunLayStake - notRunBackStake);
+    num+=(+normalMoney);
+    return this.sharedService.formatNumber(num)
+  }
+
+  showPendingRunMoney(marketId:any){
+    debugger
+    return this.selectedBets.some(x=> x.market.marketId == marketId && x.stake !== undefined && x.stake !== 0 && x.stake !== null)
+  }
+
+
   returnBetsProfit(bet:any){
     if(bet.selection.betType == 'BACK'){
       return bet.payout - bet.stake;

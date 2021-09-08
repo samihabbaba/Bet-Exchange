@@ -120,6 +120,13 @@
                                 {{betSlipService.getRunMoney(topMarket.id, item.selectionId)}}
                               </span>
 
+                              <span *ngIf="betSlipService.showPendingRunMoney(topMarket.id)"
+                              [ngClass]="{'win-money': +betSlipService.getRunMoney(topMarket.id, item.selectionId) <= +betSlipService.getPendingRunMoney(topMarket.id, item.selectionId),
+                              'loss-money': +betSlipService.getRunMoney(topMarket.id, item.selectionId) > +betSlipService.getPendingRunMoney(topMarket.id, item.selectionId)
+                            }">
+                                >>>
+                                {{betSlipService.getPendingRunMoney(topMarket.id, item.selectionId)}}
+                              </span>
 
                             </h3>
 
