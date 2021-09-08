@@ -118,8 +118,10 @@ export class SubAccountDetailsComponent implements OnInit {
     'betType', // Lay - Back
     // 'selectionType', // Live - Pre
     'stake',
+    'liability',
     'odd',
     'payout',
+    'netWin',
     // 'matchedSize',
     'status',
     'date',

@@ -213,7 +213,8 @@
         </button>
         
         <button mat-menu-item (click)="openRiskUpdateDialog(row)">
-          <mat-icon>edit</mat-icon>
+          <mat-icon>warning_amber</mat-icon>
+          <!-- <i class="fas fa-skull-crossbones"></i> -->
           <span>Risk</span>
         </button>
 
@@ -242,10 +243,10 @@
           <span *ngIf="row.isSuspended">Unsuspend</span>
         </button>
        
-        <button mat-menu-item>
+        <!-- <button mat-menu-item>
           <mat-icon>close</mat-icon>
           <span>Close</span>
-        </button>
+        </button> -->
             </mat-menu>
   
       <!-- Master Actions -->
