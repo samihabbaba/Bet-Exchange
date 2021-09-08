@@ -49,7 +49,7 @@
         >
       </mat-form-field>
 
-      <mat-form-field appearance="fill" *ngIf="this.data.role !== 'SuperAdmin' && this.data.role !== 'Client'">
+      <!-- <mat-form-field appearance="fill" *ngIf="this.data.role !== 'SuperAdmin' && this.data.role !== 'Client'">
         <mat-label><mat-icon>warning</mat-icon> Risk (0-100)%</mat-label>
         <input
           matInput
@@ -63,7 +63,86 @@
         <mat-error *ngIf="form.risk.invalid"
           >This field is required. (0 - 100)%</mat-error
         >
+      </mat-form-field> -->
+
+
+
+      <mat-form-field appearance="fill" *ngIf="this.data.role === 'Admin' && false">
+        <mat-label ><mat-icon>arrow_downward</mat-icon> Min Risk (0-100)%</mat-label>
+        <input
+          matInput
+          placeholder="minRisk"
+          formControlName="minRisk"
+          required
+          type="number"
+          min="0"
+          max="{{form.maxRisk.value}}"
+        />
+        <mat-error *ngIf="form.minRisk.invalid"
+          >This field is required. (0 - 100)% < max risk</mat-error
+        >
       </mat-form-field>
+
+      <mat-form-field appearance="fill" *ngIf="this.data.role === 'Admin' && false">
+        <mat-label ><mat-icon>arrow_upward</mat-icon> Max Risk (0-100)%</mat-label>
+        <input
+          matInput
+          placeholder="maxRisk"
+          formControlName="maxRisk"
+          required
+          type="number"
+          min="{{form.minRisk.value}}"
+          max="100"
+        />
+        <mat-error *ngIf="form.maxRisk.invalid"
+          >This field is required. (0 - 100)% > min risk</mat-error
+        >
+      </mat-form-field>
+    
+
+
+      <mat-form-field appearance="fill" *ngIf="this.data.role === 'Master'">
+        <mat-label ><mat-icon>warning</mat-icon> Admin Risk (0-100)%</mat-label>
+        <input
+          matInput
+          placeholder="adminRisk"
+          formControlName="adminRisk"
+          required
+          type="number"
+          min="0"
+          max="100"
+        />
+        <mat-error *ngIf="form.adminRisk.invalid"
+          >This field is required. (0 - 100)%</mat-error
+        >
+      </mat-form-field>
+      
+      <mat-form-field appearance="fill" *ngIf="this.data.role === 'Master'">
+        <mat-label ><mat-icon>warning</mat-icon> Master Risk (0-100)%</mat-label>
+        <input
+          matInput
+          placeholder="masterRisk"
+          formControlName="masterRisk"
+          required
+          type="number"
+          min="0"
+          max="100"
+        />
+        <mat-error *ngIf="form.masterRisk.invalid"
+          >This field is required. (0 - 100)%</mat-error
+        >
+      </mat-form-field>
+
+
+
+
+
+
+
+
+
+
+
 
       <mat-form-field appearance="fill" *ngIf="this.data.role === 'SuperAdmin'">
         <mat-label><mat-icon>price_check</mat-icon> Profit Commission (0-25)%</mat-label>

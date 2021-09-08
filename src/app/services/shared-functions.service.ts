@@ -449,6 +449,7 @@ export class SharedFunctionsService {
   }
   
   showErrorMsg(error:any, defaultMsg:any){
+    debugger
     if(error.error.errorMessage){
       this.notify.error(error.error.errorMessage);
       return

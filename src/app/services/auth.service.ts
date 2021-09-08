@@ -37,7 +37,9 @@ export class AuthService {
     balance:'',
     currency:'',
     userName:'',
-    parentCommission:0
+    parentCommission:0,
+    minRisk:0,
+    maxRisk:100
   }
 
   performLogIn(loginModel?:any) {
@@ -215,6 +217,8 @@ export class AuthService {
     this.dataService.getUserById(this.decodedToken.id).subscribe(resp => {
       this.currentUserInfo.balance = resp.wallet.balance;
       this.currentUserInfo.parentCommission = (resp.parentCommission + resp.commission)*100;
+      this.currentUserInfo.minRisk = resp.minRisk,
+      this.currentUserInfo.maxRisk = resp.maxRisk
     },
     error =>{
       this.currentUserInfo.balance = 'Unkown';

@@ -19,6 +19,9 @@ export class AddSuperModalComponent implements OnInit {
   addMasterForm: any;
   form: any;
 
+  minRisk = 0;
+  maxRisk = 100;
+
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
      public sharedFunctions:SharedFunctionsService,
@@ -62,9 +65,18 @@ export class AddSuperModalComponent implements OnInit {
       objValidation = {...objValidation, walletCurrency: new FormControl(null, Validators.required)}
       objValidation = {...objValidation, profitCommission: new FormControl(null, [Validators.required, Validators.max(25), Validators.min(0)])}
     }
-    else if(this.data.roleToCreate !== 'Client')
+    else if(this.data.roleToCreate === 'Admin')
     {
-      objValidation = {...objValidation, risk: new FormControl(null, [Validators.required, Validators.max(100), Validators.min(0)])}
+      objValidation = {...objValidation, minRisk: new FormControl(null, [Validators.required, Validators.max(100), Validators.min(0)])}
+      objValidation = {...objValidation, maxRisk: new FormControl(null, [Validators.required, Validators.max(100), Validators.min(0)])}
+    }
+    else if(this.data.roleToCreate === 'Master')
+    {
+      debugger
+      objValidation = {...objValidation, adminRisk: new FormControl(null, [Validators.required, Validators.max(100), Validators.min(0)])}
+      objValidation = {...objValidation, masterRisk: new FormControl(null, [Validators.required, Validators.max(100), Validators.min(0)])}
+      this.minRisk = this.authService.currentUserInfo.minRisk;
+      this.maxRisk = this.authService.currentUserInfo.maxRisk;
     }
 
     this.addMasterForm = this.fb.group(objValidation);

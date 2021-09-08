@@ -293,26 +293,21 @@ export class BetSlipService {
     if(this.betsForMarket.length == 0 || this.betsForMarket[0].selection.marketId !== marketId){
       return 0;
     }
-    // how much each run will cost, either as winning money or losing ()
+    // how much each run will cost, either as winning money or losing
     // get all events for the user with the needed market id
     // take only the pending bets - no unmatched or settled 
-// debugger
+    // debugger
 
     let runBack = this.betsForMarket.filter((x:any)=>x.selection.selectionId == selectionId && x.selection.betType == 'BACK')    
     let runLay = this.betsForMarket.filter((x:any)=>x.selection.selectionId == selectionId && x.selection.betType == 'LAY')    
-    
     let notRunBack = this.betsForMarket.filter((x:any)=>x.selection.selectionId != selectionId && x.selection.betType == 'BACK')    
     let notRunLay = this.betsForMarket.filter((x:any)=>x.selection.selectionId != selectionId && x.selection.betType == 'LAY')    
 
-    // (run back - run lay) + (not run lay - not run back) 
     let runBackProfit = runBack.reduce((runBackProfit:any, b:any) => runBackProfit + (b.payout - b.stake),0);
-    let runLayLiability = runLay.reduce((runLayLiability:any, b:any) => runLayLiability + ((b.odd-1)*b.stake),0);
-    
+    let runLayLiability = runLay.reduce((runLayLiability:any, b:any) => runLayLiability + ((b.odd-1)*b.stake),0);    
     let notRunBackStake = notRunBack.reduce((notRunBackStake:any, b:any) => notRunBackStake + b.stake,0);
     let notRunLayStake = notRunLay.reduce((notRunLayStake:any, b:any) => notRunLayStake + b.stake,0);
-    // let runMoney = this.betsForMarket.filter((x:any)=>x.selection.selectionId == selectionId).reduce((runMoney:any, b:any) => runMoney + b.payout,0);
-    // let notRunMoney = this.betsForMarket.filter((x:any)=>x.selection.selectionId != selectionId).reduce((notRunMoney:any, b:any) => notRunMoney + b.payout,0);
-
+    
     //calculate the winning money (stake + profit/liability) for the bets with runner id --> minus liability of the others
 
     let num =  (runBackProfit - runLayLiability) + (notRunLayStake - notRunBackStake);

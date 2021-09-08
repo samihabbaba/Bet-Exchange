@@ -70,7 +70,26 @@ export class EditSuperModalComponent implements OnInit {
         profitCommission: new FormControl(this.data.profitCommission, [Validators.required, Validators.max(25), Validators.min(0)]),
       });
     }
-
+    else if(this.data.role == 'Admin'){
+      objToBuild = this.fb.group({
+        email: new FormControl(this.data.email, Validators.required),
+        name: new FormControl(this.data.name, Validators.required),
+        phoneNumber: new FormControl(this.data.phoneNumber, Validators.required),
+        commission: new FormControl(this.data.commission, [Validators.required,Validators.max(this.data.maxCommission)]),
+        // minRisk: new FormControl(this.data.minRisk, [Validators.required, Validators.max(100), Validators.min(0)]),
+        // maxRisk: new FormControl(this.data.maxRisk, [Validators.required, Validators.max(100), Validators.min(0)])
+      });
+    }
+    else if(this.data.role == 'Master'){
+      objToBuild = this.fb.group({
+        email: new FormControl(this.data.email, Validators.required),
+        name: new FormControl(this.data.name, Validators.required),
+        phoneNumber: new FormControl(this.data.phoneNumber, Validators.required),
+        commission: new FormControl(this.data.commission, [Validators.required,Validators.max(this.data.maxCommission)]),
+        adminRisk: new FormControl(this.data.adminRisk, [Validators.required, Validators.max(100), Validators.min(0)]),
+        masterRisk: new FormControl(this.data.masterRisk, [Validators.required, Validators.max(100), Validators.min(0)])
+      });
+    }
     else if(this.data.role == 'Client'){
       objToBuild = this.fb.group({
         email: new FormControl(this.data.email, Validators.required),
@@ -87,12 +106,10 @@ export class EditSuperModalComponent implements OnInit {
         name: new FormControl(this.data.name, Validators.required),
         phoneNumber: new FormControl(this.data.phoneNumber, Validators.required),
         commission: new FormControl(this.data.commission, [Validators.required,Validators.max(this.data.maxCommission)]),
-        risk: new FormControl(this.data.risk, [Validators.required, Validators.max(100), Validators.min(0)]),
+        // risk: new FormControl(this.data.risk, [Validators.required, Validators.max(100), Validators.min(0)]),
         // profitCommission: new FormControl(this.data.profitCommission, [Validators.required, Validators.max(25), Validators.min(0)]),
       });
     }
-
-    
 
 
     this.editMasterForm = objToBuild;
