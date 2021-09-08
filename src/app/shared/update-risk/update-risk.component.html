@@ -7,7 +7,7 @@
 
 
 
-      <mat-form-field appearance="fill" >
+      <mat-form-field appearance="fill" *ngIf="this.authService.decodedToken.role !== 'Master'" >
         <mat-label ><mat-icon>warning</mat-icon> Admin Risk ({{this.minRisk}} - {{this.maxRisk}})%</mat-label>
         <input
           matInput

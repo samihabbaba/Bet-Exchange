@@ -25,7 +25,7 @@ export class UpdateRiskComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dataService:DataService,
     private notify:NotificationService,
-    private authService:AuthService,
+    public authService:AuthService,
     private sharedService:SharedFunctionsService,
     private dialogRef: MatDialogRef<UpdateRiskComponent>
   ) {
@@ -45,10 +45,18 @@ export class UpdateRiskComponent implements OnInit {
 
   initalizeForm() {
     
-    this.editRiskForm = this.fb.group({
-      adminRisk: new FormControl(this.data.adminRisk, [Validators.required, Validators.max(100), Validators.min(0)]),
-      masterRisk: new FormControl(this.data.masterRisk, [Validators.required, Validators.max(100), Validators.min(0)])
-    });
+    if(this.authService.decodedToken.role == 'Master'){
+      this.editRiskForm = this.fb.group({
+        // adminRisk: new FormControl(this.data.adminRisk, [Validators.required, Validators.max(100), Validators.min(0)]),
+        masterRisk: new FormControl(this.data.masterRisk, [Validators.required, Validators.max(100), Validators.min(0)])
+      });
+    }
+    else{
+      this.editRiskForm = this.fb.group({
+        adminRisk: new FormControl(this.data.adminRisk, [Validators.required, Validators.max(100), Validators.min(0)]),
+        masterRisk: new FormControl(this.data.masterRisk, [Validators.required, Validators.max(100), Validators.min(0)])
+      });
+    }
   }
 
   updateRisk(){
