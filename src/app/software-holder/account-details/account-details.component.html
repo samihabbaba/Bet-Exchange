@@ -83,6 +83,10 @@
         <!-- <div>Role: &nbsp; <span> {{myUser?.role}} </span></div> -->
 
 
+        <div (click)="openRiskTableDialog(myUser)" *ngIf="myUser?.role === 'Admin' || myUser?.role === 'SuperAdmin'">
+          <a style="color: blue; " class="clickable">Show Risks</a>
+        </div>
+
         <div (click)="openRiskUpdateDialog(myUser)" *ngIf="myUser?.role === 'Master'">
           <a style="color: blue; " class="clickable">Edit My Risk</a>
         </div>

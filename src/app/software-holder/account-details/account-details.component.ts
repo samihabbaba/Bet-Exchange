@@ -19,6 +19,7 @@ import { SharedFunctionsService } from 'src/app/services/shared-functions.servic
 import { BetDetailsComponent } from 'src/app/shared/bet-details/bet-details.component';
 import { BetSettleModalComponent } from 'src/app/shared/bet-settle-modal/bet-settle-modal.component';
 import { ConfirmationMessageComponent } from 'src/app/shared/confirmation-message/confirmation-message.component';
+import { RisksTableComponent } from 'src/app/shared/risks-table/risks-table.component';
 import { UpdateRiskComponent } from 'src/app/shared/update-risk/update-risk.component';
 import { AddBettingRuleComponent } from '../add-betting-rule/add-betting-rule.component';
 import { DeleteBettingRuleComponent } from '../delete-betting-rule/delete-betting-rule.component';
@@ -591,10 +592,8 @@ export class AccountDetailsComponent implements OnInit {
   }
 
   openRiskUpdateDialog(obj:any){
-    debugger
     this.dataService.getRisk(obj.id).subscribe((resp:any) => {
 
-      debugger
       let masterRisk = resp.body[0].risks[resp.body[0].risks.findIndex((x:any)=>x.userId == obj.id)].risk
       let parent = this.sharedService.getUserParent(obj);
       let adminRisk = resp.body[0].risks[resp.body[0].risks.findIndex((x:any)=>x.userId == parent.id)].risk
@@ -618,7 +617,25 @@ export class AccountDetailsComponent implements OnInit {
     });
 
     }, error =>{
-      debugger
+      this.notify.error("Error getting Risk")
+    })
+
+    
+  }
+
+  openRiskTableDialog(obj:any){
+    this.dataService.getRisk(obj.id).subscribe((resp:any) => {
+
+    const dialogRef = this.dialog.open(RisksTableComponent, {
+      data: resp.body,
+      width: '80%',
+    });
+    // dialogRef.afterClosed().subscribe(async (result) => {
+    //   await this.sharedService.delay(500);
+    //   console.log(`Dialog result: ${result}`);
+    // });
+
+    }, error =>{
       this.notify.error("Error getting Risk")
     })
 

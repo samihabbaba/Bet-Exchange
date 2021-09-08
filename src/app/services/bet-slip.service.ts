@@ -317,7 +317,6 @@ export class BetSlipService {
   }
 
   returnBetsProfit(bet:any){
-debugger
     if(bet.selection.betType == 'BACK'){
       return bet.payout - bet.stake;
     }

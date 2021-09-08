@@ -160,7 +160,6 @@ export class AdminDatatableComponent implements OnInit {
   openRiskUpdateDialog(obj:any){
     this.dataService.getRisk(obj.id).subscribe((resp:any) => {
 
-      debugger
       let masterRisk = resp.body[0].risks[resp.body[0].risks.findIndex((x:any)=>x.userId == obj.id)].risk
       let parent = this.sharedFunctions.getUserParent(obj);
       let adminRisk = resp.body[0].risks[resp.body[0].risks.findIndex((x:any)=>x.userId == parent.id)].risk

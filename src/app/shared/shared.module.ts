@@ -23,6 +23,7 @@ import { BetDetailsComponent } from './bet-details/bet-details.component';
 import { BetSettleModalComponent } from './bet-settle-modal/bet-settle-modal.component';
 import { ConfirmationMessageComponent } from './confirmation-message/confirmation-message.component';
 import { UpdateRiskComponent } from './update-risk/update-risk.component';
+import { RisksTableComponent } from './risks-table/risks-table.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { UpdateRiskComponent } from './update-risk/update-risk.component';
     BetDetailsComponent,
     BetSettleModalComponent,
     ConfirmationMessageComponent,
-    UpdateRiskComponent
+    UpdateRiskComponent,
+    RisksTableComponent
   ],
   imports: [
     CommonModule,

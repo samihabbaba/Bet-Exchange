@@ -11,9 +11,11 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { contentInOut } from 'src/app/animations/animation';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
+import { NotificationService } from 'src/app/services/notification.service';
 import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
 import { BetDetailsComponent } from 'src/app/shared/bet-details/bet-details.component';
 import { BetSettleModalComponent } from 'src/app/shared/bet-settle-modal/bet-settle-modal.component';
+import { RisksTableComponent } from 'src/app/shared/risks-table/risks-table.component';
 
 @Component({
   selector: 'app-sub-account-details',
@@ -155,7 +157,7 @@ export class SubAccountDetailsComponent implements OnInit {
   userQuestionUpdate = new Subject<string>();
 
   
-  constructor(private route: ActivatedRoute, private dataService:DataService,
+  constructor(private route: ActivatedRoute, private dataService:DataService, private notify:NotificationService,
      public sharedService: SharedFunctionsService, public dialog: MatDialog, public authService:AuthService) {
       this.userQuestionUpdate.pipe(
         debounceTime(800),
@@ -318,6 +320,25 @@ export class SubAccountDetailsComponent implements OnInit {
       await this.delay(1000);
       this.loadUsersBet();
     });
+  }
+
+  openRiskTableDialog(obj:any){
+    this.dataService.getRisk(obj.id).subscribe((resp:any) => {
+
+    const dialogRef = this.dialog.open(RisksTableComponent, {
+      data: resp.body,
+      width: '80%',
+    });
+    // dialogRef.afterClosed().subscribe(async (result) => {
+    //   await this.sharedService.delay(500);
+    //   console.log(`Dialog result: ${result}`);
+    // });
+
+    }, error =>{
+      this.notify.error("Error getting Risk")
+    })
+
+    
   }
 
   
