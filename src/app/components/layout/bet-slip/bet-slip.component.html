@@ -151,8 +151,8 @@
             </div>
             <div class="open-bets-odds">
               <!-- <input type="number" value="2" /> -->
-              <span  matTooltip="Stake"  [matTooltipPosition]="'above'"><p>{{ this.sharedFunctionsService.formatNumber(openBet.stake) }}</p> </span>
-              <span  matTooltip="Odds"  [matTooltipPosition]="'above'"><p>{{ this.sharedFunctionsService.formatNumber(openBet.odd) }}</p> </span>
+              <span  matTooltip="Stake"  [matTooltipPosition]="'above'"><p>{{ this.sharedFunctionsService.formatNumber(openBet.stake) }}</p> </span>|
+              <span  matTooltip="Odds"  [matTooltipPosition]="'above'"><p>{{ this.sharedFunctionsService.formatNumber(openBet.odd) }}</p> </span>|
               <!-- <span><p>{{ this.sharedFunctionsService.formatNumber( openBet.payout) }}</p> </span> -->
             <span  matTooltip="Profit"  [matTooltipPosition]="'above'"><p>{{ this.sharedFunctionsService.formatNumber( this.betSlipService.returnBetsProfit(openBet) ) }}</p> </span>
             </div>
