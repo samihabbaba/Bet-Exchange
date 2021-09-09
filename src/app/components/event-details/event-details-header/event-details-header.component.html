@@ -5,7 +5,7 @@
       <span class="title">  <span>{{returnEventName(event?.name)}}</span> - {{event?.eventType?.name}}</span>
       <!-- <div class="event-date">Fri 2 Jul, 17:00</div> -->
       <div class="event-date">{{event?.openDate | date:"EEEE, MMMM d, h:mm a"}} -     
-        <img *ngIf="event?.region.name" 
+        <img  *ngIf="showRegionFlag(event)" 
         src="../../../../assets/flags/{{event?.region.name.toLowerCase()}}.svg"
               class="sport-menu-icon flag-header"/>
         <!-- {{event?.region?.name}} 

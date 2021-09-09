@@ -34,4 +34,18 @@ export class EventDetailsHeaderComponent implements OnInit {
     }
   }
 
+  showRegionFlag(event:any){
+    try{
+      if(!event || !event.region || !event.region.name){
+        return false
+      }
+      else{
+        return true;
+      }
+    }
+    catch(ex){
+      return false;
+    }
+  }
+
 }
