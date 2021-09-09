@@ -74,15 +74,27 @@ export class AddBettingRuleComponent implements OnInit {
 
 
   addRule(){
-
-    this.dataService.addBettingRules(this.addMasterForm.value).subscribe(resp => {
-
-      this.notify.success('Rule Added');
-      this.dialogRef.close();
-    }, error => {
-      this.sharedFunctions.showErrorMsg(error,'Error adding rule')
-        
-    })
+    if(this.data.update){
+      this.dataService.updateBettingRules({...this.addMasterForm.value, id:this.data.obj.id}).subscribe(resp => {
+  
+        this.notify.success('Rule updated');
+        this.dialogRef.close();
+      }, error => {
+        this.sharedFunctions.showErrorMsg(error,'Error updating rule')
+          
+      })
+    }
+    else
+    {
+      this.dataService.addBettingRules(this.addMasterForm.value).subscribe(resp => {
+  
+        this.notify.success('Rule Added');
+        this.dialogRef.close();
+      }, error => {
+        this.sharedFunctions.showErrorMsg(error,'Error adding rule')
+          
+      })
+    }
   }
 
 }

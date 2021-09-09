@@ -151,6 +151,6 @@
     [disabled]="!this.addMasterForm.valid"
     (click)="addRule()"
   >
-    Add
+    {{this.data.update? 'Update': 'Add'}}
   </button>
 </mat-dialog-actions>

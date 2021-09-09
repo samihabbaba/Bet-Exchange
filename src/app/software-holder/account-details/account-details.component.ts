@@ -126,7 +126,7 @@ export class AccountDetailsComponent implements OnInit {
   
   // bettingRule Section
   displayedColumnsBettingRules: string[] = [
-    'id',
+    // 'id',
     'eventTypeId',
     'category',
     'betType',
