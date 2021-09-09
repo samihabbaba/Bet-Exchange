@@ -173,7 +173,7 @@ export class AccountDetailsComponent implements OnInit {
     'id',
     'name',
     'isActive',
-    'actions',
+    // 'actions',
   ];
   
   regionsData = new MatTableDataSource<any>();
@@ -181,7 +181,7 @@ export class AccountDetailsComponent implements OnInit {
     'countryCode',
     'name',
     'isActive',
-    'actions',
+    // 'actions',
   ];
 
   
@@ -191,7 +191,7 @@ export class AccountDetailsComponent implements OnInit {
     'name',
     'category',
     'isActive',
-    'actions',
+    // 'actions',
   ];
 
   myUser:any = {
@@ -396,7 +396,7 @@ export class AccountDetailsComponent implements OnInit {
     this.dataService.getAllRegions('',null).subscribe(resp =>{
       this.regionsList = resp.body;
       this.regionsData.data = resp.body;
-
+      this.sportForRegionChange()
       this.currentRegionIdForLeagues = resp.body[0].countryCode;
       if(loadAfter){
         this.loadLeagues();
@@ -549,13 +549,31 @@ export class AccountDetailsComponent implements OnInit {
   }
 
   notActiveRegions:any =[]
-  sportForRegionChange(){
+  sportForRegionChange2(){
     let index = this.sportsList.findIndex((x:any)=> x.id == this.currentSportIdForRegions)
     this.notActiveRegions = this.sportsList[index].deactivatedRegions;
   }
 
   isRegionActive(code:any){
     return !this.notActiveRegions.some((x:any)=> x.countryCode == code);
+  }
+
+  sportForRegionChange(){
+
+    let index = this.sportsList.findIndex((x:any)=> x.id == this.currentSportIdForRegions)
+    this.notActiveRegions = this.sportsList[index].deactivatedRegions;
+
+    let newRegions:any = []
+    this.regionsData.data.forEach(element => {
+      newRegions.push(
+        {
+          ...element,
+          isActiveForSport: !this.notActiveRegions.some((x:any)=> x.countryCode == element.countryCode)
+        }
+      )
+    });
+
+    this.regionsData.data = newRegions;
   }
 
   setUserIdForBet(username='', userId=''){
@@ -571,6 +589,7 @@ export class AccountDetailsComponent implements OnInit {
       this.notify.success('League updated')
     }, error =>{
       this.notify.error('Error updating league')
+      this.loadLeagues();
     })
   }
 
@@ -638,8 +657,51 @@ export class AccountDetailsComponent implements OnInit {
     }, error =>{
       this.notify.error("Error getting Risk")
     })
-
     
   }
+
+  updateSport(sport:any){
+
+    this.dataService.toggleSportActive(sport.id).subscribe(resp => {
+
+      this.notify.success(`Sport ${sport.name} updated`);
+    }
+    , error => {
+      sport.isActive = !sport.isActive;
+      this.notify.error(`Error updating sport ${sport.name}`)
+    })
+  }
+
+  updateRegion(region:any){
+
+    this.dataService.toggleRegionActivationForSport(this.currentSportIdForRegions, region.countryCode).subscribe(resp => {
+      debugger
+
+      let index = this.sportsList.findIndex((x:any)=> x.id == this.currentSportIdForRegions)
+
+      if(region.isActiveForSport){
+        let i = this.sportsList[index].deactivatedRegions.findIndex((x:any)=>x.countryCode == region.countryCode)
+        if(i>-1){
+          this.sportsList[index].deactivatedRegions.splice(i, 1);
+        }
+      }
+      else{
+        this.sportsList[index].deactivatedRegions.push({
+          countryCode: region.countryCode,
+          name: region.name
+        });
+      }
+      
+      this.notActiveRegions = this.sportsList[index].deactivatedRegions;
+
+      this.notify.success(`Region ${region.name} updated for sport ${ this.sportsList[index].name}`);
+    }
+    , error => {
+      region.isActiveForSport = !region.isActiveForSport;
+      let index = this.sportsList.findIndex((x:any)=> x.id == this.currentSportIdForRegions)
+      this.notify.error(`Error updating region ${region.name} for sport ${ this.sportsList[index].name}`)
+    })
+  }
+
 
 }

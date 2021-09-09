@@ -1,0 +1,5 @@
+
+/* remove the underline from mat-select that has class hide-underline */
+::ng-deep .hide-underline .mat-form-field-underline {
+    display: none;
+  }
