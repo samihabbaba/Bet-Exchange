@@ -102,6 +102,7 @@
       <mat-form-field appearance="legacy" class="open-bets-select">
         <!-- <mat-label>Favorite food</mat-label> -->
         <mat-select
+          [panelClass]="'fuck'"
           [(ngModel)]="this.betSlipService.selectedOpenBet"
           name="food"
           (selectionChange)="this.betSlipService.updateOpenBets($event)"
@@ -123,6 +124,17 @@
       >
         <span>WAITING (UNMATCHED)</span>
       </div>
+
+      <div
+        class="bet-slip-info-line"
+        *ngIf="this.betSlipService.openBetsToViewUnmatched.length > 0"
+      >
+        <span>
+          <p>Stake</p>
+          <p>Odds</p>
+          <p>Profit</p>
+        </span>
+      </div>
       <div
         *ngFor="
           let openBet of this.betSlipService.openBetsToViewUnmatched;
@@ -137,24 +149,42 @@
           }"
         >
           <div class="top-row">
-            <div class="remove-bet-btn"
-             (click)="openBetDetail(openBet)">
+            <div class="remove-bet-btn" (click)="openBetDetail(openBet)">
               <!-- <fa-icon [icon]="fontAwesomeIcons.exit" class="delete-icon" ></fa-icon> -->
               <mat-icon class="eye-icon">visibility</mat-icon>
             </div>
             <div class="open-bets-title">
-              <h1>{{ openBet.selection.eventName }}</h1>
+              <!-- <h1>{{ openBet.selection.eventName }}</h1> -->
               <h2>
-                {{ openBet.selection.marketName }} -
-                {{ openBet.selection.selectionName }}
+                {{ openBet.selection.marketName }}
               </h2>
+
+              <h3>
+                {{ openBet.selection.selectionName }}
+              </h3>
             </div>
             <div class="open-bets-odds">
               <!-- <input type="number" value="2" /> -->
-              <span  matTooltip="Stake"  [matTooltipPosition]="'above'"><p>{{ this.sharedFunctionsService.formatNumber(openBet.stake) }}</p> </span>|
-              <span  matTooltip="Odds"  [matTooltipPosition]="'above'"><p>{{ this.sharedFunctionsService.formatNumber(openBet.odd) }}</p> </span>|
+              <span matTooltip="Stake" [matTooltipPosition]="'above'"
+                ><p>
+                  {{ this.sharedFunctionsService.formatNumber(openBet.stake) }}
+                </p> </span
+              >|
+              <span matTooltip="Odds" [matTooltipPosition]="'above'"
+                ><p>
+                  {{ this.sharedFunctionsService.formatNumber(openBet.odd) }}
+                </p> </span
+              >|
               <!-- <span><p>{{ this.sharedFunctionsService.formatNumber( openBet.payout) }}</p> </span> -->
-            <span  matTooltip="Profit"  [matTooltipPosition]="'above'"><p>{{ this.sharedFunctionsService.formatNumber( this.betSlipService.returnBetsProfit(openBet) ) }}</p> </span>
+              <span matTooltip="Profit" [matTooltipPosition]="'above'"
+                ><p>
+                  {{
+                    this.sharedFunctionsService.formatNumber(
+                      this.betSlipService.returnBetsProfit(openBet)
+                    )
+                  }}
+                </p>
+              </span>
             </div>
           </div>
           <div class="bottom-row">
@@ -165,7 +195,10 @@
                   : "At Pre-Match"
               }}
             </h1>
-            <div class="cancel-checkbox openBet-cancel-btn" (click)='this.openConfirmDialog(openBet, 5)'>
+            <div
+              class="cancel-checkbox openBet-cancel-btn"
+              (click)="this.openConfirmDialog(openBet, 5)"
+            >
               <!-- <input type="radio" id="cancel" name="cancel" /> -->
               <label for="cancel">Cancel</label>
             </div>
@@ -185,8 +218,16 @@
         <span>PLACED (MATCHED)</span>
       </div>
 
-     
-
+      <div
+        class="bet-slip-info-line"
+        *ngIf="this.betSlipService.openBetsToViewMatched.length > 0"
+      >
+        <span>
+          <p>Stake</p>
+          <p>Odds</p>
+          <p>Profit</p>
+        </span>
+      </div>
 
       <div
         *ngFor="
@@ -203,17 +244,37 @@
           }"
         >
           <div class="matched-bet-title">
-            <h1>{{ openBet.selection.eventName }}</h1>
+            <!-- <h1>{{ openBet.selection.eventName }}</h1> -->
             <h2>
-              {{ openBet.selection.marketName }} -
-              {{ openBet.selection.selectionName }}
+              {{ openBet.selection.marketName }}
             </h2>
+
+            <h3>
+              {{ openBet.selection.selectionName }}
+            </h3>
           </div>
           <div class="matched-bet-odds">
-            <span matTooltip="Stake"  [matTooltipPosition]="'above'"><p>{{ this.sharedFunctionsService.formatNumber(openBet.stake) }}</p> </span>
-            <span matTooltip="Odds" [matTooltipPosition]="'above'"><p>{{ this.sharedFunctionsService.formatNumber(openBet.odd) }}</p> </span>
+            <span matTooltip="Stake" [matTooltipPosition]="'above'"
+              ><p>
+                {{ this.sharedFunctionsService.formatNumber(openBet.stake) }}
+              </p>
+            </span>
+            <span matTooltip="Odds" [matTooltipPosition]="'above'"
+              ><p>
+                {{ this.sharedFunctionsService.formatNumber(openBet.odd) }}
+              </p>
+            </span>
             <!-- <span><p>{{ this.sharedFunctionsService.formatNumber( openBet.payout) }}</p> </span> -->
-            <span matTooltip="Profit" [matTooltipPosition]="'above'"><p>{{ this.sharedFunctionsService.formatNumber( this.betSlipService.returnBetsProfit(openBet) ) }}</p> </span>          </div>
+            <span matTooltip="Profit" [matTooltipPosition]="'above'"
+              ><p>
+                {{
+                  this.sharedFunctionsService.formatNumber(
+                    this.betSlipService.returnBetsProfit(openBet)
+                  )
+                }}
+              </p>
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -257,8 +318,19 @@
     </div>
 
     <div class="bet-slip-buttons" *ngIf="this.tabToDisplay == 'Open'">
-      <button class="reset-btn" (click)='this.openConfirmDialog({}, 6)' [disabled]="this.betSlipService.selectedOpenBet === ''">Cancel All Unmatched</button>
-      <button class="submit-btn" (click)='this.betSlipService.clearMatchedBets()'>Clear Matched</button>
+      <button
+        class="reset-btn"
+        (click)="this.openConfirmDialog({}, 6)"
+        [disabled]="this.betSlipService.selectedOpenBet === ''"
+      >
+        Cancel All Unmatched
+      </button>
+      <button
+        class="submit-btn"
+        (click)="this.betSlipService.clearMatchedBets()"
+      >
+        Clear Matched
+      </button>
       <!-- <button class="submit-btn">Update</button> -->
     </div>
   </div>
