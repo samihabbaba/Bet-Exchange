@@ -16,6 +16,7 @@ import { AddBettingRuleComponent } from './add-betting-rule/add-betting-rule.com
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { DeleteBettingRuleComponent } from './delete-betting-rule/delete-betting-rule.component';
 import { FormsModule } from '@angular/forms';
+import {MatRadioModule} from '@angular/material/radio';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { FormsModule } from '@angular/forms';
     SoftwareHolderRoutingModule,
     SharedModule,
     MatSlideToggleModule,
-    FormsModule
+    FormsModule,
+    MatRadioModule
   ]
 })
 export class SoftwareHolderModule { }

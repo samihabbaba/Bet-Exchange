@@ -1318,8 +1318,7 @@
             
               <!-- {{ row.category }} -->
 
-              <mat-form-field class="category-options-table hide-underline" >
-                <!-- <mat-label>Category</mat-label> -->
+              <!-- <mat-form-field class="category-options-table hide-underline" >
                 <mat-select name="pl"
                 (selectionChange)="updateLeague(row)"
                 [(ngModel)]="row.category"
@@ -1348,7 +1347,21 @@
                   D
                 </mat-option>
                 </mat-select>
-              </mat-form-field>
+              </mat-form-field> -->
+              
+              <!-- <div class="radio-container" >
+                A <input type="radio" name="category{{row.id}}" value="A" id="category{{row.id}}" [checked]="row.category == 'A'" (change)="updateLeague(row, $event)"> 
+                B <input type="radio" name="category{{row.id}}" value="B" id="category{{row.id}}" [checked]="row.category == 'B'" (change)="updateLeague(row, $event)"> 
+                C <input type="radio" name="category{{row.id}}" value="C" id="category{{row.id}}" [checked]="row.category == 'C'" (change)="updateLeague(row, $event)"> 
+                D <input type="radio" name="category{{row.id}}" value="D" id="category{{row.id}}" [checked]="row.category == 'D'" (change)="updateLeague(row, $event)"> 
+              </div> -->
+
+              <mat-radio-group aria-label="Select an option" [(ngModel)]="row.category" (change)="updateLeague(row)">
+                <mat-radio-button value="A">A</mat-radio-button>
+                <mat-radio-button value="B">B</mat-radio-button>
+                <mat-radio-button value="C">C</mat-radio-button>
+                <mat-radio-button value="D">D</mat-radio-button>
+              </mat-radio-group>
 
             </td>
           </ng-container>

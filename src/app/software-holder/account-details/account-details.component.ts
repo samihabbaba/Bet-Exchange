@@ -584,7 +584,18 @@ export class AccountDetailsComponent implements OnInit {
     this.loadBets();
   }
 
-  updateLeague(league:any){
+  updateLeague(league:any, evt?:any){
+
+    // for radio btns check
+    if(evt){
+      let target = evt.target;
+      if (target.checked) {
+        league.category = target.defaultValue
+      } else {
+      return
+      }
+    }
+
     this.dataService.updateLeague(league).subscribe(resp => {
       this.notify.success('League updated')
     }, error =>{
