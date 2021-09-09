@@ -32,6 +32,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { AdminAccountModule } from './admin-account/admin-account.module';
 import { MatIconModule } from '@angular/material/icon';
 import { ClientProfileComponent } from './components/client-profile/client-profile.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 
@@ -72,7 +73,8 @@ import { ClientProfileComponent } from './components/client-profile/client-profi
     MatFormFieldModule,
     MatNativeDateModule,
     AdminAccountModule,
-    MatIconModule
+    MatIconModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent],
