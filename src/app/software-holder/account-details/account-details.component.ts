@@ -134,7 +134,7 @@ export class AccountDetailsComponent implements OnInit {
     'maxAmount',
     'multiplier',
     'minMatch',
-    'minFigure',
+    'minOdds',
     'maxMargin',
     'isActive',
     'disableOnFalse',

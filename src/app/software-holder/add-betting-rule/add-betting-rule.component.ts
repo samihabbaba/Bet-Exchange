@@ -50,7 +50,7 @@ export class AddBettingRuleComponent implements OnInit {
       maxAmount: new FormControl(null, [Validators.required]),
       multiplier: new FormControl(null, Validators.required),
       minMatch: new FormControl(null, [Validators.required]),
-      minFigure: new FormControl(null, [Validators.required]),
+      minOdds: new FormControl(null, [Validators.required]),
       maxMargin: new FormControl(null, Validators.required),
       isActive: new FormControl(false, Validators.required),
       disableOnFalse: new FormControl(false, Validators.required),
