@@ -59,7 +59,7 @@ export class EditSuperModalComponent implements OnInit {
 
   initalizeForm() {
     let objToBuild:any = {};
-
+debugger
     if(this.data.role == 'SuperAdmin'){
       objToBuild = this.fb.group({
         email: new FormControl(this.data.email, Validators.required),
@@ -86,8 +86,8 @@ export class EditSuperModalComponent implements OnInit {
         name: new FormControl(this.data.name, Validators.required),
         phoneNumber: new FormControl(this.data.phoneNumber, Validators.required),
         commission: new FormControl(this.data.commission, [Validators.required,Validators.max(this.data.maxCommission)]),
-        adminRisk: new FormControl(this.data.adminRisk, [Validators.required, Validators.max(100), Validators.min(0)]),
-        masterRisk: new FormControl(this.data.masterRisk, [Validators.required, Validators.max(100), Validators.min(0)])
+        // adminRisk: new FormControl(this.data.adminRisk, [Validators.required, Validators.max(100), Validators.min(0)]),
+        // masterRisk: new FormControl(this.data.masterRisk, [Validators.required, Validators.max(100), Validators.min(0)])
       });
     }
     else if(this.data.role == 'Client'){

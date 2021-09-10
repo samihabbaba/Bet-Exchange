@@ -15,6 +15,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
 import { BetDetailsComponent } from 'src/app/shared/bet-details/bet-details.component';
 import { BetSettleModalComponent } from 'src/app/shared/bet-settle-modal/bet-settle-modal.component';
+import { PayCommissionComponent } from 'src/app/shared/pay-commission/pay-commission.component';
 import { RisksTableComponent } from 'src/app/shared/risks-table/risks-table.component';
 
 @Component({
@@ -336,9 +337,20 @@ export class SubAccountDetailsComponent implements OnInit {
 
     }, error =>{
       this.notify.error("Error getting Risk")
-    })
-
-    
+    }) 
+  }
+  
+  openPayCommissionDialog(obj:any){
+    if(this.currentUser.unsettledCommission <= 0){
+      return
+    }
+    const dialogRef = this.dialog.open(PayCommissionComponent,{
+      data:obj,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+      this.loadUserById(); 
+    }); 
   }
 
   

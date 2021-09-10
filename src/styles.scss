@@ -3628,6 +3628,15 @@ th span {
   }
 }
 
+.cant-click{
+  cursor: not-allowed;
+  text-decoration: underline;
+  color: grey;
+  &:hover {
+    cursor: not-allowed;
+  }
+}
+
 .radio-container {
   display: flex;
 }

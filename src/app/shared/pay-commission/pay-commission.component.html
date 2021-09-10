@@ -1,0 +1,40 @@
+<h2 mat-dialog-title>
+    
+    Settle commission
+    
+  </h2>
+  <mat-dialog-content class="mat-typography">
+    <!-- <div class="cs-modal-form-field-container"> -->
+    <div class="">
+
+       <!-- Are You sure you want to settle commission with amount {{data.unsettledCommission}} ? -->
+      <div class="conf-hh">
+          <!-- Are You sure you want to settle commission with amount <input type="number" [(ngModel)]="amount"> ? -->
+
+          Are You sure you want to settle commission with amount <input 
+          matInput 
+          type="number"
+          [(ngModel)]="amount" 
+          placeholder="amount" 
+          style="max-width: 11rem;"
+          size="number"
+          /> ?
+
+          
+      </div>
+  
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button
+      color="primary"
+      mat-button
+      [disabled]="amount == 0 "
+      cdkFocusInitial
+      (click)="settleCommission()"
+    >
+      Confirm
+    </button>
+  </mat-dialog-actions>
+  

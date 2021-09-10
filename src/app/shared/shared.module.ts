@@ -14,7 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -24,6 +24,7 @@ import { BetSettleModalComponent } from './bet-settle-modal/bet-settle-modal.com
 import { ConfirmationMessageComponent } from './confirmation-message/confirmation-message.component';
 import { UpdateRiskComponent } from './update-risk/update-risk.component';
 import { RisksTableComponent } from './risks-table/risks-table.component';
+import { PayCommissionComponent } from './pay-commission/pay-commission.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { RisksTableComponent } from './risks-table/risks-table.component';
     BetSettleModalComponent,
     ConfirmationMessageComponent,
     UpdateRiskComponent,
-    RisksTableComponent
+    RisksTableComponent,
+    PayCommissionComponent
   ],
   imports: [
     CommonModule,
@@ -55,6 +57,8 @@ import { RisksTableComponent } from './risks-table/risks-table.component';
     MatCardModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    FormsModule,
+    
   ],
   exports: [
     MatToolbarModule,

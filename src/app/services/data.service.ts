@@ -859,6 +859,17 @@ this.layoutService.closeMenuChilds();
       });
     }
     
+
+    settleCommission(id:any, amount:number) {
+      
+      return this.http.post(`${environment.apiUrl}users/${id}/settle`, {
+        amount:amount
+      }, {
+        headers: this.httpOptions.headers,
+        observe: 'response',
+      });
+    }
+
     // exchangeUser( obj:any) {
     //   return this.http.post(`${environment.apiUrl}users/exchange`, obj, {
     //     headers: this.httpOptions.headers,
