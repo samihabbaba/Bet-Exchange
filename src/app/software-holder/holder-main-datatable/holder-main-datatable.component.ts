@@ -42,6 +42,8 @@ export class HolderMainDatatableComponent implements OnInit {
     // 'minRisk',
     // 'maxRisk',
     'commission',
+    'profitCommission',
+    'unsettledCommission',
     'wallet balance',
     'isActive',
     'isSuspended',
