@@ -69,11 +69,17 @@ export class BetSlipComponent implements OnInit {
             resp.body[0].user.wallet.balance;
 
           this.betSlipService.selectedBets = [];
+          
+          let newOpenBet = '';
           resp.body.forEach((bet: any) => {
             this.betSlipService.currentOpenBets.push(bet);
+            newOpenBet = bet.selection.eventName;
           });
 
-          this.betSlipService.updateOpenBetsOptions();
+          if(this.betSlipService.currentOpenBets.some(x=>x.selection.eventName === newOpenBet) && newOpenBet !== ''){
+            this.betSlipService.selectedOpenBet = newOpenBet;
+          }
+          this.betSlipService.updateOpenBetsOptions(true);
           this.notificationService.success('Bet(s) added successfully!');
           this.betSlipService.loadTopMarketBets(this.betSlipService.latestTopMarketId);
         },

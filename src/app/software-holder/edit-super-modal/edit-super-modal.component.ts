@@ -59,7 +59,7 @@ export class EditSuperModalComponent implements OnInit {
 
   initalizeForm() {
     let objToBuild:any = {};
-debugger
+
     if(this.data.role == 'SuperAdmin'){
       objToBuild = this.fb.group({
         email: new FormControl(this.data.email, Validators.required),

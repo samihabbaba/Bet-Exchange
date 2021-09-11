@@ -686,7 +686,6 @@ export class AccountDetailsComponent implements OnInit {
   updateRegion(region:any){
 
     this.dataService.toggleRegionActivationForSport(this.currentSportIdForRegions, region.countryCode).subscribe(resp => {
-      debugger
 
       let index = this.sportsList.findIndex((x:any)=> x.id == this.currentSportIdForRegions)
 

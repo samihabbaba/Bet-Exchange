@@ -321,7 +321,7 @@ export class BetSlipService {
     let normalMoney = this.getRunMoney(marketId,selectionId);
     let marketBets = this.selectedBets.filter(x=> x.market.marketId == marketId && x.stake !== undefined && x.stake !== 0 && x.stake !== null);
     // let marketBetss = this.selectedBets.filter(x=> (x.stake - x.market.run.price));
-debugger
+
     let runBack = marketBets.filter((x:any)=>x.market.run.selectionId == selectionId && x.isBack)    
     let runLay = marketBets.filter((x:any)=>x.market.run.selectionId == selectionId && !x.isBack)    
     let notRunBack = marketBets.filter((x:any)=>x.market.run.selectionId != selectionId && x.isBack)    
@@ -338,7 +338,6 @@ debugger
   }
 
   showPendingRunMoney(marketId:any){
-    debugger
     return this.selectedBets.some(x=> x.market.marketId == marketId && x.stake !== undefined && x.stake !== 0 && x.stake !== null)
   }
 
