@@ -1494,6 +1494,10 @@ input {
     }
     h3 {
     }
+    cursor: pointer;
+    &:hover{
+      cursor: pointer;
+    }
   }
 
   .matched-bet-odds {
