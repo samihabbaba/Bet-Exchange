@@ -339,6 +339,14 @@ export class SharedFunctionsService {
 
   oddAvailableForMainPage(obj:any , index:number,back = true){
 
+    if(!obj.markets[0]){
+      return false;
+    }
+
+    if(!this.marketAvailable(obj.markets[0])){
+      return false;
+    }
+
       if (back){
         if(this.returnHighestBet( this.getBackObj(obj, index)) === null){
           return false;
