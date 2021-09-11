@@ -176,20 +176,26 @@ export class SubAccountDetailsComponent implements OnInit {
       this.currentUserId = params['id']; 
       this.parentIdForBets = this.currentUserId;
       this.loadUserById();
-      this.loadUsersBet();
-      this.loadUsersTransactions();
-      this.loadUsersTransactionsSub();
+      
       this.loadLoginHistory();
       this.loadSports();
    });
-
    
+  }
+
+  secondOrderLoads(){
+    this.loadUsersBet();
+    this.loadUsersTransactions();
+    if(this.currentUser.role !== 'Client'){
+      this.loadUsersTransactionsSub();
+    }
   }
 
   loadUserById()
    {
      this.dataService.getUserById(this.currentUserId).subscribe(resp =>{
       this.currentUser = resp;
+      this.secondOrderLoads();
      }, error =>{
        // redirect somewhere
      })
@@ -202,6 +208,11 @@ export class SubAccountDetailsComponent implements OnInit {
     
      let start = this.sharedService.formatDate(this.rangeBets.controls.start.value.getDate(),this.rangeBets.controls.start.value.getMonth()+1,this.rangeBets.controls.start.value.getFullYear()) 
      let end = this.sharedService.formatDate(endD.getDate(),endD.getMonth()+1,endD.getFullYear(), true) 
+
+    if(this.currentUser.role == 'Client' && this.parentIdForBets != ''){
+      this.userIdForBets = this.parentIdForBets;
+      this.parentIdForBets = '';
+    }
 
      this.dataService.getBets(this.pageIndexBets, this.pageSize, this.userIdForBets, this.parentIdForBets, this.betTypeForBets,'','',this.sportIdForBets,'',start,end, this.onActionDateForBets,this.usernameForBets,this.statusForBets).subscribe(resp =>{
       this.lengthBets = resp.body.pagingInfo.totalCount
@@ -243,7 +254,6 @@ export class SubAccountDetailsComponent implements OnInit {
       this.transactionsSubData.data = resp.body.items;
     }, error =>{
 
-      // redirect somewhere
     })
    }
 
