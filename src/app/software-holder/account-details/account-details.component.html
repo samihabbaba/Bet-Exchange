@@ -19,6 +19,7 @@
 
       
       <mat-button-toggle value="subAccounts" [checked]="false"
+      *ngIf="this.authService.decodedToken.role === 'SoftwareHolder' || this.authService.decodedToken.role === 'SuperAdmin' || this.authService.decodedToken.role === 'Admin'"
       >SubAccounts</mat-button-toggle>
       
 
@@ -470,8 +471,7 @@
   
           
           <div class="refresh-button-container">
-            <button mat-fab class="reload-btn" (click)="loadSubAccounts()"
-            [disabled]="disableReloadBtn(rangeBets.controls)" >
+            <button mat-fab class="reload-btn" (click)="loadSubAccounts()" >
               <mat-icon>refresh</mat-icon>
             </button>
           </div>
@@ -488,17 +488,48 @@
             </mat-select>
           </mat-form-field>
           
-          <mat-form-field appearance="fill" class="table-filter">
-            <mat-label>Bet Type</mat-label>
+
+          <mat-form-field appearance="fill" class="table-filter" *ngIf="this.myUser?.role == 'SoftwareHolder'">
+            <mat-label>SuperAdmin</mat-label>
             <mat-select 
-            [(ngModel)]="betTypeForBets"
+            [(ngModel)]="superAdminIdSearch"
+            (selectionChange)="userDropdownChange(superAdminIdSearch,'-1','SuperAdmin','Admin')"
+            [disabled]="this.roleSearch !== ''"
             >
               <mat-option [value]="''" > All </mat-option>
-              <mat-option [value]="'BACK'" > BACK </mat-option>
-              <mat-option [value]="'LAY'" > Lay </mat-option>
+              <mat-option *ngFor="let user of subAccountsObj.SuperAdmin.data" [value]="user.id" > {{user.userName}} </mat-option>
+
             </mat-select>
           </mat-form-field>
 
+
+          <mat-form-field appearance="fill" class="table-filter" *ngIf="this.myUser?.role == 'SoftwareHolder' || this.myUser?.role == 'SuperAdmin'">
+            <mat-label>Admin</mat-label>
+            <mat-select 
+            [(ngModel)]="adminIdSearch"
+            (selectionChange)="userDropdownChange(adminIdSearch,superAdminIdSearch,'Admin','Master')"
+            [disabled]="disableAdminSearch()"
+            >
+              <mat-option [value]="''" > All </mat-option>
+              <mat-option *ngFor="let user of subAccountsObj.Admin.data" [value]="user.id" > {{user.userName}} </mat-option>
+
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="table-filter" *ngIf="this.myUser?.role == 'SoftwareHolder' || this.myUser?.role == 'SuperAdmin'|| this.myUser?.role == 'Admin'">
+            <mat-label>Master</mat-label>
+            <mat-select 
+            [(ngModel)]="masterIdSearch"
+            (selectionChange)="userDropdownChange(masterIdSearch,adminIdSearch,'Master','Client')"
+            [disabled]="disableMasterSearch()"
+            >
+              <mat-option [value]="''" > All </mat-option>
+              <mat-option *ngFor="let user of subAccountsObj.Master.data" [value]="user.id" > {{user.userName}} </mat-option>
+
+            </mat-select>
+          </mat-form-field>
+
+     
           
           
 

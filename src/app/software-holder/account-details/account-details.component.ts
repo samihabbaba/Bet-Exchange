@@ -8,6 +8,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { faLessThanEqual } from '@fortawesome/free-solid-svg-icons';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { contentInOut } from 'src/app/animations/animation';
@@ -315,7 +316,6 @@ export class AccountDetailsComponent implements OnInit {
   }
 
   loadUsersTransactions(){
-debugger
     let endD = new Date(this.rangeTrans.controls.end.value);
     endD.setDate(endD.getDate() + 1);
     
@@ -724,6 +724,7 @@ debugger
   pageIndexSubs = 1;
   subsData = new MatTableDataSource<any>()
   roleSearch = '';
+  resetAccounts = true;
 
   displayedColumnsSubAccounts: string[] = [
     'userName',
@@ -748,18 +749,35 @@ debugger
     {i:3,name:'Master'},
     {i:4,name:'Client'}
   ]
-
   rolesOptions:any = [];
+  currentSubId='';
+  allUsersSearch:any = [];
+  subAccountsObj:any = {
+    SuperAdmin: {role:'SuperAdmin', data:[]},
+    Admin: {role:'Admin', data:[]},
+    Master: {role:'Master', data:[]},
+    Client: {role:'Client', data:[]},
+  }
+  superAdminIdSearch = '';
+  adminIdSearch = '';
+  masterIdSearch = '';
+  clientIdSearch = '';
 
   loadSubAccounts(){
    
+    if(this.currentSubId == ''){
+      this.currentSubId = this.myUser.id;
+    }
     this.dataService.getAllUsers({
       PageNo:this.pageIndexSubs,
       PageSize:this.pageSize,
-      parentId:this.myUser.id,
+      parentId:this.currentSubId,
       Role:this.roleSearch
     }).subscribe(resp =>{
       this.subsData.data = resp.items;
+      if(this.resetAccounts){
+        this.setAvailableUser();
+      }
      this.lengthSubs = resp.pagingInfo.totalCount
    }, error =>{
      // redirect somewhere
@@ -780,7 +798,56 @@ debugger
     this.pageSize = page.pageSize;
     this.pageIndexSubs = page.pageIndex + 1;
 
-    this.loadBets();
+    this.loadSubAccounts();
+  }
+
+  setAvailableUser(){
+    this.resetAccounts = false;
+
+    this.allUsersSearch = this.subsData.data;
+    this.subAccountsObj.SuperAdmin.data = this.allUsersSearch.filter((x:any)=>x.role =='SuperAdmin')
+    this.subAccountsObj.Admin.data = this.allUsersSearch.filter((x:any)=>x.role =='Admin')
+    this.subAccountsObj.Master.data = this.allUsersSearch.filter((x:any)=>x.role =='Master')
+    this.subAccountsObj.Client.data = this.allUsersSearch.filter((x:any)=>x.role =='Client')
+  }
+
+  userDropdownChange(roleId:any, parentRoleId:any, role:any, roleLower:any){
+    if(roleId == ''){
+      if(parentRoleId !='-1'){
+        this.currentSubId = parentRoleId;
+      }else{
+        this.currentSubId = this.myUser.id;
+      }
+    }
+    else{
+      this.currentSubId = roleId;
+      this.setSubArray(roleLower,roleId)
+    }
+    
+  }
+  
+  setSubArray(role:any, id:any){
+    this.subAccountsObj[role].data = this.allUsersSearch.filter((x:any)=> x.role == role && x.parentHeirarchy[x.parentHeirarchy.findIndex((y:any)=> y.depth ==0)].id == id)
+  }
+
+  disableAdminSearch(){
+    if(this.roleSearch !== ''){
+      return true;
+    }
+    if(this.myUser.role == 'SuperAdmin'){
+      return false
+    }
+    return this.superAdminIdSearch===''
+  }
+  
+  disableMasterSearch(){
+    if(this.roleSearch !== ''){
+      return true;
+    }
+    if(this.myUser.role == 'Admin'){
+      return false
+    }
+    return this.adminIdSearch===''
   }
 
 }
