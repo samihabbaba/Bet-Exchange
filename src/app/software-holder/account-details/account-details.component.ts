@@ -472,7 +472,7 @@ export class AccountDetailsComponent implements OnInit {
 
   
  openConfirmDialog(obj:any,functionToCall:number){
- 
+
   let confirmMsg= '';
   let successMsg= '';
   let errorMsg= '';
@@ -491,6 +491,12 @@ export class AccountDetailsComponent implements OnInit {
      successMsg= 'League updated';
      errorMsg= 'Error on league update';
   }
+  else if(functionToCall == 4){
+
+    confirmMsg= obj.isSuspended? 'Are You Sure You want to unsuspend user ?': 'Are You Sure You want to suspend user ?';
+    successMsg= 'User Updated';
+    errorMsg= 'Error on user update';
+ }
 
   const dialogRef = this.dialog.open(ConfirmationMessageComponent,{
     data:{
@@ -514,7 +520,9 @@ export class AccountDetailsComponent implements OnInit {
     } 
     else if(functionToCall == 3){
       this.loadLeagues();
-    } 
+    } else if(functionToCall == 4){
+      this.loadSubAccounts();
+    }
   });
   }
 
