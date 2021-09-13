@@ -33,7 +33,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="fill" *ngIf="this.data.role !== 'Client'">
-        <mat-label><mat-icon matTooltip="{{10-this.data.maxCommission}}% of the commission is taken by parents accounts">paid</mat-icon> Commission (0-{{this.data.maxCommission}})% </mat-label>
+        <mat-label><mat-icon matTooltip="{{10-this.data.maxCommission}}% of the commission is taken by parents accounts">paid</mat-icon> Com. (0-{{this.data.maxCommission}})% <span *ngIf="showTotalCom()">({{this.authService.currentUserInfo.parentCommission + form.commission.value}}% total)</span></mat-label>
         <input
         matTooltip="{{10-this.data.maxCommission}}% of the commission is taken by parents accounts"
           matInput

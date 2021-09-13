@@ -25,7 +25,7 @@ export class EditSuperModalComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dataService:DataService,
     private notify:NotificationService,
-    private authService:AuthService,
+    public authService:AuthService,
     private sharedService:SharedFunctionsService,
     private dialogRef: MatDialogRef<EditSuperModalComponent>
   ) {
@@ -137,6 +137,20 @@ export class EditSuperModalComponent implements OnInit {
         this.dialogRef.close();
     })
   }
+
+  showTotalCom(){
+    if(this.data.role === 'SuperAdmin'){
+      return false
+    }
+
+    let total = this.authService.currentUserInfo.parentCommission + this.form.commission.value;
+    if(total <= 10)
+    {
+      return true
+    }
+    return false
+  }
+
 }
 
 

@@ -26,7 +26,7 @@ export class AddSuperModalComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
      public sharedFunctions:SharedFunctionsService,
      private dataService:DataService,
-     private authService:AuthService,
+     public authService:AuthService,
      private notify:NotificationService,
      private dialogRef: MatDialogRef<AddSuperModalComponent>) {
         dialogRef.disableClose = true;
@@ -91,6 +91,20 @@ export class AddSuperModalComponent implements OnInit {
       this.sharedFunctions.showErrorMsg(error,'Error adding user')
       this.dialogRef.close();
     })
+  }
+
+
+  showTotalCom(){
+    if(this.data.roleToCreate === 'SuperAdmin'){
+      return false
+    }
+
+    let total = this.authService.currentUserInfo.parentCommission + this.form.commission.value;
+    if(total <= 10)
+    {
+      return true
+    }
+    return false
   }
 
 }

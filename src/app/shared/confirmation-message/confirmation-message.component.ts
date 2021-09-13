@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AuthService } from 'src/app/services/auth.service';
 import { BetSlipService } from 'src/app/services/bet-slip.service';
 import { DataService } from 'src/app/services/data.service';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -18,6 +19,7 @@ export class ConfirmationMessageComponent implements OnInit {
     private notify:NotificationService,
     private sharedService:SharedFunctionsService,
     private betSlipService:BetSlipService,
+    private authService:AuthService,
     private dialogRef: MatDialogRef<ConfirmationMessageComponent>) {
       dialogRef.disableClose = true;
      }
@@ -108,11 +110,14 @@ export class ConfirmationMessageComponent implements OnInit {
     this.betSlipService.currentOpenBets;
     this.dataService.voidBets(this.data.obj.id).subscribe(resp => {
       this.betSlipService.currentOpenBets;
+      this.authService.updateCurrentBalance();
 
       this.notify.success(this.successMsg);
       this.betSlipService.cancelOpenBetById(this.data.obj.id);
       this.closeDialog();
     }, error => {
+      this.authService.updateCurrentBalance();
+
       this.dialogRef.close();
       this.sharedService.showErrorMsg(error, this.errorMsg)
 

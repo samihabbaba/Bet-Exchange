@@ -232,6 +232,7 @@ export class BetSlipComponent implements OnInit {
       else if(functionToCall == 6){
         // this.betSlipService.updateOpenBetsOptions();
       }
+      this.authService.updateCurrentBalance();
     });
   }
 
