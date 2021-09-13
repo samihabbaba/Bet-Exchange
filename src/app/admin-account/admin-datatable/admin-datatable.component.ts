@@ -38,6 +38,7 @@ export class AdminDatatableComponent implements OnInit {
     'phoneNumber',
     // 'risk',
     'commission',
+    'totalCommission',
     'wallet balance',
     'isActive',
     'isSuspended',

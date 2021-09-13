@@ -42,6 +42,7 @@ export class MainDatatableComponent implements OnInit {
     'minRisk',
     'maxRisk',
     'commission',
+    'totalCommission',
     'wallet balance',
     'isActive',
     'isSuspended',

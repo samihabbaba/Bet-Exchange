@@ -34,6 +34,7 @@ export class ClientDatatableComponent implements OnInit {
     'email',
     'phoneNumber',
     'risk',
+    'totalCommission',
     // 'commission',
     'wallet balance',
     'isActive',
