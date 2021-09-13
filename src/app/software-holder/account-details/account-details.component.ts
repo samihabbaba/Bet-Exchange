@@ -249,7 +249,6 @@ export class AccountDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.loadUser()
     this.loadBets()
-    this.loadUsersTransactions();
     this.loadSports(true);
 
     if(this.authService.decodedToken.role == 'SoftwareHolder'){
@@ -271,6 +270,12 @@ export class AccountDetailsComponent implements OnInit {
 
   }
 
+  secondStageLoads(){
+    this.loadSubAccounts();
+    this.loadUsersTransactions();
+    this.setRoleOptions();
+  }
+
   passwordMatchValidator(g: any){
     return g.get('newPassword').value === g.get('confirmNewPassword').value ? null : {'mismatch': true};
   }
@@ -287,8 +292,8 @@ export class AccountDetailsComponent implements OnInit {
   loadUser(){
 
     this.dataService.getUserById(this.authService.decodedToken.id).subscribe(resp =>{
-
       this.myUser = resp;
+      this.secondStageLoads();
     },error =>{
 
       //redirect to error page
@@ -310,7 +315,7 @@ export class AccountDetailsComponent implements OnInit {
   }
 
   loadUsersTransactions(){
-
+debugger
     let endD = new Date(this.rangeTrans.controls.end.value);
     endD.setDate(endD.getDate() + 1);
     
@@ -713,5 +718,69 @@ export class AccountDetailsComponent implements OnInit {
     })
   }
 
+  //////////////////////// sub accounts work
+
+  lengthSubs = 0;
+  pageIndexSubs = 1;
+  subsData = new MatTableDataSource<any>()
+  roleSearch = '';
+
+  displayedColumnsSubAccounts: string[] = [
+    'userName',
+    'name',
+    'role',
+    // 'email',
+    // 'phoneNumber',
+    'commission',
+    'profitCommission',
+    // 'unsettledCommission',
+    'currency',
+    'wallet balance',
+    'isActive',
+    'isSuspended',
+    'actions',
+  ];
+
+  roles = [
+    {i:0,name:'SoftwareHolder'},
+    {i:1,name:'SuperAdmin'},
+    {i:2,name:'Admin'},
+    {i:3,name:'Master'},
+    {i:4,name:'Client'}
+  ]
+
+  rolesOptions:any = [];
+
+  loadSubAccounts(){
+   
+    this.dataService.getAllUsers({
+      PageNo:this.pageIndexSubs,
+      PageSize:this.pageSize,
+      parentId:this.myUser.id,
+      Role:this.roleSearch
+    }).subscribe(resp =>{
+      this.subsData.data = resp.items;
+     this.lengthSubs = resp.pagingInfo.totalCount
+   }, error =>{
+     // redirect somewhere
+   })
+  }
+
+  setRoleOptions(){
+    this.rolesOptions=[];
+    let currentI = this.roles[this.roles.findIndex(x=>x.name == this.myUser.role)].i
+    this.roles.forEach((element:any) => {
+      if(element.i > currentI) {
+        this.rolesOptions.push(element);
+      }
+    });
+  }
+
+  updatePageSubs(page:any) {
+    this.pageSize = page.pageSize;
+    this.pageIndexSubs = page.pageIndex + 1;
+
+    this.loadBets();
+  }
 
 }
