@@ -54,11 +54,7 @@
   </mat-toolbar>
   <div class="cs-summary-card-container">
     <mat-card>
-      <div
-        [@contentInOut]
-        *ngIf="profile.value == 'summary'"
-        class="cs-summary-container"
-      >
+      <div [@contentInOut] *ngIf="profile.value == 'summary'" class="cs-summary-container" >
         <div>Email: &nbsp; <span>{{myUser.email}}</span> </div>
         <div>Username: &nbsp; <span>{{myUser.userName}}</span></div>
         <div>Phone Number: &nbsp; <span> {{myUser?.phoneNumber}} </span></div>
@@ -97,6 +93,7 @@
         </div>
 
       </div>
+
       <div [@contentInOut] *ngIf="profile.value == 'changePassword'">
         <form
           [formGroup]="changePasswordForm"
@@ -155,12 +152,9 @@
           Save
         </button>
       </div>
-     
-    
       
       <div [@contentInOut] *ngIf="profile.value == 'bettingHistory'">
         <div class="cs-d-flex">
-  
           
           <div class="refresh-button-container">
             <button mat-fab class="reload-btn" (click)="loadBets()"
@@ -168,8 +162,7 @@
               <mat-icon>refresh</mat-icon>
             </button>
           </div>
-  
-  
+    
           <mat-form-field appearance="fill" style="margin-left: 10px">
             <mat-label>Enter a date range</mat-label>
             <mat-date-range-input [formGroup]="rangeBets" [rangePicker]="picker">
@@ -217,9 +210,6 @@
               <mat-option [value]="'LAY'" > Lay </mat-option>
             </mat-select>
           </mat-form-field>
-
-          
-          
 
         </div>
   
@@ -299,38 +289,32 @@
             <th mat-header-cell *matHeaderCellDef>Username</th>
             <td mat-cell *matCellDef="let row" (click)="setUserIdForBet(row.userName, row.userId)" class="underline-text">{{ row.userName }}</td>
           </ng-container>
-  
           
           <ng-container matColumnDef="sport">
             <th mat-header-cell *matHeaderCellDef>Sport</th>
             <td mat-cell *matCellDef="let row">{{ this.sharedService.getSportNameById(row.selection.eventTypeId) }}</td>
           </ng-container>
-  
              
           <ng-container matColumnDef="eventName">
             <th mat-header-cell *matHeaderCellDef>Event</th>
             <td mat-cell *matCellDef="let row">{{ row.selection.eventName }}</td>
           </ng-container>
-  
              
           <ng-container matColumnDef="marketName">
             <th mat-header-cell *matHeaderCellDef>Market</th>
             <td mat-cell *matCellDef="let row">{{ row.selection.marketName }}</td>
-          </ng-container>
-  
+          </ng-container> 
              
           <ng-container matColumnDef="selectionName">
             <th mat-header-cell *matHeaderCellDef>Selection</th>
             <td mat-cell *matCellDef="let row">{{ row.selection.selectionName }}</td>
           </ng-container>
-  
-             
+            
           <ng-container matColumnDef="betType">
             <th mat-header-cell *matHeaderCellDef>Bet Type</th>
             <td mat-cell *matCellDef="let row">{{ row.selection.betType }}</td>
           </ng-container>
-  
-             
+              
           <ng-container matColumnDef="selectionType">
             <th mat-header-cell *matHeaderCellDef>Sel. Type</th>
             <td mat-cell *matCellDef="let row">{{ row.selectionType }}</td>
@@ -368,8 +352,7 @@
             <th mat-header-cell *matHeaderCellDef>Matched Size</th>
             <td mat-cell *matCellDef="let row">{{ row.matchedSize }}</td>
           </ng-container>
-  
-          
+           
           <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef>Status</th>
             <td mat-cell *matCellDef="let row">{{ row.status }}</td>
@@ -394,8 +377,7 @@
             <th mat-header-cell *matHeaderCellDef>Matched Date</th>
             <td mat-cell *matCellDef="let row">{{ this.sharedService.getMatchedDate(row.matchedDate)| date:'d/M/yyyy, h:mm a' }}</td>
           </ng-container>
-  
-         
+       
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>Actions</th>
             <td mat-cell *matCellDef="let row">
@@ -705,7 +687,6 @@
         </mat-paginator>
       </div>
 
-      
       <div [@contentInOut] *ngIf="profile.value == 'transactions'">
         <div class="cs-d-flex">
   
@@ -833,8 +814,6 @@
         >
         </mat-paginator>
       </div>
-
-
 
       <div [@contentInOut] *ngIf="profile.value == 'sub-accounts-transactions'">
         <div class="cs-d-flex">
@@ -971,8 +950,6 @@
         >
         </mat-paginator>
       </div>
-
-
 
       <div [@contentInOut] *ngIf="profile.value == 'bettingRules'">
         <div class="cs-d-flex">
@@ -1222,7 +1199,6 @@
         
       </div>
 
-
       <div [@contentInOut] *ngIf="profile.value == 'regions'">
         <div class="cs-d-flex">
 
@@ -1317,8 +1293,7 @@
         </table>
         
       </div>
-
-      
+    
       <div [@contentInOut] *ngIf="profile.value == 'leagues'">
        
         <div class="cs-d-flex">
@@ -1486,9 +1461,6 @@
         </table>
         
       </div>
-
-
-
 
 
 
