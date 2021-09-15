@@ -171,6 +171,19 @@ export class AccountDetailsComponent implements OnInit {
     // 'avgOddsMatched',
   ];
 
+  
+  displayedColumnsExpo: string[] = [
+    'eventName',
+    'betsPlayed',
+    'userPlayed',
+    'netWin',
+    'netLoss',
+    'risk',
+    'possibleWin',
+    'possibleLoss',
+    // 'actions'
+  ];
+
 
   sportsData = new MatTableDataSource<any>();
   displayedColumnsSports: string[] = [
@@ -207,6 +220,8 @@ export class AccountDetailsComponent implements OnInit {
   });
   lengthBets = 0;
   pageIndexBets = 1;
+  lengthExpo = 0;
+  pageIndexExpo = 1;
   lengthTrans = 0;
   pageIndexTrans = 1;
   lengthTransSub = 0;
@@ -215,6 +230,8 @@ export class AccountDetailsComponent implements OnInit {
   pageIndexBettingRules = 1;
   pageSize = this.sharedService.defaultPageSize;
   bettingHistoryData = new MatTableDataSource<any>();
+  bettingExpoData = new MatTableDataSource<any>();
+  
 
   sportsList:any =[]
   regionsList:any =[]
@@ -260,6 +277,7 @@ export class AccountDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.loadUser()
     this.loadBets()
+    this.loadExpo()
     this.loadSports(true);
 
     if(this.authService.decodedToken.role == 'SoftwareHolder'){
@@ -303,7 +321,6 @@ export class AccountDetailsComponent implements OnInit {
   loadUser(){
 
     this.dataService.getUserById(this.authService.decodedToken.id).subscribe(resp =>{
-      debugger
       this.myUser = resp;
       this.secondStageLoads();
     },error =>{
@@ -321,6 +338,17 @@ export class AccountDetailsComponent implements OnInit {
     this.dataService.getBets(this.pageIndexBets, this.pageSize, this.userIdForBets, this.parentIdForBets, this.betTypeForBets,'','',this.sportIdForBets,'',start,end, this.onActionDateForBets, this.usernameForBets, this.statusForBets).subscribe(resp =>{
      this.lengthBets = resp.body.pagingInfo.totalCount
      this.bettingHistoryData.data = resp.body.items;
+   }, error =>{
+     // redirect somewhere
+   })
+  }
+
+  loadExpo(){
+   
+    this.dataService.getExposure(this.pageIndexExpo,this.pageSize,'').subscribe(resp =>{
+      debugger
+     this.lengthExpo = resp.pagingInfo.totalCount
+     this.bettingExpoData.data = resp.items;
    }, error =>{
      // redirect somewhere
    })
@@ -492,6 +520,13 @@ export class AccountDetailsComponent implements OnInit {
     this.pageIndexBets = page.pageIndex + 1;
 
     this.loadBets();
+  }
+  
+  updatePageExpo(page:any) {
+    this.pageSize = page.pageSize;
+    this.pageIndexExpo = page.pageIndex + 1;
+
+    this.loadExpo();
   }
 
   updatePageTrans(page:any) {
@@ -721,7 +756,7 @@ export class AccountDetailsComponent implements OnInit {
 
   
   openCommissionUpdateDialog(obj:any){
-debugger
+
     let width = '50%';
     if(this.screenSize == 'xs' || this.screenSize == 'sm'){
       width = '80%'
@@ -825,10 +860,11 @@ debugger
     'userName',
     'name',
     'role',
+    'parent',
     // 'email',
     // 'phoneNumber',
     'commission',
-    'profitCommission',
+    // 'profitCommission',
     // 'unsettledCommission',
     'currency',
     'wallet balance',

@@ -741,11 +741,15 @@ this.layoutService.closeMenuChilds();
 
 
    getAllUsers(pars:any) {
-      return this.http.get<any>( `${this.baseUrl}users?PageNo=${
-        pars.PageNo ? pars.PageNo : ''
-      }&PageSize=${pars.PageSize ? pars.PageSize : ''}&ParentId=${
-        pars.parentId ? pars.parentId : ''
-      }&Role=${pars.Role ? pars.Role : ''}`, {
+     debugger
+let query = this.convertObjectToQueryString({
+  PageNo:pars.PageNo,
+  PageSize:pars.PageSize,
+  ParentId:pars.ParentId,
+  Role:pars.Role,
+})
+
+      return this.http.get<any>( `${this.baseUrl}users${query}`, {
         headers: this.httpOptions.headers,
       });
     }
@@ -804,6 +808,17 @@ this.layoutService.closeMenuChilds();
       return this.http.get(`${environment.apiUrl}users/${id}/risk`, {
         headers: this.httpOptions.headers,
         observe: 'response',
+      });
+    }
+
+    getExposure(PageNo:number, PageSize:number ,UserId = '') {
+      let query = this.convertObjectToQueryString({
+        PageNo:PageNo,
+        PageSize:PageSize,
+        UserId:UserId
+      })
+      return this.http.get<any>( `${this.baseUrl}users/exposure${query}`, {
+        headers: this.httpOptions.headers,
       });
     }
   
@@ -887,10 +902,11 @@ this.layoutService.closeMenuChilds();
      * @returns Query string representation of obj
      */
     convertObjectToQueryString(obj: any){
+
       let query = "?";
       for (const [key, value] of Object.entries(obj)) {
         
-        if(value === '' || value === null){
+        if(value === '' || value === null || value === undefined){
           continue;
         }
         query += query[query.length - 1] === '?' ? `${key}=${value}` : `&${key}=${value}`;

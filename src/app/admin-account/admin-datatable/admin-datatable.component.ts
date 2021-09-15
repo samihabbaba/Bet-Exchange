@@ -64,15 +64,18 @@ export class AdminDatatableComponent implements OnInit {
   }
 
   loadUsers(){
-
+debugger
     this.dataService.getAllUsers({
       PageNo:1,
       PageSize:5,
-      rParentId:'',
+      ParentId:'',
       Role:'Master'
     }).subscribe(resp => {
-      this.dataSource.data = resp.items
+      
+debugger
+this.dataSource.data = resp.items
     }, error => {
+      debugger
 
     })
   }

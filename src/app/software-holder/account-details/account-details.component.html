@@ -17,6 +17,9 @@
       <mat-button-toggle value="bettingHistory" [checked]="false"
       >Betting History</mat-button-toggle>
 
+      <mat-button-toggle value="bettingExposure" [checked]="false"
+      >Betting Exposure</mat-button-toggle>
+
       
       <mat-button-toggle value="subAccounts" [checked]="false"
       *ngIf="this.authService.decodedToken.role === 'SoftwareHolder' || this.authService.decodedToken.role === 'SuperAdmin' || this.authService.decodedToken.role === 'Admin'"
@@ -25,8 +28,8 @@
 
       
 
-      <!-- <mat-button-toggle value="forecast">Forecast</mat-button-toggle -->
-      <!-- ><mat-button-toggle value="pl">P&L</mat-button-toggle> -->
+      <!-- <mat-button-toggle value="forecast">Forecast</mat-button-toggle> -->
+      <!-- <mat-button-toggle value="pl">P&L</mat-button-toggle> -->
       <!-- <mat-button-toggle value="totalPl">Total P&L</mat-button-toggle> -->
       <!-- <mat-button-toggle value="casinoTotal">Casino Total P&L</mat-button-toggle> -->
       <mat-button-toggle value="transactions">Transactions</mat-button-toggle>
@@ -458,6 +461,134 @@
         </mat-paginator>
       </div>
       
+
+      <div [@contentInOut] *ngIf="profile.value == 'bettingExposure'">
+       
+
+        <table
+          mat-table
+          [dataSource]="bettingExpoData"
+          style="min-width: 870px"
+        >
+
+
+          
+          <ng-container matColumnDef="eventName">
+            <th mat-header-cell *matHeaderCellDef>Event Name</th>
+            <td mat-cell *matCellDef="let row" >{{ row.eventName }}</td>
+          </ng-container>
+          
+          <ng-container matColumnDef="betsPlayed">
+            <th mat-header-cell *matHeaderCellDef>Bets</th>
+            <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.bets.length, false) }}</td>
+          </ng-container>
+             
+          <ng-container matColumnDef="userPlayed">
+            <th mat-header-cell *matHeaderCellDef>Players</th>
+            <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.bets.length, false) }}</td>
+          </ng-container>
+             
+          <ng-container matColumnDef="netLoss">
+            <th mat-header-cell *matHeaderCellDef>Net Loss</th>
+            <td mat-cell *matCellDef="let row">{{ row.netLoss }}</td>
+          </ng-container> 
+             
+          <ng-container matColumnDef="netWin">
+            <th mat-header-cell *matHeaderCellDef>Net Win</th>
+            <td mat-cell *matCellDef="let row">{{ row.netWin }}</td>
+          </ng-container>
+            
+          <ng-container matColumnDef="risk">
+            <th mat-header-cell *matHeaderCellDef>Risk</th>
+            <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.risk) }}%</td>
+          </ng-container>
+              
+          <ng-container matColumnDef="possibleWin">
+            <th mat-header-cell *matHeaderCellDef>Possible Win</th>
+            <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.possibleWin)  }}</td>
+          </ng-container>
+             
+          <ng-container matColumnDef="possibleLoss">
+            <th mat-header-cell *matHeaderCellDef>Possible Loss</th>
+            <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.possibleLoss)  }}</td>
+          </ng-container>
+
+         
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let row">
+              <button
+                mat-icon-button
+                [matMenuTriggerFor]="menu"
+                (click)="$event.stopPropagation()"
+              >
+                <mat-icon>more_vert</mat-icon>
+    
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item (click)="openBetDetail(row)">
+                    <mat-icon>feed</mat-icon>
+                    <span>Details</span>
+                  </button>
+
+                  
+                  <button mat-menu-item (click)="openMarketsForEvent(row)" *ngIf="this.authService.decodedToken.role === 'Client'">
+                    <mat-icon>add_business</mat-icon>
+                    <span>Event markets</span>
+                  </button>
+  
+                  <button mat-menu-item (click)="openBetSettleDialog(row,'win')" *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'">
+                    <mat-icon>done</mat-icon>
+                    <span>Set win</span>
+                  </button>
+  
+                  <button mat-menu-item (click)="openBetSettleDialog(row,'lose')" *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'">
+                    <mat-icon>close</mat-icon>
+                    <span>Set Lose</span>
+                  </button>
+  
+                  <button mat-menu-item (click)="openBetSettleDialog(row,'cancel')" *ngIf="this.showCancelBet(row)">
+                    <mat-icon>delete_outline</mat-icon>
+                    <span>Cancel</span>
+                  </button>
+                                 
+                 
+                </mat-menu>
+              </button>
+    
+              
+             
+  
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+  
+           <!-- Master Actions -->
+       
+           
+    
+          <!-- Master Actions -->
+  
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumnsExpo"
+          ></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumnsExpo"
+          ></tr>
+        </table>
+  
+  
+        <mat-paginator 
+        [length]="lengthExpo"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="this.sharedService.pageSizeOptions"
+        (page)="updatePageExpo($event)"
+        >
+        </mat-paginator>
+      </div>
+
+
       <div [@contentInOut] *ngIf="profile.value == 'subAccounts'">
         <div class="cs-d-flex">
   
@@ -562,6 +693,15 @@
           <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         
+        <ng-container matColumnDef="parent">
+          <th mat-header-cell *matHeaderCellDef >
+            Parent
+          </th>
+          <td mat-cell *matCellDef="let row">{{ this.sharedService.getUserParent(row).userName  }}</td>
+          <td mat-footer-cell *matFooterCellDef> </td>
+        </ng-container>
+        
+
         <ng-container matColumnDef="unsettledCommission">
           <th mat-header-cell *matHeaderCellDef >
             Unsettled Com.
