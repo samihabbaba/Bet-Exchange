@@ -1,0 +1,45 @@
+<h2 mat-dialog-title>Update Risk</h2>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="editCommissionForm">
+      <!-- <div class="cs-modal-form-field-container"> -->
+    <div class="">
+     
+      
+        <mat-form-field appearance="fill" *ngIf="this.data.role !== 'Client'">
+            <mat-label><mat-icon matTooltip="{{10-this.data.maxCommission}}% of the commission is taken by parents accounts">paid</mat-icon> Com. (0-{{this.data.maxCommission}})% <span *ngIf="showTotalCom()">({{this.authService.currentUserInfo.parentCommission + form.commission.value}}% total)</span></mat-label>
+            <input
+            matTooltip="{{10-this.data.maxCommission}}% of the commission is taken by parents accounts"
+              matInput
+              placeholder="Commission"
+              formControlName="commission"
+              required
+              type="number"
+              min="0"
+              max="{{this.data.maxCommission}}"
+            />
+            <mat-error *ngIf="form.commission.invalid"
+              >This field is required. (0 - {{this.data.maxCommission}})</mat-error
+            >
+          </mat-form-field>
+
+      
+   
+     
+      
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button
+    color="primary"
+    mat-button
+    [mat-dialog-close]="true"
+    cdkFocusInitial
+    [disabled]="!this.editCommissionForm.valid"
+    (click)="updateCommission()"
+  >
+    Update
+  </button>
+
+</mat-dialog-actions>

@@ -91,6 +91,10 @@
         <div (click)="openRiskUpdateDialog(myUser)" *ngIf="myUser?.role === 'Master'">
           <a  class="clickable blue-text">Edit My Risk</a>
         </div>
+        
+        <div (click)="openCommissionUpdateDialog(myUser)" *ngIf="myUser?.role === 'Admin' || myUser?.role === 'SuperAdmin' || myUser?.role === 'Master'">
+          <a  class="clickable blue-text">Set My Commission</a>
+        </div>
 
       </div>
 
@@ -392,6 +396,12 @@
                   <button mat-menu-item (click)="openBetDetail(row)">
                     <mat-icon>feed</mat-icon>
                     <span>Details</span>
+                  </button>
+
+                  
+                  <button mat-menu-item (click)="openMarketsForEvent(row)" *ngIf="this.authService.decodedToken.role === 'Client'">
+                    <mat-icon>add_business</mat-icon>
+                    <span>Event markets</span>
                   </button>
   
                   <button mat-menu-item (click)="openBetSettleDialog(row,'win')" *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'">

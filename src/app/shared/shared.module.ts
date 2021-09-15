@@ -25,6 +25,7 @@ import { ConfirmationMessageComponent } from './confirmation-message/confirmatio
 import { UpdateRiskComponent } from './update-risk/update-risk.component';
 import { RisksTableComponent } from './risks-table/risks-table.component';
 import { PayCommissionComponent } from './pay-commission/pay-commission.component';
+import { SetMyCommissionComponent } from './set-my-commission/set-my-commission.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { PayCommissionComponent } from './pay-commission/pay-commission.componen
     ConfirmationMessageComponent,
     UpdateRiskComponent,
     RisksTableComponent,
-    PayCommissionComponent
+    PayCommissionComponent,
+    SetMyCommissionComponent
   ],
   imports: [
     CommonModule,

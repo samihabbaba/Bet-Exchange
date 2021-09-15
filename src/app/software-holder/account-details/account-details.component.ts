@@ -16,14 +16,17 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { LayoutService } from 'src/app/services/layout.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { ScreenSizeService } from 'src/app/services/screen-size.service';
 import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
 import { BetDetailsComponent } from 'src/app/shared/bet-details/bet-details.component';
 import { BetSettleModalComponent } from 'src/app/shared/bet-settle-modal/bet-settle-modal.component';
 import { ConfirmationMessageComponent } from 'src/app/shared/confirmation-message/confirmation-message.component';
 import { RisksTableComponent } from 'src/app/shared/risks-table/risks-table.component';
+import { SetMyCommissionComponent } from 'src/app/shared/set-my-commission/set-my-commission.component';
 import { UpdateRiskComponent } from 'src/app/shared/update-risk/update-risk.component';
 import { AddBettingRuleComponent } from '../add-betting-rule/add-betting-rule.component';
 import { DeleteBettingRuleComponent } from '../delete-betting-rule/delete-betting-rule.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-account-details',
@@ -235,17 +238,24 @@ export class AccountDetailsComponent implements OnInit {
   usernameForBets='';
 
   userQuestionUpdate = new Subject<string>();
-
+  screenObserver$?: Subscription;
+  screenSize='';
   
   constructor(private fb: FormBuilder,  private router: Router, private dataService:DataService
     , public sharedService:SharedFunctionsService, public authService:AuthService, 
-    public dialog: MatDialog, private notify:NotificationService, private layoutService:LayoutService) {
+    public dialog: MatDialog, private notify:NotificationService, private layoutService:LayoutService, private screenSizeService:ScreenSizeService) {
       this.userQuestionUpdate.pipe(
         debounceTime(800),
         distinctUntilChanged())
         .subscribe(value => {
           this.loadBets();
         });
+
+        this.screenObserver$ = this.screenSizeService.currentScreenSize.subscribe( resp =>
+            {
+              this.screenSize = resp
+            }
+        )
     }
   ngOnInit(): void {
     this.loadUser()
@@ -293,6 +303,7 @@ export class AccountDetailsComponent implements OnInit {
   loadUser(){
 
     this.dataService.getUserById(this.authService.decodedToken.id).subscribe(resp =>{
+      debugger
       this.myUser = resp;
       this.secondStageLoads();
     },error =>{
@@ -321,12 +332,11 @@ export class AccountDetailsComponent implements OnInit {
     
     let start = this.sharedService.formatDate(this.rangeTrans.controls.start.value.getDate(),this.rangeTrans.controls.start.value.getMonth()+1,this.rangeTrans.controls.start.value.getFullYear()) 
     let end = this.sharedService.formatDate(endD.getDate(),endD.getMonth()+1,endD.getFullYear(), true) 
-
     let id = this.authService.decodedToken.id;
     let directParent = false;
     let parentId = '';
     if(this.authService.decodedToken.role == 'SoftwareHolder'){
-      parentId = id;
+      // parentId = id;
       directParent = true;
       id = '';
     }
@@ -348,7 +358,12 @@ export class AccountDetailsComponent implements OnInit {
     let start = this.sharedService.formatDate(this.rangeTransSub.controls.start.value.getDate(),this.rangeTransSub.controls.start.value.getMonth()+1,this.rangeTransSub.controls.start.value.getFullYear()) 
     let end = this.sharedService.formatDate(endD.getDate(),endD.getMonth()+1,endD.getFullYear(), true) 
 
-    let id = this.authService.decodedToken.id;
+    let id = '';
+    // let id = this.authService.decodedToken.id;
+    
+    if(this.authService.decodedToken.role == 'SoftwareHolder'){
+      id = '';
+    }
 
     this.dataService.getTransactions(this.pageIndexTransSub , this.pageSize, '', '', '',id, start,end,this.directParentTrans, this.transactionType2 ).subscribe(resp =>{
       this.lengthTransSub= resp.body.pagingInfo.totalCount;
@@ -417,8 +432,46 @@ export class AccountDetailsComponent implements OnInit {
    
     }
 
+    openEventDetail(id:any, Live=true){
+      this.router.navigateByUrl('home').then( x=>
+        {
+          if(Live){
+            this.dataService.loadMarketsForGameLive(id);
+          }
+          else{
+            this.dataService.loadMarketsForGamePre(id);
+          }
+        }
+      )
+    }
+
+    openMarketsForEvent(obj:any){
+        if(obj.selectionType === 'UPCOMING'){
+          this.dataService.getUpcomingById(obj.selection.eventId).subscribe(resp => {
+        this.openEventDetail(obj.selection.eventId, false)
+
+          }, error => {
+            this.dataService.getLIveById(obj.selection.eventId).subscribe(resp =>{
+              this.openEventDetail(obj.selection.eventId)
+            },
+            error => {
+              this.notify.error('Can\'t open event details at the moment')
+            })
+          })
+        }
+        else if(obj.selectionType === 'LIVE'){
+          this.dataService.getLIveById(obj.selection.eventId).subscribe(resp =>{
+            this.openEventDetail(obj.selection.eventId)
+      
+            },
+            error => {
+              this.notify.error('Can\'t open event details at the moment')
+            })
+        }
+    }
 
    openBetDetail(obj:any) {
+
     const dialogRef = this.dialog.open(BetDetailsComponent,{
       data:obj
     });
@@ -661,6 +714,40 @@ export class AccountDetailsComponent implements OnInit {
 
     }, error =>{
       this.notify.error("Error getting Risk")
+    })
+
+    
+  }
+
+  
+  openCommissionUpdateDialog(obj:any){
+debugger
+    let width = '50%';
+    if(this.screenSize == 'xs' || this.screenSize == 'sm'){
+      width = '80%'
+    } else if(this.screenSize == 'md' ){
+      width = '75%'
+    }
+    // else if(this.screenSize == 'md' || this.screenSize == 'sm'){
+    //   width = '80%'
+    // }
+    this.dataService.getUserById(obj.id).subscribe((resp:any) => {
+
+      let objToSend = {
+        user:resp
+      }
+    const dialogRef = this.dialog.open(SetMyCommissionComponent, {
+      data: objToSend,
+      width: '30%',
+    });
+    dialogRef.afterClosed().subscribe(async (result) => {
+      await this.sharedService.delay(500);
+      console.log(`Dialog result: ${result}`);
+      this.loadUser();
+    });
+
+    }, error =>{
+      this.notify.error("Error getting User info")
     })
 
     
