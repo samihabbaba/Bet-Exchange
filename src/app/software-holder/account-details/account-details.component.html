@@ -525,32 +525,13 @@
                 <mat-icon>more_vert</mat-icon>
     
                 <mat-menu #menu="matMenu">
-                  <button mat-menu-item (click)="openBetDetail(row)">
+                 
+                  <button mat-menu-item (click)="openExpoDetail(row)">
                     <mat-icon>feed</mat-icon>
                     <span>Details</span>
                   </button>
 
                   
-                  <button mat-menu-item (click)="openMarketsForEvent(row)" *ngIf="this.authService.decodedToken.role === 'Client'">
-                    <mat-icon>add_business</mat-icon>
-                    <span>Event markets</span>
-                  </button>
-  
-                  <button mat-menu-item (click)="openBetSettleDialog(row,'win')" *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'">
-                    <mat-icon>done</mat-icon>
-                    <span>Set win</span>
-                  </button>
-  
-                  <button mat-menu-item (click)="openBetSettleDialog(row,'lose')" *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'">
-                    <mat-icon>close</mat-icon>
-                    <span>Set Lose</span>
-                  </button>
-  
-                  <button mat-menu-item (click)="openBetSettleDialog(row,'cancel')" *ngIf="this.showCancelBet(row)">
-                    <mat-icon>delete_outline</mat-icon>
-                    <span>Cancel</span>
-                  </button>
-                                 
                  
                 </mat-menu>
               </button>

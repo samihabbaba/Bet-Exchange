@@ -34,7 +34,6 @@ export class SetMyCommissionComponent implements OnInit {
 
 
   ngOnInit(): void {
-      debugger
     if(!this.data.maxCommission){
       this.data.maxCommission = 10 - this.authService.currentUserInfo.parentCommission;
     }
@@ -49,14 +48,12 @@ export class SetMyCommissionComponent implements OnInit {
   }
 
   initalizeForm() {
-    debugger
     this.editCommissionForm = this.fb.group({
       commission: new FormControl(this.data.user.commission*100, [Validators.required,Validators.max(this.data.maxCommission),Validators.min(0)])
     });
-    
   }
 
-  updateCommission(){debugger
+  updateCommission(){
 
     let objToSend = {
       id:this.data.user.id,

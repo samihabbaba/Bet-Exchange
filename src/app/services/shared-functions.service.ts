@@ -149,11 +149,7 @@ export class SharedFunctionsService {
       }
     }
 
-  formatNumber(num:any, isMoney=true, d=false) {
-    if(d){
-      debugger
-      num = num.length;
-    }
+  formatNumber(num:any, isMoney=true) {
     try{
       num = Number(num);
       if(num === 0 ){

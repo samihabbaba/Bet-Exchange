@@ -27,6 +27,7 @@ import { UpdateRiskComponent } from 'src/app/shared/update-risk/update-risk.comp
 import { AddBettingRuleComponent } from '../add-betting-rule/add-betting-rule.component';
 import { DeleteBettingRuleComponent } from '../delete-betting-rule/delete-betting-rule.component';
 import { Subscription } from 'rxjs';
+import { ExpoDetailsComponent } from 'src/app/shared/expo-details/expo-details.component';
 
 @Component({
   selector: 'app-account-details',
@@ -181,7 +182,7 @@ export class AccountDetailsComponent implements OnInit {
     'risk',
     'possibleWin',
     'possibleLoss',
-    // 'actions'
+    'actions'
   ];
 
 
@@ -498,15 +499,26 @@ export class AccountDetailsComponent implements OnInit {
         }
     }
 
-   openBetDetail(obj:any) {
+    openBetDetail(obj:any) {
 
-    const dialogRef = this.dialog.open(BetDetailsComponent,{
-      data:obj
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
+      const dialogRef = this.dialog.open(BetDetailsComponent,{
+        data:obj
+      });
+      dialogRef.afterClosed().subscribe((result) => {
+        console.log(`Dialog result: ${result}`);
+      });
+    }
+
+    openExpoDetail(obj:any) {
+ 
+      debugger
+     const dialogRef = this.dialog.open(ExpoDetailsComponent,{
+       data:obj
+     });
+     dialogRef.afterClosed().subscribe((result) => {
+       console.log(`Dialog result: ${result}`);
+     });
+   }
   
   disableReloadBtn(form:any){
     if(form.start.value == null || form.end.value == null){

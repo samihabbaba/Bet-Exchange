@@ -26,6 +26,7 @@ import { UpdateRiskComponent } from './update-risk/update-risk.component';
 import { RisksTableComponent } from './risks-table/risks-table.component';
 import { PayCommissionComponent } from './pay-commission/pay-commission.component';
 import { SetMyCommissionComponent } from './set-my-commission/set-my-commission.component';
+import { ExpoDetailsComponent } from './expo-details/expo-details.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { SetMyCommissionComponent } from './set-my-commission/set-my-commission.
     UpdateRiskComponent,
     RisksTableComponent,
     PayCommissionComponent,
-    SetMyCommissionComponent
+    SetMyCommissionComponent,
+    ExpoDetailsComponent
   ],
   imports: [
     CommonModule,
