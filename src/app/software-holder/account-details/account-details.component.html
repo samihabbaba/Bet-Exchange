@@ -17,7 +17,7 @@
       <mat-button-toggle value="bettingHistory" [checked]="false"
       >Betting History</mat-button-toggle>
 
-      <mat-button-toggle value="bettingExposure" [checked]="false"
+      <mat-button-toggle value="bettingExposure" [checked]="false" *ngIf="this.authService.decodedToken.role !== undefined ||this.authService.decodedToken.role !== 'SoftwareHolder'||this.authService.decodedToken.role !== 'Client'"
       >Betting Exposure</mat-button-toggle>
 
       
@@ -36,19 +36,19 @@
       <mat-button-toggle value="sub-accounts-transactions" *ngIf="this.authService.decodedToken.role !== undefined && this.authService.decodedToken.role !== 'Client'"
       >SubAccounts Transactions</mat-button-toggle>
 
-      <mat-button-toggle *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'" value="bettingRules">Betting Rules</mat-button-toggle>
+      <mat-button-toggle *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'|| this.authService.decodedToken.role === 'SuperAdmin' " value="bettingRules">Betting Rules</mat-button-toggle>
 
-      <mat-button-toggle value="sports" [checked]="false" *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'"
+      <mat-button-toggle value="sports" [checked]="false" *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'|| this.authService.decodedToken.role === 'SuperAdmin' "
       >Sports</mat-button-toggle>
       
 
       <mat-button-toggle value="regions" [checked]="false"
-      *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'"
+      *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'|| this.authService.decodedToken.role === 'SuperAdmin' "
       >Regions</mat-button-toggle>
       
 
       <mat-button-toggle value="leagues" [checked]="false"
-      *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'"
+      *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'|| this.authService.decodedToken.role === 'SuperAdmin' "
       >Leagues</mat-button-toggle>
       
     </mat-button-toggle-group>

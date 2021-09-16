@@ -347,7 +347,6 @@ export class AccountDetailsComponent implements OnInit {
   loadExpo(){
    
     this.dataService.getExposure(this.pageIndexExpo,this.pageSize,'').subscribe(resp =>{
-      debugger
      this.lengthExpo = resp.pagingInfo.totalCount
      this.bettingExpoData.data = resp.items;
    }, error =>{
@@ -510,9 +509,7 @@ export class AccountDetailsComponent implements OnInit {
     }
 
     openExpoDetail(obj:any) {
- 
-      debugger
-     const dialogRef = this.dialog.open(ExpoDetailsComponent,{
+      const dialogRef = this.dialog.open(ExpoDetailsComponent,{
        data:obj,
        maxHeight: '90vh'
      });

@@ -51,7 +51,6 @@ export class ExpoDetailsComponent implements OnInit {
 
   getRunMoney( marketName:any, selectionId:any, selectionName:any){ // maybe take run name also ?
 
-    debugger
     // if(this.data.bets.length == 0 || this.data.bets[0].selection.marketId !== marketId){
     //   return 0;
     // }
@@ -94,13 +93,11 @@ export class ExpoDetailsComponent implements OnInit {
   }
 
   getBetsNumForSelection(selection:any, marketName:any){
-    debugger
     return this.data.bets.filter((x:any)=> x.selection.selectionName == selection.name && x.selection.marketName == marketName).length
   }
 
   
   getPlayerNumForSelection(selection:any, marketName:any){
-debugger
     let bets = this.data.bets.filter((x:any)=> x.selection.fullSelectionName == selection.name&& x.selection.marketName == marketName);
     let users = bets.map(function(i:any) {
       return i.userName;
@@ -133,7 +130,6 @@ debugger
   }
 
   openBetInfo(marketName:any) {
-debugger
     let obj = this.data.bets.filter((x:any)=> x.selection.marketName == marketName);
     const dialogRef = this.dialog.open(BetsInfoComponent,{
       data:obj
