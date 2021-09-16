@@ -290,99 +290,129 @@
           <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef>ID</th>
             <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+            <td mat-footer-cell *matFooterCellDef> </td>
           </ng-container>
           
           <ng-container matColumnDef="userName">
             <th mat-header-cell *matHeaderCellDef>Username</th>
             <td mat-cell *matCellDef="let row" (click)="setUserIdForBet(row.userName, row.userId)" class="underline-text">{{ row.userName }}</td>
+            <td mat-footer-cell *matFooterCellDef> </td>
           </ng-container>
           
           <ng-container matColumnDef="sport">
             <th mat-header-cell *matHeaderCellDef>Sport</th>
             <td mat-cell *matCellDef="let row">{{ this.sharedService.getSportNameById(row.selection.eventTypeId) }}</td>
+            <td mat-footer-cell *matFooterCellDef> </td>
           </ng-container>
              
           <ng-container matColumnDef="eventName">
             <th mat-header-cell *matHeaderCellDef>Event</th>
             <td mat-cell *matCellDef="let row">{{ row.selection.eventName }}</td>
+            <td mat-footer-cell *matFooterCellDef> Totals : </td>
           </ng-container>
              
           <ng-container matColumnDef="marketName">
             <th mat-header-cell *matHeaderCellDef>Market</th>
             <td mat-cell *matCellDef="let row">{{ row.selection.marketName }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
           </ng-container> 
              
           <ng-container matColumnDef="selectionName">
             <th mat-header-cell *matHeaderCellDef>Selection</th>
             <td mat-cell *matCellDef="let row">{{ row.selection.fullSelectionName }}</td>
+            <td mat-footer-cell *matFooterCellDef> </td>
           </ng-container>
             
           <ng-container matColumnDef="betType">
             <th mat-header-cell *matHeaderCellDef>Bet Type</th>
             <td mat-cell *matCellDef="let row">{{ row.selection.betType }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
           </ng-container>
               
           <ng-container matColumnDef="selectionType">
             <th mat-header-cell *matHeaderCellDef>Sel. Type</th>
             <td mat-cell *matCellDef="let row">{{ row.selectionType }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
           </ng-container>
              
           <ng-container matColumnDef="stake">
             <th mat-header-cell *matHeaderCellDef>Stake</th>
             <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.stake)  }}</td>
+            <td mat-footer-cell *matFooterCellDef> {{ this.sharedService.formatNumber(betTotals.totalStake) }}</td>
           </ng-container>
 
           <ng-container matColumnDef="liability">
             <th mat-header-cell *matHeaderCellDef>Liability</th>
             <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.liability)  }}</td>
+            <td mat-footer-cell *matFooterCellDef> {{  this.sharedService.formatNumber(betTotals.totalLiability) }}</td>
           </ng-container>
   
           <ng-container matColumnDef="odd">
             <th mat-header-cell *matHeaderCellDef>Odd</th>
             <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.odd)  }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
           </ng-container>
           
           <ng-container matColumnDef="payout">
             <th mat-header-cell *matHeaderCellDef>Potential Payout</th>
             <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.payout)  }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
           </ng-container>
 
           <ng-container matColumnDef="netWin">
+            <th mat-header-cell *matHeaderCellDef>Possible net</th>
+            <td mat-cell *matCellDef="let row"
+           
+            >{{ this.sharedService.formatNumber(row.netWin)  }} </td>
+
+            <td mat-footer-cell *matFooterCellDef>{{ this.sharedService.formatNumber(betTotals.totalNetWin) }}</td>
+          </ng-container>
+
+          
+          <ng-container matColumnDef="actualWin">
             <th mat-header-cell *matHeaderCellDef>Net</th>
             <td mat-cell *matCellDef="let row"
             [ngClass]="{'win-money': row.netWin >= 0,
                         'loss-money': row.netWin < 0}"
-            >{{ this.sharedService.formatNumber(row.netWin)  }}</td>
+            >{{ this.sharedService.formatNumber(row.actualWin)  }}  </td>
+
+            <td mat-footer-cell *matFooterCellDef>{{ this.sharedService.formatNumber(betTotals.totalActualWin)}}</td>
           </ng-container>
   
           <ng-container matColumnDef="matchedSize">
             <th mat-header-cell *matHeaderCellDef>Matched Size</th>
             <td mat-cell *matCellDef="let row">{{ row.matchedSize }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
           </ng-container>
            
           <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef>Status</th>
             <td mat-cell *matCellDef="let row">{{ row.status }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
           </ng-container>
              
           <ng-container matColumnDef="date">
             <th mat-header-cell *matHeaderCellDef>Date</th>
             <td mat-cell *matCellDef="let row">{{ row.date| date:'d/M/yyyy, h:mm a' }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
           </ng-container>
              
           <ng-container matColumnDef="lastActionDate">
             <th mat-header-cell *matHeaderCellDef>Last Action</th>
             <td mat-cell *matCellDef="let row">{{ row.lastActionDate| date:'d/M/yyyy, h:mm a' }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
           </ng-container>
              
           <ng-container matColumnDef="eventDate">
             <th mat-header-cell *matHeaderCellDef>Event Date</th>
             <td mat-cell *matCellDef="let row">{{ row.selection.eventDate| date:'d/M/yyyy, h:mm a' }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
           </ng-container>
              
           <ng-container matColumnDef="matchedDate">
             <th mat-header-cell *matHeaderCellDef>Matched Date</th>
             <td mat-cell *matCellDef="let row">{{ this.sharedService.getMatchedDate(row.matchedDate)| date:'d/M/yyyy, h:mm a' }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
           </ng-container>
        
           <ng-container matColumnDef="actions">
@@ -449,6 +479,7 @@
             [ngClass]="{'Back-bet-selection': row.selection.betType == 'BACK',
                         'Lay-bet-selection': row.selection.betType == 'LAY'}"
           ></tr>
+          <tr mat-footer-row *matFooterRowDef="displayedColumnsBettingHistory"></tr>
         </table>
   
   
@@ -888,7 +919,7 @@
           </ng-container>
 
           <ng-container matColumnDef="amount">
-            <th mat-header-cell *matHeaderCellDef>Amount</th>
+            <th mat-header-cell *matHeaderCellDef>Amount ( {{transTotals.totalAmount}} )</th>
             <td mat-cell *matCellDef="let row"
             [ngClass]="{'loss-money': row.amount < 0, 'win-money': row.amount >= 0}"
             >{{ this.sharedService.formatNumber(row.amount) }}</td>
@@ -1029,7 +1060,7 @@
           </ng-container>
 
           <ng-container matColumnDef="amount">
-            <th mat-header-cell *matHeaderCellDef>Amount</th>
+            <th mat-header-cell *matHeaderCellDef>Amount ( {{transSubTotals.totalAmount}} )</th>
             <td mat-cell *matCellDef="let row"
             [ngClass]="{'loss-money': row.amount < 0, 'win-money': row.amount >= 0}"
             >{{ this.sharedService.formatNumber(row.amount) }}</td>

@@ -162,6 +162,7 @@ export class AccountDetailsComponent implements OnInit {
     'odd',
     'payout',
     'netWin',
+    'actualWin',
     // 'matchedSize',
     'status',
     'date',
@@ -259,6 +260,21 @@ export class AccountDetailsComponent implements OnInit {
   screenObserver$?: Subscription;
   screenSize='';
   
+  betTotals:any = {
+    totalActualWin:0,
+    totalLiability:0,
+    totalNetWin:0,
+    totalStake:0
+  };
+  
+  transTotals:any = {
+    totalAmount:0
+  };
+
+  transSubTotals:any = {
+    totalAmount:0
+  };
+
   constructor(private fb: FormBuilder,  private router: Router, private dataService:DataService
     , public sharedService:SharedFunctionsService, public authService:AuthService, 
     public dialog: MatDialog, private notify:NotificationService, private layoutService:LayoutService, private screenSizeService:ScreenSizeService) {
@@ -278,16 +294,18 @@ export class AccountDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.loadUser()
     this.loadBets()
-    this.loadExpo()
     this.loadSports(true);
-
+    this.loadUsersTransactions();
+    
     if(this.authService.decodedToken.role == 'SoftwareHolder' || this.authService.decodedToken.role == 'SuperAdmin'){
       this.loadBettingRules();
     }
-
-    if(this.authService.decodedToken.role !== 'Client'){
-      this.loadUsersTransactionsSub();
+    
+    if(this.authService.decodedToken.role !== 'SoftwareHolder' || this.authService.decodedToken.role !== 'Client'){
+      this.loadExpo();
     }
+    
+    
 
     
     this.layoutService.mainContentDisplayType.next('other');
@@ -302,8 +320,10 @@ export class AccountDetailsComponent implements OnInit {
 
   secondStageLoads(){
     this.loadSubAccounts();
-    this.loadUsersTransactions();
     this.setRoleOptions();
+    if(this.authService.decodedToken.role !== 'Client'){
+      this.loadUsersTransactionsSub();
+    }
   }
 
   passwordMatchValidator(g: any){
@@ -337,7 +357,8 @@ export class AccountDetailsComponent implements OnInit {
     let start = this.sharedService.formatDate(this.rangeBets.controls.start.value.getDate(),this.rangeBets.controls.start.value.getMonth()+1,this.rangeBets.controls.start.value.getFullYear()) 
     let end = this.sharedService.formatDate(endD.getDate(),endD.getMonth()+1,endD.getFullYear(), true) 
     this.dataService.getBets(this.pageIndexBets, this.pageSize, this.userIdForBets, this.parentIdForBets, this.betTypeForBets,'','',this.sportIdForBets,'',start,end, this.onActionDateForBets, this.usernameForBets, this.statusForBets).subscribe(resp =>{
-     this.lengthBets = resp.body.pagingInfo.totalCount
+     this.betTotals = resp.body.stats;
+      this.lengthBets = resp.body.pagingInfo.totalCount
      this.bettingHistoryData.data = resp.body.items;
    }, error =>{
      // redirect somewhere
@@ -369,6 +390,7 @@ export class AccountDetailsComponent implements OnInit {
       id = '';
     }
     this.dataService.getTransactions(this.pageIndexTrans, this.pageSize, id, '', '',parentId, start,end,directParent,this.transactionType1 ).subscribe(resp =>{
+      this.transTotals = resp.body.stats
       this.lengthTrans= resp.body.pagingInfo.totalCount;
       this.transactionsData.data = resp.body.items;
     }, error =>{
@@ -394,6 +416,8 @@ export class AccountDetailsComponent implements OnInit {
     }
 
     this.dataService.getTransactions(this.pageIndexTransSub , this.pageSize, '', '', '',id, start,end,this.directParentTrans, this.transactionType2 ).subscribe(resp =>{
+      this.transSubTotals = resp.body.stats
+      
       this.lengthTransSub= resp.body.pagingInfo.totalCount;
       this.transactionsSubData.data = resp.body.items;
     }, error =>{
@@ -910,7 +934,6 @@ export class AccountDetailsComponent implements OnInit {
   clientIdSearch = '';
 
   loadSubAccounts(){
-   debugger
     if(this.currentSubId == ''){
       this.currentSubId = this.myUser.id;
     }
@@ -920,7 +943,6 @@ export class AccountDetailsComponent implements OnInit {
       ParentId:this.currentSubId,
       Role:this.roleSearch
     }).subscribe(resp =>{
-   debugger
 
       this.subsData.data = resp.items;
       if(this.resetAccounts){
