@@ -994,4 +994,14 @@ export class AccountDetailsComponent implements OnInit {
     return this.adminIdSearch===''
   }
 
+  getPlayerNumForSelection(obj:any){
+        let users = obj.map(function(i:any) {
+          return i.userName;
+        });
+    
+        let uniq = [...new Set(users)];
+    
+        return uniq.length;
+      }
+
 }

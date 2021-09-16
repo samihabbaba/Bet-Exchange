@@ -485,16 +485,16 @@
              
           <ng-container matColumnDef="userPlayed">
             <th mat-header-cell *matHeaderCellDef>Players</th>
-            <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.bets.length, false) }}</td>
+            <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber( this.getPlayerNumForSelection(row.bets), false) }}</td>
           </ng-container>
              
           <ng-container matColumnDef="netLoss">
-            <th mat-header-cell *matHeaderCellDef>Net Loss</th>
+            <th mat-header-cell *matHeaderCellDef>Max Loss</th>
             <td mat-cell *matCellDef="let row">{{ row.netLoss }}</td>
           </ng-container> 
              
           <ng-container matColumnDef="netWin">
-            <th mat-header-cell *matHeaderCellDef>Net Win</th>
+            <th mat-header-cell *matHeaderCellDef>Max Win</th>
             <td mat-cell *matCellDef="let row">{{ row.netWin }}</td>
           </ng-container>
             
@@ -504,12 +504,12 @@
           </ng-container>
               
           <ng-container matColumnDef="possibleWin">
-            <th mat-header-cell *matHeaderCellDef>Possible Win</th>
+            <th mat-header-cell *matHeaderCellDef>My Possible Win</th>
             <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.possibleWin)  }}</td>
           </ng-container>
              
           <ng-container matColumnDef="possibleLoss">
-            <th mat-header-cell *matHeaderCellDef>Possible Loss</th>
+            <th mat-header-cell *matHeaderCellDef>My Possible Loss</th>
             <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.possibleLoss)  }}</td>
           </ng-container>
 
