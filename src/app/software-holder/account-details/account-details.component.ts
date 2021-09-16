@@ -281,7 +281,7 @@ export class AccountDetailsComponent implements OnInit {
     this.loadExpo()
     this.loadSports(true);
 
-    if(this.authService.decodedToken.role == 'SoftwareHolder'){
+    if(this.authService.decodedToken.role == 'SoftwareHolder' || this.authService.decodedToken.role == 'SuperAdmin'){
       this.loadBettingRules();
     }
 
@@ -423,9 +423,14 @@ export class AccountDetailsComponent implements OnInit {
 
    loadSports(loadAfter = false){
      this.dataService.getSports().subscribe(resp => {
-
-       this.sportsList = resp.body.sort((a:any, b:any) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
-       this.sportsData.data = resp.body.sort((a:any, b:any) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+      
+      if(this.authService.decodedToken.role === 'SoftwareHolder'){
+        this.sportsList = resp.body.sort((a:any, b:any) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+        this.sportsData.data = resp.body.sort((a:any, b:any) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+      }else{
+        this.sportsList = resp.body.filter((x:any)=>!this.sharedService.strictedSports.some(y=>y==x.name)).sort((a:any, b:any) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+        this.sportsData.data = resp.body.filter((x:any)=>!this.sharedService.strictedSports.some(y=>y==x.name)).sort((a:any, b:any) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+      }
        
        if(this.currentSportIdForRegions === ''){
          this.currentSportIdForRegions = resp.body[0].id;

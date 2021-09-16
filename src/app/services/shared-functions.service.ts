@@ -19,6 +19,23 @@ export class SharedFunctionsService {
    currencyList = ['TRY', 'USD', 'EUR', 'GBP'];
    sports:any = []
 
+   strictedSports =[
+    'Special Bets',
+    'Cycling',
+    'Gaelic Games',
+    'Politics',
+    'Mixed Martial Arts',
+    'Esports',
+    'Golf',
+    'Cricket',
+    'Greyhound Racing',
+    'Boxing',
+    'Australian Rules',
+    'Horse Racing',
+    'Baseball',
+    'Motor Sport',
+   ]
+
   constructor(private dataService:DataService , private notify:NotificationService) {
     this.loadSports();
    }
