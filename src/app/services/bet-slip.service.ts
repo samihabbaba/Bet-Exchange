@@ -298,18 +298,7 @@ export class BetSlipService {
     // get all events for the user with the needed market id
     // take only the pending bets - no unmatched or settled 
     // debugger
-
-    this.betsForMarket.forEach((x:any) => {
-      debugger
-      let i =x.selection.selectionId;
-      let y = selectionId;
-      let ii = x.selection.fullSelectionName.trim();
-      let yy = (selectionName +' '+ this.returnSecondPartRunName({handicap:selectionHandicap},marketName)).trim()
-
-      let z = i ==y;
-      let zz = ii=yy;
-    });
-
+    
     let runBack = this.betsForMarket.filter((x:any)=>x.selection.selectionId == selectionId && x.selection.betType == 'BACK' && x.selection.fullSelectionName.trim() == (selectionName +' '+ this.returnSecondPartRunName({handicap:selectionHandicap},marketName)).trim())    
     let runLay = this.betsForMarket.filter((x:any)=>x.selection.selectionId == selectionId && x.selection.betType == 'LAY' && x.selection.fullSelectionName.trim() == (selectionName +' '+ this.returnSecondPartRunName({handicap:selectionHandicap},marketName)).trim())    
     let notRunBack = this.betsForMarket.filter((x:any)=> (x.selection.selectionId != selectionId || x.selection.fullSelectionName.trim() !== (selectionName +' '+ this.returnSecondPartRunName({handicap:selectionHandicap},marketName)).trim()) && x.selection.betType == 'BACK')    
