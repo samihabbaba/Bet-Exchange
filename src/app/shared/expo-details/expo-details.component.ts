@@ -28,7 +28,7 @@ export class ExpoDetailsComponent implements OnInit {
         bet.selection.runners.forEach((run:any) => {
           selectionsList.push({
             id:run.selectionId,
-            name:run.runnerName+' '+this.returnSecondPartRunName(run,marketName)
+            name:(run.runnerName+' '+this.returnSecondPartRunName(run,marketName)).trim()
           })
         })
         
@@ -51,7 +51,7 @@ export class ExpoDetailsComponent implements OnInit {
 
   getRunMoney( marketName:any, selectionId:any, selectionName:any){ // maybe take run name also ?
 
-    
+    debugger
     // if(this.data.bets.length == 0 || this.data.bets[0].selection.marketId !== marketId){
     //   return 0;
     // }
@@ -59,11 +59,13 @@ export class ExpoDetailsComponent implements OnInit {
     // get all events for the user with the needed market id
     // take only the pending bets - no unmatched or settled 
     // debugger
+
+    let marketsToCheck = this.data.bets.filter((x:any)=> x.selection.marketName == marketName)
     
-    let runBack = this.data.bets.filter((x:any)=>x.selection.selectionId == selectionId && x.selection.betType == 'BACK' && x.selection.fullSelectionName.trim() == selectionName.trim())    
-    let runLay = this.data.bets.filter((x:any)=>x.selection.selectionId == selectionId && x.selection.betType == 'LAY' && x.selection.fullSelectionName.trim() == selectionName.trim())    
-    let notRunBack = this.data.bets.filter((x:any)=> (x.selection.selectionId != selectionId || x.selection.fullSelectionName.trim() !== selectionName) && x.selection.betType == 'BACK')    
-    let notRunLay = this.data.bets.filter((x:any)=> (x.selection.selectionId != selectionId || x.selection.fullSelectionName.trim() !== selectionName.trim()) && x.selection.betType == 'LAY')    
+    let runBack = marketsToCheck.filter((x:any)=>x.selection.selectionId == selectionId && x.selection.betType == 'BACK' && x.selection.fullSelectionName.trim() == selectionName.trim())    
+    let runLay = marketsToCheck.filter((x:any)=>x.selection.selectionId == selectionId && x.selection.betType == 'LAY' && x.selection.fullSelectionName.trim() == selectionName.trim())    
+    let notRunBack = marketsToCheck.filter((x:any)=> (x.selection.selectionId != selectionId || x.selection.fullSelectionName.trim() !== selectionName) && x.selection.betType == 'BACK')    
+    let notRunLay = marketsToCheck.filter((x:any)=> (x.selection.selectionId != selectionId || x.selection.fullSelectionName.trim() !== selectionName.trim()) && x.selection.betType == 'LAY')    
 
     let runBackProfit = runBack.reduce((runBackProfit:any, b:any) => runBackProfit + (b.payout - b.stake),0);
     let runLayLiability = runLay.reduce((runLayLiability:any, b:any) => runLayLiability + ((b.odd-1)*b.stake),0);    
@@ -79,12 +81,6 @@ export class ExpoDetailsComponent implements OnInit {
   }
 
 
-
-  showPendingRunMoney(marketId:any){
-    return this.data.bets.some((x:any)=> x.market.marketId == marketId && x.stake !== undefined && x.stake !== 0 && x.stake !== null)
-  }
-
-
   returnBetsProfit(bet:any){
     if(bet.selection.betType == 'BACK'){
       return bet.payout - bet.stake;
@@ -97,14 +93,15 @@ export class ExpoDetailsComponent implements OnInit {
     }
   }
 
-  getBetsNumForSelection(selectionId:any){
-    return this.data.bets.filter((x:any)=> x.selection.selectionName == selectionId).length
+  getBetsNumForSelection(selection:any, marketName:any){
+    debugger
+    return this.data.bets.filter((x:any)=> x.selection.selectionName == selection.name && x.selection.marketName == marketName).length
   }
 
   
-  getPlayerNumForSelection(selectionId:any){
-
-    let bets = this.data.bets.filter((x:any)=> x.selection.selectionName == selectionId);
+  getPlayerNumForSelection(selection:any, marketName:any){
+debugger
+    let bets = this.data.bets.filter((x:any)=> x.selection.fullSelectionName == selection.name&& x.selection.marketName == marketName);
     let users = bets.map(function(i:any) {
       return i.userName;
     });
