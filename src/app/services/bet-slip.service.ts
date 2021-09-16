@@ -288,8 +288,9 @@ export class BetSlipService {
     })
   }
 
-  getRunMoney(marketId:any, selectionId:any){ // maybe take run name also ?
+  getRunMoney(marketId:any, marketName:any, selectionId:any, selectionName:any, selectionHandicap:any ){ // maybe take run name also ?
 
+    
     if(this.betsForMarket.length == 0 || this.betsForMarket[0].selection.marketId !== marketId){
       return 0;
     }
@@ -298,10 +299,21 @@ export class BetSlipService {
     // take only the pending bets - no unmatched or settled 
     // debugger
 
-    let runBack = this.betsForMarket.filter((x:any)=>x.selection.selectionId == selectionId && x.selection.betType == 'BACK')    
-    let runLay = this.betsForMarket.filter((x:any)=>x.selection.selectionId == selectionId && x.selection.betType == 'LAY')    
-    let notRunBack = this.betsForMarket.filter((x:any)=>x.selection.selectionId != selectionId && x.selection.betType == 'BACK')    
-    let notRunLay = this.betsForMarket.filter((x:any)=>x.selection.selectionId != selectionId && x.selection.betType == 'LAY')    
+    this.betsForMarket.forEach((x:any) => {
+      debugger
+      let i =x.selection.selectionId;
+      let y = selectionId;
+      let ii = x.selection.fullSelectionName.trim();
+      let yy = (selectionName +' '+ this.returnSecondPartRunName({handicap:selectionHandicap},marketName)).trim()
+
+      let z = i ==y;
+      let zz = ii=yy;
+    });
+
+    let runBack = this.betsForMarket.filter((x:any)=>x.selection.selectionId == selectionId && x.selection.betType == 'BACK' && x.selection.fullSelectionName.trim() == (selectionName +' '+ this.returnSecondPartRunName({handicap:selectionHandicap},marketName)).trim())    
+    let runLay = this.betsForMarket.filter((x:any)=>x.selection.selectionId == selectionId && x.selection.betType == 'LAY' && x.selection.fullSelectionName.trim() == (selectionName +' '+ this.returnSecondPartRunName({handicap:selectionHandicap},marketName)).trim())    
+    let notRunBack = this.betsForMarket.filter((x:any)=> (x.selection.selectionId != selectionId || x.selection.fullSelectionName.trim() !== (selectionName +' '+ this.returnSecondPartRunName({handicap:selectionHandicap},marketName)).trim()) && x.selection.betType == 'BACK')    
+    let notRunLay = this.betsForMarket.filter((x:any)=> (x.selection.selectionId != selectionId || x.selection.fullSelectionName.trim() !== (selectionName +' '+ this.returnSecondPartRunName({handicap:selectionHandicap},marketName)).trim()) && x.selection.betType == 'LAY')    
 
     let runBackProfit = runBack.reduce((runBackProfit:any, b:any) => runBackProfit + (b.payout - b.stake),0);
     let runLayLiability = runLay.reduce((runLayLiability:any, b:any) => runLayLiability + ((b.odd-1)*b.stake),0);    
@@ -316,17 +328,19 @@ export class BetSlipService {
     // return (runBackProfit - runLayLiability) + (notRunLayStake - notRunBackStake);
   }
 
-  getPendingRunMoney(marketId:any, selectionId:any){
-
-    let normalMoney = this.getRunMoney(marketId,selectionId);
+  getPendingRunMoney(marketId:any,marketName:any, selectionId:any, selectionName:any, selectionHandicap:any){
+// debugger
+    let normalMoney = this.getRunMoney(marketId,marketName, selectionId, selectionName, selectionHandicap);
+    
     let marketBets = this.selectedBets.filter(x=> x.market.marketId == marketId && x.stake !== undefined && x.stake !== 0 && x.stake !== null);
     // let marketBetss = this.selectedBets.filter(x=> (x.stake - x.market.run.price));
 
-    let runBack = marketBets.filter((x:any)=>x.market.run.selectionId == selectionId && x.isBack)    
-    let runLay = marketBets.filter((x:any)=>x.market.run.selectionId == selectionId && !x.isBack)    
-    let notRunBack = marketBets.filter((x:any)=>x.market.run.selectionId != selectionId && x.isBack)    
-    let notRunLay = marketBets.filter((x:any)=>x.market.run.selectionId != selectionId && !x.isBack)    
+    let runBack = marketBets.filter((x:any)=>x.market.run.selectionId == selectionId && x.isBack && x.market.run.runnerName.trim() === (selectionName +' '+ this.returnSecondPartRunName({handicap:selectionHandicap},marketName)).trim() )    
+    let runLay = marketBets.filter((x:any)=>x.market.run.selectionId == selectionId && !x.isBack && x.market.run.runnerName.trim() === (selectionName +' '+ this.returnSecondPartRunName({handicap:selectionHandicap},marketName)).trim())    
+    let notRunBack = marketBets.filter((x:any)=> (x.market.run.selectionId != selectionId || x.market.run.runnerName.trim() !== (selectionName +' '+ this.returnSecondPartRunName({handicap:selectionHandicap},marketName)).trim()) && x.isBack)    
+    let notRunLay = marketBets.filter((x:any)=> (x.market.run.selectionId != selectionId || x.market.run.runnerName.trim() !== (selectionName +' '+ this.returnSecondPartRunName({handicap:selectionHandicap},marketName)).trim()) && !x.isBack )    
 
+    
     let runBackProfit = runBack.reduce((runBackProfit:any, b:any) => runBackProfit + (b.stake * b.market.run.price - b.stake),0);
     let runLayLiability = runLay.reduce((runLayLiability:any, b:any) => runLayLiability + ((b.market.run.price-1)*b.stake),0);    
     let notRunBackStake = notRunBack.reduce((notRunBackStake:any, b:any) => notRunBackStake + b.stake,0);
@@ -334,6 +348,7 @@ export class BetSlipService {
 
     let num =  (runBackProfit - runLayLiability) + (notRunLayStake - notRunBackStake);
     num+=(+normalMoney);
+    
     return this.sharedService.formatNumber(num)
   }
 
