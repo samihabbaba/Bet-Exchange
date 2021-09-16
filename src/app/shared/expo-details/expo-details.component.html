@@ -1,14 +1,10 @@
 
-<div *ngFor="let sel of selections">
 
-    name: {{sel}}
-    <!-- amount: {{getRunMoney(sel)}} -->
-</div>
+<div  *ngFor="let market of checkedMarket" class="market-container">
 
-
-<div  *ngFor="let market of checkedMarket">
-
-  for market : {{market.name}}  - <span (click)="this.openBetInfo(market.name)"> [btn] show bets [btn] </span>
+  <div class="market-name-container clickable" (click)="this.openBetInfo(market.name)">
+    {{market.name}}  
+  </div>
 
     <table style="width: 60vw;  overflow-y: scroll; max-height: 200px;">
         <tr>
