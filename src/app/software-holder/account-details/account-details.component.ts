@@ -513,7 +513,8 @@ export class AccountDetailsComponent implements OnInit {
  
       debugger
      const dialogRef = this.dialog.open(ExpoDetailsComponent,{
-       data:obj
+       data:obj,
+       maxHeight: '90vh'
      });
      dialogRef.afterClosed().subscribe((result) => {
        console.log(`Dialog result: ${result}`);

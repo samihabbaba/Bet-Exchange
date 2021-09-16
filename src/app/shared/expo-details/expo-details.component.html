@@ -1,26 +1,29 @@
-<p>expo-details works!</p>
-
-
 
 <div *ngFor="let sel of selections">
 
     name: {{sel}}
-    amount: {{getRunMoney(sel)}}
+    <!-- amount: {{getRunMoney(sel)}} -->
 </div>
 
 
+<div  *ngFor="let market of checkedMarket">
 
-<table style="width: 60vw; height: 40vh;">
-    <tr>
-      <th>Selection</th>
-      <th>Exposure</th>
-      <th>Bets #</th>
-      <th>Players #</th>
-    </tr>
-    <tr  *ngFor="let sel of selections">
-      <td>{{sel}}</td>
-      <td>{{getRunMoney(sel)}}</td>
-      <td>{{getBetsNumForSelection(sel)}}</td>
-      <td>{{getPlayerNumForSelection(sel)}}</td>
-    </tr>
-  </table>
+  for market : {{market.name}}  - [btn] show bets [btn]
+
+    <table style="width: 60vw;  overflow-y: scroll; max-height: 200px;">
+        <tr>
+          <th>Selection</th>
+          <th>Exposure</th>
+          <th>Bets #</th>
+          <th>Players #</th>
+        </tr>
+        <tr  *ngFor="let sel of market.selections">
+          <td>{{sel.name}}</td>
+          <td>{{getRunMoney(market.name, sel.id, sel.name)}}</td>
+          <td>{{getBetsNumForSelection(sel)}}</td>
+          <td>{{getPlayerNumForSelection(sel)}}</td>
+        </tr>
+      </table>
+
+</div>
+

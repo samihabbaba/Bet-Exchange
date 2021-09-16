@@ -14,11 +14,33 @@ export class ExpoDetailsComponent implements OnInit {
   public sharedService:SharedFunctionsService, private dataService:DataService) { }
 
   selections = [];
+  checkedMarket:any = [];
   ngOnInit(): void {
     debugger
     this.data
+    debugger
+
     this.selections = this.data.bets[0].selection.runnerNames;
 
+    this.data.bets.forEach((bet:any) => {
+      if(!this.checkedMarket.some((x:any)=> x.name === bet.selection.marketName)){
+        let marketName = bet.selection.marketName
+        let selectionsList:any = []
+        bet.selection.runners.forEach((run:any) => {
+          selectionsList.push({
+            id:run.selectionId,
+            name:run.runnerName+' '+this.returnSecondPartRunName(run,marketName)
+          })
+        })
+        
+        this.checkedMarket.push({
+          name:marketName,
+          selections:selectionsList
+        })
+
+
+      }
+    });
     debugger
   }
 
@@ -26,22 +48,23 @@ export class ExpoDetailsComponent implements OnInit {
 
 
 
-  getRunMoney( selectionId:any){ // maybe take run name also ?
 
-    // debugger
-    // if(this.betsForMarket.length == 0 || this.betsForMarket[0].selection.marketId !== marketId){
+
+  getRunMoney( marketName:any, selectionId:any, selectionName:any){ // maybe take run name also ?
+
+    
+    // if(this.data.bets.length == 0 || this.data.bets[0].selection.marketId !== marketId){
     //   return 0;
     // }
-
     // how much each run will cost, either as winning money or losing
     // get all events for the user with the needed market id
     // take only the pending bets - no unmatched or settled 
     // debugger
-
-    let runBack = this.data.bets.filter((x:any)=>x.selection.selectionName == selectionId && x.selection.betType == 'BACK')    
-    let runLay = this.data.bets.filter((x:any)=>x.selection.selectionName == selectionId && x.selection.betType == 'LAY')    
-    let notRunBack = this.data.bets.filter((x:any)=>x.selection.selectionName != selectionId && x.selection.betType == 'BACK')    
-    let notRunLay = this.data.bets.filter((x:any)=>x.selection.selectionName != selectionId && x.selection.betType == 'LAY')    
+    
+    let runBack = this.data.bets.filter((x:any)=>x.selection.selectionId == selectionId && x.selection.betType == 'BACK' && x.selection.fullSelectionName.trim() == selectionName.trim())    
+    let runLay = this.data.bets.filter((x:any)=>x.selection.selectionId == selectionId && x.selection.betType == 'LAY' && x.selection.fullSelectionName.trim() == selectionName.trim())    
+    let notRunBack = this.data.bets.filter((x:any)=> (x.selection.selectionId != selectionId || x.selection.fullSelectionName.trim() !== selectionName) && x.selection.betType == 'BACK')    
+    let notRunLay = this.data.bets.filter((x:any)=> (x.selection.selectionId != selectionId || x.selection.fullSelectionName.trim() !== selectionName.trim()) && x.selection.betType == 'LAY')    
 
     let runBackProfit = runBack.reduce((runBackProfit:any, b:any) => runBackProfit + (b.payout - b.stake),0);
     let runLayLiability = runLay.reduce((runLayLiability:any, b:any) => runLayLiability + ((b.odd-1)*b.stake),0);    
@@ -55,6 +78,7 @@ export class ExpoDetailsComponent implements OnInit {
     
     // return (runBackProfit - runLayLiability) + (notRunLayStake - notRunBackStake);
   }
+
 
 
   showPendingRunMoney(marketId:any){
@@ -90,6 +114,27 @@ export class ExpoDetailsComponent implements OnInit {
     let uniq = [...new Set(users)];
 
     return uniq.length;
+  }
+
+  returnSecondPartRunName(run:any, marketName:string):any{
+
+    let showSign = marketName.toLowerCase().includes('handicap');
+
+    if(run.handicap){
+      let num = +run.handicap;
+      if(num.toString().includes('.75') || num.toString().includes('.25')){
+        if(!num.toString().includes('-') && showSign){
+          return '+'+(num -0.25) + ' & ' + '+'+(num +0.25)
+        } else{
+          return (num -0.25) + ' & ' + (num +0.25)
+        }
+      }else{
+        return num;
+      }
+    }
+    else{
+      return '';
+    }
   }
 
 }
