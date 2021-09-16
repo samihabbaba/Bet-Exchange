@@ -8,7 +8,7 @@
 
 <div  *ngFor="let market of checkedMarket">
 
-  for market : {{market.name}}  - [btn] show bets [btn]
+  for market : {{market.name}}  - <span (click)="this.openBetInfo(market.name)"> [btn] show bets [btn] </span>
 
     <table style="width: 60vw;  overflow-y: scroll; max-height: 200px;">
         <tr>

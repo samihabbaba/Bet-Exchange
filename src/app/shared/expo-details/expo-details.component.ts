@@ -1,7 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DataService } from 'src/app/services/data.service';
 import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
+import { BetsInfoComponent } from '../bets-info/bets-info.component';
 
 @Component({
   selector: 'app-expo-details',
@@ -11,14 +12,12 @@ import { SharedFunctionsService } from 'src/app/services/shared-functions.servic
 export class ExpoDetailsComponent implements OnInit {
 
   constructor(    @Inject(MAT_DIALOG_DATA) public data: any,
-  public sharedService:SharedFunctionsService, private dataService:DataService) { }
+  public sharedService:SharedFunctionsService, private dataService:DataService,
+  private dialog: MatDialog) { }
 
   selections = [];
   checkedMarket:any = [];
   ngOnInit(): void {
-    debugger
-    this.data
-    debugger
 
     this.selections = this.data.bets[0].selection.runnerNames;
 
@@ -41,7 +40,7 @@ export class ExpoDetailsComponent implements OnInit {
 
       }
     });
-    debugger
+
   }
 
 
@@ -99,13 +98,12 @@ export class ExpoDetailsComponent implements OnInit {
   }
 
   getBetsNumForSelection(selectionId:any){
-    debugger
     return this.data.bets.filter((x:any)=> x.selection.selectionName == selectionId).length
   }
 
   
   getPlayerNumForSelection(selectionId:any){
-    debugger
+
     let bets = this.data.bets.filter((x:any)=> x.selection.selectionName == selectionId);
     let users = bets.map(function(i:any) {
       return i.userName;
@@ -135,6 +133,17 @@ export class ExpoDetailsComponent implements OnInit {
     else{
       return '';
     }
+  }
+
+  openBetInfo(marketName:any) {
+debugger
+    let obj = this.data.bets.filter((x:any)=> x.selection.marketName == marketName);
+    const dialogRef = this.dialog.open(BetsInfoComponent,{
+      data:obj
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+
+    });
   }
 
 }
