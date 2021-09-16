@@ -153,7 +153,7 @@ export class MainDatatableComponent implements OnInit {
     this.dataService.getAllUsers({
       PageNo:1,
       PageSize:5,
-      rParentId:'',
+      ParentId:'',
       Role:'Admin'
     }).subscribe(resp => {
 

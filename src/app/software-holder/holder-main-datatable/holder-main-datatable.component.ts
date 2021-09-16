@@ -153,7 +153,7 @@ export class HolderMainDatatableComponent implements OnInit {
     this.dataService.getAllUsers({
       PageNo:this.pageIndex,
       PageSize:this.pageSize,
-      rParentId:'',
+      ParentId:'',
       Role:'SuperAdmin'
     }).subscribe(resp => {
 

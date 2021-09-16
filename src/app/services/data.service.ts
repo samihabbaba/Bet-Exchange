@@ -741,6 +741,7 @@ this.layoutService.closeMenuChilds();
 
 
    getAllUsers(pars:any) {
+     debugger
 let query = this.convertObjectToQueryString({
   PageNo:pars.PageNo,
   PageSize:pars.PageSize,

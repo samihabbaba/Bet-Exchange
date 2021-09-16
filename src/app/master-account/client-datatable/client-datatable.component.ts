@@ -64,7 +64,7 @@ export class ClientDatatableComponent implements OnInit {
     this.dataService.getAllUsers({
       PageNo:this.pageIndex,
       PageSize:this.pageSize,
-      rParentId:'',
+      ParentId:'',
       Role:'Client'
     }).subscribe(resp => {
 

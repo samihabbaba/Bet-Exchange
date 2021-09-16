@@ -910,16 +910,18 @@ export class AccountDetailsComponent implements OnInit {
   clientIdSearch = '';
 
   loadSubAccounts(){
-   
+   debugger
     if(this.currentSubId == ''){
       this.currentSubId = this.myUser.id;
     }
     this.dataService.getAllUsers({
       PageNo:this.pageIndexSubs,
       PageSize:this.pageSize,
-      parentId:this.currentSubId,
+      ParentId:this.currentSubId,
       Role:this.roleSearch
     }).subscribe(resp =>{
+   debugger
+
       this.subsData.data = resp.items;
       if(this.resetAccounts){
         this.setAvailableUser();
