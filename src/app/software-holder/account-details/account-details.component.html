@@ -305,9 +305,12 @@
             <td mat-footer-cell *matFooterCellDef> </td>
           </ng-container>
              
+
           <ng-container matColumnDef="eventName">
             <th mat-header-cell *matHeaderCellDef>Event</th>
-            <td mat-cell *matCellDef="let row">{{ row.selection.eventName }}</td>
+            <td mat-cell *matCellDef="let row" (click)="openMarketsForEvent(row)"
+            [ngClass]="{'clickable': this.authService.decodedToken.role === 'Client'}"
+            >{{ row.selection.eventName }}</td>
             <td mat-footer-cell *matFooterCellDef> Totals : </td>
           </ng-container>
              

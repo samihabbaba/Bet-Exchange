@@ -512,6 +512,12 @@ export class AccountDetailsComponent implements OnInit {
     }
 
     openEventDetail(id:any, Live=true){
+      // const url = this.router.serializeUrl(
+      //   this.router.createUrlTree([`/home`])
+      // );
+      // // window.open(url, '_blank').;
+      // this.router.navigate([]).then(result => {  window.open(url, '_blank'); this.dataService.loadMarketsForGameLive(id); });
+      // return
       this.router.navigateByUrl('home').then( x=>
         {
           if(Live){
@@ -525,6 +531,9 @@ export class AccountDetailsComponent implements OnInit {
     }
 
     openMarketsForEvent(obj:any){
+      if(this.authService.decodedToken.role !== 'Client'){
+        return
+      }
         if(obj.selectionType === 'UPCOMING'){
           this.dataService.getUpcomingById(obj.selection.eventId).subscribe(resp => {
         this.openEventDetail(obj.selection.eventId, false)
