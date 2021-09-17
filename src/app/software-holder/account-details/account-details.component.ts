@@ -275,6 +275,13 @@ export class AccountDetailsComponent implements OnInit {
     totalAmount:0
   };
 
+  expoTotals:any = {
+    totalNetLoss:0,
+    totalNetWin:0,
+    totalPossibleLoss:0,
+    totalPossibleWin:0
+  };
+
   constructor(private fb: FormBuilder,  private router: Router, private dataService:DataService
     , public sharedService:SharedFunctionsService, public authService:AuthService, 
     public dialog: MatDialog, private notify:NotificationService, private layoutService:LayoutService, private screenSizeService:ScreenSizeService) {
@@ -378,6 +385,18 @@ export class AccountDetailsComponent implements OnInit {
   loadExpo(){
    
     this.dataService.getExposure(this.pageIndexExpo,this.pageSize,'').subscribe(resp =>{
+      debugger
+      if(resp.stats == null){
+        this.expoTotals = {
+          totalNetLoss:0,
+          totalNetWin:0,
+          totalPossibleLoss:0,
+          totalPossibleWin:0
+        };
+      }
+      else{
+        this.expoTotals = resp.stats
+      }
      this.lengthExpo = resp.pagingInfo.totalCount
      this.bettingExpoData.data = resp.items;
    }, error =>{

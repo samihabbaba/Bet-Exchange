@@ -649,28 +649,28 @@
           <th mat-header-cell *matHeaderCellDef> Totals : </th>
         </ng-container>
         <ng-container matColumnDef="h2">
-          <th mat-header-cell *matHeaderCellDef> h2 </th>
+          <th mat-header-cell *matHeaderCellDef>  </th>
         </ng-container>
         <ng-container matColumnDef="h3">
-          <th mat-header-cell *matHeaderCellDef> h3 </th>
+          <th mat-header-cell *matHeaderCellDef>  </th>
         </ng-container>
         <ng-container matColumnDef="h4">
-          <th mat-header-cell *matHeaderCellDef> h4 </th>
+          <th mat-header-cell *matHeaderCellDef> {{expoTotals.totalPossibleWin}} </th>
         </ng-container>
         <ng-container matColumnDef="h5">
-          <th mat-header-cell *matHeaderCellDef> h5 </th>
+          <th mat-header-cell *matHeaderCellDef> {{expoTotals.totalPossibleLoss}}  </th>
         </ng-container>
         <ng-container matColumnDef="h6">
-          <th mat-header-cell *matHeaderCellDef> h6 </th>
+          <th mat-header-cell *matHeaderCellDef>  </th>
         </ng-container>
         <ng-container matColumnDef="h7">
-          <th mat-header-cell *matHeaderCellDef> h7 </th>
+          <th mat-header-cell *matHeaderCellDef> {{expoTotals.totalNetWin}} </th>
         </ng-container>
         <ng-container matColumnDef="h8">
-          <th mat-header-cell *matHeaderCellDef> h8 </th>
+          <th mat-header-cell *matHeaderCellDef> {{expoTotals.totalNetLoss}} </th>
         </ng-container>
         <ng-container matColumnDef="h9">
-          <th mat-header-cell *matHeaderCellDef> h9 </th>
+          <th mat-header-cell *matHeaderCellDef>  </th>
         </ng-container>
         <!-- 2nd header end -->
 
@@ -679,10 +679,10 @@
             *matHeaderRowDef="displayedColumnsExpo"
           ></tr>
 
-          <!-- <tr
+          <tr
             mat-header-row
             *matHeaderRowDef="['h1','h2','h3','h4','h5','h6','h7','h8','h9']"
-          ></tr> -->
+          ></tr>
 
           <tr
             mat-row
