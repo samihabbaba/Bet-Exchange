@@ -377,9 +377,9 @@ export class SubAccountDetailsComponent implements OnInit {
   }
   
   openPayCommissionDialog(obj:any){
-    if(this.currentUser.unsettledCommission <= 0){
-      return
-    }
+    // if(this.currentUser.unsettledCommission <= 0){
+    //   return
+    // }
     const dialogRef = this.dialog.open(PayCommissionComponent,{
       data:obj,
     });

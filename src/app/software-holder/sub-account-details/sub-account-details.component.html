@@ -72,10 +72,14 @@
       </div>
       
       <div (click)="openPayCommissionDialog(currentUser)" *ngIf="currentUser?.role === 'SuperAdmin' && this.authService.decodedToken.role == 'SoftwareHolder'" >
-        <a matTooltip="Can't settle commission if unsettled commission = 0 " [matTooltipDisabled]="currentUser.unsettledCommission > 0" 
-        [ngClass]="{'clickable blue-text': currentUser.unsettledCommission > 0,
-                      'cant-click': currentUser.unsettledCommission <= 0}">
-                       Settle commission</a>
+        <!-- <a matTooltip="Can't settle commission if unsettled commission = 0 " [matTooltipDisabled]="currentUser.unsettledCommission > 0" 
+          [ngClass]="{'clickable blue-text': currentUser.unsettledCommission > 0,
+                        'cant-click': currentUser.unsettledCommission <= 0}">
+                         Settle commission</a> -->
+                         
+          <a class="clickable blue-text">
+                         Settle commission</a>
+                         
       </div>
 
     </div>
