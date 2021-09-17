@@ -357,8 +357,18 @@ export class AccountDetailsComponent implements OnInit {
     let start = this.sharedService.formatDate(this.rangeBets.controls.start.value.getDate(),this.rangeBets.controls.start.value.getMonth()+1,this.rangeBets.controls.start.value.getFullYear()) 
     let end = this.sharedService.formatDate(endD.getDate(),endD.getMonth()+1,endD.getFullYear(), true) 
     this.dataService.getBets(this.pageIndexBets, this.pageSize, this.userIdForBets, this.parentIdForBets, this.betTypeForBets,'','',this.sportIdForBets,'',start,end, this.onActionDateForBets, this.usernameForBets, this.statusForBets).subscribe(resp =>{
-     this.betTotals = resp.body.stats;
-      this.lengthBets = resp.body.pagingInfo.totalCount
+      if(resp.body.stats === null){
+        this.betTotals = {
+          totalActualWin:0,
+          totalLiability:0,
+          totalNetWin:0,
+          totalStake:0
+        };
+      }else{
+        this.betTotals = resp.body.stats;
+      }
+      
+     this.lengthBets = resp.body.pagingInfo.totalCount
      this.bettingHistoryData.data = resp.body.items;
    }, error =>{
      // redirect somewhere

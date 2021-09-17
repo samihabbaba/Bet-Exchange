@@ -356,7 +356,7 @@
          
           >{{ this.sharedService.formatNumber(row.netWin)  }} </td>
 
-          <td mat-footer-cell *matFooterCellDef>{{ this.sharedService.formatNumber(betTotals.totalNetWin) }}</td>
+          <td mat-footer-cell *matFooterCellDef>{{ this.sharedService.formatNumber(betTotals?.totalNetWin) }}</td>
         </ng-container>
 
         
@@ -367,7 +367,7 @@
                       'loss-money': row.actualWin < 0}"
           >{{ this.sharedService.formatNumber(row.actualWin)  }}  </td>
 
-          <td mat-footer-cell *matFooterCellDef>{{ this.sharedService.formatNumber(betTotals.totalActualWin)}}</td>
+          <td mat-footer-cell *matFooterCellDef>{{ this.sharedService.formatNumber(betTotals?.totalActualWin)}}</td>
         </ng-container>
 
         
@@ -470,10 +470,10 @@
           <th mat-header-cell *matHeaderCellDef>  </th>
         </ng-container>
         <ng-container matColumnDef="h6">
-          <th mat-header-cell *matHeaderCellDef> {{ this.sharedService.formatNumber(betTotals.totalStake) }} </th>
+          <th mat-header-cell *matHeaderCellDef> {{ this.sharedService.formatNumber(betTotals?.totalStake) }} </th>
         </ng-container>
         <ng-container matColumnDef="h7">
-          <th mat-header-cell *matHeaderCellDef> {{  this.sharedService.formatNumber(betTotals.totalLiability) }} </th>
+          <th mat-header-cell *matHeaderCellDef> {{  this.sharedService.formatNumber(betTotals?.totalLiability) }} </th>
         </ng-container>
         <ng-container matColumnDef="h8">
           <th mat-header-cell *matHeaderCellDef>  </th>
@@ -482,13 +482,13 @@
           <th mat-header-cell *matHeaderCellDef>  </th>
         </ng-container>
         <ng-container matColumnDef="h10">
-          <th mat-header-cell *matHeaderCellDef> {{ this.sharedService.formatNumber(betTotals.totalNetWin) }} </th>
+          <th mat-header-cell *matHeaderCellDef> {{ this.sharedService.formatNumber(betTotals?.totalNetWin) }} </th>
         </ng-container>
         <ng-container matColumnDef="h11">
           <th mat-header-cell *matHeaderCellDef
-          [ngClass]="{'win-money': betTotals.totalActualWin >= 0,
-                      'loss-money': betTotals.totalActualWin < 0}"
-                      > {{ this.sharedService.formatNumber(betTotals.totalActualWin)}} </th>
+          [ngClass]="{'win-money': betTotals?.totalActualWin >= 0,
+                      'loss-money': betTotals?.totalActualWin < 0}"
+                      > {{ this.sharedService.formatNumber(betTotals?.totalActualWin)}} </th>
         </ng-container>
         <ng-container matColumnDef="h12">
           <th mat-header-cell *matHeaderCellDef>  </th>
