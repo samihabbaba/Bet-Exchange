@@ -565,8 +565,8 @@
 
           
           <ng-container matColumnDef="eventName">
-            <th mat-header-cell *matHeaderCellDef>Event Name</th>
-            <td mat-cell *matCellDef="let row" >{{ row.eventName }}</td>
+            <th mat-header-cell *matHeaderCellDef >Event Name</th>
+            <td mat-cell *matCellDef="let row" (click)="openExpoDetail(row)" class="clickable">{{ row.eventName }}</td>
           </ng-container>
           
           <ng-container matColumnDef="betsPlayed">
