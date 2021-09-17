@@ -125,6 +125,7 @@ export class SubAccountDetailsComponent implements OnInit {
     'odd',
     'payout',
     'netWin',
+    'actualWin',
     // 'matchedSize',
     'status',
     'date',
@@ -157,6 +158,20 @@ export class SubAccountDetailsComponent implements OnInit {
 
   userQuestionUpdate = new Subject<string>();
 
+  betTotals:any = {
+    totalActualWin:0,
+    totalLiability:0,
+    totalNetWin:0,
+    totalStake:0
+  };
+  
+  transTotals:any = {
+    totalAmount:0
+  };
+
+  transSubTotals:any = {
+    totalAmount:0
+  };
   
   constructor(private route: ActivatedRoute, private dataService:DataService, private notify:NotificationService,
      public sharedService: SharedFunctionsService, public dialog: MatDialog, public authService:AuthService) {
@@ -215,6 +230,7 @@ export class SubAccountDetailsComponent implements OnInit {
     }
 
      this.dataService.getBets(this.pageIndexBets, this.pageSize, this.userIdForBets, this.parentIdForBets, this.betTypeForBets,'','',this.sportIdForBets,'',start,end, this.onActionDateForBets,this.usernameForBets,this.statusForBets).subscribe(resp =>{
+      this.betTotals = resp.body.stats;
       this.lengthBets = resp.body.pagingInfo.totalCount
       this.bettingHistoryData.data = resp.body.items;
     }, error =>{
@@ -232,7 +248,12 @@ export class SubAccountDetailsComponent implements OnInit {
     let end = this.sharedService.formatDate(endD.getDate(),endD.getMonth()+1,endD.getFullYear(), true) 
 
     this.dataService.getTransactions(this.pageIndexTrans, this.pageSize, this.currentUserId, '', '','', start,end,'',this.transactionType1).subscribe(resp =>{
-
+      if(resp.body.stats == null){
+        this.transTotals.totalAmount = 0;
+      }
+      else{
+        this.transTotals = resp.body.stats
+      }
       this.lengthTrans= resp.body.pagingInfo.totalCount;      
       this.transactionsData.data = resp.body.items;
     }, error =>{
@@ -249,7 +270,12 @@ export class SubAccountDetailsComponent implements OnInit {
     let end = this.sharedService.formatDate(endD.getDate(),endD.getMonth()+1,endD.getFullYear(), true) 
 
     this.dataService.getTransactions(this.pageIndexTransSub, this.pageSize, '', '', '', this.currentUserId, start,end,this.directParentTrans,this.transactionType2).subscribe(resp =>{
-
+      if(resp.body.stats == null){
+        this.transSubTotals.totalAmount = 0;
+      }
+      else{
+        this.transSubTotals = resp.body.stats
+      }
       this.lengthTransSub= resp.body.pagingInfo.totalCount;      
       this.transactionsSubData.data = resp.body.items;
     }, error =>{

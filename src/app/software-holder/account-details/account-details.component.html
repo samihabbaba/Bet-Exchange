@@ -976,7 +976,7 @@
           </ng-container>
 
           <ng-container matColumnDef="amount">
-            <th mat-header-cell *matHeaderCellDef>Amount ( {{transTotals.totalAmount}} )</th>
+            <th mat-header-cell *matHeaderCellDef>Amount ( {{this.sharedService.formatNumber(transTotals.totalAmount)}} )</th>
             <td mat-cell *matCellDef="let row"
             [ngClass]="{'loss-money': row.amount < 0, 'win-money': row.amount >= 0}"
             >{{ this.sharedService.formatNumber(row.amount) }}</td>
@@ -1117,7 +1117,7 @@
           </ng-container>
 
           <ng-container matColumnDef="amount">
-            <th mat-header-cell *matHeaderCellDef>Amount ( {{transSubTotals.totalAmount}} )</th>
+            <th mat-header-cell *matHeaderCellDef>Amount ( {{this.sharedService.formatNumber(transSubTotals.totalAmount)}} )</th>
             <td mat-cell *matCellDef="let row"
             [ngClass]="{'loss-money': row.amount < 0, 'win-money': row.amount >= 0}"
             >{{ this.sharedService.formatNumber(row.amount) }}</td>

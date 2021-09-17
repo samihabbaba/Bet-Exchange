@@ -390,7 +390,6 @@ export class AccountDetailsComponent implements OnInit {
       id = '';
     }
     this.dataService.getTransactions(this.pageIndexTrans, this.pageSize, id, '', '',parentId, start,end,directParent,this.transactionType1 ).subscribe(resp =>{
-      debugger
       if(resp.body.stats == null){
         this.transTotals.totalAmount = 0;
       }
