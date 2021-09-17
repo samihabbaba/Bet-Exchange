@@ -3613,10 +3613,10 @@ th span {
   background-color: white;
 }
 
-.loss-money {
+.loss-money, .lose-bet {
   color: red;
 }
-.win-money {
+.win-money, .win-bet {
   color: green;
 }
 
@@ -3661,4 +3661,27 @@ mat-radio-button {
 
 .blue-text {
   color: blue;
+}
+
+
+.void-bet{
+  color: purple;
+}
+
+.expired-bet{
+  color: grey;
+}
+
+.pending-bet{
+  color: brown;
+  // chocolate
+  // coral
+}
+
+.unmatched-bet{
+  color: darkcyan;
+}
+
+.bold-font{
+  font-weight: bolder;
 }

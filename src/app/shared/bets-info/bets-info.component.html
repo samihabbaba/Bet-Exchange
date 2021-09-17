@@ -64,10 +64,8 @@
           </ng-container>
 
           <ng-container matColumnDef="netWin">
-            <th mat-header-cell *matHeaderCellDef>Net</th>
+            <th mat-header-cell *matHeaderCellDef>Possible net</th>
             <td mat-cell *matCellDef="let row"
-            [ngClass]="{'win-money': row.netWin >= 0,
-                        'loss-money': row.netWin < 0}"
             >{{ this.sharedService.formatNumber(row.netWin)  }}</td>
           </ng-container>
   
@@ -78,7 +76,7 @@
            
           <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef>Status</th>
-            <td mat-cell *matCellDef="let row">{{ row.status }}</td>
+            <td mat-cell *matCellDef="let row"  class="{{row.status.toLowerCase()}}-bet bold-font">{{ row.status }}</td>
           </ng-container>
              
           <ng-container matColumnDef="date">
