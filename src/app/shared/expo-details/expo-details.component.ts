@@ -93,7 +93,8 @@ export class ExpoDetailsComponent implements OnInit {
   }
 
   getBetsNumForSelection(selection:any, marketName:any){
-    return this.data.bets.filter((x:any)=> x.selection.selectionName == selection.name && x.selection.marketName == marketName).length
+    let i = this.data.bets.filter((x:any)=> x.selection.fullSelectionName == selection.name && x.selection.marketName == marketName).length
+    return  i ;
   }
 
   
