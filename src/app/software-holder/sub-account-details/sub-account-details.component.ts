@@ -230,7 +230,16 @@ export class SubAccountDetailsComponent implements OnInit {
     }
 
      this.dataService.getBets(this.pageIndexBets, this.pageSize, this.userIdForBets, this.parentIdForBets, this.betTypeForBets,'','',this.sportIdForBets,'',start,end, this.onActionDateForBets,this.usernameForBets,this.statusForBets).subscribe(resp =>{
-      this.betTotals = resp.body.stats;
+      if(resp.body.stats === null){
+        this.betTotals = {
+          totalActualWin:0,
+          totalLiability:0,
+          totalNetWin:0,
+          totalStake:0
+        };
+      }else{
+        this.betTotals = resp.body.stats;
+      }
       this.lengthBets = resp.body.pagingInfo.totalCount
       this.bettingHistoryData.data = resp.body.items;
     }, error =>{
