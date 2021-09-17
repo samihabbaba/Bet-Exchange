@@ -390,7 +390,13 @@ export class AccountDetailsComponent implements OnInit {
       id = '';
     }
     this.dataService.getTransactions(this.pageIndexTrans, this.pageSize, id, '', '',parentId, start,end,directParent,this.transactionType1 ).subscribe(resp =>{
-      this.transTotals = resp.body.stats
+      debugger
+      if(resp.body.stats == null){
+        this.transTotals.totalAmount = 0;
+      }
+      else{
+        this.transTotals = resp.body.stats
+      }
       this.lengthTrans= resp.body.pagingInfo.totalCount;
       this.transactionsData.data = resp.body.items;
     }, error =>{
@@ -416,7 +422,14 @@ export class AccountDetailsComponent implements OnInit {
     }
 
     this.dataService.getTransactions(this.pageIndexTransSub , this.pageSize, '', '', '',id, start,end,this.directParentTrans, this.transactionType2 ).subscribe(resp =>{
-      this.transSubTotals = resp.body.stats
+     
+     
+      if(resp.body.stats == null){
+        this.transSubTotals.totalAmount = 0;
+      }
+      else{
+        this.transSubTotals = resp.body.stats
+      }
       
       this.lengthTransSub= resp.body.pagingInfo.totalCount;
       this.transactionsSubData.data = resp.body.items;
