@@ -385,7 +385,6 @@ export class AccountDetailsComponent implements OnInit {
   loadExpo(){
    
     this.dataService.getExposure(this.pageIndexExpo,this.pageSize,'').subscribe(resp =>{
-      debugger
       if(resp.stats == null){
         this.expoTotals = {
           totalNetLoss:0,
@@ -531,12 +530,20 @@ export class AccountDetailsComponent implements OnInit {
     }
 
     openEventDetail(id:any, Live=true){
-      // const url = this.router.serializeUrl(
-      //   this.router.createUrlTree([`/home`])
-      // );
-      // // window.open(url, '_blank').;
-      // this.router.navigate([]).then(result => {  window.open(url, '_blank'); this.dataService.loadMarketsForGameLive(id); });
-      // return
+      let urlString = ''
+      if(Live){
+        urlString= 'live/'+id
+      }
+      else{
+        urlString= 'pre/'+id
+      }
+
+      const url = this.router.serializeUrl(
+        this.router.createUrlTree([`/home/${urlString}`])
+      );
+      window.open(url, '_blank');
+
+      return;
       this.router.navigateByUrl('home').then( x=>
         {
           if(Live){

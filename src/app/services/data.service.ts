@@ -442,9 +442,9 @@ export class DataService {
 
   ////// live part
 
-  loadLiveGames() {
+  loadLiveGames(ignoreLoading = false) {
     this.layoutService.closeMenuChilds();
-    if (this.layoutService.isMainLoading()) {
+    if (this.layoutService.isMainLoading() && !ignoreLoading) {
       return;
     } else {
       this.layoutService.startMainLoading();
@@ -514,7 +514,7 @@ export class DataService {
     this.layoutService.displayGameDetails();
 
     this.getLIveById(eventId)
-      .pipe(finalize(() => this.layoutService.stopMainLoading()))
+      // .pipe(finalize(() => this.layoutService.stopMainLoading()))
       .subscribe(
         (resp) => {
 
@@ -529,9 +529,12 @@ export class DataService {
             this.layoutService.displayLiveGames();
             this.noti.info('Can\'t load the requested event at the moment');
           }
+          this.layoutService.stopMainLoading()
         },
         (error) => {
           this.eventDetails.next([]);
+          this.loadLiveGames(true);
+          // this.layoutService.displayLiveGames()
           // add error message here
         }
       );
@@ -595,11 +598,10 @@ export class DataService {
     
   }
 
-  loadPreGamesFromHeader(sportId?:any) {
+  loadPreGamesFromHeader(sportId?:any,  ignoreLoading=false) {
 // return //uncomment here
-
 this.layoutService.closeMenuChilds();
-    if (this.layoutService.isMainLoading()) {
+    if (this.layoutService.isMainLoading()  && !ignoreLoading) {
       return;
     } else {
       this.layoutService.startMainLoading();
@@ -627,7 +629,6 @@ this.layoutService.closeMenuChilds();
         )
       .subscribe(
         (resp) => {
-
           this.layoutService.displayPreGames();
 
           let sorted = resp.body.items/*.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null)*/.sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0)
@@ -642,6 +643,7 @@ this.layoutService.closeMenuChilds();
           this.events.next(result);          
         },
         (error) => {
+
           this.events.next([]);
           // add error message here
         }
@@ -659,7 +661,6 @@ this.layoutService.closeMenuChilds();
     this.layoutService.displayGameDetails();
 
     this.getUpcomingById(eventId)
-      .pipe(finalize(() => this.layoutService.stopMainLoading()))
       .subscribe(
         (resp) => {
           if(resp.body.markets.length > 0){
@@ -670,9 +671,12 @@ this.layoutService.closeMenuChilds();
             this.layoutService.displayPreGames();
             this.noti.info('Can\'t load the requested event at the moment');
           }
+          this.layoutService.stopMainLoading()
         },
         (error) => {
           this.eventDetails.next([]);
+          this.loadPreGamesFromHeader('',true);
+          // this.layoutService.displayPreGames()
           // add error message here
         }
       );

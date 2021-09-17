@@ -22,7 +22,8 @@ export class AppComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     // private dataService: DataService,
     private layoutService: LayoutService,
-    public authService: AuthService
+    public authService: AuthService,
+    private route: ActivatedRoute
   ) {}
   ngOnInit(): void {
     this.initializeSubscriptions();
@@ -81,4 +82,8 @@ export class AppComponent implements OnInit {
     //   return false;
     // }
   }
+
+
+  private sub: any;
+
 }

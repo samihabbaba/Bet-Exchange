@@ -7,7 +7,7 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { fadeMenuAndSlip } from 'src/app/animations/animation';
 import { AuthService } from 'src/app/services/auth.service';
@@ -18,6 +18,7 @@ import {
   ScreenSizeService,
 } from 'src/app/services/screen-size.service';
 import { SharedFunctionsService } from 'src/app/services/shared-functions.service';
+import {Location} from '@angular/common'; 
 
 @Component({
   selector: 'app-main-content',
@@ -53,7 +54,9 @@ export class MainContentComponent implements OnInit {
     private screenSizeService: ScreenSizeService,
     private layoutService: LayoutService,
     private authService:AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
+    private location: Location
   ) {
     this.initializeSubscriptions();
     // let redirect = this.authService.redirectToPage();
@@ -62,7 +65,11 @@ export class MainContentComponent implements OnInit {
     // }
   }
 
+  
+  
+
   ngOnInit(): void {
+    this.checkIfEventRoute();
     this.screenObserver$ = this.screenSizeService.currentScreenSize.subscribe(
       this.isScreenSmall.bind(this)
     );
@@ -129,4 +136,29 @@ export class MainContentComponent implements OnInit {
   closeSlip() {
     this.displayBetSlip = false;
   }
+
+
+  private sub: any;
+
+  checkIfEventRoute(){
+
+    this.sub = this.route.params.subscribe(params => {
+
+     let type = params['type']; 
+     let event = params['eventId']; // (+) converts string 'id' to a number
+	 
+
+     if(type == 'live'){
+      this.dataService.loadMarketsForGameLive(event);
+    }
+    else if(type == 'pre'){
+      this.dataService.loadMarketsForGamePre(event);
+    }
+
+    this.location.replaceState("/home");
+
+
+   })
+  }
+
 }

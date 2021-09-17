@@ -14,7 +14,7 @@ import { AccountDetailsComponent } from './software-holder/account-details/accou
 const routes: Routes = [
   { path: '', component: MainContentComponent, canActivate: [RouteGuard] },
   { path: 'home', component: MainContentComponent, canActivate: [RouteGuard] },
-  // { path: 'home/:type/:eventId', component: MainContentComponent, canActivate: [RouteGuard] },
+  { path: 'home/:type/:eventId', component: MainContentComponent, canActivate: [RouteGuard] },
   { path: 'profile' , component: AccountDetailsComponent, canActivate: [RouteGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'software-holder', loadChildren: () => import('./software-holder/software-holder.module').then(m => m.SoftwareHolderModule), canActivate: [SoftwareHolderGuard] },
