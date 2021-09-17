@@ -726,6 +726,7 @@ export class AccountDetailsComponent implements OnInit {
 
     const dialogRef = this.dialog.open(AddBettingRuleComponent, {
       data:dataToSend,
+      width: '290vh'
     });
     dialogRef.afterClosed().subscribe(async (result) => {
       console.log(`Dialog result: ${result}`);
