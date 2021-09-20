@@ -18,6 +18,12 @@ export class SharedFunctionsService {
 
    currencyList = ['TRY', 'USD', 'EUR', 'GBP'];
    sports:any = []
+   sportToMainMarket = [{ id:'1',main: ['Match Odds'] },{ id:'26420387',main: ['Fight Result'] },{ id:'7524',main: ['Moneyline'] },{ id:'7522',main: ['Moneyline'] }
+   ,{ id:'2',main: ['Match Odds'] },{ id:'6423',main: ['Moneyline'] },{ id:'6422',main: ['Match Winner','Match Odds'] },{ id:'5',main: ['Match Odds'] }
+   ,{ id:'1477',main: ['Match Odds','Regular Time Match Odds'] },{ id:'3503',main: ['Match Odds'] },{ id:'6',main: ['Match Odds'] },{ id:'7511',main: ['Moneyline'] }
+   ,{ id:'11',main: [] },{ id:'8',main: [] },{ id:'7',main: [] },{ id:'61420',main: [] }
+   ,{ id:'606611',main: [] },{ id:'4339',main: [] },{ id:'4',main: ['Match Odds'] },{ id:'3',main: [] }
+   ,{ id:'27454571',main: ['Match Odds'] },{ id:'2378961',main: [] },{ id:'2152880',main: [] },{ id:'10',main: [] }]
 
    strictedSports =[
     'Special Bets',
@@ -506,5 +512,36 @@ export class SharedFunctionsService {
       return null
     }
   }
+
+  displayOdds(event:any){
+    
+   let eventType = ''
+   let marketName = ''
+    try{
+      event.id;
+      event.markets[0]?.id;
+      event.markets[0]?.runners[0]?.selectionId;
+
+      eventType = event.eventType.id;
+      marketName = event.markets[0].name
+    }
+    catch(ex){
+      return false
+    }
+
+    if(eventType && eventType !=='' && marketName && marketName !==''){
+      let index = this.sportToMainMarket.findIndex(x=> x.id == eventType);
+      if(index !== -1 && this.sportToMainMarket[index].main.some(x=> x == marketName)){
+        return true
+      }
+      else{
+        return false;
+      }
+    }
+    else{
+      return false
+    }
+  }
+
 }
 

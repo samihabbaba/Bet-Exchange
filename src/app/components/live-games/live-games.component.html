@@ -48,7 +48,7 @@
     </div>
 
 
-    <div class="odds" (click)="$event.stopPropagation()" *ngIf="event.markets[0] !== undefined">
+    <div class="odds" (click)="$event.stopPropagation()" *ngIf="event.markets[0] !== undefined && this.sharedService.displayOdds(event)">
      
      
       <div class="odds-1">
@@ -521,7 +521,7 @@
     </div>
 
 
-    <div class="odds" (click)="$event.stopPropagation()" *ngIf="event.markets[0] === undefined">
+    <div class="odds" (click)="$event.stopPropagation()" *ngIf="event.markets[0] === undefined || !this.sharedService.displayOdds(event)">
       <div class="odds-1">
         <div
           class="blue-square"
