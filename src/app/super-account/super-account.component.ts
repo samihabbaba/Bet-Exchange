@@ -21,6 +21,13 @@ export class SuperAccountComponent implements OnInit {
   }
   
   goToLoginPage() {
-    this.router.navigateByUrl('login');
+    // this.router.navigateByUrl('login');
+
+    this.authService.logut();
+
+    this.router.navigate(['login'])
+    .then(() => {
+      window.location.reload();
+    });
   }
 }
