@@ -30,8 +30,8 @@ export class LiveFeedService {
 		this._connection = null;
 		// this.connectToLiveFeed();
 		// use the below if the connection is authorized, with working on it from authServices and so on
-
-		if(localStorage.getItem('Token')){
+debugger
+		if(localStorage.getItem('token')){
 			this.connectToLiveFeed();
 		}
 	}
