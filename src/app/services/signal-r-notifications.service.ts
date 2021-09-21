@@ -28,7 +28,8 @@ export class SignalRNotificationsService {
 
 	constructor(public router: Router) {
    this._connection = null;
-    if(localStorage.getItem('token')){
+
+   if(localStorage.getItem('token')){
       this.connectToNotificationsHub();
     }
 	}
@@ -58,7 +59,7 @@ export class SignalRNotificationsService {
         {
           this.startNotificationListen();
           this._connection.invoke("GetMyId")
-            .then((id:any) => console.log("My ID from invokation is " + id))
+            .then((id:any) => {/*console.log("My ID from invokation is " + id)*/})
             .catch(console.error);
         }
       })

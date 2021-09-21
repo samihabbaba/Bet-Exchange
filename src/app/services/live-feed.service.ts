@@ -28,12 +28,12 @@ export class LiveFeedService {
 
 	constructor() {
 		this._connection = null;
-		this.connectToLiveFeed();
+		// this.connectToLiveFeed();
 		// use the below if the connection is authorized, with working on it from authServices and so on
 
-		// if(localStorage.getItem('Token')){
-		// 	this.connectToLiveFeed();
-		// }
+		if(localStorage.getItem('Token')){
+			this.connectToLiveFeed();
+		}
 	}
   
 	connectToLiveFeed(){
@@ -114,7 +114,12 @@ export class LiveFeedService {
   }
 
 	startLiveUpdate(){
-		this.stopLiveUpdate();
+		try{
+			this.stopLiveUpdate();
+		}
+		catch(ex){
+
+		}
 		this._connection.on("liveUpdate", this.onLiveUpdate.bind(this));
 	}
 	

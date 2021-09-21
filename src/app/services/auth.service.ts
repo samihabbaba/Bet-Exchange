@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { SignalRNotificationsService } from './signal-r-notifications.service';
 import { SharedFunctionsService } from './shared-functions.service';
 import { BetSlipService } from './bet-slip.service';
+import { LiveFeedService } from './live-feed.service';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,8 @@ export class AuthService {
     private signalRNoti:SignalRNotificationsService,
     private notificationService: NotificationService,
     private sharedService:SharedFunctionsService,
-    private betSlipService:BetSlipService
+    private betSlipService:BetSlipService,
+    private liveFeedService:LiveFeedService
     ) { }
 
   
@@ -171,7 +173,7 @@ export class AuthService {
 
   loginConnections(){
     this.signalRNoti.connectToNotificationsHub()
-
+    this.liveFeedService.connectToLiveFeed();
     this.sharedService.loadSports();
   }
 
