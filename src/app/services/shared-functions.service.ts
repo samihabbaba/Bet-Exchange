@@ -47,9 +47,11 @@ export class SharedFunctionsService {
    }
 
   loadSports(){
-    this.dataService.getSports().subscribe(resp => {
-      this.sports = resp.body;
-    })
+    if(localStorage.getItem('token')){
+      this.dataService.getSports().subscribe(resp => {
+        this.sports = resp.body;
+      })
+    }
   }
 
   returnTeamNameFromEvent(eventName:string, isHome = true){

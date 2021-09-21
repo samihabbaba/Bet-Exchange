@@ -14,7 +14,8 @@ type GroupActionResult = { IsAddedToGroup: boolean; ErrorMessages: string[] };
   providedIn: 'root'
 })
 export class LiveFeedService {
-	private _connection: HubConnection;
+	// private _connection: HubConnection;
+	private _connection: any;
 	private _currentGroup?: string;
   
   events = new BehaviorSubject<any>(null);
@@ -26,7 +27,18 @@ export class LiveFeedService {
 
 
 	constructor() {
-		this._connection = new HubConnectionBuilder()
+		this._connection = null;
+		this.connectToLiveFeed();
+		// use the below if the connection is authorized, with working on it from authServices and so on
+
+		// if(localStorage.getItem('Token')){
+		// 	this.connectToLiveFeed();
+		// }
+	}
+  
+	connectToLiveFeed(){
+
+			this._connection = new HubConnectionBuilder()
 			.withUrl(signalrEndpoint, {
 				withCredentials: true,
 				// headers: { authorization: "39e7311b3a0a4b25882a4811afed53fc" },
@@ -37,21 +49,22 @@ export class LiveFeedService {
 		this._connection
 			.start()
 			.then(() => {
-        this._connection.invoke("AssignToGroup", "live-update"); 
-        console.log("SignalR connected");
-      })
-      .catch((err) => { console.log("SIGMA", err)})
+		this._connection.invoke("AssignToGroup", "live-update"); 
+		console.log("SignalR connected");
+	})
+	.catch((err:any) => { console.log("SIGMA", err)})
 		// this._connection.on("liveUpdate", this.onLiveUpdate.bind(this));
 		this._connection.on("liveGameUpdate", this.onLiveGameUpdate.bind(this));
 
 
-    // this._connection.onclose(() => { 
+		// this._connection.onclose(() => { 
 
-    //   this.reconnect();
+		//   this.reconnect();
 
-    // });
+		// });
+
 	}
-  
+
   async reconnect(){
     await this.delay(3000);
         this._connection.start().then(() => {

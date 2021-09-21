@@ -81,11 +81,12 @@ export class AuthService {
           
           let dataLoaded = await this.initializeData();
           if(dataLoaded){
+            this.loginConnections();
             this.logInSuccess = true;
             this.route.navigateByUrl('home')
             .then(async () =>  {
-              await this.delay(300);
-              window.location.reload();
+              // await this.delay(300);
+              // window.location.reload();
             });
           }else{
             this.logInSuccess = false;
@@ -129,7 +130,7 @@ export class AuthService {
     Authorization: 'Bearer ',
   });
 
-  this.signalRNoti.stopNotificationListen();
+  // this.signalRNoti.stopNotificationListen();
     if(routeAfter){
       this.route.navigateByUrl('login')
     }
@@ -147,7 +148,7 @@ export class AuthService {
 
   async initializeData(){
 
-    this.signalRNoti.startNotificationListen();
+    // this.signalRNoti.startNotificationListen();
     this.loadOpenBets();
 
     return new Promise((resolve, reject) => {
@@ -166,6 +167,12 @@ export class AuthService {
       });
 
    });
+  }
+
+  loginConnections(){
+    this.signalRNoti.connectToNotificationsHub()
+
+    this.sharedService.loadSports();
   }
 
   setDecodedToken(){

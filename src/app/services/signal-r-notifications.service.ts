@@ -19,13 +19,25 @@ export interface NotificationPayload {
   providedIn: 'root'
 })
 export class SignalRNotificationsService {
-	private _connection: HubConnection;
+	private _connection: any;
+	// private _connection: HubConnection;
 
   recivedNotification = new BehaviorSubject<any>(null);
   notification = this.recivedNotification.asObservable();
   
 
 	constructor(public router: Router) {
+   this._connection = null;
+    if(localStorage.getItem('token')){
+      this.connectToNotificationsHub();
+    }
+	}
+
+  delay(ms: number) {
+        return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
+  connectToNotificationsHub(){
     let token:any = localStorage.getItem('token');
      
 		this._connection = new HubConnectionBuilder()
@@ -46,19 +58,14 @@ export class SignalRNotificationsService {
         {
           this.startNotificationListen();
           this._connection.invoke("GetMyId")
-            .then(id => console.log("My ID from invokation is " + id))
+            .then((id:any) => console.log("My ID from invokation is " + id))
             .catch(console.error);
         }
       })
-      .catch((err) => {
+      .catch((err:any) => {
          console.log("SIGMA", err)})
       
-	}
-
-  delay(ms: number) {
-        return new Promise( resolve => setTimeout(resolve, ms) );
   }
-
 
   private onNotificationReceive(noti:NotificationPayload) {
 
