@@ -17,7 +17,7 @@
       <mat-button-toggle value="bettingHistory" [checked]="false"
       >Betting History</mat-button-toggle>
 
-      <mat-button-toggle value="bettingExposure" [checked]="false" *ngIf="this.authService.decodedToken.role !== undefined ||this.authService.decodedToken.role !== 'SoftwareHolder'||this.authService.decodedToken.role !== 'Client'"
+      <mat-button-toggle value="bettingExposure" [checked]="false" *ngIf="this.authService.decodedToken.role !== undefined && this.authService.decodedToken.role !== 'SoftwareHolder'&&this.authService.decodedToken.role !== 'Client'"
       >Bet Exposure</mat-button-toggle>
 
       
