@@ -74,6 +74,8 @@ export class LiveGamesComponent implements OnInit, OnDestroy {
 
   }
 
-  
+  playedEvent(ev:any){
+    return this.betSlipService.currentOpenBets.some(x=>x.selection.eventId == ev)
+  }
 
 }

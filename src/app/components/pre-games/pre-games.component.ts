@@ -58,7 +58,9 @@ export class PreGamesComponent implements OnInit,OnDestroy {
 
   }
 
-
+  playedEvent(ev:any){
+    return this.betSlipService.currentOpenBets.some(x=>x.selection.eventId == ev)
+  }
 
   goToEventDetails(eventId:any) {
     this.dataService.loadMarketsForGamePre(eventId);

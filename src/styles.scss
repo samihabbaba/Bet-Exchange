@@ -3685,3 +3685,8 @@ mat-radio-button {
 .bold-font{
   font-weight: bolder;
 }
+
+.played-event {
+  // background-color: #e6e3e32d;
+  background-color: var(--border-color)
+}

@@ -24,6 +24,7 @@
       class="main-item"
       *ngFor="let event of sport.events"
       (click)="this.goToEventDetails(event.id)"
+      [ngClass]="{'played-event': playedEvent(event.id)}"
     >
       <!-- <fa-icon [icon]="fontAwesomeIcons.exit" class="main-icon"></fa-icon> -->
       <div class="date-time">
