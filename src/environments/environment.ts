@@ -2,6 +2,8 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+// let mainUrl = 'https://localhost:44325/'
+let mainUrl = 'https://api.xexchange.xyz/'
 export const environment = {
   production: false,
   apiKey: "39e7311b3a0a4b25882a4811afed53fc",   // for the socket/signlaR
@@ -9,11 +11,9 @@ export const environment = {
   // signalrEndpoint: 'https://socket.vebobet.xyz/hubs/datafeed'
 
   // apiUrl: 'https://api.xexchange.xyz/',
-  apiUrl: 'https://localhost:44325/',
-  // signalrEndpoint: 'https://api.xexchange.xyz/hubs/datafeed',
-  // notificationsEndpoint: 'https://api.xexchange.xyz/hubs/notifications'
-  signalrEndpoint: 'https://localhost:44325/hubs/datafeed',
-  notificationsEndpoint: 'https://localhost:44325/hubs/notifications'
+  apiUrl: `${mainUrl}`,
+  signalrEndpoint: `${mainUrl}hubs/datafeed`,
+  notificationsEndpoint: `${mainUrl}hubs/notifications`
 
   
 };
