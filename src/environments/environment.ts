@@ -8,9 +8,14 @@ export const environment = {
   // apiUrl: 'https://socket.vebobet.xyz/',
   // signalrEndpoint: 'https://socket.vebobet.xyz/hubs/datafeed'
 
-  apiUrl: 'https://api.xexchange.xyz/',
-  signalrEndpoint: 'https://api.xexchange.xyz/hubs/datafeed',
-  notificationsEndpoint: 'https://api.xexchange.xyz/hubs/notifications'
+  // apiUrl: 'https://api.xexchange.xyz/',
+  apiUrl: 'https://localhost:44325/',
+  // signalrEndpoint: 'https://api.xexchange.xyz/hubs/datafeed',
+  // notificationsEndpoint: 'https://api.xexchange.xyz/hubs/notifications'
+  signalrEndpoint: 'https://localhost:44325/hubs/datafeed',
+  notificationsEndpoint: 'https://localhost:44325/hubs/notifications'
+
+  
 };
 
 /*
