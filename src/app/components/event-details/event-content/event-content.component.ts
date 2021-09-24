@@ -1,5 +1,5 @@
 import { flatten } from '@angular/compiler';
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { BetSlipService } from 'src/app/services/bet-slip.service';
@@ -77,7 +77,8 @@ export class EventContentComponent implements OnInit {
     private dataService: DataService,
     public sharedService: SharedFunctionsService,
     private screenSizeService: ScreenSizeService,
-    public betSlipService: BetSlipService
+    public betSlipService: BetSlipService,
+    private ref: ChangeDetectorRef
   ) {
     this.screenObserver$ = this.screenSizeService.currentScreenSize.subscribe(
       this.setTabs.bind(this)
@@ -316,6 +317,8 @@ export class EventContentComponent implements OnInit {
       this.copyOfMarkets = [];
     }
     this.setTopMarket(true);
+    
+    this.ref.markForCheck();
   }
 
 

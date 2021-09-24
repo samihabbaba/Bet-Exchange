@@ -29,7 +29,8 @@ export class LiveGamesComponent implements OnInit, OnDestroy {
         // Use `key` and `value`
     }
       this.games = arrOfGames;
-      
+      this.ref.markForCheck();
+
     });
   }
 

@@ -21,6 +21,7 @@ export class NotificationService {
       
       else if(noti.type == 'BET_MATCHED'){
         this.info(noti.message);
+        this.authService.updateCurrentBalance();
       }
 
       else if(noti.type == 'BET_VOIDED'){
