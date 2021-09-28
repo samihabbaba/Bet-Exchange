@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { DebugElement, Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { BetSlip } from '../models/bet-slip';
@@ -14,7 +15,10 @@ export class BetSlipService {
   selectedBets: BetSlip[] = [];
   currentOpenBets: any[] = [];
   minStakeForBet = 1;
+  // currentOpenTab = 'Singles'
 
+  openTab = new BehaviorSubject<any>('Singles');
+  currentOpenTab = this.openTab.asObservable();
 
   openBetsToView: any[] = [];
   openBetsToViewMatched: any[] = [];
@@ -55,6 +59,7 @@ export class BetSlipService {
   ) {
 // debugger
 
+    this.openTab.next('Singles')
 
     if(!this.validOdd(market, runners, run) || !this.sharedService.marketAvailable(market)){
       return;
@@ -359,6 +364,10 @@ export class BetSlipService {
 
   }
 
+
+  handleTabClick(value:string){
+    this.openTab.next(value)
+  }
   
 
   ///////////////// API requests ////////////////////////

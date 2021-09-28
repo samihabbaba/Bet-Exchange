@@ -29,7 +29,11 @@ export class BetSlipComponent implements OnInit {
     public sharedFunctionsService: SharedFunctionsService,
     private notificationService: NotificationService, 
     private dialog: MatDialog
-  ) {}
+  ) {
+    this.betSlipService.currentOpenTab.subscribe(val => {
+      this.tabToDisplay = val
+    })
+  }
 
   stakeOptions = [10, 20, 50, 100, 200, 500];
 

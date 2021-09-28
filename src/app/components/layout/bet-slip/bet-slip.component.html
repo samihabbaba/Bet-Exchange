@@ -6,10 +6,11 @@
   <div class="bet-view">
     <div class="bet-slip-tabs">
       <div
-        class="singles active"
+        class="singles"
         value="singles"
+        [ngClass]="{'active': this.tabToDisplay == 'Singles'}"
         #singles
-        (click)="handleTabClick($event)"
+        (click)="betSlipService.handleTabClick('Singles'); $event.stopPropagation()"
       >
         <h1>
           Singles
@@ -23,8 +24,9 @@
       <div
         class="open-bets"
         value="open-bets"
+        [ngClass]="{'active': this.tabToDisplay == 'Open'}"
         #openBets
-        (click)="handleTabClick($event); $event.stopPropagation()"
+        (click)="betSlipService.handleTabClick('Open'); $event.stopPropagation()"
       >
         <h1>Open Bets</h1>
       </div>
