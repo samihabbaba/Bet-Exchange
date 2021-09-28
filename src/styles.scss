@@ -1165,15 +1165,15 @@ body {
       border: none;
 
       height: 25px;
-      &::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-      }
+      // &::-webkit-inner-spin-button {
+      //   -webkit-appearance: none;
+      //   margin: 0;
+      // }
 
-      &::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-      }
+      // &::-webkit-outer-spin-button {
+      //   -webkit-appearance: none;
+      //   margin: 0;
+      // }
 
       &:focus {
         border: 1px solid var(--primary);
