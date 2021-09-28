@@ -120,6 +120,81 @@
         </mat-select>
       </mat-form-field>
 
+
+      
+
+
+      <!-- start - matched bets -->
+
+      <div
+        class="matched-bets"
+        *ngIf="this.betSlipService.openBetsToViewMatched.length > 0"
+      >
+        <span>PLACED (MATCHED)</span>
+      </div>
+
+      <div
+        class="bet-slip-info-line"
+        *ngIf="this.betSlipService.openBetsToViewMatched.length > 0"
+      >
+        <span>
+          <p>Stake</p>
+          <p>Odds</p>
+          <p>Profit</p>
+        </span>
+      </div>
+
+      <div
+        *ngFor="
+          let openBet of this.betSlipService.openBetsToViewMatched;
+          let i = index
+        "
+      >
+        <!-- openBet.status == 'PENDING' -->
+        <div
+          class="open-bets-placed-match"
+          [ngClass]="{
+            'back-matched': openBet.selection.betType == 'BACK',
+            'lay-matched': openBet.selection.betType == 'LAY'
+          }"
+        >
+          <div class="matched-bet-title" (click)="openBetDetail(openBet)">
+            <!-- <h1>{{ openBet.selection.eventName }}</h1> -->
+            <h2>
+              {{ openBet.selection.marketName }}
+            </h2>
+
+            <h3>
+              {{ openBet.selection.fullSelectionName }}
+            </h3>
+          </div>
+          <div class="matched-bet-odds">
+            <span matTooltip="Stake" [matTooltipPosition]="'above'"
+              ><p>
+                {{ this.sharedFunctionsService.formatNumber(openBet.stake) }}
+              </p>
+            </span>
+            <span matTooltip="Odds" [matTooltipPosition]="'above'"
+              ><p>
+                {{ this.sharedFunctionsService.formatNumber(openBet.odd) }}
+              </p>
+            </span>
+            <!-- <span><p>{{ this.sharedFunctionsService.formatNumber( openBet.payout) }}</p> </span> -->
+            <span matTooltip="Profit" [matTooltipPosition]="'above'"
+              ><p>
+                {{
+                  this.sharedFunctionsService.formatNumber(
+                    this.betSlipService.returnBetsProfit(openBet)
+                  )
+                }}
+              </p>
+            </span>
+          </div>
+        </div>
+      </div>
+      <!-- end - matched bets -->
+
+      <!-- start - unmatched bets -->
       <div
         class="unmatched-bets"
         *ngIf="this.betSlipService.openBetsToViewUnmatched.length > 0"
@@ -137,6 +212,7 @@
           <p>Profit</p>
         </span>
       </div>
+
       <div
         *ngFor="
           let openBet of this.betSlipService.openBetsToViewUnmatched;
@@ -213,72 +289,8 @@
         </div>
       </div>
 
-      <div
-        class="matched-bets"
-        *ngIf="this.betSlipService.openBetsToViewMatched.length > 0"
-      >
-        <span>PLACED (MATCHED)</span>
-      </div>
+      <!-- end - unmatched bets -->
 
-      <div
-        class="bet-slip-info-line"
-        *ngIf="this.betSlipService.openBetsToViewMatched.length > 0"
-      >
-        <span>
-          <p>Stake</p>
-          <p>Odds</p>
-          <p>Profit</p>
-        </span>
-      </div>
-
-      <div
-        *ngFor="
-          let openBet of this.betSlipService.openBetsToViewMatched;
-          let i = index
-        "
-      >
-        <!-- openBet.status == 'PENDING' -->
-        <div
-          class="open-bets-placed-match"
-          [ngClass]="{
-            back: openBet.selection.betType == 'BACK',
-            lay: openBet.selection.betType == 'LAY'
-          }"
-        >
-          <div class="matched-bet-title" (click)="openBetDetail(openBet)">
-            <!-- <h1>{{ openBet.selection.eventName }}</h1> -->
-            <h2>
-              {{ openBet.selection.marketName }}
-            </h2>
-
-            <h3>
-              {{ openBet.selection.fullSelectionName }}
-            </h3>
-          </div>
-          <div class="matched-bet-odds">
-            <span matTooltip="Stake" [matTooltipPosition]="'above'"
-              ><p>
-                {{ this.sharedFunctionsService.formatNumber(openBet.stake) }}
-              </p>
-            </span>
-            <span matTooltip="Odds" [matTooltipPosition]="'above'"
-              ><p>
-                {{ this.sharedFunctionsService.formatNumber(openBet.odd) }}
-              </p>
-            </span>
-            <!-- <span><p>{{ this.sharedFunctionsService.formatNumber( openBet.payout) }}</p> </span> -->
-            <span matTooltip="Profit" [matTooltipPosition]="'above'"
-              ><p>
-                {{
-                  this.sharedFunctionsService.formatNumber(
-                    this.betSlipService.returnBetsProfit(openBet)
-                  )
-                }}
-              </p>
-            </span>
-          </div>
-        </div>
-      </div>
     </div>
 
     <div *ngIf="this.tabToDisplay == 'Singles'">
