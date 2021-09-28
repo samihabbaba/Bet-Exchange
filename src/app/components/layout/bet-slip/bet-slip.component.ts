@@ -124,7 +124,7 @@ export class BetSlipComponent implements OnInit {
     this.betSlipService.selectedBets.splice(betIndex, 1);
   }
 
-  handleTabClick(event: any) {
+  handleTabClick(event: any) { // not used --> replaced with the one in bet-slip service
     let text = event.target.textContent;
     console.log(text);
     text = text.trim();
