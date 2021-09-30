@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HubConnectionBuilder, HubConnection } from "@microsoft/signalr";
-import { BehaviorSubject, Observable, of, timer } from 'rxjs';
+import { HubConnectionBuilder, HubConnection, HubConnectionState } from "@microsoft/signalr";
+import { BehaviorSubject, Observable, of, Subject, timer } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 
@@ -27,6 +28,8 @@ export class LiveFeedService {
 
 
 	constructor() {
+		this.timer1Start();
+		this.timer2Start();
 		this._connection = null;
 		// this.connectToLiveFeed();
 		// use the below if the connection is authorized, with working on it from authServices and so on
@@ -35,7 +38,7 @@ export class LiveFeedService {
 		}
 	}
   
-	connectToLiveFeed(){
+	connectToLiveFeed(reConnectCall = false){
 
 			this._connection = new HubConnectionBuilder()
 			.withUrl(signalrEndpoint, {
@@ -47,9 +50,18 @@ export class LiveFeedService {
 			.build();
 		this._connection
 			.start()
-			.then(() => {
+			.then(async () => {
 		this._connection.invoke("AssignToGroup", "live-update"); 
 		console.log("SignalR connected");
+
+		if(reConnectCall){
+			await this.delay(1000);
+			let eventId = null;
+          if(this._currentGroup){
+            eventId = this._currentGroup.split('-')[1].trim();
+          }
+          this.listenToEvent(eventId);
+		}
 	})
 	.catch((err:any) => { console.log("SIGMA", err)})
 		// this._connection.on("liveUpdate", this.onLiveUpdate.bind(this));
@@ -81,7 +93,12 @@ export class LiveFeedService {
         return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
-	public async listenToEvent(eventId: string | number) {
+	public async listenToEvent(eventId: string | number | null) {
+
+		if(this._connection.state !== HubConnectionState.Connected || !eventId){
+			return;
+		}
+
 		const newGroup = `event-${eventId}-update`;
 		if (this._currentGroup)
 			await this._connection.invoke("RemoveFromGroup", this._currentGroup);
@@ -102,7 +119,7 @@ export class LiveFeedService {
 
 	public onLiveUpdate(games: any) {
 		// debugger
-		
+		this.liveFeedCounter++;
 		console.log(`Recieved information for ${games.length} games`);
     	this.events.next(games);
   }
@@ -127,4 +144,71 @@ export class LiveFeedService {
 	}
 
 
+
+	source: any;
+	abc: any;
+  timer1Start(){
+  this.source = timer(1000, 1000);
+  this.abc = this.source.subscribe((val:any) => {
+      console.log(val, '-       , '+new Date().toISOString());
+    //   this.subscribeTimer = this.timeLeft - val;
+	if(val == 100){
+		console.log('from t1   = '+new Date().toISOString())
+		this.timer1Stop();
+
+
+	}
+    });
+  }
+
+  timer1Stop(){
+	this.abc.unsubscribe();
+	this.timer1Start();
+  }
+
+
+  subject = new Subject();
+  timer2Start(){
+	timer(1000, 1000).pipe(
+		takeUntil(this.subject),
+	  ).subscribe(t => 
+		{
+			console.log(t, ' i\'m 2       , '+new Date().toISOString());
+			if(t == 50){
+				console.log('from t2   = '+new Date().toISOString())
+				this.timer2Stop()
+			}
+		});
+  }
+
+  timer2Stop(){
+	this.subject.next();
+	this.timer2Start();
+  }
+
+
+
+
+
+
+  liveFeedCounter=0;
+  checkFeedConnection(){
+
+    // console.log('feed # -> '+this.liveFeedCounter)
+    if(this.liveFeedCounter == 0){
+
+    //   this.liveFeedTimer = 120 * 2;
+
+      let hh = this._connection.state;
+      let hhh = document.visibilityState;
+
+      // this.removeEventListen(true);
+      this._connection.stop()
+
+	  this.connectToLiveFeed(true);
+
+    }
+
+    this.liveFeedCounter = 0;
+  }
 }
