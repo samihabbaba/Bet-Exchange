@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HubConnectionBuilder, HubConnection } from "@microsoft/signalr";
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, timer } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 
@@ -125,4 +125,6 @@ export class LiveFeedService {
 	stopLiveUpdate(){
 		this._connection.off("liveUpdate");
 	}
+
+
 }

@@ -74,7 +74,8 @@ export class ExpoDetailsComponent implements OnInit {
     //calculate the winning money (stake + profit/liability) for the bets with runner id --> minus liability of the others
 
     let num =  (runBackProfit - runLayLiability) + (notRunLayStake - notRunBackStake);
-    return this.sharedService.formatNumber(-1*num)
+    // return this.sharedService.formatNumber(-1*num)
+    return (-1*num)
     
     // return (runBackProfit - runLayLiability) + (notRunLayStake - notRunBackStake);
   }

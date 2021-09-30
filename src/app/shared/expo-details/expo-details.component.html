@@ -15,7 +15,7 @@
         </tr>
         <tr  *ngFor="let sel of market.selections">
           <td>{{sel.name}}</td>
-          <td>{{getRunMoney(market.name, sel.id, sel.name)}}</td>
+          <td>{{this.sharedService.formatNumber(getRunMoney(market.name, sel.id, sel.name))}}</td>
           <td>{{getBetsNumForSelection(sel, market.name)}}</td>
           <td>{{getPlayerNumForSelection(sel, market.name)}}</td>
         </tr>

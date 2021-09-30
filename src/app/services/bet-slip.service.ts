@@ -317,7 +317,8 @@ export class BetSlipService {
     //calculate the winning money (stake + profit/liability) for the bets with runner id --> minus liability of the others
 
     let num =  (runBackProfit - runLayLiability) + (notRunLayStake - notRunBackStake);
-    return this.sharedService.formatNumber(num)
+    // return this.sharedService.formatNumber(num)
+    return num;
     
     // return (runBackProfit - runLayLiability) + (notRunLayStake - notRunBackStake);
   }
@@ -343,7 +344,8 @@ export class BetSlipService {
     let num =  (runBackProfit - runLayLiability) + (notRunLayStake - notRunBackStake);
     num+=(+normalMoney);
     
-    return this.sharedService.formatNumber(num)
+    // return this.sharedService.formatNumber(num)
+    return num
   }
 
   showPendingRunMoney(marketId:any){
