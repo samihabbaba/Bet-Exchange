@@ -152,7 +152,7 @@ export class LiveFeedService {
   this.abc = this.source.subscribe((val:any) => {
       console.log(val, '-       , '+new Date().toISOString());
     //   this.subscribeTimer = this.timeLeft - val;
-	if(val == 100){
+	if(val == 50){
 		console.log('from t1   = '+new Date().toISOString())
 		this.timer1Stop();
 
