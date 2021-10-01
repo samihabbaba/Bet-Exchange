@@ -1,8 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, Injector } from '@angular/core';
 import { HubConnectionBuilder, HubConnection, HubConnectionState } from "@microsoft/signalr";
 import { BehaviorSubject, Observable, of, Subject, timer } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { DataService } from './data.service';
+import { LayoutService } from './layout.service';
 
 
 
@@ -21,15 +23,13 @@ export class LiveFeedService {
   
   events = new BehaviorSubject<any>(null);
   selectedEvents = this.events.asObservable();
-
+	liveFeedStarted = false;
   
   eventDetail = new BehaviorSubject<any>(null);
   selectedEventDetail = this.eventDetail.asObservable();
 
 
-	constructor() {
-		this.timer1Start();
-		this.timer2Start();
+	constructor(@Inject(Injector) private injector: Injector, private layoutService:LayoutService) {
 		this._connection = null;
 		// this.connectToLiveFeed();
 		// use the below if the connection is authorized, with working on it from authServices and so on
@@ -38,6 +38,10 @@ export class LiveFeedService {
 		}
 	}
   
+	private get dataService(): DataService {
+		return this.injector.get(DataService);
+	  }
+
 	connectToLiveFeed(reConnectCall = false){
 
 			this._connection = new HubConnectionBuilder()
@@ -61,6 +65,12 @@ export class LiveFeedService {
             eventId = this._currentGroup.split('-')[1].trim();
           }
           this.listenToEvent(eventId);
+
+		  if(this.layoutService.getHeaderValue() == 'live'){
+			  this.startLiveUpdate();
+			  this.dataService.loadLiveGames();
+		  }
+		  
 		}
 	})
 	.catch((err:any) => { console.log("SIGMA", err)})
@@ -130,6 +140,8 @@ export class LiveFeedService {
   }
 
 	startLiveUpdate(){
+		this.liveFeedStarted = true;
+		this.timer2Start();
 		try{
 			this.stopLiveUpdate();
 		}
@@ -140,6 +152,7 @@ export class LiveFeedService {
 	}
 	
 	stopLiveUpdate(){
+		this.timer2Stop();
 		this._connection.off("liveUpdate");
 	}
 
@@ -173,10 +186,10 @@ export class LiveFeedService {
 		takeUntil(this.subject),
 	  ).subscribe(t => 
 		{
-			console.log(t, ' i\'m 2       , '+new Date().toISOString());
-			if(t == 50){
-				console.log('from t2   = '+new Date().toISOString())
-				this.timer2Stop()
+			console.log(t);
+			if(t % 30 == 0){
+				this.timer2Stop();
+				this.checkFeedConnection();
 			}
 		});
   }
@@ -188,14 +201,11 @@ export class LiveFeedService {
 
 
 
-
-
-
   liveFeedCounter=0;
   checkFeedConnection(){
 
     // console.log('feed # -> '+this.liveFeedCounter)
-    if(this.liveFeedCounter == 0){
+    if(this.liveFeedCounter == 0 && this.liveFeedStarted){
 
     //   this.liveFeedTimer = 120 * 2;
 
@@ -203,6 +213,7 @@ export class LiveFeedService {
       let hhh = document.visibilityState;
 
       // this.removeEventListen(true);
+	  this.stopLiveUpdate();
       this._connection.stop()
 
 	  this.connectToLiveFeed(true);
