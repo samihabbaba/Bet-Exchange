@@ -43,7 +43,9 @@ export class LiveFeedService {
 	  }
 
 	connectToLiveFeed(reConnectCall = false){
-
+		// if(reConnectCall){
+		// 	console.log('---------------- i try connect one min plz')
+		// }
 			this._connection = new HubConnectionBuilder()
 			.withUrl(signalrEndpoint, {
 				withCredentials: true,
@@ -64,11 +66,14 @@ export class LiveFeedService {
           if(this._currentGroup){
             eventId = this._currentGroup.split('-')[1].trim();
           }
+	// console.log('------------ i listen event ', eventId)
+
           this.listenToEvent(eventId);
 
 		  if(this.layoutService.getHeaderValue() == 'live'){
+				// console.log('------------- i in live')
 			  this.startLiveUpdate();
-			  this.dataService.loadLiveGames();
+			  this.dataService.loadLiveGames(true);
 		  }
 		  
 		}
@@ -125,6 +130,7 @@ export class LiveFeedService {
 				this._connection.invoke("RemoveFromGroup", this._currentGroup);
 				this._currentGroup = undefined;
 			}
+		this._currentGroup = undefined;
 	}
 
 	public onLiveUpdate(games: any) {
@@ -163,13 +169,11 @@ export class LiveFeedService {
   timer1Start(){
   this.source = timer(1000, 1000);
   this.abc = this.source.subscribe((val:any) => {
-      console.log(val, '-       , '+new Date().toISOString());
+      console.log(val);
     //   this.subscribeTimer = this.timeLeft - val;
 	if(val == 50){
-		console.log('from t1   = '+new Date().toISOString())
 		this.timer1Stop();
-
-
+		this.checkFeedConnection();
 	}
     });
   }
@@ -186,8 +190,11 @@ export class LiveFeedService {
 		takeUntil(this.subject),
 	  ).subscribe(t => 
 		{
-			console.log(t);
-			if(t % 30 == 0){
+			if(t % 5 == 0){
+				console.log(t);
+			}
+			
+			if((t+1) % 30 == 0){
 				this.timer2Stop();
 				this.checkFeedConnection();
 			}
@@ -203,9 +210,10 @@ export class LiveFeedService {
 
   liveFeedCounter=0;
   checkFeedConnection(){
-
+	// console.log('---------- i check now')
     // console.log('feed # -> '+this.liveFeedCounter)
     if(this.liveFeedCounter == 0 && this.liveFeedStarted){
+		// console.log('----------- not good')
 
     //   this.liveFeedTimer = 120 * 2;
 
