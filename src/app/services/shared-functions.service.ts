@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { faLessThanEqual } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from './auth.service';
 import { DataService } from './data.service';
 import { NotificationService } from './notification.service';
@@ -545,5 +546,26 @@ export class SharedFunctionsService {
     }
   }
 
+  validRun(run:any = '', market:any = '')
+  {
+
+    let scondPart:string = this.returnSecondPartRunName(
+      run,
+      market
+    )
+    try{
+
+      if(scondPart.toString() && scondPart.toString().includes(' &' )){
+        return false;
+      }
+      else{
+        return true;
+      }
+
+    }
+    catch(ex){
+      return true
+    }
+  }
 }
 

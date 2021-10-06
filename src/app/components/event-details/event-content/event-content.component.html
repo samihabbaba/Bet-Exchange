@@ -93,6 +93,7 @@
                   <tr
                     class="runner-line"
                     *ngFor="let item of topMarket.runners"
+                    [hidden]='!this.sharedService.validRun(item, topMarket?.name)'
                   >
                     <!-- selection name -->
                     <td class="new-runner-info">
@@ -386,6 +387,7 @@
                           <tr
                             class="runner-line"
                             *ngFor="let run of item.runners"
+                            [hidden]='!this.sharedService.validRun(run, item?.name)'
                           >
                             <td class="new-runner">
                               <div class="graph-container">
@@ -635,6 +637,7 @@
                           <tr
                             class="runner-line"
                             *ngFor="let run of item.runners"
+                            [hidden]='!this.sharedService.validRun(run, item?.name)'
                           >
                             <td class="new-runner">
                               <div class="graph-container">
