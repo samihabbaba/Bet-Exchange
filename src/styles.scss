@@ -3311,6 +3311,7 @@ is smaller */
 
 .cs-toolbar-spacer {
   flex: 1 1 auto;
+  padding-left: 15px;
 }
 
 .cs-super-toolbar-logo {
@@ -3462,6 +3463,7 @@ app-super-account {
 
 .cs-super-profile-account-name {
   margin-left: auto !important;
+  padding: 10px;
 }
 
 /*Summary section */
@@ -3494,7 +3496,7 @@ app-super-account {
 .cs-super-change-password-form {
   display: flex;
   // flex-direction: column;
-  justify-content: center;
+  // justify-content: center;
   align-items: center;
   mat-form-field {
     padding: 8px;
@@ -3701,4 +3703,13 @@ mat-radio-button {
 .played-event {
   // background-color: #e6e3e32d;
   background-color: var(--border-color)
+}
+
+
+.mat-card{
+  overflow: auto;
+}
+
+.mat-toolbar, .mat-theme-primary, .mat-toolbar-single-row{
+  overflow: auto;
 }

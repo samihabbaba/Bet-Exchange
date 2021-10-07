@@ -666,6 +666,8 @@ this.layoutService.closeMenuChilds();
           if(resp.body.markets.length > 0){
             this.layoutService.displayGameDetails();
             this.eventDetails.next(resp.body);
+            // listen to game here
+            // this.liveFeed.listenToEvent(eventId);
           }
           else{
             this.layoutService.displayPreGames();
