@@ -3376,6 +3376,8 @@ is smaller */
   height: 35px;
   align-self: center;
   white-space: nowrap;
+  min-width: 100px !important;
+  padding: 0;
 }
 
 mat-drawer {
