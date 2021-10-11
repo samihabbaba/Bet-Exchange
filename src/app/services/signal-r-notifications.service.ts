@@ -24,6 +24,10 @@ export class SignalRNotificationsService {
 
   recivedNotification = new BehaviorSubject<any>(null);
   notification = this.recivedNotification.asObservable();
+
+  
+  recivedBetUpdate = new BehaviorSubject<any>(null);
+  betUpdate = this.recivedBetUpdate.asObservable();
   
 
 	constructor(public router: Router) {
@@ -74,16 +78,30 @@ export class SignalRNotificationsService {
     this.recivedNotification.next(noti);
   }
 
+  
+  private onBetUpdateReceive(noti:NotificationPayload) {
+
+    this.recivedBetUpdate.next(noti);
+  }
+
 	startNotificationListen(){
 
     console.log('noti on')
 		this._connection.on("onNotification", this.onNotificationReceive.bind(this));
+		this._connection.on("onBetUpdate", this.onBetUpdateReceive.bind(this));
 	}
 	
 	stopNotificationListen(){
 
     console.log('noti off')
 		this._connection.off("Notification");
+		this._connection.off("onBetUpdate");
 	}
+
+
+  //onBetUpdate
+  // >>> bet info + id 
+
+
 
 }

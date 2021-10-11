@@ -14,12 +14,22 @@ export class NotificationService {
       if(!noti){
         return
       }
+
+      //BET_PARTIALLY_MATCHED
+
+      //BET_EXPIRED
       
       if(noti.type == 'ACCOUNT_SUSPENDED' || noti.type == 0){
         this.error(noti.message);
       }
       
-      else if(noti.type == 'BET_MATCHED'){
+      else if(noti.type == 'BET_EXPIRED' ){
+        // this.error(noti.message);
+        debugger;
+        console.log(noti)
+      }
+      
+      else if(noti.type == 'BET_MATCHED'){ 
         this.info(noti.message);
         this.authService.updateCurrentBalance();
       }
