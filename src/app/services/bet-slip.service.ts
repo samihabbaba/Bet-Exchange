@@ -48,7 +48,7 @@ export class BetSlipService {
         this.loadTopMarketBets(this.latestTopMarketId);
       }
       
-      else if(noti.type == 'BET_EXPIRED'){
+      else if(noti.type == 'BET_EXPIRED' || noti.type == "EXPIRED"){
         if(this.currentOpenBets.some(x=>x.id == noti.payload)){
           let index = this.currentOpenBets.findIndex(x=>x.id == noti.payload)
           if(index > -1){
@@ -70,8 +70,17 @@ export class BetSlipService {
       // 'MATCHED'
       // 'UNMATCHED'
       // 'PARTIALLY_MATCHED'
-      
-      if(this.currentOpenBets.some(x=>x.id == bet.id)){
+      if(bet.status == 'BET_EXPIRED'|| bet.status =="EXPIRED"){
+        if(this.currentOpenBets.some(x=>x.id == bet.id)){
+          let index = this.currentOpenBets.findIndex(x=>x.id == bet.id)
+          if(index > -1){
+            this.currentOpenBets.splice(index , 1)
+            this.updateOpenBets();
+          }
+        }
+        // this.loadTopMarketBets(this.latestTopMarketId);
+      }
+      else if(this.currentOpenBets.some(x=>x.id == bet.id)){
         let index = this.currentOpenBets.findIndex(x=>x.id == bet.id)
         if(index > -1){
           this.currentOpenBets[index].status = bet.status
@@ -269,7 +278,7 @@ export class BetSlipService {
   }
 
   clearMatchedBets(){
-    this.currentOpenBets = this.currentOpenBets.filter(x=> x.status == 'UNMATCHED');
+    this.currentOpenBets = this.currentOpenBets.filter(x=> x.status == 'UNMATCHED' || x.status == 'PARTIALLY_MATCHED');
     this.updateOpenBetsOptions();
   }
 
@@ -278,6 +287,7 @@ export class BetSlipService {
     this.openBetsToViewUnmatched= this.currentOpenBets.filter(x=> x.selection.eventName === this.selectedOpenBet && x.status == 'UNMATCHED').sort((a:any, b:any) => a.selection.betType < b.selection.betType ? -1 : a.selection.betType > b.selection.betType ? 1 : 0);
     this.openBetsToViewMatched = this.currentOpenBets.filter(x=> x.selection.eventName === this.selectedOpenBet && x.status == 'PENDING').sort((a:any, b:any) => a.selection.betType < b.selection.betType ? -1 : a.selection.betType > b.selection.betType ? 1 : 0);
     this.openBetsToViewPartiallyMatched = this.currentOpenBets.filter(x=> x.selection.eventName === this.selectedOpenBet && x.status == 'PARTIALLY_MATCHED').sort((a:any, b:any) => a.selection.betType < b.selection.betType ? -1 : a.selection.betType > b.selection.betType ? 1 : 0);
+    this.updateOpenBetsOptions(true)
   }
 
   updateOpenBetsOptions(keepEvent = false){
@@ -393,16 +403,18 @@ export class BetSlipService {
 
   returnBetsProfit(bet:any, usePartial= false){
     let payout = bet.fullPayout;
+    let stake = bet.fullStake;
 
     if(usePartial){
       payout = bet.payout;
+      stake = bet.stake;
     }
 
     if(bet.selection.betType == 'BACK'){
-      return payout - bet.stake;
+      return payout - stake;
     }
     else if(bet.selection.betType == 'LAY'){
-      return bet.stake;
+      return stake;
     }
     else{
       return -1;

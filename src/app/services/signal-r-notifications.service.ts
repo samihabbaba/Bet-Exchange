@@ -80,7 +80,6 @@ export class SignalRNotificationsService {
 
   
   private onBetUpdateReceive(noti:NotificationPayload) {
-    debugger
     this.recivedBetUpdate.next(noti);
   }
 

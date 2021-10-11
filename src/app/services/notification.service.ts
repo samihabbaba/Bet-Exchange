@@ -23,8 +23,7 @@ export class NotificationService {
         this.error(noti.message);
       }
       
-      else if(noti.type == 'BET_EXPIRED' ){
-        debugger;
+      else if(noti.type == 'BET_EXPIRED' || noti.type == 'EXPIRED' ){
         this.error(noti.message);
         // this.error('New Bet Got Expired');
 

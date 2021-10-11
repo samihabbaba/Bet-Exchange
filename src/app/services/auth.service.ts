@@ -258,7 +258,6 @@ export class AuthService {
     }
 
     this.dataService.getBets(1,5000,this.decodedToken.id,'','','','','','','','',false,'','UNSETTLED','','').subscribe(resp =>{
-debugger
       this.betSlipService.currentOpenBets = resp.body.items.filter((x:any)=> x.status == 'UNMATCHED' ||  x.status == 'PENDING'||  x.status == 'PARTIALLY_MATCHED')
       this.betSlipService.updateOpenBetsOptions();
     },
