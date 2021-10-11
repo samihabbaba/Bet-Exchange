@@ -1411,6 +1411,21 @@ input {
   }
 }
 
+.partially-matched-bets {
+  width: 100%;
+  height: 28px;
+  padding: 8px;
+  background: var(--error);
+  span {
+    padding: 0;
+    margin: 0;
+    color: var(--black);
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+  }
+}
+
 .unmatched-bets {
   width: 100%;
   height: 28px;

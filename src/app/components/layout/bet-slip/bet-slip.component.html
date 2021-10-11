@@ -194,6 +194,99 @@
       </div>
       <!-- end - matched bets -->
 
+      <!-- start - partially matched bets -->
+      <div
+        class="partially-matched-bets"
+        *ngIf="this.betSlipService.openBetsToViewPartiallyMatched.length > 0"
+      >
+        <span>WAITING (Partial)</span>
+      </div>
+
+      <div
+        class="bet-slip-info-line"
+        *ngIf="this.betSlipService.openBetsToViewPartiallyMatched.length > 0"
+      >
+        <span>
+          <p>Stake</p>
+          <p>Odds</p>
+          <p>Profit</p>
+        </span>
+      </div>
+
+      <div
+        *ngFor="
+          let openBet of this.betSlipService.openBetsToViewPartiallyMatched;
+          let i = index
+        "
+      >
+        <div
+          class="open-bets-waiting-match"
+          [ngClass]="{
+            back: openBet.selection.betType == 'BACK',
+            lay: openBet.selection.betType == 'LAY'
+          }"
+        >
+          <div class="top-row">
+            <div class="open-bets-title">
+              <h2>
+                {{ openBet.selection.marketName }}
+              </h2>
+
+              <h3>
+                {{ openBet.selection.fullSelectionName }}
+              </h3>
+            </div>
+            <div class="open-bets-odds">
+              <!-- <input type="number" value="2" /> -->
+              <span matTooltip="Stake" [matTooltipPosition]="'above'"
+                ><p>
+                  {{ this.sharedFunctionsService.formatNumber(openBet.stake) }} 
+                </p> </span
+              >
+              <span matTooltip="Odds" [matTooltipPosition]="'above'"
+                ><p>
+                  {{ this.sharedFunctionsService.formatNumber(openBet.odd) }}
+                </p> </span
+              >
+              <span matTooltip="Profit" [matTooltipPosition]="'above'"
+                ><p>
+                  {{
+                    this.sharedFunctionsService.formatNumber(
+                      this.betSlipService.returnBetsProfit(openBet, true)
+                    )
+                  }}
+                </p>
+              </span>
+            </div>
+          </div>
+          <div class="bottom-row">
+            <h1>
+              {{
+                this.openBet.selectionType == "Live"
+                  ? "At In-Play"
+                  : "At Pre-Match"
+              }}
+            </h1>
+            <div
+              class="cancel-checkbox openBet-cancel-btn"
+              (click)="this.openConfirmDialog(openBet, 5)"
+            >
+              <!-- <input type="radio" id="cancel" name="cancel" /> -->
+              <label for="cancel">Cancel</label>
+            </div>
+
+            <!-- <div class="keep-checkbox">
+              <input type="radio" id="keep" name="keep" />
+              <label for="keep">Keep</label>
+            </div> -->
+          </div>
+        </div>
+      </div>
+
+      <!-- end - partially matched bets -->
+
+
+      
       <!-- start - unmatched bets -->
       <div
         class="unmatched-bets"
@@ -245,7 +338,7 @@
               <!-- <input type="number" value="2" /> -->
               <span matTooltip="Stake" [matTooltipPosition]="'above'"
                 ><p>
-                  {{ this.sharedFunctionsService.formatNumber(openBet.stake) }}
+                  {{ this.sharedFunctionsService.formatNumber(openBet.fullStake) }}
                 </p> </span
               >
               <span matTooltip="Odds" [matTooltipPosition]="'above'"

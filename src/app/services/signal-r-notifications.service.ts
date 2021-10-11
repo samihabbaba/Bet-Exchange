@@ -80,7 +80,7 @@ export class SignalRNotificationsService {
 
   
   private onBetUpdateReceive(noti:NotificationPayload) {
-
+    debugger
     this.recivedBetUpdate.next(noti);
   }
 
@@ -99,7 +99,7 @@ export class SignalRNotificationsService {
 	}
 
 
-  //onBetUpdate
+  // onBetUpdate
   // >>> bet info + id 
 
 

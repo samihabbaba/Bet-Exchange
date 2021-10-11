@@ -23,6 +23,7 @@ export class BetSlipService {
   openBetsToView: any[] = [];
   openBetsToViewMatched: any[] = [];
   openBetsToViewUnmatched: any[] = [];
+  openBetsToViewPartiallyMatched: any[] = [];
 
   openBetsSelectOptions: any[] = ['', ''];
   selectedOpenBet: any = '';
@@ -46,6 +47,42 @@ export class BetSlipService {
         }
         this.loadTopMarketBets(this.latestTopMarketId);
       }
+      
+      else if(noti.type == 'BET_EXPIRED'){
+        if(this.currentOpenBets.some(x=>x.id == noti.payload)){
+          let index = this.currentOpenBets.findIndex(x=>x.id == noti.payload)
+          if(index > -1){
+            this.currentOpenBets.splice(index , 1)
+            this.updateOpenBets();
+          }
+        }
+        this.loadTopMarketBets(this.latestTopMarketId);
+      }
+
+    })
+
+    this.notiSignalR.betUpdate.subscribe(bet => {
+
+      if(!bet){
+        return
+      }
+      
+      // 'MATCHED'
+      // 'UNMATCHED'
+      // 'PARTIALLY_MATCHED'
+      
+      if(this.currentOpenBets.some(x=>x.id == bet.id)){
+        let index = this.currentOpenBets.findIndex(x=>x.id == bet.id)
+        if(index > -1){
+          this.currentOpenBets[index].status = bet.status
+          this.currentOpenBets[index].stake = bet.stake
+          this.currentOpenBets[index].liability = bet.liability
+          this.currentOpenBets[index].payout = bet.payout
+          this.currentOpenBets[index].net = bet.net
+          this.updateOpenBets();
+        }
+      }
+      this.loadTopMarketBets(this.latestTopMarketId);
 
     })
   }
@@ -240,6 +277,7 @@ export class BetSlipService {
     this.openBetsToView = this.currentOpenBets.filter(x=> x.selection.eventName === this.selectedOpenBet).sort((a:any, b:any) => a.selection.betType < b.selection.betType ? -1 : a.selection.betType > b.selection.betType ? 1 : 0);
     this.openBetsToViewUnmatched= this.currentOpenBets.filter(x=> x.selection.eventName === this.selectedOpenBet && x.status == 'UNMATCHED').sort((a:any, b:any) => a.selection.betType < b.selection.betType ? -1 : a.selection.betType > b.selection.betType ? 1 : 0);
     this.openBetsToViewMatched = this.currentOpenBets.filter(x=> x.selection.eventName === this.selectedOpenBet && x.status == 'PENDING').sort((a:any, b:any) => a.selection.betType < b.selection.betType ? -1 : a.selection.betType > b.selection.betType ? 1 : 0);
+    this.openBetsToViewPartiallyMatched = this.currentOpenBets.filter(x=> x.selection.eventName === this.selectedOpenBet && x.status == 'PARTIALLY_MATCHED').sort((a:any, b:any) => a.selection.betType < b.selection.betType ? -1 : a.selection.betType > b.selection.betType ? 1 : 0);
   }
 
   updateOpenBetsOptions(keepEvent = false){
@@ -353,9 +391,15 @@ export class BetSlipService {
   }
 
 
-  returnBetsProfit(bet:any){
+  returnBetsProfit(bet:any, usePartial= false){
+    let payout = bet.fullPayout;
+
+    if(usePartial){
+      payout = bet.payout;
+    }
+
     if(bet.selection.betType == 'BACK'){
-      return bet.payout - bet.stake;
+      return payout - bet.stake;
     }
     else if(bet.selection.betType == 'LAY'){
       return bet.stake;
