@@ -38,7 +38,7 @@ export class ChangePasswordModalComponent implements OnInit {
   initalizeForm() {
     this.changePasswordForm = this.fb.group({
       // oldPassword: new FormControl(null, Validators.required),
-      newPassword: new FormControl(null, [Validators.required, Validators.minLength(4), Validators.maxLength(8)]),
+      newPassword: new FormControl(null, [Validators.required, Validators.minLength(4)]),
       confirmNewPassword: new FormControl(null, Validators.required),
     }, {validator: this.passwordMatchValidator});
   }
