@@ -282,15 +282,18 @@ export class BetSlipService {
     this.updateOpenBetsOptions();
   }
 
-  updateOpenBets(event?:any){
+  updateOpenBets(event?:any, val=0){
     this.openBetsToView = this.currentOpenBets.filter(x=> x.selection.eventName === this.selectedOpenBet).sort((a:any, b:any) => a.selection.betType < b.selection.betType ? -1 : a.selection.betType > b.selection.betType ? 1 : 0);
     this.openBetsToViewUnmatched= this.currentOpenBets.filter(x=> x.selection.eventName === this.selectedOpenBet && x.status == 'UNMATCHED').sort((a:any, b:any) => a.selection.betType < b.selection.betType ? -1 : a.selection.betType > b.selection.betType ? 1 : 0);
     this.openBetsToViewMatched = this.currentOpenBets.filter(x=> x.selection.eventName === this.selectedOpenBet && x.status == 'PENDING').sort((a:any, b:any) => a.selection.betType < b.selection.betType ? -1 : a.selection.betType > b.selection.betType ? 1 : 0);
     this.openBetsToViewPartiallyMatched = this.currentOpenBets.filter(x=> x.selection.eventName === this.selectedOpenBet && x.status == 'PARTIALLY_MATCHED').sort((a:any, b:any) => a.selection.betType < b.selection.betType ? -1 : a.selection.betType > b.selection.betType ? 1 : 0);
-    this.updateOpenBetsOptions(true)
+    
+    if(val != 2){
+      this.updateOpenBetsOptions(true,++val)
+    }
   }
 
-  updateOpenBetsOptions(keepEvent = false){
+  updateOpenBetsOptions(keepEvent = false, val=0){
     this.openBetsSelectOptions = this.currentOpenBets.map(function(i) {
       return i.selection.eventName;
     });
@@ -306,7 +309,9 @@ export class BetSlipService {
       }
     }
 
-    this.updateOpenBets();
+    if(val != 2){
+      this.updateOpenBets(null,++val);
+    }
   }
 
   cancelAllOpenBetsForEventId(betIds:any){

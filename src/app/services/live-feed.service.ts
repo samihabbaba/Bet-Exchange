@@ -134,13 +134,14 @@ export class LiveFeedService {
 	}
 
 	public onLiveUpdate(games: any) {
-		// debugger
 		this.liveFeedCounter++;
 		console.log(`Recieved information for ${games.length} games`);
     	this.events.next(games);
   }
 	
 	private onLiveGameUpdate(game: Match) {
+		debugger
+
 		console.log(`Recieved information for one game`);
 	    this.eventDetail.next(game);
   }
