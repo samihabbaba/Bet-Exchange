@@ -285,7 +285,8 @@ export class AuthService {
 
   updateCurrency(){
     this.getRate().subscribe((resp:any) =>{
-      let E = resp.body.rates.EUR;
+      // let E = resp.body.rates.EUR;
+      let E = resp.body.rates.GBP;
       let T = resp.body.rates[this.currentUserInfo.currency];
       // let T = resp.body.rates.TRY;
   
