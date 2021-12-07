@@ -77,6 +77,7 @@ export class AuthService {
           this.currentUserInfo.balance = this.decodedToken.balance;
           this.currentUserInfo.currency = this.decodedToken.currency;
           this.currentUserInfo.userName = this.decodedToken.sub;
+          this.updateCurrency()
 
           // const role = this.decodedToken.role;      
           localStorage.setItem("token", user.token);
@@ -186,6 +187,7 @@ export class AuthService {
       // this.currentUserInfo.balance = this.decodedToken.balance;
       this.currentUserInfo.currency = this.decodedToken.currency;
       this.currentUserInfo.userName = this.decodedToken.sub;
+      this.updateCurrency();
     }
   }
 
@@ -268,6 +270,29 @@ export class AuthService {
 
   delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
+
+
+
+  
+
+  getRate() {
+    return this.http.get(`https://openexchangerates.org/api/latest.json?app_id=2e90850ca4ad4739b4116e11756c4336`, {
+      observe: 'response',
+    });
+  }
+
+  updateCurrency(){
+    this.getRate().subscribe((resp:any) =>{
+      let E = resp.body.rates.EUR;
+      let T = resp.body.rates[this.currentUserInfo.currency];
+      // let T = resp.body.rates.TRY;
+  
+      let EtoT = T/E;
+      let TtoE = E/T;
+      this.sharedService.currencyData.rate = EtoT;
+    })
   }
 
 }

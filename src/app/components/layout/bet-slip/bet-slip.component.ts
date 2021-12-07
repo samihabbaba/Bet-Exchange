@@ -68,7 +68,7 @@ export class BetSlipComponent implements OnInit {
         (resp: any) => {
           // debugger
           // this.authService.updateCurrentBalance();
-          debugger
+
           if(resp.body.length > 0 && resp.body[0] !== null){
             let g = resp.body[0].user.wallet.balance;
             this.authService.currentUserInfo.balance =
@@ -78,22 +78,32 @@ export class BetSlipComponent implements OnInit {
             
           this.betSlipService.selectedBets = [];
           let newOpenBet = '';
-          resp.body.forEach((bet: any) => {
+          resp.body.successfulBets.forEach((bet: any) => {
             this.betSlipService.currentOpenBets.push(bet);
             newOpenBet = bet.selection.eventName;
+          });
+
+          
+          resp.body.errors.forEach((error: any) => {
+
+            this.sharedFunctionsService.showErrorMsg({
+            error: {errorMessage:error}
+          },'Error while adding Some Bet(s)!')
           });
 
           if(this.betSlipService.currentOpenBets.some(x=>x.selection.eventName === newOpenBet) && newOpenBet !== ''){
             this.betSlipService.selectedOpenBet = newOpenBet;
           }
           this.betSlipService.updateOpenBetsOptions(true);
-          this.notificationService.success('Bet(s) added successfully!');
+          if(resp.body.successfulBets.lngth > 0){
+            this.notificationService.success('Bet(s) added successfully!');
+          }
           this.betSlipService.loadTopMarketBets(this.betSlipService.latestTopMarketId);
 
           this.betSlipService.handleTabClick('Open');
         },
         (error) => {
-          debugger;
+
           this.sharedFunctionsService.showErrorMsg(error,'Error while adding Bet(s)!')
           // try {
           //   let msg = error.error.fields[Object.keys(error.error.fields)[0]];

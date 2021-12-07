@@ -4,6 +4,7 @@ import { AuthService } from './services/auth.service';
 import { BetSlipService } from './services/bet-slip.service';
 import { DataService } from './services/data.service';
 import { LayoutService } from './services/layout.service';
+import { SharedFunctionsService } from './services/shared-functions.service';
 
 @Component({
   selector: 'app-root',
@@ -23,9 +24,11 @@ export class AppComponent implements OnInit {
     // private dataService: DataService,
     private layoutService: LayoutService,
     public authService: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private sharedService:SharedFunctionsService
   ) {}
   ngOnInit(): void {
+
     this.initializeSubscriptions();
 
     if(!this.authService.loggedIn()){

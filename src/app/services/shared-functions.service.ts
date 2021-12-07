@@ -488,11 +488,18 @@ export class SharedFunctionsService {
   }
   
   showErrorMsg(error:any, defaultMsg:any){
-    if(error.error.errorMessage){
-      this.notify.error(error.error.errorMessage);
-      return
+
+    try{
+      if(error.error.errorMessage){
+        this.notify.error(error.error.errorMessage);
+        return
+      }
+      else{
+        this.notify.error(defaultMsg);
+        return
+      }
     }
-    else{
+    catch(e){
       this.notify.error(defaultMsg);
       return
     }
