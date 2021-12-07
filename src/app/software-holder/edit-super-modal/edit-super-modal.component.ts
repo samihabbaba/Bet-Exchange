@@ -26,7 +26,7 @@ export class EditSuperModalComponent implements OnInit {
     private dataService:DataService,
     private notify:NotificationService,
     public authService:AuthService,
-    private sharedService:SharedFunctionsService,
+    public sharedService:SharedFunctionsService,
     private dialogRef: MatDialogRef<EditSuperModalComponent>
   ) {
     dialogRef.disableClose = true;

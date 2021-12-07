@@ -109,7 +109,7 @@
       </mat-form-field> -->
 
       <mat-form-field appearance="fill" *ngIf="this.data.roleToCreate === 'Admin'">
-        <mat-label ><mat-icon>arrow_downward</mat-icon> Min Risk (0-100)%</mat-label>
+        <mat-label ><mat-icon>arrow_downward</mat-icon> Forced PT (0-100)%</mat-label>
         <input
           matInput
           placeholder="minRisk"
@@ -121,12 +121,12 @@
           value="0"
         />
         <mat-error *ngIf="form.minRisk.invalid"
-          >This field is required. (0 - 100)% < max risk</mat-error
+          >This field is required. (0 - 100)% < Max PT</mat-error
         >
       </mat-form-field>
 
       <mat-form-field appearance="fill" *ngIf="this.data.roleToCreate === 'Admin'">
-        <mat-label ><mat-icon>arrow_upward</mat-icon> Max Risk (0-100)%</mat-label>
+        <mat-label ><mat-icon>arrow_upward</mat-icon> Max PT (0-100)%</mat-label>
         <input
           matInput
           placeholder="maxRisk"
@@ -138,7 +138,7 @@
           value="100"
         />
         <mat-error *ngIf="form.maxRisk.invalid"
-          >This field is required. (0 - 100)% > min risk</mat-error
+          >This field is required. (0 - 100)% > Forced PT</mat-error
         >
       </mat-form-field>
     

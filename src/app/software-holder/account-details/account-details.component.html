@@ -69,8 +69,8 @@
         <div *ngIf="myUser?.role === 'SuperAdmin'">Unsettled Commission: &nbsp; <span> {{this.sharedService.formatNumber( myUser?.unsettledCommission)}} </span></div>
         <div *ngIf="myUser?.role === 'SuperAdmin'">Profit Commission: &nbsp; <span>{{this.sharedService.formatNumber( myUser?.profitCommission*100)}}%</span></div>
         <!-- <div *ngIf="myUser?.role !== 'SoftwareHolder' && myUser.role !== 'Client'">Risk: &nbsp; <span>{{this.sharedService.formatNumber( myUser?.risk)}}%</span></div> -->
-        <div *ngIf="myUser?.role === 'Admin'">Min Risk: &nbsp; <span>{{this.sharedService.formatNumber( myUser?.minRisk)}}%</span></div>
-        <div *ngIf="myUser?.role === 'Admin'">Max Risk: &nbsp; <span>{{this.sharedService.formatNumber( myUser?.maxRisk)}}%</span></div>
+        <div *ngIf="myUser?.role === 'Admin'">Forced PT: &nbsp; <span>{{this.sharedService.formatNumber( myUser?.minRisk)}}%</span></div>
+        <div *ngIf="myUser?.role === 'Admin'">Max PT: &nbsp; <span>{{this.sharedService.formatNumber( myUser?.maxRisk)}}%</span></div>
 
         <div>Active: &nbsp; <span> 
         {{myUser?.isActive ? 'True' : 'False'}}
