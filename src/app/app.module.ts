@@ -33,6 +33,7 @@ import { AdminAccountModule } from './admin-account/admin-account.module';
 import { MatIconModule } from '@angular/material/icon';
 import { ClientProfileComponent } from './components/client-profile/client-profile.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { CurrencyConverterPipe } from './Pipe/currency-converter.pipe';
 
 
 
@@ -58,6 +59,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     CloseAppMenuDirective,
     CloseBetSlipDirective,
     ClientProfileComponent,
+    CurrencyConverterPipe,
   ],
   imports: [
     BrowserModule,
@@ -78,5 +80,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
   ],
   providers: [],
   bootstrap: [AppComponent],
+  exports: [
+    CurrencyConverterPipe
+  ],
 })
 export class AppModule {}

@@ -104,7 +104,7 @@
                 {{
                   this.sharedService.returnHighestBet(
                     this.sharedService.getBackObj(event, 0)
-                  ).size
+                  ).size | currencyConverter : this.sharedService.currencyData
                 }}
               </ng-container>
   
@@ -163,7 +163,7 @@
                   this.sharedService.returnHighestBet(
                     this.sharedService.getLayObj(event, 0),
                     false
-                  ).size
+                  ).size| currencyConverter : this.sharedService.currencyData
                 }}
               </ng-container>
   
@@ -222,7 +222,7 @@
                 {{
                   this.sharedService.returnHighestBet(
                     this.sharedService.getBackObj(event, 2)
-                  ).size
+                  ).size| currencyConverter : this.sharedService.currencyData
                 }}
               </ng-container>
               
@@ -278,7 +278,7 @@
                   this.sharedService.returnHighestBet(
                     this.sharedService.getLayObj(event, 2),
                     false
-                  ).size
+                  ).size| currencyConverter : this.sharedService.currencyData
                 }}
               </ng-container>
   
@@ -333,7 +333,7 @@
                 {{
                   this.sharedService.returnHighestBet(
                     this.sharedService.getBackObj(event, 1)
-                  ).size
+                  ).size| currencyConverter : this.sharedService.currencyData
                 }}
               </ng-container>
   
@@ -392,7 +392,7 @@
                   this.sharedService.returnHighestBet(
                     this.sharedService.getLayObj(event, 1),
                     false
-                  ).size
+                  ).size| currencyConverter : this.sharedService.currencyData
                 }}
               </ng-container>
   

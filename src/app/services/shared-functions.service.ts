@@ -9,6 +9,11 @@ import { NotificationService } from './notification.service';
 })
 export class SharedFunctionsService {
 
+  currencyData = {
+    name:'EU',
+    rate:1
+  }
+  
   pageSizeOptions = [5, 10, 25, 100, 500, 1000];
   defaultPageSize = 50;
 
