@@ -65,7 +65,7 @@ export class BetSlipComponent implements OnInit {
       .submitBets(betsToSend)
       .pipe(finalize(() => this.stopLoading()))
       .subscribe(
-        (resp: any) => {
+        async (resp: any) => {
           // debugger
           // this.authService.updateCurrentBalance();
 
@@ -83,9 +83,9 @@ export class BetSlipComponent implements OnInit {
             newOpenBet = bet.selection.eventName;
           });
 
-          
+          let errorDisplayed = false;
           resp.body.errors.forEach((error: any) => {
-
+            errorDisplayed = true;
             this.sharedFunctionsService.showErrorMsg({
             error: {errorMessage:error}
           },'Error while adding Some Bet(s)!')
@@ -95,12 +95,17 @@ export class BetSlipComponent implements OnInit {
             this.betSlipService.selectedOpenBet = newOpenBet;
           }
           this.betSlipService.updateOpenBetsOptions(true);
-          if(resp.body.successfulBets.lngth > 0){
+          this.betSlipService.loadTopMarketBets(this.betSlipService.latestTopMarketId);
+          
+          this.betSlipService.handleTabClick('Open');
+          
+          
+          if(resp.body.successfulBets.length > 0){
+            if(errorDisplayed){
+              await this.sharedFunctionsService.delay(2000);
+            }
             this.notificationService.success('Bet(s) added successfully!');
           }
-          this.betSlipService.loadTopMarketBets(this.betSlipService.latestTopMarketId);
-
-          this.betSlipService.handleTabClick('Open');
         },
         (error) => {
 
