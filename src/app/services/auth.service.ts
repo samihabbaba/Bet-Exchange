@@ -225,7 +225,7 @@ export class AuthService {
 
     this.dataService.getUserById(this.decodedToken.id).subscribe(resp => {
       this.currentUserInfo.balance = resp.wallet.balance;
-      this.currentUserInfo.parentCommission = (resp.parentCommission + resp.commission)*100;
+      this.currentUserInfo.parentCommission = +((resp.parentCommission + resp.commission)*100).toFixed(2);
       this.currentUserInfo.minRisk = resp.minRisk,
       this.currentUserInfo.maxRisk = resp.maxRisk
     },
