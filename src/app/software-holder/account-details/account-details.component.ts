@@ -492,8 +492,8 @@ export class AccountDetailsComponent implements OnInit {
         this.sportsList = resp.body.sort((a:any, b:any) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
         this.sportsData.data = resp.body.sort((a:any, b:any) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
       }else{
-        this.sportsList = resp.body.filter((x:any)=>!this.sharedService.strictedSports.some(y=>y==x.name)).sort((a:any, b:any) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
-        this.sportsData.data = resp.body.filter((x:any)=>!this.sharedService.strictedSports.some(y=>y==x.name)).sort((a:any, b:any) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+        this.sportsList = resp.body/*.filter((x:any)=>!this.sharedService.strictedSports.some(y=>y==x.name))*/.sort((a:any, b:any) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+        this.sportsData.data = resp.body/*.filter((x:any)=>!this.sharedService.strictedSports.some(y=>y==x.name))*/.sort((a:any, b:any) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
       }
        
        if(this.currentSportIdForRegions === ''){
