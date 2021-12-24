@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { DataService } from './data.service';
 import { JwtHelperService } from "@auth0/angular-jwt";
-import { Observable } from 'rxjs';
+import { Observable, Subject, timer } from 'rxjs';
 import { Router } from '@angular/router';
 import { NotificationService } from './notification.service';
 import { environment } from 'src/environments/environment';
@@ -10,6 +10,7 @@ import { SignalRNotificationsService } from './signal-r-notifications.service';
 import { SharedFunctionsService } from './shared-functions.service';
 import { BetSlipService } from './bet-slip.service';
 import { LiveFeedService } from './live-feed.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -81,7 +82,9 @@ export class AuthService {
 
           // const role = this.decodedToken.role;      
           localStorage.setItem("token", user.token);
-          
+          this.timerStart();
+
+
           let dataLoaded = await this.initializeData();
           if(dataLoaded){
             this.loginConnections();
@@ -123,6 +126,7 @@ export class AuthService {
 
   logut(routeAfter = true){
     this.decodedToken = null;
+    this.timerStop(false);
     localStorage.removeItem('token');
 
     this.dataService.httpOptions.headers = new HttpHeaders({
@@ -188,6 +192,7 @@ export class AuthService {
       this.currentUserInfo.currency = this.decodedToken.currency;
       this.currentUserInfo.userName = this.decodedToken.sub;
       this.updateCurrency();
+      this.timerStart();
     }
   }
 
@@ -295,5 +300,24 @@ export class AuthService {
       this.sharedService.currencyData.rate = EtoT;
     })
   }
+
+
+  subject = new Subject();
+  timerStart(){
+    timer(1000, 1000).pipe(
+      takeUntil(this.subject),
+      ).subscribe(t => 
+      { 
+        //every 1 hours (60sec * 60min)
+        if(t == (60*60)){
+          this.updateCurrency();
+          this.timerStop();
+        }
+      });
+    }
+    timerStop(startAgain = true){
+      this.subject.next();
+      this.timerStart();
+    }
 
 }

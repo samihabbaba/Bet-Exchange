@@ -191,7 +191,7 @@ export class LiveFeedService {
 	  ).subscribe(t => 
 		{
 			if(t % 5 == 0){
-				console.log(t);
+				// console.log(t);
 			}
 			
 			if((t+1) % 30 == 0){
