@@ -283,21 +283,24 @@ export class AuthService {
   
 
   getRate() {
-    return this.http.get(`https://openexchangerates.org/api/latest.json?app_id=2e90850ca4ad4739b4116e11756c4336`, {
+    // return this.http.get(`https://openexchangerates.org/api/latest.json?app_id=2e90850ca4ad4739b4116e11756c4336`, {
+    return this.http.get(`https://openexchangerates.org/api/latest.json?app_id=15c3adca133a4ec8b0628394fd6cc4b3`, {
       observe: 'response',
     });
   }
 
   updateCurrency(){
     this.getRate().subscribe((resp:any) =>{
+      debugger
+      // rate of pound compared to usd [usd is the base for exchange + GBP is base for the datafeed] 
       // let E = resp.body.rates.EUR;
-      let E = resp.body.rates.GBP;
-      let T = resp.body.rates[this.currentUserInfo.currency];
+      let poundRate = resp.body.rates.GBP;
+      let usedCurrencyRate = resp.body.rates[this.currentUserInfo.currency];
       // let T = resp.body.rates.TRY;
   
-      let EtoT = T/E;
-      let TtoE = E/T;
-      this.sharedService.currencyData.rate = EtoT;
+      let poundToUsedRate = usedCurrencyRate/poundRate;
+      let TtoE = poundRate/usedCurrencyRate;
+      this.sharedService.currencyData.rate = poundToUsedRate;
     })
   }
 
