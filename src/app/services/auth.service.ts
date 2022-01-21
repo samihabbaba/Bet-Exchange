@@ -291,7 +291,6 @@ export class AuthService {
 
   updateCurrency(){
     this.getRate().subscribe((resp:any) =>{
-      debugger
       // rate of pound compared to usd [usd is the base for exchange + GBP is base for the datafeed] 
       // let E = resp.body.rates.EUR;
       let poundRate = resp.body.rates.GBP;
