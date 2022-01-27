@@ -67,13 +67,12 @@ export class BetSlipComponent implements OnInit {
       .subscribe(
         async (resp: any) => {
           // debugger
-          // this.authService.updateCurrentBalance();
+          this.authService.updateCurrentBalance();
 
           if(resp.body.length > 0 && resp.body[0] !== null){
             let g = resp.body[0].user.wallet.balance;
             this.authService.currentUserInfo.balance =
               resp.body[0].user.wallet.balance;
-  
             }
             
           this.betSlipService.selectedBets = [];

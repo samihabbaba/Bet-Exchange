@@ -38,7 +38,7 @@
 
       <mat-button-toggle *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'|| this.authService.decodedToken.role === 'SuperAdmin' " value="bettingRules">Betting Rules</mat-button-toggle>
 
-      <mat-button-toggle value="sports" [checked]="false" *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'|| this.authService.decodedToken.role === 'SuperAdmin' "
+      <mat-button-toggle value="sports" [checked]="false" *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'"
       >Sports</mat-button-toggle>
       
 
