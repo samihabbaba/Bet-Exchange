@@ -93,11 +93,11 @@ export class EventContentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
     //comment function call below to always show all markets categories (tabs)
     this.setTabsToShow();
     this.setTopMarket();
-    
+
     this.eventIsLive = this.event.isLive;
     this.getMarketsToDisplay();
   }
@@ -109,7 +109,7 @@ export class EventContentComponent implements OnInit {
 
 
   setTopMarket(refresh= false){
-    
+
     if (this.event.markets.length > 0) {
 
         if(refresh){
@@ -139,7 +139,7 @@ export class EventContentComponent implements OnInit {
     }
   }
 
-  
+
 
 
   handleTabClick(tab: any) {
@@ -278,8 +278,8 @@ export class EventContentComponent implements OnInit {
       this.copyOfMarkets = this.event.markets.filter((x: any) =>
         this.sharedService.isMarketPopular(x.name)
       );
-    } 
-    
+    }
+
     else if (this.selectedTab == 'Over/Under') {
       this.copyOfMarkets = this.event.markets.filter((x: any) =>
         this.sharedService.isMarketOverUnder(
@@ -287,37 +287,37 @@ export class EventContentComponent implements OnInit {
           x.runners
         )
       );
-    } 
-    
+    }
+
     else if (this.selectedTab == 'Goals') {
       this.copyOfMarkets = this.event.markets.filter((x: any) =>
         this.sharedService.isMarketGoals(x.name)
       );
-    } 
-    
+    }
+
     else if (this.selectedTab == 'Half Time') {
       this.copyOfMarkets = this.event.markets.filter((x: any) =>
         this.sharedService.isMarketHalf(x.name)
       );
-    } 
-   
+    }
+
     else if (this.selectedTab == 'Handicap') {
       this.copyOfMarkets = this.event.markets.filter((x: any) =>
         this.sharedService.isMarketHandicap(x.name, x.runners)
       );
-    } 
-   
+    }
+
     else if (this.selectedTab == 'Others') {
       this.copyOfMarkets = this.event.markets.filter((x: any) =>
         this.sharedService.isMarketOthers(x.name, x.runners)
       );
-    } 
-   
+    }
+
     else {
       this.copyOfMarkets = [];
     }
     this.setTopMarket(true);
-    
+
     this.ref.markForCheck();
   }
 
@@ -333,13 +333,13 @@ export class EventContentComponent implements OnInit {
     this.tabItems.forEach(elem => {
 
       if (elem.name == 'Popular') {
-        
+
         if(this.event.markets.some( (x: any) => this.sharedService.isMarketPopular(x.name)  )){
           this.copyOfTabs.push( elem )
         }
 
-      } 
-      
+      }
+
       else if (elem.name == 'Over/Under') {
         if( this.event.markets.some((x: any) =>
           this.sharedService.isMarketOverUnder(
@@ -349,32 +349,32 @@ export class EventContentComponent implements OnInit {
         )){
           this.copyOfTabs.push( elem )
         }
-      } 
-      
+      }
+
       else if (elem.name == 'Goals') {
         if( this.event.markets.some((x: any) =>
           this.sharedService.isMarketGoals(x.name)
         )){
           this.copyOfTabs.push( elem )
         }
-      } 
-      
+      }
+
       else if (elem.name == 'Half Time') {
         if( this.event.markets.some((x: any) =>
           this.sharedService.isMarketHalf(x.name)
         )){
           this.copyOfTabs.push( elem )
         }
-      } 
-     
+      }
+
       else if (elem.name == 'Handicap') {
         if( this.event.markets.some((x: any) =>
           this.sharedService.isMarketHandicap(x.name, x.runners)
         )){
           this.copyOfTabs.push( elem )
         }
-      } 
-     
+      }
+
       else if (elem.name == 'Others') {
         if( this.event.markets.some((x: any) =>
           this.sharedService.isMarketOthers(x.name, x.runners)
@@ -389,5 +389,6 @@ export class EventContentComponent implements OnInit {
   this.selectedTab = this.copyOfTabs[0].name;
 
   }
+
 
 }

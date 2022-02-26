@@ -1,273 +1,394 @@
 <mat-toolbar>
-    <mat-button-toggle-group
-      #profile="matButtonToggleGroup"
-      name="profile"
-      aria-label="Profile"
+  <mat-button-toggle-group
+    #profile="matButtonToggleGroup"
+    name="profile"
+    aria-label="Profile"
+  >
+    <mat-button-toggle value="summary" [checked]="true"
+      >Summary</mat-button-toggle
     >
-      <mat-button-toggle value="summary" [checked]="true"
-        >Summary</mat-button-toggle
-      >
 
-      <!-- <mat-button-toggle value="changePassword"
+    <!-- <mat-button-toggle value="changePassword"
       *ngIf="this.authService.decodedToken.role !== 'SoftwareHolder'" > -->
-      <mat-button-toggle value="changePassword"  >
+    <mat-button-toggle value="changePassword">
       Change Password
-      </mat-button-toggle >
+    </mat-button-toggle>
 
-      <mat-button-toggle value="bettingHistory" [checked]="false"
-      >Betting History</mat-button-toggle>
+    <mat-button-toggle value="bettingHistory" [checked]="false"
+      >Betting History</mat-button-toggle
+    >
 
-      <mat-button-toggle value="bettingExposure" [checked]="false" *ngIf="this.authService.decodedToken.role !== undefined && this.authService.decodedToken.role !== 'SoftwareHolder'&&this.authService.decodedToken.role !== 'Client'"
-      >Bet Exposure</mat-button-toggle>
+    <mat-button-toggle
+      value="bettingExposure"
+      [checked]="false"
+      *ngIf="
+        this.authService.decodedToken.role !== undefined &&
+        this.authService.decodedToken.role !== 'SoftwareHolder' &&
+        this.authService.decodedToken.role !== 'Client'
+      "
+      >Bet Exposure</mat-button-toggle
+    >
 
-      
-      <mat-button-toggle value="subAccounts" [checked]="false"
-      *ngIf="this.authService.decodedToken.role === 'SoftwareHolder' || this.authService.decodedToken.role === 'SuperAdmin' || this.authService.decodedToken.role === 'Admin'"
-      >SubAccounts</mat-button-toggle>
-      
+    <mat-button-toggle
+      value="subAccounts"
+      [checked]="false"
+      *ngIf="
+        this.authService.decodedToken.role === 'SoftwareHolder' ||
+        this.authService.decodedToken.role === 'SuperAdmin' ||
+        this.authService.decodedToken.role === 'Admin'
+      "
+      >SubAccounts</mat-button-toggle
+    >
 
-      
+    <!-- <mat-button-toggle value="forecast">Forecast</mat-button-toggle> -->
+    <!-- <mat-button-toggle value="pl">P&L</mat-button-toggle> -->
+    <!-- <mat-button-toggle value="totalPl">Total P&L</mat-button-toggle> -->
+    <!-- <mat-button-toggle value="casinoTotal">Casino Total P&L</mat-button-toggle> -->
+    <mat-button-toggle value="transactions">Transactions</mat-button-toggle>
+    <mat-button-toggle
+      value="sub-accounts-transactions"
+      *ngIf="
+        this.authService.decodedToken.role !== undefined &&
+        this.authService.decodedToken.role !== 'Client'
+      "
+      >SubAccounts Transactions</mat-button-toggle
+    >
 
-      <!-- <mat-button-toggle value="forecast">Forecast</mat-button-toggle> -->
-      <!-- <mat-button-toggle value="pl">P&L</mat-button-toggle> -->
-      <!-- <mat-button-toggle value="totalPl">Total P&L</mat-button-toggle> -->
-      <!-- <mat-button-toggle value="casinoTotal">Casino Total P&L</mat-button-toggle> -->
-      <mat-button-toggle value="transactions">Transactions</mat-button-toggle>
-      <mat-button-toggle value="sub-accounts-transactions" *ngIf="this.authService.decodedToken.role !== undefined && this.authService.decodedToken.role !== 'Client'"
-      >SubAccounts Transactions</mat-button-toggle>
+    <mat-button-toggle
+      *ngIf="
+        this.authService.decodedToken.role == 'SoftwareHolder' ||
+        this.authService.decodedToken.role === 'SuperAdmin'
+      "
+      value="bettingRules"
+      >Betting Rules</mat-button-toggle
+    >
 
-      <mat-button-toggle *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'|| this.authService.decodedToken.role === 'SuperAdmin' " value="bettingRules">Betting Rules</mat-button-toggle>
+    <mat-button-toggle
+      value="sports"
+      [checked]="false"
+      *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'"
+      >Sports</mat-button-toggle
+    >
 
-      <mat-button-toggle value="sports" [checked]="false" *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'"
-      >Sports</mat-button-toggle>
-      
+    <mat-button-toggle
+      value="regions"
+      [checked]="false"
+      *ngIf="
+        this.authService.decodedToken.role == 'SoftwareHolder' ||
+        this.authService.decodedToken.role === 'SuperAdmin'
+      "
+      >Regions</mat-button-toggle
+    >
 
-      <mat-button-toggle value="regions" [checked]="false"
-      *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'|| this.authService.decodedToken.role === 'SuperAdmin' "
-      >Regions</mat-button-toggle>
-      
+    <mat-button-toggle
+      value="leagues"
+      [checked]="false"
+      *ngIf="
+        this.authService.decodedToken.role == 'SoftwareHolder' ||
+        this.authService.decodedToken.role === 'SuperAdmin'
+      "
+      >Leagues</mat-button-toggle
+    >
+  </mat-button-toggle-group>
 
-      <mat-button-toggle value="leagues" [checked]="false"
-      *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'|| this.authService.decodedToken.role === 'SuperAdmin' "
-      >Leagues</mat-button-toggle>
-      
-    </mat-button-toggle-group>
-  
-    <h3 class="cs-super-profile-account-name">{{myUser?.userName}}</h3>
-  </mat-toolbar>
-  <div class="cs-summary-card-container">
-    <mat-card>
-      <div [@contentInOut] *ngIf="profile.value == 'summary'" class="cs-summary-container" >
-        <div>Email: &nbsp; <span>{{myUser.email}}</span> </div>
-        <div>Username: &nbsp; <span>{{myUser.userName}}</span></div>
-        <div>Phone Number: &nbsp; <span> {{myUser?.phoneNumber}} </span></div>
-        <div>Balance: &nbsp; <span> {{this.sharedService.formatNumber( myUser?.wallet?.balance )}} </span></div>
-        <div>Wallet Currency: &nbsp; <span> {{myUser?.wallet?.currency}} </span></div>
-        <div *ngIf="myUser.role !== 'Client'">SubAccounts Balance: &nbsp; <span> {{this.sharedService.formatNumber( myUser?.subAccountBalance )}} </span></div>
-        <div *ngIf="myUser?.role !== 'SuperAdmin' && myUser?.role !== 'SoftwareHolder'">Parents Commission: &nbsp; <span>{{this.sharedService.formatNumber( myUser?.parentCommission*100)}}%</span></div>
-        <div *ngIf="myUser.role !== 'Client' && myUser.role !== 'SoftwareHolder'">Commission: &nbsp; <span>{{this.sharedService.formatNumber( myUser?.commission*100)}}%</span></div>
-        <div *ngIf="myUser?.role === 'SuperAdmin'">Unsettled Commission: &nbsp; <span> {{this.sharedService.formatNumber( myUser?.unsettledCommission)}} </span></div>
-        <div *ngIf="myUser?.role === 'SuperAdmin'">Profit Commission: &nbsp; <span>{{this.sharedService.formatNumber( myUser?.profitCommission*100)}}%</span></div>
-        <!-- <div *ngIf="myUser?.role !== 'SoftwareHolder' && myUser.role !== 'Client'">Risk: &nbsp; <span>{{this.sharedService.formatNumber( myUser?.risk)}}%</span></div> -->
-        <div *ngIf="myUser?.role === 'Admin'">Forced PT: &nbsp; <span>{{this.sharedService.formatNumber( myUser?.minRisk)}}%</span></div>
-        <div *ngIf="myUser?.role === 'Admin'">Max PT: &nbsp; <span>{{this.sharedService.formatNumber( myUser?.maxRisk)}}%</span></div>
+  <h3 class="cs-super-profile-account-name">{{ myUser?.userName }}</h3>
+</mat-toolbar>
+<div class="cs-summary-card-container">
+  <mat-card>
+    <div
+      [@contentInOut]
+      *ngIf="profile.value == 'summary'"
+      class="cs-summary-container"
+    >
+      <div>
+        Email: &nbsp; <span>{{ myUser.email }}</span>
+      </div>
+      <div>
+        Username: &nbsp; <span>{{ myUser.userName }}</span>
+      </div>
+      <div>
+        Phone Number: &nbsp; <span> {{ myUser?.phoneNumber }} </span>
+      </div>
+      <div>
+        Balance: &nbsp;
+        <span>
+          {{ this.sharedService.formatNumber(myUser?.wallet?.balance) }}
+        </span>
+      </div>
+      <div>
+        Wallet Currency: &nbsp; <span> {{ myUser?.wallet?.currency }} </span>
+      </div>
+      <div *ngIf="myUser.role !== 'Client'">
+        SubAccounts Balance: &nbsp;
+        <span>
+          {{ this.sharedService.formatNumber(myUser?.subAccountBalance) }}
+        </span>
+      </div>
+      <div
+        *ngIf="
+          myUser?.role !== 'SuperAdmin' && myUser?.role !== 'SoftwareHolder'
+        "
+      >
+        Parents Commission: &nbsp;
+        <span
+          >{{
+            this.sharedService.formatNumber(myUser?.parentCommission * 100)
+          }}%</span
+        >
+      </div>
+      <div *ngIf="myUser.role !== 'Client' && myUser.role !== 'SoftwareHolder'">
+        Commission: &nbsp;
+        <span
+          >{{
+            this.sharedService.formatNumber(myUser?.commission * 100)
+          }}%</span
+        >
+      </div>
+      <div *ngIf="myUser?.role === 'SuperAdmin'">
+        Unsettled Commission: &nbsp;
+        <span>
+          {{ this.sharedService.formatNumber(myUser?.unsettledCommission) }}
+        </span>
+      </div>
+      <div *ngIf="myUser?.role === 'SuperAdmin'">
+        Profit Commission: &nbsp;
+        <span
+          >{{
+            this.sharedService.formatNumber(myUser?.profitCommission * 100)
+          }}%</span
+        >
+      </div>
+      <!-- <div *ngIf="myUser?.role !== 'SoftwareHolder' && myUser.role !== 'Client'">Risk: &nbsp; <span>{{this.sharedService.formatNumber( myUser?.risk)}}%</span></div> -->
+      <div *ngIf="myUser?.role === 'Admin'">
+        Forced PT: &nbsp;
+        <span>{{ this.sharedService.formatNumber(myUser?.minRisk) }}%</span>
+      </div>
+      <div *ngIf="myUser?.role === 'Admin'">
+        Max PT: &nbsp;
+        <span>{{ this.sharedService.formatNumber(myUser?.maxRisk) }}%</span>
+      </div>
 
-        <div>Active: &nbsp; <span> 
-        {{myUser?.isActive ? 'True' : 'False'}}
+      <div>
+        Active: &nbsp;
+        <span>
+          {{ myUser?.isActive ? "True" : "False" }}
           <!-- <mat-icon *ngIf="!myUser?.isActive" class="wrong-sign">dangerous</mat-icon>
           <mat-icon *ngIf="myUser?.isActive" class="tick-sign">check_circle</mat-icon>   -->
-        
-        </span></div>
-        <div>Suspended: &nbsp; <span>
-        {{myUser?.isSuspended ? 'True' : 'False'}}
+        </span>
+      </div>
+      <div>
+        Suspended: &nbsp;
+        <span>
+          {{ myUser?.isSuspended ? "True" : "False" }}
           <!-- <mat-icon *ngIf="!myUser?.isSuspended" class="wrong-sign">dangerous</mat-icon>
           <mat-icon *ngIf="myUser?.isSuspended" class="tick-sign">check_circle</mat-icon>   -->
-        
-        </span></div>
-        <!-- <div>Role: &nbsp; <span> {{myUser?.role}} </span></div> -->
+        </span>
+      </div>
+      <!-- <div>Role: &nbsp; <span> {{myUser?.role}} </span></div> -->
 
-
-        <div (click)="openRiskTableDialog(myUser)" *ngIf="myUser?.role === 'Admin' || myUser?.role === 'SuperAdmin'">
-          <a class="clickable blue-text">Show Risks</a>
-        </div>
-
-        <div (click)="openRiskUpdateDialog(myUser)" *ngIf="myUser?.role === 'Master'">
-          <a  class="clickable blue-text">Edit My Risk</a>
-        </div>
-        
-        <div (click)="openCommissionUpdateDialog(myUser)" *ngIf="myUser?.role === 'Admin' || myUser?.role === 'SuperAdmin' || myUser?.role === 'Master'">
-          <a  class="clickable blue-text">Set My Commission</a>
-        </div>
-
+      <div
+        (click)="openRiskTableDialog(myUser)"
+        *ngIf="myUser?.role === 'Admin' || myUser?.role === 'SuperAdmin'"
+      >
+        <a class="clickable blue-text">Show Risks</a>
       </div>
 
-      <div [@contentInOut] *ngIf="profile.value == 'changePassword'">
-        <form
-          [formGroup]="changePasswordForm"
-          class="cs-super-change-password-form"
-        >
-          <mat-form-field>
-            <mat-label>Old Password</mat-label>
-            <input
-              matInput
-              placeholder="Old Password"
-              formControlName="oldPassword"
-              required
-              autocomplete="off"
-            />
-            <mat-error *ngIf="changePasswordForm.controls.oldPassword.invalid"
-              >This field is required.</mat-error
-            >
-          </mat-form-field>
-  
-          <mat-form-field>
-            <mat-label>New Password</mat-label>
-            <input
-              matInput
-              placeholder="New Password"
-              formControlName="newPassword"
-              required
-              autocomplete="off"
-            />
-            <mat-error *ngIf="changePasswordForm.controls.newPassword.invalid"
-              >This field is required.</mat-error
-            >
-          </mat-form-field>
-  
-          <mat-form-field>
-            <mat-label>New Password Confirm</mat-label>
-            <input
-              matInput
-              placeholder="New Password Confirm"
-              formControlName="confirmNewPassword"
-              required
-              autocomplete="off"
-            />
-            <mat-error
-              *ngIf="changePasswordForm.controls.confirmNewPassword.invalid"
-              >This field is required.</mat-error
-            >
-          </mat-form-field>
-        </form>
-        <button
-          mat-button
-          color="primary"
-          style="display: flex; margin-left: auto"
-          [disabled]="!changePasswordForm.valid"
-          (click)="updatePassword()"
-        >
-          Save
-        </button>
+      <div
+        (click)="openRiskUpdateDialog(myUser)"
+        *ngIf="myUser?.role === 'Master'"
+      >
+        <a class="clickable blue-text">Edit My Risk</a>
       </div>
-      
-      <div [@contentInOut] *ngIf="profile.value == 'bettingHistory'">
-        <div class="cs-d-flex">
-          
-          <div class="refresh-button-container">
-            <button mat-fab class="reload-btn" (click)="loadBets()"
-            [disabled]="disableReloadBtn(rangeBets.controls)" >
-              <mat-icon>refresh</mat-icon>
-            </button>
-          </div>
-    
-          <mat-form-field appearance="fill" style="margin-left: 10px">
-            <mat-label>Enter a date range</mat-label>
-            <mat-date-range-input [formGroup]="rangeBets" [rangePicker]="picker">
-              <input
-                matStartDate
-                formControlName="start"
-                placeholder="Start date"
-                
-              />
-              
-              <input matEndDate formControlName="end" placeholder="End date"  />
-              
-            </mat-date-range-input>
-            <mat-datepicker-toggle
-              matSuffix
-              [for]="picker"
-            ></mat-datepicker-toggle>
-            <mat-date-range-picker #picker></mat-date-range-picker>
-            <mat-error
-              *ngIf="rangeBets.controls.start.hasError('matStartDateInvalid')"
-              >Invalid start date</mat-error
-            >
-            <mat-error *ngIf="rangeBets.controls.end.hasError('matEndDateInvalid')"
-              >Invalid end date</mat-error
-            >
-          </mat-form-field>
-  
-          <mat-form-field appearance="fill" class="table-filter">
-            <mat-label>Sport </mat-label>
-            <mat-select 
-            [(ngModel)]="sportIdForBets"
-            >
-              <mat-option [value]="''" > All </mat-option>
-              <mat-option *ngFor="let sport of sportsList" [value]="sport.id" > {{sport.name}} </mat-option>
-            </mat-select>
-          </mat-form-field>
-          
-          <mat-form-field appearance="fill" class="table-filter">
-            <mat-label>Bet Type</mat-label>
-            <mat-select 
-            [(ngModel)]="betTypeForBets"
-            >
-              <mat-option [value]="''" > All </mat-option>
-              <mat-option [value]="'BACK'" > BACK </mat-option>
-              <mat-option [value]="'LAY'" > LAY </mat-option>
-            </mat-select>
-          </mat-form-field>
 
+      <div
+        (click)="openCommissionUpdateDialog(myUser)"
+        *ngIf="
+          myUser?.role === 'Admin' ||
+          myUser?.role === 'SuperAdmin' ||
+          myUser?.role === 'Master'
+        "
+      >
+        <a class="clickable blue-text">Set My Commission</a>
+      </div>
+    </div>
+
+    <div [@contentInOut] *ngIf="profile.value == 'changePassword'">
+      <form
+        [formGroup]="changePasswordForm"
+        class="cs-super-change-password-form"
+      >
+        <mat-form-field>
+          <mat-label>Old Password</mat-label>
+          <input
+            matInput
+            placeholder="Old Password"
+            formControlName="oldPassword"
+            required
+            autocomplete="off"
+          />
+          <mat-error *ngIf="changePasswordForm.controls.oldPassword.invalid"
+            >This field is required.</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>New Password</mat-label>
+          <input
+            matInput
+            placeholder="New Password"
+            formControlName="newPassword"
+            required
+            autocomplete="off"
+          />
+          <mat-error *ngIf="changePasswordForm.controls.newPassword.invalid"
+            >This field is required.</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>New Password Confirm</mat-label>
+          <input
+            matInput
+            placeholder="New Password Confirm"
+            formControlName="confirmNewPassword"
+            required
+            autocomplete="off"
+          />
+          <mat-error
+            *ngIf="changePasswordForm.controls.confirmNewPassword.invalid"
+            >This field is required.</mat-error
+          >
+        </mat-form-field>
+      </form>
+      <button
+        mat-button
+        color="primary"
+        style="display: flex; margin-left: auto"
+        [disabled]="!changePasswordForm.valid"
+        (click)="updatePassword()"
+      >
+        Save
+      </button>
+    </div>
+
+    <div [@contentInOut] *ngIf="profile.value == 'bettingHistory'">
+      <div class="cs-d-flex">
+        <div class="refresh-button-container">
+          <button
+            mat-fab
+            class="reload-btn"
+            (click)="loadBets()"
+            [disabled]="disableReloadBtn(rangeBets.controls)"
+          >
+            <mat-icon>refresh</mat-icon>
+          </button>
         </div>
-  
-        <div class="cs-d-flex">
 
-          <mat-form-field appearance="fill" class="table-filter" (click)="setUserIdForBet()" *ngIf="userIdForBets !== ''" style="cursor: pointer;" >
-            <!-- <mat-label>Username</mat-label> -->
+        <mat-form-field appearance="fill" style="margin-left: 10px">
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input [formGroup]="rangeBets" [rangePicker]="picker">
             <input
+              matStartDate
+              formControlName="start"
+              placeholder="Start date"
+            />
+
+            <input matEndDate formControlName="end" placeholder="End date" />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+          <mat-error
+            *ngIf="rangeBets.controls.start.hasError('matStartDateInvalid')"
+            >Invalid start date</mat-error
+          >
+          <mat-error
+            *ngIf="rangeBets.controls.end.hasError('matEndDateInvalid')"
+            >Invalid end date</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="table-filter">
+          <mat-label>Sport </mat-label>
+          <mat-select [(ngModel)]="sportIdForBets">
+            <mat-option [value]="''"> All </mat-option>
+            <mat-option *ngFor="let sport of sportsList" [value]="sport.id">
+              {{ sport.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="table-filter">
+          <mat-label>Bet Type</mat-label>
+          <mat-select [(ngModel)]="betTypeForBets">
+            <mat-option [value]="''"> All </mat-option>
+            <mat-option [value]="'BACK'"> BACK </mat-option>
+            <mat-option [value]="'LAY'"> LAY </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="cs-d-flex">
+        <mat-form-field
+          appearance="fill"
+          class="table-filter"
+          (click)="setUserIdForBet()"
+          *ngIf="userIdForBets !== ''"
+          style="cursor: pointer"
+        >
+          <!-- <mat-label>Username</mat-label> -->
+          <input
             type="text"
             matInput
             placeholder="usernameForIdForBets"
             [(ngModel)]="this.usernameForIdForBets"
-            style="text-align:center;"
+            style="text-align: center"
             (ngModelChange)="setUserIdForBet()"
-            />
-          </mat-form-field>
+          />
+        </mat-form-field>
 
-          <mat-form-field appearance="fill" class="table-filter" *ngIf="userIdForBets === ''">
-            <mat-label>Username</mat-label>
-            <input
+        <mat-form-field
+          appearance="fill"
+          class="table-filter"
+          *ngIf="userIdForBets === ''"
+        >
+          <mat-label>Username</mat-label>
+          <input
             type="text"
-              matInput
-              placeholder="Username"
-              [(ngModel)]="usernameForBets"
-              (ngModelChange)="this.userQuestionUpdate.next($event)"
-            />
-          </mat-form-field>
+            matInput
+            placeholder="Username"
+            [(ngModel)]="usernameForBets"
+            (ngModelChange)="this.userQuestionUpdate.next($event)"
+          />
+        </mat-form-field>
 
-          <mat-form-field appearance="fill" class="table-filter">
-            <mat-label>Status</mat-label>
-            <mat-select 
-            [(ngModel)]="statusForBets"
-            >
-              <mat-option [value]="''" > All </mat-option>
-              <mat-option [value]="'WIN'" > Win </mat-option>
-              <mat-option [value]="'LOSE'" > Lose </mat-option>
-              <mat-option [value]="'PENDING'" > Pending </mat-option>
-              <mat-option [value]="'VOID'" > Void </mat-option>
-              <mat-option [value]="'UNMATCHED'" > Unmatched </mat-option>
-              <mat-option [value]="'EXPIRED'" > Expired </mat-option>
-              <mat-option [value]="'SETTLED'" > Settled </mat-option>
-              <mat-option [value]="'UNSETTLED'" > Unsettled </mat-option>
-            </mat-select>
-          </mat-form-field>
+        <mat-form-field appearance="fill" class="table-filter">
+          <mat-label>Status</mat-label>
+          <mat-select [(ngModel)]="statusForBets">
+            <mat-option [value]="''"> All </mat-option>
+            <mat-option [value]="'WIN'"> Win </mat-option>
+            <mat-option [value]="'LOSE'"> Lose </mat-option>
+            <mat-option [value]="'PENDING'"> Pending </mat-option>
+            <mat-option [value]="'VOID'"> Void </mat-option>
+            <mat-option [value]="'UNMATCHED'"> Unmatched </mat-option>
+            <mat-option [value]="'EXPIRED'"> Expired </mat-option>
+            <mat-option [value]="'SETTLED'"> Settled </mat-option>
+            <mat-option [value]="'UNSETTLED'"> Unsettled </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-          
-          <span appearance="fill" class="table-filter" style="height: 100%;">
-            <mat-slide-toggle [(ngModel)]="onActionDateForBets" style="transform: translateY(60%); "> Action Date</mat-slide-toggle>
-          </span>
-          
-          <!-- <div class="col-xl-12" *ngIf="usernameAlert != null">
+        <span appearance="fill" class="table-filter" style="height: 100%">
+          <mat-slide-toggle
+            [(ngModel)]="onActionDateForBets"
+            style="transform: translateY(60%)"
+          >
+            Action Date</mat-slide-toggle
+          >
+        </span>
+
+        <!-- <div class="col-xl-12" *ngIf="usernameAlert != null">
             <p>
               <ngb-alert
                 style="text-align: center"
@@ -278,609 +399,204 @@
               >
             </p>
           </div> -->
-
-
-        </div>
-
-        <table
-          mat-table
-          [dataSource]="bettingHistoryData"
-          style="min-width: 870px"
-        >
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef>ID</th>
-            <td mat-cell *matCellDef="let row">{{ row.id }}</td>
-            <td mat-footer-cell *matFooterCellDef> </td>
-          </ng-container>
-          
-          <ng-container matColumnDef="userName">
-            <th mat-header-cell *matHeaderCellDef>Username</th>
-            <td mat-cell *matCellDef="let row" (click)="setUserIdForBet(row.userName, row.userId)" class="underline-text">{{ row.userName }}</td>
-            <td mat-footer-cell *matFooterCellDef> </td>
-          </ng-container>
-          
-          <ng-container matColumnDef="sport">
-            <th mat-header-cell *matHeaderCellDef>Sport</th>
-            <td mat-cell *matCellDef="let row">{{ this.sharedService.getSportNameById(row.selection.eventTypeId) }}</td>
-            <td mat-footer-cell *matFooterCellDef> </td>
-          </ng-container>
-             
-
-          <ng-container matColumnDef="eventName">
-            <th mat-header-cell *matHeaderCellDef>Event</th>
-            <td mat-cell *matCellDef="let row" (click)="openMarketsForEvent(row)"
-            [ngClass]="{'clickable': this.authService.decodedToken.role === 'Client'}"
-            >{{ row.selection.eventName }}</td>
-            <td mat-footer-cell *matFooterCellDef> Totals : </td>
-          </ng-container>
-             
-          <ng-container matColumnDef="marketName">
-            <th mat-header-cell *matHeaderCellDef>Market</th>
-            <td mat-cell *matCellDef="let row">{{ row.selection.marketName }}</td>
-            <td mat-footer-cell *matFooterCellDef></td>
-          </ng-container> 
-             
-          <ng-container matColumnDef="selectionName">
-            <th mat-header-cell *matHeaderCellDef>Selection</th>
-            <td mat-cell *matCellDef="let row">{{ row.selection.fullSelectionName }}</td>
-            <td mat-footer-cell *matFooterCellDef> </td>
-          </ng-container>
-            
-          <ng-container matColumnDef="betType">
-            <th mat-header-cell *matHeaderCellDef>Bet Type</th>
-            <td mat-cell *matCellDef="let row">{{ row.selection.betType }}</td>
-            <td mat-footer-cell *matFooterCellDef></td>
-          </ng-container>
-              
-          <ng-container matColumnDef="selectionType">
-            <th mat-header-cell *matHeaderCellDef>Sel. Type</th>
-            <td mat-cell *matCellDef="let row">{{ row.selectionType }}</td>
-            <td mat-footer-cell *matFooterCellDef></td>
-          </ng-container>
-             
-          <ng-container matColumnDef="stake">
-            <th mat-header-cell *matHeaderCellDef>Stake</th>
-            <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.stake)  }}</td>
-            <td mat-footer-cell *matFooterCellDef> {{ this.sharedService.formatNumber(betTotals?.totalStake) }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="liability">
-            <th mat-header-cell *matHeaderCellDef>Liability</th>
-            <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.liability)  }}</td>
-            <td mat-footer-cell *matFooterCellDef> {{  this.sharedService.formatNumber(betTotals?.totalLiability) }}</td>
-          </ng-container>
-  
-          <ng-container matColumnDef="odd">
-            <th mat-header-cell *matHeaderCellDef>Odd</th>
-            <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.odd)  }}</td>
-            <td mat-footer-cell *matFooterCellDef></td>
-          </ng-container>
-          
-          <ng-container matColumnDef="payout">
-            <th mat-header-cell *matHeaderCellDef>Potential Payout</th>
-            <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.payout)  }}</td>
-            <td mat-footer-cell *matFooterCellDef></td>
-          </ng-container>
-
-          <ng-container matColumnDef="netWin">
-            <th mat-header-cell *matHeaderCellDef>Possible net</th>
-            <td mat-cell *matCellDef="let row"
-           
-            >{{ this.sharedService.formatNumber(row.netWin)  }} </td>
-
-            <td mat-footer-cell *matFooterCellDef>{{ this.sharedService.formatNumber(betTotals?.totalNetWin) }}</td>
-          </ng-container>
-
-          
-          <ng-container matColumnDef="actualWin">
-            <th mat-header-cell *matHeaderCellDef>Net</th>
-            <td mat-cell *matCellDef="let row"
-            [ngClass]="{'win-money': row.actualWin >= 0,
-                        'loss-money': row.actualWin < 0}"
-            >{{ this.sharedService.formatNumber(row.actualWin)  }}  </td>
-
-            <td mat-footer-cell *matFooterCellDef>{{ this.sharedService.formatNumber(betTotals?.totalActualWin)}}</td>
-          </ng-container>
-  
-          <ng-container matColumnDef="matchedSize">
-            <th mat-header-cell *matHeaderCellDef>Matched Size</th>
-            <td mat-cell *matCellDef="let row">{{ row.matchedSize }}</td>
-            <td mat-footer-cell *matFooterCellDef></td>
-          </ng-container>
-           
-          <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef>Status</th>
-            <td mat-cell *matCellDef="let row" class="{{row.status.toLowerCase()}}-bet bold-font"
-            >{{ row.status }}</td>
-            <td mat-footer-cell *matFooterCellDef></td>
-          </ng-container>
-             
-          <ng-container matColumnDef="date">
-            <th mat-header-cell *matHeaderCellDef>Date</th>
-            <td mat-cell *matCellDef="let row">{{ row.date| date:'d/M/yyyy, h:mm a' }}</td>
-            <td mat-footer-cell *matFooterCellDef></td>
-          </ng-container>
-             
-          <ng-container matColumnDef="lastActionDate">
-            <th mat-header-cell *matHeaderCellDef>Last Action</th>
-            <td mat-cell *matCellDef="let row">{{ row.lastActionDate| date:'d/M/yyyy, h:mm a' }}</td>
-            <td mat-footer-cell *matFooterCellDef></td>
-          </ng-container>
-             
-          <ng-container matColumnDef="eventDate">
-            <th mat-header-cell *matHeaderCellDef>Event Date</th>
-            <td mat-cell *matCellDef="let row">{{ row.selection.eventDate| date:'d/M/yyyy, h:mm a' }}</td>
-            <td mat-footer-cell *matFooterCellDef></td>
-          </ng-container>
-             
-          <ng-container matColumnDef="matchedDate">
-            <th mat-header-cell *matHeaderCellDef>Matched Date</th>
-            <td mat-cell *matCellDef="let row">{{ this.sharedService.getMatchedDate(row.matchedDate)| date:'d/M/yyyy, h:mm a' }}</td>
-            <td mat-footer-cell *matFooterCellDef></td>
-          </ng-container>
-       
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
-            <td mat-cell *matCellDef="let row">
-              <button
-                mat-icon-button
-                [matMenuTriggerFor]="menu"
-                (click)="$event.stopPropagation()"
-              >
-                <mat-icon>more_vert</mat-icon>
-    
-                <mat-menu #menu="matMenu">
-                  <button mat-menu-item (click)="openBetDetail(row)">
-                    <mat-icon>feed</mat-icon>
-                    <span>Details</span>
-                  </button>
-
-                  
-                  <button mat-menu-item (click)="openMarketsForEvent(row)" *ngIf="this.authService.decodedToken.role === 'Client'">
-                    <mat-icon>add_business</mat-icon>
-                    <span>Event markets</span>
-                  </button>
-  
-                  <button mat-menu-item (click)="openBetSettleDialog(row,'win')" *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'">
-                    <mat-icon>done</mat-icon>
-                    <span>Set win</span>
-                  </button>
-  
-                  <button mat-menu-item (click)="openBetSettleDialog(row,'lose')" *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'">
-                    <mat-icon>close</mat-icon>
-                    <span>Set Lose</span>
-                  </button>
-  
-                  <button mat-menu-item (click)="openBetSettleDialog(row,'cancel')" *ngIf="this.showCancelBet(row)">
-                    <mat-icon>delete_outline</mat-icon>
-                    <span>Cancel</span>
-                  </button>
-                                 
-                 
-                </mat-menu>
-              </button>
-    
-              
-             
-  
-            </td>
-            <td mat-footer-cell *matFooterCellDef></td>
-          </ng-container>
-  
-           <!-- Master Actions -->
-       
-           
-    
-          <!-- Master Actions -->
-
-
-
-          <!-- 2nd header start -->
-          <ng-container matColumnDef="h1">
-            <th mat-header-cell *matHeaderCellDef>  </th>
-          </ng-container>
-          <ng-container matColumnDef="h2">
-            <th mat-header-cell *matHeaderCellDef> Totals : </th>
-          </ng-container>
-          <ng-container matColumnDef="h3">
-            <th mat-header-cell *matHeaderCellDef>  </th>
-          </ng-container>
-          <ng-container matColumnDef="h4">
-            <th mat-header-cell *matHeaderCellDef>  </th>
-          </ng-container>
-          <ng-container matColumnDef="h5">
-            <th mat-header-cell *matHeaderCellDef>  </th>
-          </ng-container>
-          <ng-container matColumnDef="h6">
-            <th mat-header-cell *matHeaderCellDef> {{ this.sharedService.formatNumber(betTotals?.totalStake) }} </th>
-          </ng-container>
-          <ng-container matColumnDef="h7">
-            <th mat-header-cell *matHeaderCellDef> {{  this.sharedService.formatNumber(betTotals?.totalLiability) }} </th>
-          </ng-container>
-          <ng-container matColumnDef="h8">
-            <th mat-header-cell *matHeaderCellDef>  </th>
-          </ng-container>
-          <ng-container matColumnDef="h9">
-            <th mat-header-cell *matHeaderCellDef>  </th>
-          </ng-container>
-          <ng-container matColumnDef="h10">
-            <th mat-header-cell *matHeaderCellDef> {{ this.sharedService.formatNumber(betTotals?.totalNetWin) }} </th>
-          </ng-container>
-          <ng-container matColumnDef="h11">
-            <th mat-header-cell *matHeaderCellDef
-            [ngClass]="{'win-money': betTotals?.totalActualWin >= 0,
-                      'loss-money': betTotals?.totalActualWin < 0}"
-                      > {{ this.sharedService.formatNumber(betTotals?.totalActualWin)}} </th>
-          </ng-container>
-          <ng-container matColumnDef="h12">
-            <th mat-header-cell *matHeaderCellDef>  </th>
-          </ng-container>
-          <ng-container matColumnDef="h13">
-            <th mat-header-cell *matHeaderCellDef>  </th>
-          </ng-container>
-          <ng-container matColumnDef="h14">
-            <th mat-header-cell *matHeaderCellDef>  </th>
-          </ng-container>
-          <!-- 2nd header end -->
-
-
-  
-          <tr
-            mat-header-row
-            *matHeaderRowDef="displayedColumnsBettingHistory"
-          ></tr>
-
-          <tr
-            mat-header-row
-            *matHeaderRowDef="['h1','h2','h3','h4','h5','h6','h7','h8','h9','h10','h11','h12','h13','h14']"
-          ></tr>
-
-          <tr
-            mat-row
-            *matRowDef="let row; columns: displayedColumnsBettingHistory"
-            [ngClass]="{'Back-bet-selection': row.selection.betType == 'BACK',
-                        'Lay-bet-selection': row.selection.betType == 'LAY'}"
-          ></tr>
-          <!-- <tr mat-footer-row *matFooterRowDef="displayedColumnsBettingHistory"></tr> -->
-        </table>
-  
-  
-        <mat-paginator 
-        [length]="lengthBets"
-        [pageSize]="pageSize"
-        [pageSizeOptions]="this.sharedService.pageSizeOptions"
-        (page)="updatePageBets($event)"
-        >
-        </mat-paginator>
-      </div>
-      
-
-      <!-- end of bet history -->
-
-      <div [@contentInOut] *ngIf="profile.value == 'bettingExposure'">
-       
-
-        <table
-          mat-table
-          [dataSource]="bettingExpoData"
-          style="min-width: 870px"
-        >
-
-
-          
-          <ng-container matColumnDef="eventName">
-            <th mat-header-cell *matHeaderCellDef >Event Name</th>
-            <td mat-cell *matCellDef="let row" (click)="openExpoDetail(row)" class="clickable">{{ row.eventName }}</td>
-          </ng-container>
-          
-          <ng-container matColumnDef="betsPlayed">
-            <th mat-header-cell *matHeaderCellDef>Bets</th>
-            <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.bets.length, false) }}</td>
-          </ng-container>
-             
-          <ng-container matColumnDef="userPlayed">
-            <th mat-header-cell *matHeaderCellDef>Players</th>
-            <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber( this.getPlayerNumForSelection(row.bets), false) }}</td>
-          </ng-container>
-             
-          <ng-container matColumnDef="netLoss">
-            <th mat-header-cell *matHeaderCellDef>Max Loss</th>
-            <td mat-cell *matCellDef="let row">{{ row.netLoss }}</td>
-          </ng-container> 
-             
-          <ng-container matColumnDef="netWin">
-            <th mat-header-cell *matHeaderCellDef>Max Win</th>
-            <td mat-cell *matCellDef="let row">{{ row.netWin }}</td>
-          </ng-container>
-            
-          <ng-container matColumnDef="risk">
-            <th mat-header-cell *matHeaderCellDef>Risk</th>
-            <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.risk) }}%</td>
-          </ng-container>
-              
-          <ng-container matColumnDef="possibleWin">
-            <th mat-header-cell *matHeaderCellDef>My Possible Win</th>
-            <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.possibleWin)  }}</td>
-          </ng-container>
-             
-          <ng-container matColumnDef="possibleLoss">
-            <th mat-header-cell *matHeaderCellDef>My Possible Loss</th>
-            <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.possibleLoss)  }}</td>
-          </ng-container>
-
-         
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
-            <td mat-cell *matCellDef="let row">
-              <button
-                mat-icon-button
-                [matMenuTriggerFor]="menu"
-                (click)="$event.stopPropagation()"
-              >
-                <mat-icon>more_vert</mat-icon>
-    
-                <mat-menu #menu="matMenu">
-                 
-                  <button mat-menu-item (click)="openExpoDetail(row)">
-                    <mat-icon>feed</mat-icon>
-                    <span>Details</span>
-                  </button>
-
-                  
-                 
-                </mat-menu>
-              </button>
-    
-              
-             
-  
-            </td>
-            <td mat-footer-cell *matFooterCellDef></td>
-          </ng-container>
-  
-           <!-- Master Actions -->
-       
-           
-    
-          <!-- Master Actions -->
-  
-
-          <!-- 2nd header start -->
-         <ng-container matColumnDef="h1">
-          <th mat-header-cell *matHeaderCellDef> Totals : </th>
-        </ng-container>
-        <ng-container matColumnDef="h2">
-          <th mat-header-cell *matHeaderCellDef>  </th>
-        </ng-container>
-        <ng-container matColumnDef="h3">
-          <th mat-header-cell *matHeaderCellDef>  </th>
-        </ng-container>
-        <ng-container matColumnDef="h4">
-          <th mat-header-cell *matHeaderCellDef> {{expoTotals.totalPossibleWin}} </th>
-        </ng-container>
-        <ng-container matColumnDef="h5">
-          <th mat-header-cell *matHeaderCellDef> {{expoTotals.totalPossibleLoss}}  </th>
-        </ng-container>
-        <ng-container matColumnDef="h6">
-          <th mat-header-cell *matHeaderCellDef>  </th>
-        </ng-container>
-        <ng-container matColumnDef="h7">
-          <th mat-header-cell *matHeaderCellDef> {{expoTotals.totalNetWin}} </th>
-        </ng-container>
-        <ng-container matColumnDef="h8">
-          <th mat-header-cell *matHeaderCellDef> {{expoTotals.totalNetLoss}} </th>
-        </ng-container>
-        <ng-container matColumnDef="h9">
-          <th mat-header-cell *matHeaderCellDef>  </th>
-        </ng-container>
-        <!-- 2nd header end -->
-
-          <tr
-            mat-header-row
-            *matHeaderRowDef="displayedColumnsExpo"
-          ></tr>
-
-          <tr
-            mat-header-row
-            *matHeaderRowDef="['h1','h2','h3','h4','h5','h6','h7','h8','h9']"
-          ></tr>
-
-          <tr
-            mat-row
-            *matRowDef="let row; columns: displayedColumnsExpo"
-          ></tr>
-        </table>
-  
-  
-        <mat-paginator 
-        [length]="lengthExpo"
-        [pageSize]="pageSize"
-        [pageSizeOptions]="this.sharedService.pageSizeOptions"
-        (page)="updatePageExpo($event)"
-        >
-        </mat-paginator>
       </div>
 
+      <table
+        mat-table
+        [dataSource]="bettingHistoryData"
+        style="min-width: 870px"
+      >
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
 
-      <div [@contentInOut] *ngIf="profile.value == 'subAccounts'">
-        <div class="cs-d-flex">
-  
-          
-          <div class="refresh-button-container">
-            <button mat-fab class="reload-btn" (click)="loadSubAccounts()" >
-              <mat-icon>refresh</mat-icon>
-            </button>
-          </div>
-  
-  
-  
-          <mat-form-field appearance="fill" class="table-filter">
-            <mat-label>Role </mat-label>
-            <mat-select 
-            [(ngModel)]="roleSearch"
-            >
-              <mat-option [value]="''" > All </mat-option>
-              <mat-option *ngFor="let role of rolesOptions" [value]="role.name" > {{role.name}} </mat-option>
-            </mat-select>
-          </mat-form-field>
-          
-
-          <mat-form-field appearance="fill" class="table-filter" *ngIf="this.myUser?.role == 'SoftwareHolder'">
-            <mat-label>SuperAdmin</mat-label>
-            <mat-select 
-            [(ngModel)]="superAdminIdSearch"
-            (selectionChange)="userDropdownChange(superAdminIdSearch,'-1','SuperAdmin','Admin')"
-            [disabled]="this.roleSearch !== ''"
-            >
-              <mat-option [value]="''" > All </mat-option>
-              <mat-option *ngFor="let user of subAccountsObj.SuperAdmin.data" [value]="user.id" > {{user.userName}} </mat-option>
-
-            </mat-select>
-          </mat-form-field>
-
-
-          <mat-form-field appearance="fill" class="table-filter" *ngIf="this.myUser?.role == 'SoftwareHolder' || this.myUser?.role == 'SuperAdmin'">
-            <mat-label>Admin</mat-label>
-            <mat-select 
-            [(ngModel)]="adminIdSearch"
-            (selectionChange)="userDropdownChange(adminIdSearch,superAdminIdSearch,'Admin','Master')"
-            [disabled]="disableAdminSearch()"
-            >
-              <mat-option [value]="''" > All </mat-option>
-              <mat-option *ngFor="let user of subAccountsObj.Admin.data" [value]="user.id" > {{user.userName}} </mat-option>
-
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field appearance="fill" class="table-filter" *ngIf="this.myUser?.role == 'SoftwareHolder' || this.myUser?.role == 'SuperAdmin'|| this.myUser?.role == 'Admin'">
-            <mat-label>Master</mat-label>
-            <mat-select 
-            [(ngModel)]="masterIdSearch"
-            (selectionChange)="userDropdownChange(masterIdSearch,adminIdSearch,'Master','Client')"
-            [disabled]="disableMasterSearch()"
-            >
-              <mat-option [value]="''" > All </mat-option>
-              <mat-option *ngFor="let user of subAccountsObj.Master.data" [value]="user.id" > {{user.userName}} </mat-option>
-
-            </mat-select>
-          </mat-form-field>
-
-     
-          
-          
-
-        </div>
-  
-       
-
-        <table
-          mat-table
-          [dataSource]="subsData"
-          style="min-width: 870px"
-        >
-        
         <ng-container matColumnDef="userName">
           <th mat-header-cell *matHeaderCellDef>Username</th>
-          <td mat-cell *matCellDef="let row" class="underline-text">{{ row.userName }}</td>
+          <td
+            mat-cell
+            *matCellDef="let row"
+            (click)="setUserIdForBet(row.userName, row.userId)"
+            class="underline-text"
+          >
+            {{ row.userName }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
         </ng-container>
 
+        <ng-container matColumnDef="sport">
+          <th mat-header-cell *matHeaderCellDef>Sport</th>
+          <td mat-cell *matCellDef="let row">
+            {{ this.sharedService.getSportNameById(row.selection.eventTypeId) }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
 
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>Name</th>
-          <td mat-cell *matCellDef="let row" class="underline-text">{{ row.name }}</td>
+        <ng-container matColumnDef="eventName">
+          <th mat-header-cell *matHeaderCellDef>Event</th>
+          <td
+            mat-cell
+            *matCellDef="let row"
+            (click)="openMarketsForEvent(row)"
+            [ngClass]="{
+              clickable: this.authService.decodedToken.role === 'Client'
+            }"
+          >
+            {{ row.selection.eventName }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef>Totals :</td>
         </ng-container>
-  
-        <ng-container matColumnDef="commission">
-          <th mat-header-cell *matHeaderCellDef >
-            Commission
-          </th>
-          <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.commission*100)  }}%</td>
-          <td mat-footer-cell *matFooterCellDef> </td>
-        </ng-container>
-        
-        <ng-container matColumnDef="profitCommission">
-          <th mat-header-cell *matHeaderCellDef >
-            Profit Com.
-          </th>
-          <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.profitCommission*100)  }}%</td>
-          <td mat-footer-cell *matFooterCellDef> </td>
-        </ng-container>
-        
-        <ng-container matColumnDef="parent">
-          <th mat-header-cell *matHeaderCellDef >
-            Parent
-          </th>
-          <td mat-cell *matCellDef="let row">{{ this.sharedService.getUserParent(row).userName  }}</td>
-          <td mat-footer-cell *matFooterCellDef> </td>
-        </ng-container>
-        
 
-        <ng-container matColumnDef="unsettledCommission">
-          <th mat-header-cell *matHeaderCellDef >
-            Unsettled Com.
-          </th>
-          <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.unsettledCommission)  }}</td>
-          <td mat-footer-cell *matFooterCellDef> </td>
+        <ng-container matColumnDef="marketName">
+          <th mat-header-cell *matHeaderCellDef>Market</th>
+          <td mat-cell *matCellDef="let row">{{ row.selection.marketName }}</td>
+          <td mat-footer-cell *matFooterCellDef></td>
         </ng-container>
-  
-        <ng-container matColumnDef="wallet balance">
-          <th mat-header-cell *matHeaderCellDef >
-            Wallet Balance
-          </th>
-          <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.wallet?.balance)  }}</td>
-          <td mat-footer-cell *matFooterCellDef> </td>
+
+        <ng-container matColumnDef="selectionName">
+          <th mat-header-cell *matHeaderCellDef>Selection</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.selection.fullSelectionName }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
         </ng-container>
-        
-        <ng-container matColumnDef="isActive">
-          <th mat-header-cell *matHeaderCellDef >
-            Active
-          </th>
-              
-              <td mat-cell *matCellDef="let row">
-                <mat-icon *ngIf="!row.isActive" class="wrong-sign">dangerous</mat-icon>
-                <mat-icon *ngIf="row.isActive" class="tick-sign">check_circle</mat-icon>  
-              </td>
-          <td mat-footer-cell *matFooterCellDef> </td>
+
+        <ng-container matColumnDef="betType">
+          <th mat-header-cell *matHeaderCellDef>Bet Type</th>
+          <td mat-cell *matCellDef="let row">{{ row.selection.betType }}</td>
+          <td mat-footer-cell *matFooterCellDef></td>
         </ng-container>
-  
-        
-        <ng-container matColumnDef="isSuspended">
-          <th mat-header-cell *matHeaderCellDef >
-            Suspended
-          </th>
-              
-              <td mat-cell *matCellDef="let row">
-                <mat-icon *ngIf="!row.isSuspended" class="wrong-sign">dangerous</mat-icon>
-                <mat-icon *ngIf="row.isSuspended" class="tick-sign">check_circle</mat-icon>  
-              </td>
-          <td mat-footer-cell *matFooterCellDef> </td>
+
+        <ng-container matColumnDef="selectionType">
+          <th mat-header-cell *matHeaderCellDef>Sel. Type</th>
+          <td mat-cell *matCellDef="let row">{{ row.selectionType }}</td>
+          <td mat-footer-cell *matFooterCellDef></td>
         </ng-container>
-  
-        
-        <ng-container matColumnDef="role">
-          <th mat-header-cell *matHeaderCellDef >
-            role
-          </th>
-          <td mat-cell *matCellDef="let row">{{ row.role }}</td>
-          <td mat-footer-cell *matFooterCellDef> </td>
+
+        <ng-container matColumnDef="stake">
+          <th mat-header-cell *matHeaderCellDef>Stake</th>
+          <td mat-cell *matCellDef="let row">
+            {{ this.sharedService.formatNumber(row.stake) }}
+            <span *ngIf="row.status === 'PARTIALLY_MATCHED' || row.status === 'UNMATCHED'">
+              ({{ row.fullStake }})
+            </span>
+          </td>
+          <td mat-footer-cell *matFooterCellDef>
+            {{ this.sharedService.formatNumber(betTotals?.totalStake) }}
+          </td>
         </ng-container>
-  
-        
-        
-        <ng-container matColumnDef="currency">
-          <th mat-header-cell *matHeaderCellDef >
-            Currency
-          </th>
-          <td mat-cell *matCellDef="let row">{{ row.wallet.currency }}</td>
-          <td mat-footer-cell *matFooterCellDef> </td>
+
+        <ng-container matColumnDef="liability">
+          <th mat-header-cell *matHeaderCellDef>Liability</th>
+          <td mat-cell *matCellDef="let row">
+            {{ this.sharedService.formatNumber(row.liability) }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef>
+            {{ this.sharedService.formatNumber(betTotals?.totalLiability) }}
+          </td>
         </ng-container>
-  
-  
-  
-  
-  
+
+        <ng-container matColumnDef="odd">
+          <th mat-header-cell *matHeaderCellDef>Odd</th>
+          <td mat-cell *matCellDef="let row">
+            {{ this.sharedService.formatNumber(row.odd) }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="payout">
+          <th mat-header-cell *matHeaderCellDef>Potential Payout</th>
+          <td mat-cell *matCellDef="let row">
+            {{ this.sharedService.formatNumber(row.payout) }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="netWin">
+          <th mat-header-cell *matHeaderCellDef>Possible net</th>
+          <td mat-cell *matCellDef="let row">
+            {{ this.sharedService.formatNumber(row.netWin) }}
+          </td>
+
+          <td mat-footer-cell *matFooterCellDef>
+            {{ this.sharedService.formatNumber(betTotals?.totalNetWin) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actualWin">
+          <th mat-header-cell *matHeaderCellDef>Net</th>
+          <td
+            mat-cell
+            *matCellDef="let row"
+            [ngClass]="{
+              'win-money': row.actualWin >= 0,
+              'loss-money': row.actualWin < 0
+            }"
+          >
+            {{ this.sharedService.formatNumber(row.actualWin) }}
+          </td>
+
+          <td mat-footer-cell *matFooterCellDef>
+            {{ this.sharedService.formatNumber(betTotals?.totalActualWin) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="matchedSize">
+          <th mat-header-cell *matHeaderCellDef>Matched Size</th>
+          <td mat-cell *matCellDef="let row">{{ row.matchedSize }}</td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td
+            mat-cell
+            *matCellDef="let row"
+            class="{{ row.status.toLowerCase() }}-bet bold-font"
+          >
+            {{ row.status }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>Date</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.date | date: "d/M/yyyy, h:mm a" }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="lastActionDate">
+          <th mat-header-cell *matHeaderCellDef>Last Action</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.lastActionDate | date: "d/M/yyyy, h:mm a" }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="eventDate">
+          <th mat-header-cell *matHeaderCellDef>Event Date</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.selection.eventDate | date: "d/M/yyyy, h:mm a" }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="matchedDate">
+          <th mat-header-cell *matHeaderCellDef>Matched Date</th>
+          <td mat-cell *matCellDef="let row">
+            {{
+              this.sharedService.getMatchedDate(row.matchedDate)
+                | date: "d/M/yyyy, h:mm a"
+            }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
         <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef >Actions</th>
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
           <td mat-cell *matCellDef="let row">
             <button
               mat-icon-button
@@ -888,19 +604,546 @@
               (click)="$event.stopPropagation()"
             >
               <mat-icon>more_vert</mat-icon>
-  
-  
+
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="openBetDetail(row)">
+                  <mat-icon>feed</mat-icon>
+                  <span>Details</span>
+                </button>
+
+                <!-- <button
+                  mat-menu-item
+                  (click)="openMarketsForEvent(row)"
+                  *ngIf="this.authService.decodedToken.role === 'Client'"
+                >
+                  <mat-icon>add_business</mat-icon>
+                  <span>Event markets</span>
+                </button> -->
+
+                <button
+                  mat-menu-item
+                  (click)="openBetSettleDialog(row, 'win')"
+                  *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'"
+                >
+                  <mat-icon>done</mat-icon>
+                  <span>Set win</span>
+                </button>
+
+                <button
+                  mat-menu-item
+                  (click)="openBetSettleDialog(row, 'lose')"
+                  *ngIf="this.authService.decodedToken.role == 'SoftwareHolder'"
+                >
+                  <mat-icon>close</mat-icon>
+                  <span>Set Lose</span>
+                </button>
+
+                <button
+                  mat-menu-item
+                  (click)="openBetSettleDialog(row, 'cancel')"
+                  *ngIf="this.showCancelBet(row)"
+                >
+                  <mat-icon>delete_outline</mat-icon>
+                  <span>Cancel</span>
+                </button>
+              </mat-menu>
             </button>
-  
-             <!-- Master Actions -->
-     
-             <mat-menu #menu="matMenu">
-          <!-- <button mat-menu-item (click)="openEditMasterDialog(row)">
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <!-- Master Actions -->
+
+        <!-- Master Actions -->
+
+        <!-- 2nd header start -->
+        <ng-container matColumnDef="h1">
+          <th mat-header-cell *matHeaderCellDef></th>
+        </ng-container>
+        <ng-container matColumnDef="h2">
+          <th mat-header-cell *matHeaderCellDef>Totals :</th>
+        </ng-container>
+        <ng-container matColumnDef="h3">
+          <th mat-header-cell *matHeaderCellDef></th>
+        </ng-container>
+        <ng-container matColumnDef="h4">
+          <th mat-header-cell *matHeaderCellDef></th>
+        </ng-container>
+        <ng-container matColumnDef="h5">
+          <th mat-header-cell *matHeaderCellDef></th>
+        </ng-container>
+        <ng-container matColumnDef="h6">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ this.sharedService.formatNumber(betTotals?.totalStake) }}
+          </th>
+        </ng-container>
+        <ng-container matColumnDef="h7">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ this.sharedService.formatNumber(betTotals?.totalLiability) }}
+          </th>
+        </ng-container>
+        <ng-container matColumnDef="h8">
+          <th mat-header-cell *matHeaderCellDef></th>
+        </ng-container>
+        <ng-container matColumnDef="h9">
+          <th mat-header-cell *matHeaderCellDef></th>
+        </ng-container>
+        <ng-container matColumnDef="h10">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ this.sharedService.formatNumber(betTotals?.totalNetWin) }}
+          </th>
+        </ng-container>
+        <ng-container matColumnDef="h11">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            [ngClass]="{
+              'win-money': betTotals?.totalActualWin >= 0,
+              'loss-money': betTotals?.totalActualWin < 0
+            }"
+          >
+            {{ this.sharedService.formatNumber(betTotals?.totalActualWin) }}
+          </th>
+        </ng-container>
+        <ng-container matColumnDef="h12">
+          <th mat-header-cell *matHeaderCellDef></th>
+        </ng-container>
+        <ng-container matColumnDef="h13">
+          <th mat-header-cell *matHeaderCellDef></th>
+        </ng-container>
+        <ng-container matColumnDef="h14">
+          <th mat-header-cell *matHeaderCellDef></th>
+        </ng-container>
+        <!-- 2nd header end -->
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumnsBettingHistory"
+        ></tr>
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="[
+            'h1',
+            'h2',
+            'h3',
+            'h4',
+            'h5',
+            'h6',
+            'h7',
+            'h8',
+            'h9',
+            'h10',
+            'h11',
+            'h12',
+            'h13',
+            'h14'
+          ]"
+        ></tr>
+
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumnsBettingHistory"
+          [ngClass]="{
+            'Back-bet-selection': row.selection.betType == 'BACK',
+            'Lay-bet-selection': row.selection.betType == 'LAY'
+          }"
+        ></tr>
+        <!-- <tr mat-footer-row *matFooterRowDef="displayedColumnsBettingHistory"></tr> -->
+      </table>
+
+      <mat-paginator
+        [length]="lengthBets"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="this.sharedService.pageSizeOptions"
+        (page)="updatePageBets($event)"
+      >
+      </mat-paginator>
+    </div>
+
+    <!-- end of bet history -->
+
+    <div [@contentInOut] *ngIf="profile.value == 'bettingExposure'">
+      <table mat-table [dataSource]="bettingExpoData" style="min-width: 870px">
+        <ng-container matColumnDef="eventName">
+          <th mat-header-cell *matHeaderCellDef>Event Name</th>
+          <td
+            mat-cell
+            *matCellDef="let row"
+            (click)="openExpoDetail(row)"
+            class="clickable"
+          >
+            {{ row.eventName }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="betsPlayed">
+          <th mat-header-cell *matHeaderCellDef>Bets</th>
+          <td mat-cell *matCellDef="let row">
+            {{ this.sharedService.formatNumber(row.bets.length, false) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="userPlayed">
+          <th mat-header-cell *matHeaderCellDef>Players</th>
+          <td mat-cell *matCellDef="let row">
+            {{
+              this.sharedService.formatNumber(
+                this.getPlayerNumForSelection(row.bets),
+                false
+              )
+            }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="netLoss">
+          <th mat-header-cell *matHeaderCellDef>Max Loss</th>
+          <td mat-cell *matCellDef="let row">{{ row.netLoss }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="netWin">
+          <th mat-header-cell *matHeaderCellDef>Max Win</th>
+          <td mat-cell *matCellDef="let row">{{ row.netWin }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="risk">
+          <th mat-header-cell *matHeaderCellDef>Risk</th>
+          <td mat-cell *matCellDef="let row">
+            {{ this.sharedService.formatNumber(row.risk) }}%
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="possibleWin">
+          <th mat-header-cell *matHeaderCellDef>My Possible Win</th>
+          <td mat-cell *matCellDef="let row">
+            {{ this.sharedService.formatNumber(row.possibleWin) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="possibleLoss">
+          <th mat-header-cell *matHeaderCellDef>My Possible Loss</th>
+          <td mat-cell *matCellDef="let row">
+            {{ this.sharedService.formatNumber(row.possibleLoss) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let row">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="menu"
+              (click)="$event.stopPropagation()"
+            >
+              <mat-icon>more_vert</mat-icon>
+
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="openExpoDetail(row)">
+                  <mat-icon>feed</mat-icon>
+                  <span>Details</span>
+                </button>
+              </mat-menu>
+            </button>
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <!-- Master Actions -->
+
+        <!-- Master Actions -->
+
+        <!-- 2nd header start -->
+        <ng-container matColumnDef="h1">
+          <th mat-header-cell *matHeaderCellDef>Totals :</th>
+        </ng-container>
+        <ng-container matColumnDef="h2">
+          <th mat-header-cell *matHeaderCellDef></th>
+        </ng-container>
+        <ng-container matColumnDef="h3">
+          <th mat-header-cell *matHeaderCellDef></th>
+        </ng-container>
+        <ng-container matColumnDef="h4">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ expoTotals.totalPossibleWin }}
+          </th>
+        </ng-container>
+        <ng-container matColumnDef="h5">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ expoTotals.totalPossibleLoss }}
+          </th>
+        </ng-container>
+        <ng-container matColumnDef="h6">
+          <th mat-header-cell *matHeaderCellDef></th>
+        </ng-container>
+        <ng-container matColumnDef="h7">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ expoTotals.totalNetWin }}
+          </th>
+        </ng-container>
+        <ng-container matColumnDef="h8">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ expoTotals.totalNetLoss }}
+          </th>
+        </ng-container>
+        <ng-container matColumnDef="h9">
+          <th mat-header-cell *matHeaderCellDef></th>
+        </ng-container>
+        <!-- 2nd header end -->
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsExpo"></tr>
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="[
+            'h1',
+            'h2',
+            'h3',
+            'h4',
+            'h5',
+            'h6',
+            'h7',
+            'h8',
+            'h9'
+          ]"
+        ></tr>
+
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsExpo"></tr>
+      </table>
+
+      <mat-paginator
+        [length]="lengthExpo"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="this.sharedService.pageSizeOptions"
+        (page)="updatePageExpo($event)"
+      >
+      </mat-paginator>
+    </div>
+
+    <div [@contentInOut] *ngIf="profile.value == 'subAccounts'">
+      <div class="cs-d-flex">
+        <div class="refresh-button-container">
+          <button mat-fab class="reload-btn" (click)="loadSubAccounts()">
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </div>
+
+        <mat-form-field appearance="fill" class="table-filter">
+          <mat-label>Role </mat-label>
+          <mat-select [(ngModel)]="roleSearch">
+            <mat-option [value]="''"> All </mat-option>
+            <mat-option *ngFor="let role of rolesOptions" [value]="role.name">
+              {{ role.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field
+          appearance="fill"
+          class="table-filter"
+          *ngIf="this.myUser?.role == 'SoftwareHolder'"
+        >
+          <mat-label>SuperAdmin</mat-label>
+          <mat-select
+            [(ngModel)]="superAdminIdSearch"
+            (selectionChange)="
+              userDropdownChange(
+                superAdminIdSearch,
+                '-1',
+                'SuperAdmin',
+                'Admin'
+              )
+            "
+            [disabled]="this.roleSearch !== ''"
+          >
+            <mat-option [value]="''"> All </mat-option>
+            <mat-option
+              *ngFor="let user of subAccountsObj.SuperAdmin.data"
+              [value]="user.id"
+            >
+              {{ user.userName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field
+          appearance="fill"
+          class="table-filter"
+          *ngIf="
+            this.myUser?.role == 'SoftwareHolder' ||
+            this.myUser?.role == 'SuperAdmin'
+          "
+        >
+          <mat-label>Admin</mat-label>
+          <mat-select
+            [(ngModel)]="adminIdSearch"
+            (selectionChange)="
+              userDropdownChange(
+                adminIdSearch,
+                superAdminIdSearch,
+                'Admin',
+                'Master'
+              )
+            "
+            [disabled]="disableAdminSearch()"
+          >
+            <mat-option [value]="''"> All </mat-option>
+            <mat-option
+              *ngFor="let user of subAccountsObj.Admin.data"
+              [value]="user.id"
+            >
+              {{ user.userName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field
+          appearance="fill"
+          class="table-filter"
+          *ngIf="
+            this.myUser?.role == 'SoftwareHolder' ||
+            this.myUser?.role == 'SuperAdmin' ||
+            this.myUser?.role == 'Admin'
+          "
+        >
+          <mat-label>Master</mat-label>
+          <mat-select
+            [(ngModel)]="masterIdSearch"
+            (selectionChange)="
+              userDropdownChange(
+                masterIdSearch,
+                adminIdSearch,
+                'Master',
+                'Client'
+              )
+            "
+            [disabled]="disableMasterSearch()"
+          >
+            <mat-option [value]="''"> All </mat-option>
+            <mat-option
+              *ngFor="let user of subAccountsObj.Master.data"
+              [value]="user.id"
+            >
+              {{ user.userName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <table mat-table [dataSource]="subsData" style="min-width: 870px">
+        <ng-container matColumnDef="userName">
+          <th mat-header-cell *matHeaderCellDef>Username</th>
+          <td mat-cell *matCellDef="let row" class="underline-text">
+            {{ row.userName }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let row" class="underline-text">
+            {{ row.name }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="commission">
+          <th mat-header-cell *matHeaderCellDef>Commission</th>
+          <td mat-cell *matCellDef="let row">
+            {{ this.sharedService.formatNumber(row.commission * 100) }}%
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="profitCommission">
+          <th mat-header-cell *matHeaderCellDef>Profit Com.</th>
+          <td mat-cell *matCellDef="let row">
+            {{ this.sharedService.formatNumber(row.profitCommission * 100) }}%
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="parent">
+          <th mat-header-cell *matHeaderCellDef>Parent</th>
+          <td mat-cell *matCellDef="let row">
+            {{ this.sharedService.getUserParent(row).userName }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="unsettledCommission">
+          <th mat-header-cell *matHeaderCellDef>Unsettled Com.</th>
+          <td mat-cell *matCellDef="let row">
+            {{ this.sharedService.formatNumber(row.unsettledCommission) }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="wallet balance">
+          <th mat-header-cell *matHeaderCellDef>Wallet Balance</th>
+          <td mat-cell *matCellDef="let row">
+            {{ this.sharedService.formatNumber(row.wallet?.balance) }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="isActive">
+          <th mat-header-cell *matHeaderCellDef>Active</th>
+
+          <td mat-cell *matCellDef="let row">
+            <mat-icon *ngIf="!row.isActive" class="wrong-sign"
+              >dangerous</mat-icon
+            >
+            <mat-icon *ngIf="row.isActive" class="tick-sign"
+              >check_circle</mat-icon
+            >
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="isSuspended">
+          <th mat-header-cell *matHeaderCellDef>Suspended</th>
+
+          <td mat-cell *matCellDef="let row">
+            <mat-icon *ngIf="!row.isSuspended" class="wrong-sign"
+              >dangerous</mat-icon
+            >
+            <mat-icon *ngIf="row.isSuspended" class="tick-sign"
+              >check_circle</mat-icon
+            >
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="role">
+          <th mat-header-cell *matHeaderCellDef>role</th>
+          <td mat-cell *matCellDef="let row">{{ row.role }}</td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="currency">
+          <th mat-header-cell *matHeaderCellDef>Currency</th>
+          <td mat-cell *matCellDef="let row">{{ row.wallet.currency }}</td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let row">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="menu"
+              (click)="$event.stopPropagation()"
+            >
+              <mat-icon>more_vert</mat-icon>
+            </button>
+
+            <!-- Master Actions -->
+
+            <mat-menu #menu="matMenu">
+              <!-- <button mat-menu-item (click)="openEditMasterDialog(row)">
             <mat-icon>edit</mat-icon>
             <span>Edit</span>
           </button> -->
-        
-          <!-- <button mat-menu-item (click)="openChangePasswordDialog(row.id)">
+
+              <!-- <button mat-menu-item (click)="openChangePasswordDialog(row.id)">
             <mat-icon>lock</mat-icon>
             <span>Change Password</span>
           </button>
@@ -909,721 +1152,726 @@
             <span *ngIf="!row.isActive">Activate</span>
             <span *ngIf="row.isActive">Deactivate</span>
           </button> -->
-          
-          <button mat-menu-item (click)="openConfirmDialog(row,4)">
-            <mat-icon *ngIf="!row.isSuspended">block</mat-icon>
-            <mat-icon *ngIf="row.isSuspended">accessibility_new</mat-icon>
-            <span *ngIf="!row.isSuspended">Suspend</span>
-            <span *ngIf="row.isSuspended">Unsuspend</span>
-          </button>
-         
-          <!-- <button mat-menu-item>
+
+              <button mat-menu-item (click)="openConfirmDialog(row, 4)">
+                <mat-icon *ngIf="!row.isSuspended">block</mat-icon>
+                <mat-icon *ngIf="row.isSuspended">accessibility_new</mat-icon>
+                <span *ngIf="!row.isSuspended">Suspend</span>
+                <span *ngIf="row.isSuspended">Unsuspend</span>
+              </button>
+
+              <!-- <button mat-menu-item>
             <mat-icon>close</mat-icon>
             <span>Close</span>
           </button> -->
-              </mat-menu>
-  
-        <!-- Master Actions -->
+            </mat-menu>
+
+            <!-- Master Actions -->
           </td>
           <td mat-footer-cell *matFooterCellDef></td>
         </ng-container>
 
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsSubAccounts"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumnsSubAccounts"
+        ></tr>
+      </table>
 
-  
-          <tr
-            mat-header-row
-            *matHeaderRowDef="displayedColumnsSubAccounts"
-          ></tr>
-          <tr
-            mat-row
-            *matRowDef="let row; columns: displayedColumnsSubAccounts"
-               ></tr>
-        </table>
-  
-  
-        <mat-paginator 
+      <mat-paginator
         [length]="lengthSubs"
         [pageSize]="pageSize"
         [pageSizeOptions]="this.sharedService.pageSizeOptions"
         (page)="updatePageBets($event)"
+      >
+      </mat-paginator>
+    </div>
+
+    <div [@contentInOut] *ngIf="profile.value == 'transactions'">
+      <div class="cs-d-flex">
+        <div class="refresh-button-container">
+          <button
+            mat-fab
+            class="reload-btn"
+            (click)="loadUsersTransactions()"
+            [disabled]="disableReloadBtn(rangeTrans.controls)"
+          >
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </div>
+
+
+
+
+        <mat-form-field
+          appearance="fill"
+          class="table-filter"
+          style="margin-left: 10px"
         >
-        </mat-paginator>
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input [formGroup]="rangeTrans" [rangePicker]="picker">
+            <input
+              matStartDate
+              formControlName="start"
+              placeholder="Start date"
+            />
+            <input matEndDate formControlName="end" placeholder="End date" />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+          <mat-error
+            *ngIf="rangeTrans.controls.start.hasError('matStartDateInvalid')"
+            >Invalid start date</mat-error
+          >
+          <mat-error
+            *ngIf="rangeTrans.controls.end.hasError('matEndDateInvalid')"
+            >Invalid end date</mat-error
+          >
+        </mat-form-field>
+
+
+        <mat-form-field appearance="fill" class="table-filter">
+          <mat-label>Bet Type</mat-label>
+          <mat-select [(ngModel)]="betTypeForBets">
+            <mat-option [value]="''"> All </mat-option>
+            <mat-option [value]="'BACK'"> BACK </mat-option>
+            <mat-option [value]="'LAY'"> LAY </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field
+          appearance="fill"
+          class="table-filter"
+          *ngIf="this.authService.decodedToken.role == 'Client'"
+        >
+          <mat-label>Type </mat-label>
+          <mat-select [(ngModel)]="transactionType1">
+            <mat-option [value]="''"> All </mat-option>
+            <mat-option [value]="true"> Bet Only </mat-option>
+            <mat-option [value]="false"> Money Only </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
 
-      <div [@contentInOut] *ngIf="profile.value == 'transactions'">
-        <div class="cs-d-flex">
-  
-          <div class="refresh-button-container">
-            <button mat-fab class="reload-btn" (click)="loadUsersTransactions()" 
-            [disabled]="disableReloadBtn(rangeTrans.controls)" >
-              <mat-icon>refresh</mat-icon>
-            </button>
-          </div>
-  
-          <mat-form-field appearance="fill" class="table-filter" style="margin-left: 10px">
-            <mat-label>Enter a date range</mat-label>
-            <mat-date-range-input [formGroup]="rangeTrans" [rangePicker]="picker">
-              <input
-                matStartDate
-                formControlName="start"
-                placeholder="Start date"
-              />
-              <input matEndDate formControlName="end" placeholder="End date" />
-            </mat-date-range-input>
-            <mat-datepicker-toggle
-              matSuffix
-              [for]="picker"
-            ></mat-datepicker-toggle>
-            <mat-date-range-picker #picker></mat-date-range-picker>
-            <mat-error
-              *ngIf="rangeTrans.controls.start.hasError('matStartDateInvalid')"
-              >Invalid start date</mat-error
-            >
-            <mat-error *ngIf="rangeTrans.controls.end.hasError('matEndDateInvalid')"
-              >Invalid end date</mat-error
-            >
-          </mat-form-field>
+      <table mat-table [dataSource]="transactionsData" style="min-width: 870px">
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>Date</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.createdAt | date: "d/M/yyyy, h:mm a" }}
+          </td>
+        </ng-container>
 
-          <mat-form-field appearance="fill" class="table-filter" *ngIf="this.authService.decodedToken.role == 'Client'">
-            <mat-label>Type </mat-label>
-            <mat-select 
-            [(ngModel)]="transactionType1"
-            >
-              <mat-option [value]="''" > All </mat-option>
-              <mat-option [value]="true" > Bet Only </mat-option>
-              <mat-option [value]="false" > Money Only </mat-option>
-            </mat-select>
-          </mat-form-field>
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef>Transaction Type</th>
+          <td mat-cell *matCellDef="let row">{{ row.type }}</td>
+        </ng-container>
 
-        </div>
-  
-        <table mat-table [dataSource]="transactionsData" style="min-width: 870px">
-          <ng-container matColumnDef="date">
-            <th mat-header-cell *matHeaderCellDef>Date</th>
-            <td mat-cell *matCellDef="let row">{{ row.createdAt | date:'d/M/yyyy, h:mm a' }}</td>
-          </ng-container>
-          
-          <ng-container matColumnDef="type">
-            <th mat-header-cell *matHeaderCellDef>Transaction Type</th>
-            <td mat-cell *matCellDef="let row">{{ row.type }}</td>
-          </ng-container>
+        <ng-container matColumnDef="user">
+          <th mat-header-cell *matHeaderCellDef>Username</th>
+          <td mat-cell *matCellDef="let row">{{ row.user.userName }}</td>
+        </ng-container>
 
-          <ng-container matColumnDef="user">
-            <th mat-header-cell *matHeaderCellDef>Username</th>
-            <td mat-cell *matCellDef="let row">{{ row.user.userName }}</td>
-          </ng-container>
+        <ng-container matColumnDef="balanceBefore">
+          <th mat-header-cell *matHeaderCellDef>Balance Before</th>
+          <td mat-cell *matCellDef="let row">
+            {{ this.sharedService.formatNumber(row.balanceBefore) }}
+          </td>
+        </ng-container>
 
-          
-          <ng-container matColumnDef="balanceBefore">
-            <th mat-header-cell *matHeaderCellDef>Balance Before</th>
-            <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.balanceBefore) }}</td>
-          </ng-container>
+        <ng-container matColumnDef="amount">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            [ngClass]="{
+              'win-money': transTotals.totalAmount > 0,
+              'loss-money': transTotals.totalAmount < 0
+            }"
+          >
+            Amount (
+            {{ this.sharedService.formatNumber(transTotals.totalAmount) }} )
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let row"
+            [ngClass]="{
+              'loss-money': row.amount < 0,
+              'win-money': row.amount >= 0
+            }"
+          >
+            {{ this.sharedService.formatNumber(row.amount) }}
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="amount">
-            <th mat-header-cell *matHeaderCellDef
-            [ngClass]="{'win-money': transTotals.totalAmount > 0,
-                      'loss-money': transTotals.totalAmount < 0}"
-                      >Amount ( {{this.sharedService.formatNumber(transTotals.totalAmount)}} )</th>
-            <td mat-cell *matCellDef="let row"
-            [ngClass]="{'loss-money': row.amount < 0, 'win-money': row.amount >= 0}"
-            >{{ this.sharedService.formatNumber(row.amount) }}</td>
-          </ng-container>
+        <ng-container matColumnDef="balanceAfter">
+          <th mat-header-cell *matHeaderCellDef>Balance After</th>
+          <td mat-cell *matCellDef="let row">
+            {{ this.sharedService.formatNumber(row.balanceAfter) }}
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="balanceAfter">
-            <th mat-header-cell *matHeaderCellDef>Balance After</th>
-            <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.balanceAfter) }}</td>
-          </ng-container>
-          
-          <ng-container matColumnDef="balance change">
-            <th mat-header-cell *matHeaderCellDef>Balance Change</th>
-            <td mat-cell *matCellDef="let row"> 
+        <ng-container matColumnDef="balance change">
+          <th mat-header-cell *matHeaderCellDef>Balance Change</th>
+          <td mat-cell *matCellDef="let row">
             <span class="balance-change-container">
-              {{ row.balanceBefore }} <mat-icon>arrow_right_alt</mat-icon> {{ row.balanceAfter }}
-            </span>  
-            </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="currency">
-            <th mat-header-cell *matHeaderCellDef>Currency</th>
-            <td mat-cell *matCellDef="let row">{{ row.currencyCode }}</td>
-          </ng-container>
-          <ng-container matColumnDef="balance">
-            <th mat-header-cell *matHeaderCellDef>Current balance</th>
-            <td mat-cell *matCellDef="let row">{{ row.user.wallet.balance }}</td>
-          </ng-container>
-          <ng-container matColumnDef="comment">
-            <th mat-header-cell *matHeaderCellDef>Comment</th>
-            <td mat-cell *matCellDef="let row">{{ row.comment }}</td>
-          </ng-container>
-  
-          <ng-container matColumnDef="exchangeRate">
-            <th mat-header-cell *matHeaderCellDef>Exchange Rate</th>
-            <td mat-cell *matCellDef="let row">{{ row.exchangeRate }}</td>
-          </ng-container>
-  
-          <!-- <ng-container matColumnDef="fromTo">
+              {{ row.balanceBefore }} <mat-icon>arrow_right_alt</mat-icon>
+              {{ row.balanceAfter }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="currency">
+          <th mat-header-cell *matHeaderCellDef>Currency</th>
+          <td mat-cell *matCellDef="let row">{{ row.currencyCode }}</td>
+        </ng-container>
+        <ng-container matColumnDef="balance">
+          <th mat-header-cell *matHeaderCellDef>Current balance</th>
+          <td mat-cell *matCellDef="let row">{{ row.user.wallet.balance }}</td>
+        </ng-container>
+        <ng-container matColumnDef="comment">
+          <th mat-header-cell *matHeaderCellDef>Comment</th>
+          <td mat-cell *matCellDef="let row">{{ row.comment }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="exchangeRate">
+          <th mat-header-cell *matHeaderCellDef>Exchange Rate</th>
+          <td mat-cell *matCellDef="let row">{{ row.exchangeRate }}</td>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="fromTo">
             <th mat-header-cell *matHeaderCellDef>From To</th>
             <td mat-cell *matCellDef="let row">{{ row.fromTo }}</td>
           </ng-container> -->
-  
-          <tr mat-header-row *matHeaderRowDef="displayedColumnsTransactions"></tr>
-          <tr
-            mat-row
-            *matRowDef="let row; columns: displayedColumnsTransactions"
-          ></tr>
-        </table>
-        <mat-paginator 
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsTransactions"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumnsTransactions"
+        ></tr>
+      </table>
+      <mat-paginator
         [length]="lengthTrans"
         [pageSize]="pageSize"
         [pageSizeOptions]="this.sharedService.pageSizeOptions"
         (page)="updatePageTrans($event)"
+      >
+      </mat-paginator>
+    </div>
+
+    <div [@contentInOut] *ngIf="profile.value == 'sub-accounts-transactions'">
+      <div class="cs-d-flex">
+        <div class="refresh-button-container">
+          <button
+            mat-fab
+            class="reload-btn"
+            (click)="loadUsersTransactionsSub()"
+            [disabled]="disableReloadBtn(rangeTransSub.controls)"
+          >
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </div>
+
+        <mat-form-field
+          appearance="fill"
+          style="margin-left: 10px"
+          class="table-filter"
         >
-        </mat-paginator>
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input
+            [formGroup]="rangeTransSub"
+            [rangePicker]="picker"
+          >
+            <input
+              matStartDate
+              formControlName="start"
+              placeholder="Start date"
+            />
+            <input matEndDate formControlName="end" placeholder="End date" />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+          <mat-error
+            *ngIf="rangeTransSub.controls.start.hasError('matStartDateInvalid')"
+            >Invalid start date</mat-error
+          >
+          <mat-error
+            *ngIf="rangeTransSub.controls.end.hasError('matEndDateInvalid')"
+            >Invalid end date</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="table-filter">
+          <mat-label>Type </mat-label>
+          <mat-select [(ngModel)]="transactionType2">
+            <mat-option [value]="''"> All </mat-option>
+            <mat-option [value]="true"> Bet Only </mat-option>
+            <mat-option [value]="false"> Money Only </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field
+          appearance="fill"
+          class="table-filter"
+          *ngIf="this.authService.decodedToken.role !== 'Master'"
+        >
+          <mat-label>Sub level </mat-label>
+          <mat-select [(ngModel)]="directParentTrans">
+            <mat-option [value]="false"> All </mat-option>
+            <mat-option [value]="true"> Direct </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
 
-      <div [@contentInOut] *ngIf="profile.value == 'sub-accounts-transactions'">
-        <div class="cs-d-flex">
-  
-          <div class="refresh-button-container">
-            <button mat-fab class="reload-btn" (click)="loadUsersTransactionsSub()" 
-            [disabled]="disableReloadBtn(rangeTransSub.controls)" >
-              <mat-icon>refresh</mat-icon>
-            </button>
-          </div>
-  
-          <mat-form-field appearance="fill" style="margin-left: 10px" class="table-filter">
-            <mat-label>Enter a date range</mat-label>
-            <mat-date-range-input [formGroup]="rangeTransSub" [rangePicker]="picker">
-              <input
-                matStartDate
-                formControlName="start"
-                placeholder="Start date"
-              />
-              <input matEndDate formControlName="end" placeholder="End date" />
-            </mat-date-range-input>
-            <mat-datepicker-toggle
-              matSuffix
-              [for]="picker"
-            ></mat-datepicker-toggle>
-            <mat-date-range-picker #picker></mat-date-range-picker>
-            <mat-error
-              *ngIf="rangeTransSub.controls.start.hasError('matStartDateInvalid')"
-              >Invalid start date</mat-error
-            >
-            <mat-error *ngIf="rangeTransSub.controls.end.hasError('matEndDateInvalid')"
-              >Invalid end date</mat-error
-            >
-          </mat-form-field>
-  
-  
-          <mat-form-field appearance="fill" class="table-filter">
-            <mat-label>Type </mat-label>
-            <mat-select 
-            [(ngModel)]="transactionType2"
-            >
-              <mat-option [value]="''" > All </mat-option>
-              <mat-option [value]="true" > Bet Only </mat-option>
-              <mat-option [value]="false" > Money Only </mat-option>
-            </mat-select>
-          </mat-form-field>
-  
-          
-          <mat-form-field appearance="fill" class="table-filter" *ngIf="this.authService.decodedToken.role !== 'Master'">
-            <mat-label>Sub level </mat-label>
-            <mat-select 
-            [(ngModel)]="directParentTrans"
-            >
-              <mat-option [value]="false" > All </mat-option>
-              <mat-option [value]="true" > Direct </mat-option>
-            </mat-select>
-          </mat-form-field>
-  
-  
-  
-        </div>
-  
-        <table mat-table [dataSource]="transactionsSubData" style="min-width: 870px">
-          <ng-container matColumnDef="date">
-            <th mat-header-cell *matHeaderCellDef>Date</th>
-            <td mat-cell *matCellDef="let row">{{ row.createdAt| date:'d/M/yyyy, h:mm a' }}</td>
-          </ng-container>
-          
-          <ng-container matColumnDef="user">
-            <th mat-header-cell *matHeaderCellDef>Username</th>
-            <td mat-cell *matCellDef="let row">{{ row.user.userName }}</td>
-          </ng-container>
-          
-          <ng-container matColumnDef="type">
-            <th mat-header-cell *matHeaderCellDef>Transaction Type</th>
-            <td mat-cell *matCellDef="let row">{{ row.type }}</td>
-          </ng-container>
-  
-          <ng-container matColumnDef="balanceBefore">
-            <th mat-header-cell *matHeaderCellDef>Balance Before</th>
-            <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.balanceBefore) }}</td>
-          </ng-container>
+      <table
+        mat-table
+        [dataSource]="transactionsSubData"
+        style="min-width: 870px"
+      >
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>Date</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.createdAt | date: "d/M/yyyy, h:mm a" }}
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="amount">
-            <th mat-header-cell *matHeaderCellDef
-            [ngClass]="{'win-money': transSubTotals.totalAmount > 0,
-            'loss-money': transSubTotals.totalAmount < 0}"
-            >Amount ( {{this.sharedService.formatNumber(transSubTotals.totalAmount)}} )</th>
-            <td mat-cell *matCellDef="let row"
-            [ngClass]="{'loss-money': row.amount < 0, 'win-money': row.amount >= 0}"
-            >{{ this.sharedService.formatNumber(row.amount) }}</td>
-          </ng-container>
+        <ng-container matColumnDef="user">
+          <th mat-header-cell *matHeaderCellDef>Username</th>
+          <td mat-cell *matCellDef="let row">{{ row.user.userName }}</td>
+        </ng-container>
 
-          <ng-container matColumnDef="balanceAfter">
-            <th mat-header-cell *matHeaderCellDef>Balance After</th>
-            <td mat-cell *matCellDef="let row">{{ this.sharedService.formatNumber(row.balanceAfter) }}</td>
-          </ng-container>
-          
-          <ng-container matColumnDef="balance change">
-            <th mat-header-cell *matHeaderCellDef>Balance Change</th>
-            <td mat-cell *matCellDef="let row"> 
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef>Transaction Type</th>
+          <td mat-cell *matCellDef="let row">{{ row.type }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="balanceBefore">
+          <th mat-header-cell *matHeaderCellDef>Balance Before</th>
+          <td mat-cell *matCellDef="let row">
+            {{ this.sharedService.formatNumber(row.balanceBefore) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amount">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            [ngClass]="{
+              'win-money': transSubTotals.totalAmount > 0,
+              'loss-money': transSubTotals.totalAmount < 0
+            }"
+          >
+            Amount (
+            {{ this.sharedService.formatNumber(transSubTotals.totalAmount) }} )
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let row"
+            [ngClass]="{
+              'loss-money': row.amount < 0,
+              'win-money': row.amount >= 0
+            }"
+          >
+            {{ this.sharedService.formatNumber(row.amount) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="balanceAfter">
+          <th mat-header-cell *matHeaderCellDef>Balance After</th>
+          <td mat-cell *matCellDef="let row">
+            {{ this.sharedService.formatNumber(row.balanceAfter) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="balance change">
+          <th mat-header-cell *matHeaderCellDef>Balance Change</th>
+          <td mat-cell *matCellDef="let row">
             <span class="balance-change-container">
-              {{ row.balanceBefore }} <mat-icon>arrow_right_alt</mat-icon> {{ row.balanceAfter }}
-            </span>  
-            </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="currency">
-            <th mat-header-cell *matHeaderCellDef>Currency</th>
-            <td mat-cell *matCellDef="let row">{{ row.currencyCode }}</td>
-          </ng-container>
-          <ng-container matColumnDef="balance">
-            <th mat-header-cell *matHeaderCellDef>Current alance</th>
-            <td mat-cell *matCellDef="let row">{{ row.user.wallet.balance }}</td>
-          </ng-container>
-          <ng-container matColumnDef="comment">
-            <th mat-header-cell *matHeaderCellDef>Comment</th>
-            <td mat-cell *matCellDef="let row">{{ row.comment }}</td>
-          </ng-container>
-  
-          <ng-container matColumnDef="exchangeRate">
-            <th mat-header-cell *matHeaderCellDef>Exchange Rate</th>
-            <td mat-cell *matCellDef="let row">{{ row.exchangeRate }}</td>
-          </ng-container>
-  
-          <tr mat-header-row *matHeaderRowDef="displayedColumnsTransactions"></tr>
-          <tr
-            mat-row
-            *matRowDef="let row; columns: displayedColumnsTransactions"
-          ></tr>
-        </table>
-        <mat-paginator 
+              {{ row.balanceBefore }} <mat-icon>arrow_right_alt</mat-icon>
+              {{ row.balanceAfter }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="currency">
+          <th mat-header-cell *matHeaderCellDef>Currency</th>
+          <td mat-cell *matCellDef="let row">{{ row.currencyCode }}</td>
+        </ng-container>
+        <ng-container matColumnDef="balance">
+          <th mat-header-cell *matHeaderCellDef>Current alance</th>
+          <td mat-cell *matCellDef="let row">{{ row.user.wallet.balance }}</td>
+        </ng-container>
+        <ng-container matColumnDef="comment">
+          <th mat-header-cell *matHeaderCellDef>Comment</th>
+          <td mat-cell *matCellDef="let row">{{ row.comment }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="exchangeRate">
+          <th mat-header-cell *matHeaderCellDef>Exchange Rate</th>
+          <td mat-cell *matCellDef="let row">{{ row.exchangeRate }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsTransactions"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumnsTransactions"
+        ></tr>
+      </table>
+      <mat-paginator
         [length]="lengthTransSub"
         [pageSize]="pageSize"
         [pageSizeOptions]="this.sharedService.pageSizeOptions"
         (page)="updatePageTransSub($event)"
-        >
-        </mat-paginator>
-      </div>
+      >
+      </mat-paginator>
+    </div>
 
-      <div [@contentInOut] *ngIf="profile.value == 'bettingRules'">
-        <div class="cs-d-flex">
-          <!-- <mat-form-field appearance="standard" class="cs-super-table-filter">
+    <div [@contentInOut] *ngIf="profile.value == 'bettingRules'">
+      <div class="cs-d-flex">
+        <!-- <mat-form-field appearance="standard" class="cs-super-table-filter">
             <mat-label>Filter</mat-label>
             <input matInput (keyup)="applyFilter($event)" placeholder="Filter" #input />
           </mat-form-field> -->
-        
-          <button
-            color="theme-primary"
-            mat-raised-button
-            class="cs-add-master-btn"
-            (click)="addBettingRule()"
-          >
-            Add New Rule
-          </button>
-        </div>
-  
-        <table mat-table [dataSource]="bettingRulesData" style="min-width: 870px">
 
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef>ID</th>
-            <td mat-cell *matCellDef="let row">{{ row.id }}</td>
-          </ng-container>
-          
-          <ng-container matColumnDef="eventTypeId">
-            <th mat-header-cell *matHeaderCellDef>Sport</th>
-            <td mat-cell *matCellDef="let row">{{ this.sharedService.getSportNameById( row.eventTypeId )}}</td>
-          </ng-container>
+        <button
+          color="theme-primary"
+          mat-raised-button
+          class="cs-add-master-btn"
+          (click)="addBettingRule()"
+        >
+          Add New Rule
+        </button>
+      </div>
 
-          <ng-container matColumnDef="category">
-            <th mat-header-cell *matHeaderCellDef>Category</th>
-            <td mat-cell *matCellDef="let row">
+      <table mat-table [dataSource]="bettingRulesData" style="min-width: 870px">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+        </ng-container>
 
-              {{ row.category }}
-            
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="eventTypeId">
+          <th mat-header-cell *matHeaderCellDef>Sport</th>
+          <td mat-cell *matCellDef="let row">
+            {{ this.sharedService.getSportNameById(row.eventTypeId) }}
+          </td>
+        </ng-container>
 
-          
-          <ng-container matColumnDef="betType">
-            <th mat-header-cell *matHeaderCellDef>Bet Type</th>
-            <td mat-cell *matCellDef="let row">{{ row.betType }}</td>
-          </ng-container>
-          
-          <ng-container matColumnDef="minAmount">
-            <th mat-header-cell *matHeaderCellDef>Min Amount</th>
-            <td mat-cell *matCellDef="let row"> 
-              {{ this.sharedService.formatNumber( row.minAmount, false ) }}
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="category">
+          <th mat-header-cell *matHeaderCellDef>Category</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.category }}
+          </td>
+        </ng-container>
 
-          
-          <ng-container matColumnDef="maxAmount">
-            <th mat-header-cell *matHeaderCellDef>Max Amount</th>
-            <td mat-cell *matCellDef="let row"> 
-              {{ this.sharedService.formatNumber(row.maxAmount, false) }}
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="betType">
+          <th mat-header-cell *matHeaderCellDef>Bet Type</th>
+          <td mat-cell *matCellDef="let row">{{ row.betType }}</td>
+        </ng-container>
 
-          
-          <ng-container matColumnDef="multiplier">
-            <th mat-header-cell *matHeaderCellDef>Multiplier</th>
-            <td mat-cell *matCellDef="let row"> 
-              {{ row.multiplier }}
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="minAmount">
+          <th mat-header-cell *matHeaderCellDef>Min Amount</th>
+          <td mat-cell *matCellDef="let row">
+            {{ this.sharedService.formatNumber(row.minAmount, false) }}
+          </td>
+        </ng-container>
 
-          
-          <ng-container matColumnDef="minMatch">
-            <th mat-header-cell *matHeaderCellDef>Min Match</th>
-            <td mat-cell *matCellDef="let row"> 
-              {{ this.sharedService.formatNumber(row.minMatch, false) }}
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="maxAmount">
+          <th mat-header-cell *matHeaderCellDef>Max Amount</th>
+          <td mat-cell *matCellDef="let row">
+            {{ this.sharedService.formatNumber(row.maxAmount, false) }}
+          </td>
+        </ng-container>
 
-          
-          <ng-container matColumnDef="minOdds">
-            <th mat-header-cell *matHeaderCellDef>Min Odds</th>
-            <td mat-cell *matCellDef="let row"> 
-              {{ this.sharedService.formatNumber(row.minOdds, false) }}
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="multiplier">
+          <th mat-header-cell *matHeaderCellDef>Multiplier</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.multiplier }}
+          </td>
+        </ng-container>
 
+        <ng-container matColumnDef="minMatch">
+          <th mat-header-cell *matHeaderCellDef>Min Match</th>
+          <td mat-cell *matCellDef="let row">
+            {{ this.sharedService.formatNumber(row.minMatch, false) }}
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="maxMargin">
-            <th mat-header-cell *matHeaderCellDef>Max Margin</th>
-            <td mat-cell *matCellDef="let row"> 
-              {{ this.sharedService.formatNumber(row.maxMargin, false) }}
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="minOdds">
+          <th mat-header-cell *matHeaderCellDef>Min Odds</th>
+          <td mat-cell *matCellDef="let row">
+            {{ this.sharedService.formatNumber(row.minOdds, false) }}
+          </td>
+        </ng-container>
 
+        <ng-container matColumnDef="maxMargin">
+          <th mat-header-cell *matHeaderCellDef>Max Margin</th>
+          <td mat-cell *matCellDef="let row">
+            {{ this.sharedService.formatNumber(row.maxMargin, false) }}
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="isActive">
-            <th mat-header-cell *matHeaderCellDef>Active</th>
-            <td mat-cell *matCellDef="let row">
-              <mat-icon *ngIf="!row.isActive" class="wrong-sign">dangerous</mat-icon>
-              <mat-icon *ngIf="row.isActive" class="tick-sign">check_circle</mat-icon>  
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="isActive">
+          <th mat-header-cell *matHeaderCellDef>Active</th>
+          <td mat-cell *matCellDef="let row">
+            <mat-icon *ngIf="!row.isActive" class="wrong-sign"
+              >dangerous</mat-icon
+            >
+            <mat-icon *ngIf="row.isActive" class="tick-sign"
+              >check_circle</mat-icon
+            >
+          </td>
+        </ng-container>
 
+        <ng-container matColumnDef="disableOnFalse">
+          <th mat-header-cell *matHeaderCellDef>Disable On False</th>
+          <td mat-cell *matCellDef="let row">
+            <mat-icon *ngIf="!row.disableOnFalse" class="wrong-sign"
+              >dangerous</mat-icon
+            >
+            <mat-icon *ngIf="row.disableOnFalse" class="tick-sign"
+              >check_circle</mat-icon
+            >
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="disableOnFalse">
-            <th mat-header-cell *matHeaderCellDef>Disable On False</th>
-            <td mat-cell *matCellDef="let row">
-              <mat-icon *ngIf="!row.disableOnFalse" class="wrong-sign">dangerous</mat-icon>
-              <mat-icon *ngIf="row.disableOnFalse" class="tick-sign">check_circle</mat-icon>  
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="forceRule">
+          <th mat-header-cell *matHeaderCellDef>Force Rule</th>
+          <td mat-cell *matCellDef="let row">
+            <mat-icon *ngIf="!row.forceRule" class="wrong-sign"
+              >dangerous</mat-icon
+            >
+            <mat-icon *ngIf="row.forceRule" class="tick-sign"
+              >check_circle</mat-icon
+            >
+          </td>
+        </ng-container>
 
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let row">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="menu"
+              (click)="$event.stopPropagation()"
+            >
+              <mat-icon>more_vert</mat-icon>
 
-          <ng-container matColumnDef="forceRule">
-            <th mat-header-cell *matHeaderCellDef>Force Rule</th>
-            <td mat-cell *matCellDef="let row">
-              <mat-icon *ngIf="!row.forceRule" class="wrong-sign">dangerous</mat-icon>
-              <mat-icon *ngIf="row.forceRule" class="tick-sign">check_circle</mat-icon>  
-            </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
-            <td mat-cell *matCellDef="let row">
-              <button
-                mat-icon-button
-                [matMenuTriggerFor]="menu"
-                (click)="$event.stopPropagation()"
-              >
-                <mat-icon>more_vert</mat-icon>
-    
-                <mat-menu #menu="matMenu">
-                  
-  
-                  <button mat-menu-item (click)="this.addBettingRule(row)">
-                    <mat-icon>feed</mat-icon>
-                    <span>Update</span>
-                  </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="this.addBettingRule(row)">
+                  <mat-icon>feed</mat-icon>
+                  <span>Update</span>
+                </button>
 
-                  <button mat-menu-item (click)="this.deleteBettingRule(row)">
-                    <mat-icon>delete_outline</mat-icon>
-                    <span>Delete</span>
-                  </button>
+                <button mat-menu-item (click)="this.deleteBettingRule(row)">
+                  <mat-icon>delete_outline</mat-icon>
+                  <span>Delete</span>
+                </button>
+              </mat-menu>
+            </button>
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
 
-                                 
-                 
-                </mat-menu>
-              </button>
-    
-              
-             
-  
-            </td>
-            <td mat-footer-cell *matFooterCellDef></td>
-          </ng-container>
-          
-  
-  
-          <tr mat-header-row *matHeaderRowDef="displayedColumnsBettingRules"></tr>
-          <tr
-            mat-row
-            *matRowDef="let row; columns: displayedColumnsBettingRules"
-          ></tr>
-        </table>
-        <mat-paginator 
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsBettingRules"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumnsBettingRules"
+        ></tr>
+      </table>
+      <mat-paginator
         [length]="lengthBettingRules"
         [pageSize]="pageSize"
         [pageSizeOptions]="this.sharedService.pageSizeOptions"
         (page)="updatePageBettingRules($event)"
-        >
-        </mat-paginator>
-      </div>
+      >
+      </mat-paginator>
+    </div>
 
-      <div [@contentInOut] *ngIf="profile.value == 'sports'">
-        <div class="cs-d-flex">
-          
-        
-        </div>
-  
-        <table mat-table [dataSource]="sportsData" style="min-width: 870px">
+    <div [@contentInOut] *ngIf="profile.value == 'sports'">
+      <div class="cs-d-flex"></div>
 
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef>ID</th>
-            <td mat-cell *matCellDef="let row">{{ row.id }}</td>
-          </ng-container>
-          
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>Name</th>
-            <td mat-cell *matCellDef="let row">{{ row.name }}</td>
-          </ng-container>
+      <table mat-table [dataSource]="sportsData" style="min-width: 870px">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+        </ng-container>
 
-          
-          <ng-container matColumnDef="isActive">
-            <th mat-header-cell *matHeaderCellDef>Active</th>
-            <td mat-cell *matCellDef="let row">
-              <!-- <mat-icon *ngIf="!row.isActive" class="wrong-sign">dangerous</mat-icon>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="isActive">
+          <th mat-header-cell *matHeaderCellDef>Active</th>
+          <td mat-cell *matCellDef="let row">
+            <!-- <mat-icon *ngIf="!row.isActive" class="wrong-sign">dangerous</mat-icon>
               <mat-icon *ngIf="row.isActive" class="tick-sign">check_circle</mat-icon>   -->
 
-              <mat-slide-toggle [(ngModel)]="row.isActive" (change)="updateSport(row)"></mat-slide-toggle>
+            <mat-slide-toggle
+              [(ngModel)]="row.isActive"
+              (change)="updateSport(row)"
+            ></mat-slide-toggle>
+          </td>
+        </ng-container>
 
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let row">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="menu"
+              (click)="$event.stopPropagation()"
+            >
+              <mat-icon>more_vert</mat-icon>
 
-            </td>
-          </ng-container>
-          
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
-            <td mat-cell *matCellDef="let row">
-              <button
-                mat-icon-button
-                [matMenuTriggerFor]="menu"
-                (click)="$event.stopPropagation()"
-              >
-                <mat-icon>more_vert</mat-icon>
-    
-                <mat-menu #menu="matMenu">
-                  
-  
-                  <!-- <button mat-menu-item >
+              <mat-menu #menu="matMenu">
+                <!-- <button mat-menu-item >
                     <mat-icon>feed</mat-icon>
                     <span>Update</span>
                   </button> -->
 
-                  <button mat-menu-item (click)="this.openConfirmDialog(row,1)">
-                    <mat-icon>new_releases</mat-icon>
-                    <span *ngIf="!row.isActive">Activate</span>
-                    <span *ngIf="row.isActive">Deactivate</span>
-                  </button>
+                <button mat-menu-item (click)="this.openConfirmDialog(row, 1)">
+                  <mat-icon>new_releases</mat-icon>
+                  <span *ngIf="!row.isActive">Activate</span>
+                  <span *ngIf="row.isActive">Deactivate</span>
+                </button>
+              </mat-menu>
+            </button>
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
 
-                                 
-                 
-                </mat-menu>
-              </button>
-    
-              
-             
-  
-            </td>
-            <td mat-footer-cell *matFooterCellDef></td>
-          </ng-container>
-          
-  
-  
-          <tr mat-header-row *matHeaderRowDef="displayedColumnsSports"></tr>
-          <tr
-            mat-row
-            *matRowDef="let row; columns: displayedColumnsSports"
-          ></tr>
-        </table>
-        
-      </div>
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsSports"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsSports"></tr>
+      </table>
+    </div>
 
-      <div [@contentInOut] *ngIf="profile.value == 'regions'">
-        <div class="cs-d-flex">
-
-        
-
-          <mat-form-field appearance="fill">
-            <mat-label>Sport</mat-label>
-            <mat-select name="pl"
+    <div [@contentInOut] *ngIf="profile.value == 'regions'">
+      <div class="cs-d-flex">
+        <mat-form-field appearance="fill">
+          <mat-label>Sport</mat-label>
+          <mat-select
+            name="pl"
             [(ngModel)]="currentSportIdForRegions"
             (selectionChange)="this.sportForRegionChange()"
-            >
-              <mat-option
-                *ngFor="let sport of sportsList"
-                [value]="sport.id"
-              >
-                {{ sport.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-  
-       
-        </div>
-  
-        <table mat-table [dataSource]="regionsData" style="min-width: 870px">
+          >
+            <mat-option *ngFor="let sport of sportsList" [value]="sport.id">
+              {{ sport.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-          <ng-container matColumnDef="countryCode">
-            <th mat-header-cell *matHeaderCellDef>Country Code</th>
-            <td mat-cell *matCellDef="let row">{{ row.countryCode }}</td>
-          </ng-container>
-          
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>Name</th>
-            <td mat-cell *matCellDef="let row">{{ row.name }}</td>
-          </ng-container>
+      <table mat-table [dataSource]="regionsData" style="min-width: 870px">
+        <ng-container matColumnDef="countryCode">
+          <th mat-header-cell *matHeaderCellDef>Country Code</th>
+          <td mat-cell *matCellDef="let row">{{ row.countryCode }}</td>
+        </ng-container>
 
-          
-          <ng-container matColumnDef="isActive">
-            <th mat-header-cell *matHeaderCellDef>Active</th>
-            <td mat-cell *matCellDef="let row">
-              <!-- <mat-icon *ngIf="!isRegionActive(row.countryCode)" class="wrong-sign">dangerous</mat-icon>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="isActive">
+          <th mat-header-cell *matHeaderCellDef>Active</th>
+          <td mat-cell *matCellDef="let row">
+            <!-- <mat-icon *ngIf="!isRegionActive(row.countryCode)" class="wrong-sign">dangerous</mat-icon>
               <mat-icon *ngIf="isRegionActive(row.countryCode)" class="tick-sign">check_circle</mat-icon>   -->
 
-              <!-- <mat-slide-toggle [checked]="isRegionActive(row.countryCode)" (change)="updateRegion(row)"></mat-slide-toggle> -->
-              <mat-slide-toggle [(ngModel)]="row.isActiveForSport" (change)="updateRegion(row)"></mat-slide-toggle>
+            <!-- <mat-slide-toggle [checked]="isRegionActive(row.countryCode)" (change)="updateRegion(row)"></mat-slide-toggle> -->
+            <mat-slide-toggle
+              [(ngModel)]="row.isActiveForSport"
+              (change)="updateRegion(row)"
+            ></mat-slide-toggle>
+          </td>
+        </ng-container>
 
-            </td>
-          </ng-container>
-          
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
-            <td mat-cell *matCellDef="let row">
-              <button
-                mat-icon-button
-                [matMenuTriggerFor]="menu"
-                (click)="$event.stopPropagation()"
-              >
-                <mat-icon>more_vert</mat-icon>
-    
-                <mat-menu #menu="matMenu">
-                  
-  
-                  <!-- <button mat-menu-item >
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let row">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="menu"
+              (click)="$event.stopPropagation()"
+            >
+              <mat-icon>more_vert</mat-icon>
+
+              <mat-menu #menu="matMenu">
+                <!-- <button mat-menu-item >
                     <mat-icon>feed</mat-icon>
                     <span>Update</span>
                   </button> -->
 
-                  <button mat-menu-item (click)="this.openConfirmDialog(row,2)">
-                    <mat-icon>new_releases</mat-icon>
-                    <span *ngIf="!isRegionActive(row.countryCode)">Activate</span>
-                    <span *ngIf="isRegionActive(row.countryCode)">Deactivate</span>
-                  </button>
-
-                                 
-                 
-                </mat-menu>
-              </button>
-    
-              
-             
-  
-            </td>
-            <td mat-footer-cell *matFooterCellDef></td>
-          </ng-container>
-          
-  
-  
-          <tr mat-header-row *matHeaderRowDef="displayedColumnsRegions"></tr>
-          <tr
-            mat-row
-            *matRowDef="let row; columns: displayedColumnsRegions"
-          ></tr>
-        </table>
-        
-      </div>
-    
-      <div [@contentInOut] *ngIf="profile.value == 'leagues'">
-       
-        <div class="cs-d-flex">
-          
-          <div class="refresh-button-container">
-            <button mat-fab class="reload-btn" (click)="loadLeagues()"
-            >
-              <mat-icon>refresh</mat-icon>
+                <button mat-menu-item (click)="this.openConfirmDialog(row, 2)">
+                  <mat-icon>new_releases</mat-icon>
+                  <span *ngIf="!isRegionActive(row.countryCode)">Activate</span>
+                  <span *ngIf="isRegionActive(row.countryCode)"
+                    >Deactivate</span
+                  >
+                </button>
+              </mat-menu>
             </button>
-          </div>
-          
-          <mat-form-field appearance="fill" class="table-filter">
-            <mat-label>Sport</mat-label>
-            <mat-select name="pl"
-            [(ngModel)]="currentSportIdForLeagues"
-            >
-              <mat-option
-                *ngFor="let sport of sportsList"
-                [value]="sport.id"
-              >
-                {{ sport.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
 
-          <mat-form-field appearance="fill" class="table-filter">
-            <mat-label>Region</mat-label>
-            <mat-select name="pl"
-            [(ngModel)]="currentRegionIdForLeagues"
-            >
-              <mat-option
-                *ngFor="let region of regionsList"
-                [value]="region.countryCode"
-              >
-                {{ region.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsRegions"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsRegions"></tr>
+      </table>
+    </div>
+
+    <div [@contentInOut] *ngIf="profile.value == 'leagues'">
+      <div class="cs-d-flex">
+        <div class="refresh-button-container">
+          <button mat-fab class="reload-btn" (click)="loadLeagues()">
+            <mat-icon>refresh</mat-icon>
+          </button>
         </div>
-  
-        <table mat-table [dataSource]="leaguesData" style="min-width: 870px">
 
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef>ID</th>
-            <td mat-cell *matCellDef="let row">{{ row.id }}</td>
-          </ng-container>
-          
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>Name</th>
-            <td mat-cell *matCellDef="let row">{{ row.name }}</td>
-          </ng-container>
+        <mat-form-field appearance="fill" class="table-filter">
+          <mat-label>Sport</mat-label>
+          <mat-select name="pl" [(ngModel)]="currentSportIdForLeagues">
+            <mat-option *ngFor="let sport of sportsList" [value]="sport.id">
+              {{ sport.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-          
-          <ng-container matColumnDef="category">
-            <th mat-header-cell *matHeaderCellDef>Category</th>
-            <td mat-cell *matCellDef="let row">
-            
-              <!-- {{ row.category }} -->
+        <mat-form-field appearance="fill" class="table-filter">
+          <mat-label>Region</mat-label>
+          <mat-select name="pl" [(ngModel)]="currentRegionIdForLeagues">
+            <mat-option
+              *ngFor="let region of regionsList"
+              [value]="region.countryCode"
+            >
+              {{ region.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-              <!-- <mat-form-field class="category-options-table hide-underline" >
+      <table mat-table [dataSource]="leaguesData" style="min-width: 870px">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="category">
+          <th mat-header-cell *matHeaderCellDef>Category</th>
+          <td mat-cell *matCellDef="let row">
+            <!-- {{ row.category }} -->
+
+            <!-- <mat-form-field class="category-options-table hide-underline" >
                 <mat-select name="pl"
                 (selectionChange)="updateLeague(row)"
                 [(ngModel)]="row.category"
@@ -1633,19 +1881,19 @@
                 >
                   A
                 </mat-option>
-                
+
                 <mat-option
                 [value]="'B'"
                 >
                   B
                 </mat-option>
-              
+
                 <mat-option
                 [value]="'C'"
                 >
                   C
                 </mat-option>
-              
+
                 <mat-option
                 [value]="'D'"
                 >
@@ -1653,86 +1901,70 @@
                 </mat-option>
                 </mat-select>
               </mat-form-field> -->
-              
-              <!-- <div class="radio-container" >
-                A <input type="radio" name="category{{row.id}}" value="A" id="category{{row.id}}" [checked]="row.category == 'A'" (change)="updateLeague(row, $event)"> 
-                B <input type="radio" name="category{{row.id}}" value="B" id="category{{row.id}}" [checked]="row.category == 'B'" (change)="updateLeague(row, $event)"> 
-                C <input type="radio" name="category{{row.id}}" value="C" id="category{{row.id}}" [checked]="row.category == 'C'" (change)="updateLeague(row, $event)"> 
-                D <input type="radio" name="category{{row.id}}" value="D" id="category{{row.id}}" [checked]="row.category == 'D'" (change)="updateLeague(row, $event)"> 
+
+            <!-- <div class="radio-container" >
+                A <input type="radio" name="category{{row.id}}" value="A" id="category{{row.id}}" [checked]="row.category == 'A'" (change)="updateLeague(row, $event)">
+                B <input type="radio" name="category{{row.id}}" value="B" id="category{{row.id}}" [checked]="row.category == 'B'" (change)="updateLeague(row, $event)">
+                C <input type="radio" name="category{{row.id}}" value="C" id="category{{row.id}}" [checked]="row.category == 'C'" (change)="updateLeague(row, $event)">
+                D <input type="radio" name="category{{row.id}}" value="D" id="category{{row.id}}" [checked]="row.category == 'D'" (change)="updateLeague(row, $event)">
               </div> -->
 
-              <mat-radio-group aria-label="Select an option" [(ngModel)]="row.category" (change)="updateLeague(row)">
-                <mat-radio-button value="A">A</mat-radio-button>
-                <mat-radio-button value="B">B</mat-radio-button>
-                <mat-radio-button value="C">C</mat-radio-button>
-                <mat-radio-button value="D">D</mat-radio-button>
-              </mat-radio-group>
+            <mat-radio-group
+              aria-label="Select an option"
+              [(ngModel)]="row.category"
+              (change)="updateLeague(row)"
+            >
+              <mat-radio-button value="A">A</mat-radio-button>
+              <mat-radio-button value="B">B</mat-radio-button>
+              <mat-radio-button value="C">C</mat-radio-button>
+              <mat-radio-button value="D">D</mat-radio-button>
+            </mat-radio-group>
+          </td>
+        </ng-container>
 
-            </td>
-          </ng-container>
-
-          
-          <ng-container matColumnDef="isActive">
-            <th mat-header-cell *matHeaderCellDef>Active</th>
-            <td mat-cell *matCellDef="let row">
-              <!-- <mat-icon *ngIf="!row.isActive" class="wrong-sign">dangerous</mat-icon>
+        <ng-container matColumnDef="isActive">
+          <th mat-header-cell *matHeaderCellDef>Active</th>
+          <td mat-cell *matCellDef="let row">
+            <!-- <mat-icon *ngIf="!row.isActive" class="wrong-sign">dangerous</mat-icon>
               <mat-icon *ngIf="row.isActive" class="tick-sign">check_circle</mat-icon>   -->
 
-              <mat-slide-toggle [(ngModel)]="row.isActive" (change)="updateLeague(row)"></mat-slide-toggle>
+            <mat-slide-toggle
+              [(ngModel)]="row.isActive"
+              (change)="updateLeague(row)"
+            ></mat-slide-toggle>
+          </td>
+        </ng-container>
 
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let row">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="menu"
+              (click)="$event.stopPropagation()"
+            >
+              <mat-icon>more_vert</mat-icon>
 
-            </td>
-          </ng-container>
-          
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
-            <td mat-cell *matCellDef="let row">
-              <button
-                mat-icon-button
-                [matMenuTriggerFor]="menu"
-                (click)="$event.stopPropagation()"
-              >
-                <mat-icon>more_vert</mat-icon>
-    
-                <mat-menu #menu="matMenu">
-                  
-  
-                  <!-- <button mat-menu-item >
+              <mat-menu #menu="matMenu">
+                <!-- <button mat-menu-item >
                     <mat-icon>feed</mat-icon>
                     <span>Update</span>
                   </button> -->
 
-                  <button mat-menu-item (click)="this.openConfirmDialog(row,3)">
-                    <mat-icon>new_releases</mat-icon>
-                    <span *ngIf="!row.isActive">Activate</span>
-                    <span *ngIf="row.isActive">Deactivate</span>
-                  </button>
+                <button mat-menu-item (click)="this.openConfirmDialog(row, 3)">
+                  <mat-icon>new_releases</mat-icon>
+                  <span *ngIf="!row.isActive">Activate</span>
+                  <span *ngIf="row.isActive">Deactivate</span>
+                </button>
+              </mat-menu>
+            </button>
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
 
-                                 
-                 
-                </mat-menu>
-              </button>
-    
-              
-             
-  
-            </td>
-            <td mat-footer-cell *matFooterCellDef></td>
-          </ng-container>
-          
-  
-  
-          <tr mat-header-row *matHeaderRowDef="displayedColumnsLeagues"></tr>
-          <tr
-            mat-row
-            *matRowDef="let row; columns: displayedColumnsLeagues"
-          ></tr>
-        </table>
-        
-      </div>
-
-
-
-    </mat-card>
-  </div>
-  
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsLeagues"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsLeagues"></tr>
+      </table>
+    </div>
+  </mat-card>
+</div>

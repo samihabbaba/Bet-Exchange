@@ -65,10 +65,26 @@
               </th>
               <!-- <th class="percentage"><span>110%</span></th> -->
               <th class="back-all-btn">
-                <button (click)="this.betSlipService.pickAllTopMarketsOdds(event, topMarket)"><span>Back all</span></button>
+                <button
+                  (click)="
+                    this.betSlipService.pickAllTopMarketsOdds(event, topMarket)
+                  "
+                >
+                  <span>Back all</span>
+                </button>
               </th>
               <th class="lay-all-btn">
-                <button (click)="this.betSlipService.pickAllTopMarketsOdds(event, topMarket, false)"><span>Lay all</span></button>
+                <button
+                  (click)="
+                    this.betSlipService.pickAllTopMarketsOdds(
+                      event,
+                      topMarket,
+                      false
+                    )
+                  "
+                >
+                  <span>Lay all</span>
+                </button>
               </th>
               <!-- <th class="percentage-2"><span>120%</span></th> -->
             </tr>
@@ -76,14 +92,18 @@
         </table>
       </div>
 
-      <div class="runners-list-wrapper" [ngClass]="{lowLiquidity : !this.sharedService.marketAvailable(topMarket)}">
-
-
-                <div class="disabled-mini-market-runners-list" *ngIf="!this.sharedService.marketAvailable(topMarket)">
-
-                  <h1>Low Liquidity</h1>
-                </div>
-
+      <div
+        class="runners-list-wrapper"
+        [ngClass]="{
+          lowLiquidity: !this.sharedService.marketAvailable(topMarket)
+        }"
+      >
+        <div
+          class="disabled-mini-market-runners-list"
+          *ngIf="!this.sharedService.marketAvailable(topMarket)"
+        >
+          <h1>Low Liquidity</h1>
+        </div>
 
         <div class="runner-list-component">
           <div class="runners-container">
@@ -93,7 +113,9 @@
                   <tr
                     class="runner-line"
                     *ngFor="let item of topMarket.runners"
-                    [hidden]='!this.sharedService.validRun(item, topMarket?.name)'
+                    [hidden]="
+                      !this.sharedService.validRun(item, topMarket?.name)
+                    "
                   >
                     <!-- selection name -->
                     <td class="new-runner-info">
@@ -107,30 +129,144 @@
                             <h3 class="runner-name">
                               {{ item.name }}
                               {{
-                                returnSecondPartRunName(
-                                  item,
-                                  topMarket?.name
-                                )
+                                returnSecondPartRunName(item, topMarket?.name)
                               }}
 
                               &nbsp;
                               <span
-                              *ngIf="betSlipService.getRunMoney(topMarket.id,topMarket.name, item.selectionId, item.name, item.handicap)!=0"
-                              [ngClass]="{'win-money': betSlipService.getRunMoney(topMarket.id,topMarket.name, item.selectionId, item.name, item.handicap )>=0,
-                                          'loss-money': betSlipService.getRunMoney(topMarket.id,topMarket.name, item.selectionId, item.name, item.handicap )<0}">
-                                {{this.sharedService.formatNumber(betSlipService.getRunMoney(topMarket.id,topMarket.name, item.selectionId, item.name, item.handicap))}}
+                                *ngIf="
+                                  betSlipService.getRunMoney(
+                                    topMarket.id,
+                                    topMarket.name,
+                                    item.selectionId,
+                                    item.name,
+                                    item.handicap
+                                  ) != 0
+                                "
+                                [ngClass]="{
+                                  'win-money':
+                                    betSlipService.getRunMoney(
+                                      topMarket.id,
+                                      topMarket.name,
+                                      item.selectionId,
+                                      item.name,
+                                      item.handicap
+                                    ) >= 0,
+                                  'loss-money':
+                                    betSlipService.getRunMoney(
+                                      topMarket.id,
+                                      topMarket.name,
+                                      item.selectionId,
+                                      item.name,
+                                      item.handicap
+                                    ) < 0
+                                }"
+                              >
+                                {{
+                                  this.sharedService.formatNumber(
+                                    betSlipService.getRunMoney(
+                                      topMarket.id,
+                                      topMarket.name,
+                                      item.selectionId,
+                                      item.name,
+                                      item.handicap
+                                    )
+                                  )
+                                }}
                               </span>
-
-                              <span *ngIf="betSlipService.showPendingRunMoney(topMarket.id)"
-                              [ngClass]="{'win-money': +betSlipService.getRunMoney(topMarket.id,topMarket.name, item.selectionId, item.name, item.handicap) <= +betSlipService.getPendingRunMoney(topMarket.id,topMarket.name, item.selectionId, item.name, item.handicap),
-                              'loss-money': +betSlipService.getRunMoney(topMarket.id,topMarket.name, item.selectionId, item.name, item.handicap) > +betSlipService.getPendingRunMoney(topMarket.id,topMarket.name, item.selectionId, item.name, item.handicap)
-                            }">
+                              <!-- Probably will tell us to change this again -->
+                              <!-- <span
+                                *ngIf="
+                                  betSlipService.showPendingRunMoney(
+                                    topMarket.id
+                                  )
+                                "
+                                [ngClass]="{
+                                  'win-money':
+                                    +betSlipService.getRunMoney(
+                                      topMarket.id,
+                                      topMarket.name,
+                                      item.selectionId,
+                                      item.name,
+                                      item.handicap
+                                    ) <=
+                                    +betSlipService.getPendingRunMoney(
+                                      topMarket.id,
+                                      topMarket.name,
+                                      item.selectionId,
+                                      item.name,
+                                      item.handicap
+                                    ),
+                                  'loss-money':
+                                    +betSlipService.getRunMoney(
+                                      topMarket.id,
+                                      topMarket.name,
+                                      item.selectionId,
+                                      item.name,
+                                      item.handicap
+                                    ) >
+                                    +betSlipService.getPendingRunMoney(
+                                      topMarket.id,
+                                      topMarket.name,
+                                      item.selectionId,
+                                      item.name,
+                                      item.handicap
+                                    )
+                                }"
+                              >
                                 >>>
-                                {{this.sharedService.formatNumber( betSlipService.getPendingRunMoney(topMarket.id,topMarket.name, item.selectionId, item.name, item.handicap) )}}
+                                {{
+                                  this.sharedService.formatNumber(
+                                    betSlipService.getPendingRunMoney(
+                                      topMarket.id,
+                                      topMarket.name,
+                                      item.selectionId,
+                                      item.name,
+                                      item.handicap
+                                    )
+                                  )
+                                }}
+                              </span> -->
+
+                              <span
+                                *ngIf="
+                                  betSlipService.showPendingRunMoney(
+                                    topMarket.id
+                                  )
+                                "
+                                [ngClass]="{
+                                  'win-money':
+                                    betSlipService.getPendingRunMoney(
+                                      topMarket.id,
+                                      topMarket.name,
+                                      item.selectionId,
+                                      item.name,
+                                      item.handicap
+                                    ) >= 0,
+                                  'loss-money':
+                                    betSlipService.getPendingRunMoney(
+                                      topMarket.id,
+                                      topMarket.name,
+                                      item.selectionId,
+                                      item.name,
+                                      item.handicap
+                                    ) < 0
+                                }"
+                              >
+                                >>>
+                                {{
+                                  this.sharedService.formatNumber(
+                                    betSlipService.getPendingRunMoney(
+                                      topMarket.id,
+                                      topMarket.name,
+                                      item.selectionId,
+                                      item.name,
+                                      item.handicap
+                                    )
+                                  )
+                                }}
                               </span>
-
                             </h3>
-
                           </div>
                         </div>
                       </div>
@@ -161,14 +297,20 @@
                             true,
                             item.name +
                               ' ' +
-                              returnSecondPartRunName(
-                                item,
-                                topMarket?.name
-                              )
+                              returnSecondPartRunName(item, topMarket?.name)
                           )
                         }"
                       >
-                        <div class="bet-runner" *ngIf="this.sharedService.oddAvailableEventContent(item,selection,true)">
+                        <div
+                          class="bet-runner"
+                          *ngIf="
+                            this.sharedService.oddAvailableEventContent(
+                              item,
+                              selection,
+                              true
+                            )
+                          "
+                        >
                           <span class="bet-btn-price">{{
                             this.sharedService.returnRunWithIndex(
                               item,
@@ -179,17 +321,24 @@
                             this.sharedService.returnRunWithIndex(
                               item,
                               selection
-                            ).size| currencyConverter : this.sharedService.currencyData
+                            ).size
+                              | currencyConverter
+                                : this.sharedService.currencyData
                           }}</span>
                         </div>
 
-                        <div class="bet-runner" *ngIf="!this.sharedService.oddAvailableEventContent(item,selection,true)">
-                          <fa-icon 
-                          [icon]="fontAwesomeIcons.lock"
-                       ></fa-icon>
-
+                        <div
+                          class="bet-runner"
+                          *ngIf="
+                            !this.sharedService.oddAvailableEventContent(
+                              item,
+                              selection,
+                              true
+                            )
+                          "
+                        >
+                          <fa-icon [icon]="fontAwesomeIcons.lock"></fa-icon>
                         </div>
-                            
                       </button>
                     </td>
 
@@ -222,14 +371,20 @@
                             false,
                             item.name +
                               ' ' +
-                              returnSecondPartRunName(
-                                item,
-                                topMarket?.name
-                              )
+                              returnSecondPartRunName(item, topMarket?.name)
                           )
                         }"
                       >
-                        <div class="bet-runner" *ngIf="this.sharedService.oddAvailableEventContent(item,selection,false)">
+                        <div
+                          class="bet-runner"
+                          *ngIf="
+                            this.sharedService.oddAvailableEventContent(
+                              item,
+                              selection,
+                              false
+                            )
+                          "
+                        >
                           <span class="bet-btn-price">{{
                             this.sharedService.returnRunWithIndex(
                               item,
@@ -242,16 +397,24 @@
                               item,
                               selection,
                               true
-                            ).size| currencyConverter : this.sharedService.currencyData
+                            ).size
+                              | currencyConverter
+                                : this.sharedService.currencyData
                           }}</span>
                         </div>
 
-                        <div class="bet-runner" *ngIf="!this.sharedService.oddAvailableEventContent(item,selection,false)">
-                          <fa-icon 
-                          [icon]="fontAwesomeIcons.lock"
-                       ></fa-icon>
-                       </div>
-
+                        <div
+                          class="bet-runner"
+                          *ngIf="
+                            !this.sharedService.oddAvailableEventContent(
+                              item,
+                              selection,
+                              false
+                            )
+                          "
+                        >
+                          <fa-icon [icon]="fontAwesomeIcons.lock"></fa-icon>
+                        </div>
                       </button>
                     </td>
 
@@ -363,9 +526,7 @@
                       <span
                         >Matched: EUR
                         {{
-                          this.sharedService.formatNumber(
-                            item?.totalMatched
-                          )
+                          this.sharedService.formatNumber(item?.totalMatched)
                         }}</span
                       >
                     </th>
@@ -375,8 +536,16 @@
                 </thead>
               </table>
 
-              <div class="mini-market-runners-list" [ngClass]="{lowLiquidity : !this.sharedService.marketAvailable(item)}">
-                <div class="disabled-mini-market-runners-list" *ngIf="!this.sharedService.marketAvailable(item)">
+              <div
+                class="mini-market-runners-list"
+                [ngClass]="{
+                  lowLiquidity: !this.sharedService.marketAvailable(item)
+                }"
+              >
+                <div
+                  class="disabled-mini-market-runners-list"
+                  *ngIf="!this.sharedService.marketAvailable(item)"
+                >
                   <h1>Low Liquidity</h1>
                 </div>
                 <div class="mini-market-runners-list-container">
@@ -387,7 +556,9 @@
                           <tr
                             class="runner-line"
                             *ngFor="let run of item.runners"
-                            [hidden]='!this.sharedService.validRun(run, item?.name)'
+                            [hidden]="
+                              !this.sharedService.validRun(run, item?.name)
+                            "
                           >
                             <td class="new-runner">
                               <div class="graph-container">
@@ -396,12 +567,7 @@
                               <div class="name-container">
                                 <h3>
                                   {{ run.name }}
-                                  {{
-                                    returnSecondPartRunName(
-                                      run,
-                                      item?.name
-                                    )
-                                  }}
+                                  {{ returnSecondPartRunName(run, item?.name) }}
                                 </h3>
                               </div>
                             </td>
@@ -432,10 +598,7 @@
                                       true,
                                       run.name +
                                         ' ' +
-                                        returnSecondPartRunName(
-                                          run,
-                                          item?.name
-                                        )
+                                        returnSecondPartRunName(run, item?.name)
                                     )
                                 }"
                               >
@@ -443,7 +606,12 @@
                                   <span class="size">
                                     <!--  -->
                                     <ng-container
-                                    *ngIf="this.sharedService.oddAvailableEventContent(run,0)"
+                                      *ngIf="
+                                        this.sharedService.oddAvailableEventContent(
+                                          run,
+                                          0
+                                        )
+                                      "
                                     >
                                       {{
                                         this.sharedService.returnHighestBet(
@@ -455,7 +623,12 @@
                                     </ng-container>
 
                                     <fa-icon
-                                      *ngIf="!this.sharedService.oddAvailableEventContent(run,0)"
+                                      *ngIf="
+                                        !this.sharedService.oddAvailableEventContent(
+                                          run,
+                                          0
+                                        )
+                                      "
                                       [icon]="fontAwesomeIcons.lock"
                                     ></fa-icon>
                                     <!--  -->
@@ -476,10 +649,11 @@
                                           this.sharedService.getBackObjForRun(
                                             run
                                           )
-                                        ).size| currencyConverter : this.sharedService.currencyData
+                                        ).size
+                                          | currencyConverter
+                                            : this.sharedService.currencyData
                                       }}
                                     </ng-container>
-
                                   </span>
                                 </div>
                               </button>
@@ -511,10 +685,7 @@
                                       false,
                                       run.name +
                                         ' ' +
-                                        returnSecondPartRunName(
-                                          run,
-                                          item?.name
-                                        )
+                                        returnSecondPartRunName(run, item?.name)
                                     )
                                 }"
                               >
@@ -522,7 +693,13 @@
                                   <span class="size">
                                     <!--  -->
                                     <ng-container
-                                    *ngIf="this.sharedService.oddAvailableEventContent(run,0, false)"
+                                      *ngIf="
+                                        this.sharedService.oddAvailableEventContent(
+                                          run,
+                                          0,
+                                          false
+                                        )
+                                      "
                                     >
                                       {{
                                         this.sharedService.returnHighestBet(
@@ -534,7 +711,14 @@
                                       }}
                                     </ng-container>
 
-                                    <fa-icon *ngIf="!this.sharedService.oddAvailableEventContent(run,0, false)"
+                                    <fa-icon
+                                      *ngIf="
+                                        !this.sharedService.oddAvailableEventContent(
+                                          run,
+                                          0,
+                                          false
+                                        )
+                                      "
                                       [icon]="fontAwesomeIcons.lock"
                                     ></fa-icon>
                                     <!--  -->
@@ -557,10 +741,11 @@
                                             run
                                           ),
                                           false
-                                        ).size| currencyConverter : this.sharedService.currencyData
+                                        ).size
+                                          | currencyConverter
+                                            : this.sharedService.currencyData
                                       }}
                                     </ng-container>
-
                                   </span>
                                 </div>
                               </button>
@@ -613,9 +798,7 @@
                       <span
                         >Matched: EUR
                         {{
-                          this.sharedService.formatNumber(
-                            item?.totalMatched
-                          )
+                          this.sharedService.formatNumber(item?.totalMatched)
                         }}</span
                       >
                     </th>
@@ -625,8 +808,16 @@
                 </thead>
               </table>
 
-              <div class="mini-market-runners-list" [ngClass]="{lowLiquidity : !this.sharedService.marketAvailable(item)}">
-                <div class="disabled-mini-market-runners-list" *ngIf="!this.sharedService.marketAvailable(item)">
+              <div
+                class="mini-market-runners-list"
+                [ngClass]="{
+                  lowLiquidity: !this.sharedService.marketAvailable(item)
+                }"
+              >
+                <div
+                  class="disabled-mini-market-runners-list"
+                  *ngIf="!this.sharedService.marketAvailable(item)"
+                >
                   <h1>Low Liquidity</h1>
                 </div>
                 <div class="mini-market-runners-list-container">
@@ -637,7 +828,9 @@
                           <tr
                             class="runner-line"
                             *ngFor="let run of item.runners"
-                            [hidden]='!this.sharedService.validRun(run, item?.name)'
+                            [hidden]="
+                              !this.sharedService.validRun(run, item?.name)
+                            "
                           >
                             <td class="new-runner">
                               <div class="graph-container">
@@ -646,12 +839,7 @@
                               <div class="name-container">
                                 <h3>
                                   {{ run.name }}
-                                  {{
-                                    returnSecondPartRunName(
-                                      run,
-                                      item?.name
-                                    )
-                                  }}
+                                  {{ returnSecondPartRunName(run, item?.name) }}
                                 </h3>
                               </div>
                             </td>
@@ -680,10 +868,7 @@
                                       true,
                                       run.name +
                                         ' ' +
-                                        returnSecondPartRunName(
-                                          run,
-                                          item?.name
-                                        )
+                                        returnSecondPartRunName(run, item?.name)
                                     )
                                 }"
                               >
@@ -691,7 +876,12 @@
                                   <span class="size">
                                     <!--  -->
                                     <ng-container
-                                    *ngIf="this.sharedService.oddAvailableEventContent(run,0)"
+                                      *ngIf="
+                                        this.sharedService.oddAvailableEventContent(
+                                          run,
+                                          0
+                                        )
+                                      "
                                     >
                                       {{
                                         this.sharedService.returnHighestBet(
@@ -702,7 +892,13 @@
                                       }}
                                     </ng-container>
 
-                                    <fa-icon *ngIf="!this.sharedService.oddAvailableEventContent(run,0)"
+                                    <fa-icon
+                                      *ngIf="
+                                        !this.sharedService.oddAvailableEventContent(
+                                          run,
+                                          0
+                                        )
+                                      "
                                       [icon]="fontAwesomeIcons.lock"
                                     ></fa-icon>
                                     <!--  -->
@@ -723,10 +919,11 @@
                                           this.sharedService.getBackObjForRun(
                                             run
                                           )
-                                        ).size| currencyConverter : this.sharedService.currencyData
+                                        ).size
+                                          | currencyConverter
+                                            : this.sharedService.currencyData
                                       }}
                                     </ng-container>
-
                                   </span>
                                 </div>
                               </button>
@@ -757,10 +954,7 @@
                                       false,
                                       run.name +
                                         ' ' +
-                                        returnSecondPartRunName(
-                                          run,
-                                          item?.name
-                                        )
+                                        returnSecondPartRunName(run, item?.name)
                                     )
                                 }"
                               >
@@ -768,7 +962,13 @@
                                   <span class="size">
                                     <!--  -->
                                     <ng-container
-                                    *ngIf="this.sharedService.oddAvailableEventContent(run,0,false)"
+                                      *ngIf="
+                                        this.sharedService.oddAvailableEventContent(
+                                          run,
+                                          0,
+                                          false
+                                        )
+                                      "
                                     >
                                       {{
                                         this.sharedService.returnHighestBet(
@@ -780,7 +980,14 @@
                                       }}
                                     </ng-container>
 
-                                    <fa-icon *ngIf="!this.sharedService.oddAvailableEventContent(run,0,false)"
+                                    <fa-icon
+                                      *ngIf="
+                                        !this.sharedService.oddAvailableEventContent(
+                                          run,
+                                          0,
+                                          false
+                                        )
+                                      "
                                       [icon]="fontAwesomeIcons.lock"
                                     ></fa-icon>
                                     <!--  -->
@@ -803,10 +1010,11 @@
                                             run
                                           ),
                                           false
-                                        ).size| currencyConverter : this.sharedService.currencyData
+                                        ).size
+                                          | currencyConverter
+                                            : this.sharedService.currencyData
                                       }}
                                     </ng-container>
-                                    
                                   </span>
                                 </div>
                               </button>

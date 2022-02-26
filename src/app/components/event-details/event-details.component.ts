@@ -26,6 +26,7 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log(this.game)
     try{
       if(this.betSlipService.currentOpenBets.some(x=>x.selection.eventName === this.game.name) ){
         this.betSlipService.selectedOpenBet = this.game.name;

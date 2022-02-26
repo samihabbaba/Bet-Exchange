@@ -27,12 +27,12 @@ export class BetSlipComponent implements OnInit {
     public dataService: DataService,
     private authService: AuthService,
     public sharedFunctionsService: SharedFunctionsService,
-    private notificationService: NotificationService, 
+    private notificationService: NotificationService,
     private dialog: MatDialog
   ) {
-    this.betSlipService.currentOpenTab.subscribe(val => {
-      this.tabToDisplay = val
-    })
+    this.betSlipService.currentOpenTab.subscribe((val) => {
+      this.tabToDisplay = val;
+    });
   }
 
   stakeOptions = [10, 20, 50, 100, 200, 500];
@@ -69,12 +69,12 @@ export class BetSlipComponent implements OnInit {
           // debugger
           this.authService.updateCurrentBalance();
 
-          if(resp.body.length > 0 && resp.body[0] !== null){
+          if (resp.body.length > 0 && resp.body[0] !== null) {
             let g = resp.body[0].user.wallet.balance;
             this.authService.currentUserInfo.balance =
               resp.body[0].user.wallet.balance;
-            }
-            
+          }
+
           this.betSlipService.selectedBets = [];
           let newOpenBet = '';
           resp.body.successfulBets.forEach((bet: any) => {
@@ -85,36 +85,47 @@ export class BetSlipComponent implements OnInit {
           let errorDisplayed = false;
           resp.body.errors.forEach((error: any) => {
             errorDisplayed = true;
-            this.sharedFunctionsService.showErrorMsg({
-            error: {errorMessage:error}
-          },'Error while adding Some Bet(s)!')
+            this.sharedFunctionsService.showErrorMsg(
+              {
+                error: { errorMessage: error },
+              },
+              'Error while adding Some Bet(s)!'
+            );
           });
 
-          if(this.betSlipService.currentOpenBets.some(x=>x.selection.eventName === newOpenBet) && newOpenBet !== ''){
+          if (
+            this.betSlipService.currentOpenBets.some(
+              (x) => x.selection.eventName === newOpenBet
+            ) &&
+            newOpenBet !== ''
+          ) {
             this.betSlipService.selectedOpenBet = newOpenBet;
           }
           this.betSlipService.updateOpenBetsOptions(true);
-          this.betSlipService.loadTopMarketBets(this.betSlipService.latestTopMarketId);
-          
+          this.betSlipService.loadTopMarketBets(
+            this.betSlipService.latestTopMarketId
+          );
+
           this.betSlipService.handleTabClick('Open');
-          
-          
-          if(resp.body.successfulBets.length > 0){
-            if(errorDisplayed){
+
+          if (resp.body.successfulBets.length > 0) {
+            if (errorDisplayed) {
               await this.sharedFunctionsService.delay(2000);
             }
             this.notificationService.success('Bet(s) added successfully!');
           }
         },
         (error) => {
-
-          this.sharedFunctionsService.showErrorMsg(error,'Error while adding Bet(s)!')
+          this.sharedFunctionsService.showErrorMsg(
+            error,
+            'Error while adding Bet(s)!'
+          );
           // try {
           //   let msg = error.error.fields[Object.keys(error.error.fields)[0]];
-            
+
           //   if (msg !== undefined) {
           //     this.notificationService.error(msg);
-          //   } 
+          //   }
           //   else {
           //     let msg = error.error;
           //     if (msg !== undefined && msg) {
@@ -143,7 +154,8 @@ export class BetSlipComponent implements OnInit {
     this.betSlipService.selectedBets.splice(betIndex, 1);
   }
 
-  handleTabClick(event: any) { // not used --> replaced with the one in bet-slip service
+  handleTabClick(event: any) {
+    // not used --> replaced with the one in bet-slip service
     let text = event.target.textContent;
     console.log(text);
     text = text.trim();
@@ -209,63 +221,59 @@ export class BetSlipComponent implements OnInit {
     return false;
   }
 
-
-
-
-  openConfirmDialog(obj:any,functionToCall:number){
-    let confirmMsg= '';
-    let successMsg= '';
-    let errorMsg= '';
+  openConfirmDialog(obj: any, functionToCall: number) {
+    let confirmMsg = '';
+    let successMsg = '';
+    let errorMsg = '';
     let id = '';
-    if(functionToCall == 5){
-      
-       confirmMsg=  'Are You Sure You want to cancel the bet ?';
-       successMsg= 'Bet canceled';
-       errorMsg= 'Error on bet update';
+    if (functionToCall == 5) {
+      confirmMsg = 'Are You Sure You want to cancel the bet ?';
+      successMsg = 'Bet canceled';
+      errorMsg = 'Error on bet update';
     }
-    
-    if(functionToCall == 6){
-      let index = this.betSlipService.currentOpenBets.findIndex(x=> x.selection.eventName === this.betSlipService.selectedOpenBet);
-      if(index < 0){
-        this.notificationService.error('Error canceling the requested event')
-        return
-      }
-      else{
+
+    if (functionToCall == 6) {
+      let index = this.betSlipService.currentOpenBets.findIndex(
+        (x) => x.selection.eventName === this.betSlipService.selectedOpenBet
+      );
+      if (index < 0) {
+        this.notificationService.error('Error canceling the requested event');
+        return;
+      } else {
         obj.id = this.betSlipService.currentOpenBets[index].selection.eventId;
       }
-      confirmMsg=  'Are You Sure You want to cancel all unmatched bets for this event?';
-       successMsg= 'Bets canceled';
-       errorMsg= 'Error on bets update';
-   }
-  
-    const dialogRef = this.dialog.open(ConfirmationMessageComponent,{
-      data:{
-        obj:obj,
-        functionToCall:functionToCall,
-        confirmMsg:confirmMsg,
-        successMsg:successMsg,
-        errorMsg:errorMsg,
-      }
+      confirmMsg =
+        'Are You Sure You want to cancel all unmatched bets for this event?';
+      successMsg = 'Bets canceled';
+      errorMsg = 'Error on bets update';
+    }
+
+    const dialogRef = this.dialog.open(ConfirmationMessageComponent, {
+      data: {
+        obj: obj,
+        functionToCall: functionToCall,
+        confirmMsg: confirmMsg,
+        successMsg: successMsg,
+        errorMsg: errorMsg,
+      },
     });
-  
-    dialogRef.afterClosed().subscribe( async (result) => {
-      if(functionToCall == 5){
+
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (functionToCall == 5) {
         // this.betSlipService.updateOpenBets();
-      }
-      else if(functionToCall == 6){
+      } else if (functionToCall == 6) {
         // this.betSlipService.updateOpenBetsOptions();
       }
       this.authService.updateCurrentBalance();
     });
   }
 
-  openBetDetail(obj:any) {
-    const dialogRef = this.dialog.open(BetDetailsComponent,{
-      data:obj
+  openBetDetail(obj: any) {
+    const dialogRef = this.dialog.open(BetDetailsComponent, {
+      data: obj,
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
     });
   }
-
 }

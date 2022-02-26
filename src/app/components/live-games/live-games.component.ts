@@ -20,7 +20,7 @@ export class LiveGamesComponent implements OnInit, OnDestroy {
     public betSlipService: BetSlipService,
     private ref: ChangeDetectorRef
   ) {
-    
+
     this.subscription = this.dataService.selectedEvents.subscribe((resp) => {
       let arrOfGames = [];
       for (let key in resp) {
@@ -32,6 +32,8 @@ export class LiveGamesComponent implements OnInit, OnDestroy {
       this.ref.markForCheck();
 
     });
+
+    console.log(this.games)
   }
 
   deb = false;
@@ -63,7 +65,7 @@ export class LiveGamesComponent implements OnInit, OnDestroy {
     }
 
     console.log(this.lastSport)
-    
+
 
     if(sport == this.lastSport){
       return false;

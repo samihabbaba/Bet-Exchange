@@ -1068,7 +1068,7 @@ body {
   &.lay {
     background: var(--light-red);
   }
-  
+
 
 }
 
@@ -1079,7 +1079,7 @@ body {
 .bet-item-market-title {
   padding-left: 6px;
   flex: 1;
-  max-width: 52%;
+  width: 45%;
   h1 {
     font-size: 15px;
     line-height: 18px;
@@ -1141,7 +1141,7 @@ body {
 
   .bet-item-match-odd {
     align-self: center;
-    width: 33.3%;
+    width: 38%;
     input {
       width: 105%;
       border-radius: 4px;
@@ -1159,7 +1159,7 @@ body {
 
   .bet-item-match-stake {
     align-self: center;
-    width: 33.3%;
+    width: 38%;
     input {
       width: 105%;
       border-radius: 4px;
@@ -1372,6 +1372,7 @@ input {
     &.disabled {
       background: var(--light-grey);
       cursor: not-allowed;
+      pointer-events: none;
       opacity: 0.5;
       // pointer-events: none;
     }

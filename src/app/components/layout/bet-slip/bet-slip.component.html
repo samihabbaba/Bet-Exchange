@@ -8,12 +8,14 @@
       <div
         class="singles"
         value="singles"
-        [ngClass]="{'active': this.tabToDisplay == 'Singles'}"
+        [ngClass]="{ active: this.tabToDisplay == 'Singles' }"
         #singles
-        (click)="betSlipService.handleTabClick('Singles'); $event.stopPropagation()"
+        (click)="
+          betSlipService.handleTabClick('Singles'); $event.stopPropagation()
+        "
       >
         <h1>
-          Singles
+          Slip
           <span
             *ngIf="this.betSlipService.selectedBets.length > 0"
             (click)="$event.stopPropagation()"
@@ -24,9 +26,11 @@
       <div
         class="open-bets"
         value="open-bets"
-        [ngClass]="{'active': this.tabToDisplay == 'Open'}"
+        [ngClass]="{ active: this.tabToDisplay == 'Open' }"
         #openBets
-        (click)="betSlipService.handleTabClick('Open'); $event.stopPropagation()"
+        (click)="
+          betSlipService.handleTabClick('Open'); $event.stopPropagation()
+        "
       >
         <h1>Open Bets</h1>
       </div>
@@ -50,7 +54,11 @@
               ></fa-icon>
             </div>
 
-            <div class="bet-item-market-title">
+            <div
+              class="bet-item-market-title"
+              style="cursor: default"
+              [matTooltip]="bet.market.run.runnerName"
+            >
               <h1>{{ bet.market.run.runnerName }}</h1>
               <h3>{{ bet.market.marketName }}</h3>
             </div>
@@ -68,6 +76,7 @@
                 <input
                   type="number"
                   min="0.1"
+                  step="5"
                   [(ngModel)]="bet.stake"
                   (input)="setLiabilityForBet(bet)"
                   onkeyup="if(parseInt(this.value)>100000){ this.value =100000; return false; }"
@@ -119,10 +128,6 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-
-
-      
-
 
       <!-- start - matched bets -->
 
@@ -240,14 +245,14 @@
               <!-- <input type="number" value="2" /> -->
               <span matTooltip="Stake" [matTooltipPosition]="'above'"
                 ><p>
-                  {{ this.sharedFunctionsService.formatNumber(openBet.stake) }} 
-                </p> </span
-              >
+                  {{ this.sharedFunctionsService.formatNumber(openBet.stake) }}
+                </p>
+              </span>
               <span matTooltip="Odds" [matTooltipPosition]="'above'"
                 ><p>
                   {{ this.sharedFunctionsService.formatNumber(openBet.odd) }}
-                </p> </span
-              >
+                </p>
+              </span>
               <span matTooltip="Profit" [matTooltipPosition]="'above'"
                 ><p>
                   {{
@@ -285,8 +290,6 @@
 
       <!-- end - partially matched bets -->
 
-
-      
       <!-- start - unmatched bets -->
       <div
         class="unmatched-bets"
@@ -338,14 +341,16 @@
               <!-- <input type="number" value="2" /> -->
               <span matTooltip="Stake" [matTooltipPosition]="'above'"
                 ><p>
-                  {{ this.sharedFunctionsService.formatNumber(openBet.fullStake) }}
-                </p> </span
-              >
+                  {{
+                    this.sharedFunctionsService.formatNumber(openBet.fullStake)
+                  }}
+                </p>
+              </span>
               <span matTooltip="Odds" [matTooltipPosition]="'above'"
                 ><p>
                   {{ this.sharedFunctionsService.formatNumber(openBet.odd) }}
-                </p> </span
-              >
+                </p>
+              </span>
               <!-- <span><p>{{ this.sharedFunctionsService.formatNumber( openBet.payout) }}</p> </span> -->
               <span matTooltip="Profit" [matTooltipPosition]="'above'"
                 ><p>
@@ -383,7 +388,6 @@
       </div>
 
       <!-- end - unmatched bets -->
-
     </div>
 
     <div *ngIf="this.tabToDisplay == 'Singles'">

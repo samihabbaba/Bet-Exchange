@@ -30,7 +30,7 @@ export class DataService {
     private http: HttpClient,
     private layoutService: LayoutService,
     public liveFeed: LiveFeedService,
-    private noti:NotificationService
+    private noti: NotificationService
   ) {
     this.liveFeed.selectedEvents.subscribe((resp) => {
       this.handleLiveFeed(resp);
@@ -41,31 +41,46 @@ export class DataService {
     });
   }
 
-
-
   ////////////////////////////////
   ////// Bet Controller //////
   ///////////////////////////////
 
-  getBets(PageNo:number, PageSize:number, UserId='', ParentId='', BetType='', MarketId='', SelectionId='', EventTypeId='', CompetitionId='',StartDate='', EndDate='', OnLastActionDate=false,UserName='',BetStatus='',  SortBy='Date',SortingType='-1') {
-   let query = this.convertObjectToQueryString({
-    PageNo:PageNo,
-    PageSize:PageSize,
-    UserId:UserId,
-    ParentId:ParentId,
-    BetType:BetType, 
-    MarketId: MarketId, 
-    SelectionId: SelectionId, 
-    EventTypeId: EventTypeId, 
-    CompetitionId: CompetitionId,
-    StartDate: StartDate, 
-    EndDate: EndDate, 
-    OnLastActionDate:OnLastActionDate,
-    UserName: UserName,
-    BetStatus: BetStatus,
-    SortBy:SortBy,
-    SortingType:SortingType
-   })
+  getBets(
+    PageNo: number,
+    PageSize: number,
+    UserId = '',
+    ParentId = '',
+    BetType = '',
+    MarketId = '',
+    SelectionId = '',
+    EventTypeId = '',
+    CompetitionId = '',
+    StartDate = '',
+    EndDate = '',
+    OnLastActionDate = false,
+    UserName = '',
+    BetStatus = '',
+    SortBy = 'Date',
+    SortingType = '-1'
+  ) {
+    let query = this.convertObjectToQueryString({
+      PageNo: PageNo,
+      PageSize: PageSize,
+      UserId: UserId,
+      ParentId: ParentId,
+      BetType: BetType,
+      MarketId: MarketId,
+      SelectionId: SelectionId,
+      EventTypeId: EventTypeId,
+      CompetitionId: CompetitionId,
+      StartDate: StartDate,
+      EndDate: EndDate,
+      OnLastActionDate: OnLastActionDate,
+      UserName: UserName,
+      BetStatus: BetStatus,
+      SortBy: SortBy,
+      SortingType: SortingType,
+    });
     return this.http.get<any>(`${this.baseUrl}bets${query}`, {
       headers: this.httpOptions.headers,
       observe: 'response',
@@ -77,58 +92,94 @@ export class DataService {
     // });
   }
 
-  submitBets(bets:any){        
-     return this.http.post(`${environment.apiUrl}bets`, bets, {
-       headers: this.httpOptions.headers,
-       observe: "response",
-     });
+  submitBets(bets: any) {
+    return this.http.post(`${environment.apiUrl}bets`, bets, {
+      headers: this.httpOptions.headers,
+      observe: 'response',
+    });
   }
-    
-  getBetById(id:string) {
+
+  getBetById(id: string) {
     return this.http.get<any>(`${this.baseUrl}bets/${id}`, {
       headers: this.httpOptions.headers,
       observe: 'response',
     });
   }
 
-  voidBets(id:string){        
-    return this.http.post(`${environment.apiUrl}bets/${id}/void`,{}, {
-      headers: this.httpOptions.headers,
-      observe: "response",
-    });
- }
+  voidBets(id: string) {
+    return this.http.post(
+      `${environment.apiUrl}bets/${id}/void`,
+      {},
+      {
+        headers: this.httpOptions.headers,
+        observe: 'response',
+      }
+    );
+  }
 
- 
- voidBetsMulti(obj:any){        
-  return this.http.post(`${environment.apiUrl}bets/void`, obj , {
-    headers: this.httpOptions.headers,
-    observe: "response",
-  });
-}
- 
-  winBets(id:string){        
-    return this.http.post(`${environment.apiUrl}bets/${id}/win`,{}, {
+  voidBetsMulti(obj: any) {
+    return this.http.post(`${environment.apiUrl}bets/void`, obj, {
       headers: this.httpOptions.headers,
-      observe: "response",
+      observe: 'response',
     });
   }
 
-  loseBets(id:string){        
-      return this.http.post(`${environment.apiUrl}bets/${id}/lose`,{}, {
+  winBets(id: string) {
+    return this.http.post(
+      `${environment.apiUrl}bets/${id}/win`,
+      {},
+      {
         headers: this.httpOptions.headers,
-        observe: "response",
-      });
-    }
+        observe: 'response',
+      }
+    );
+  }
+
+  loseBets(id: string) {
+    return this.http.post(
+      `${environment.apiUrl}bets/${id}/lose`,
+      {},
+      {
+        headers: this.httpOptions.headers,
+        observe: 'response',
+      }
+    );
+  }
 
   ///////////////////////////////////
   ///// Transaction Controller /////
   //////////////////////////////////
 
-  getTransactions(PageNo:number, PageSize:number, UserId='', ToUserId='', CurrencyCode='', ParentId='', StartDate='',EndDate='',DirectParent:any='',BettingTransactionsOnly:any='', SortBy='CreatedAt',SortingType='-1' ) {
+  getTransactions(
+    PageNo: number,
+    PageSize: number,
+    UserId = '',
+    ToUserId = '',
+    CurrencyCode = '',
+    ParentId = '',
+    StartDate = '',
+    EndDate = '',
+    DirectParent: any = '',
+    BettingTransactionsOnly: any = '',
+    SortBy = 'CreatedAt',
+    SortingType = '-1',
+    type = ''
+  ) {
     //BettingTransactionsOnly  [ null (all), true (only bet related), flase (filter out the bet related transactions)]
     let query = this.convertObjectToQueryString({
-      PageNo:PageNo, PageSize:PageSize, UserId:UserId, ToUserId:ToUserId, CurrencyCode:CurrencyCode, ParentId:ParentId, StartDate:StartDate,EndDate:EndDate, DirectParent:DirectParent, BettingTransactionsOnly:BettingTransactionsOnly,SortBy:SortBy,SortingType:SortingType
-    })
+      PageNo: PageNo,
+      PageSize: PageSize,
+      UserId: UserId,
+      ToUserId: ToUserId,
+      CurrencyCode: CurrencyCode,
+      ParentId: ParentId,
+      StartDate: StartDate,
+      EndDate: EndDate,
+      DirectParent: DirectParent,
+      BettingTransactionsOnly: BettingTransactionsOnly,
+      SortBy: SortBy,
+      SortingType: SortingType,
+    });
     return this.http.get<any>(`${this.baseUrl}transactions${query}`, {
       headers: this.httpOptions.headers,
       observe: 'response',
@@ -138,49 +189,57 @@ export class DataService {
     //   observe: 'response',
     // });
   }
-    
-  getTransactionById(id:string) {
+
+  getTransactionById(id: string) {
     return this.http.get<any>(`${this.baseUrl}transactions/${id}`, {
       headers: this.httpOptions.headers,
       observe: 'response',
     });
   }
 
-
-
-
-
-
-///////////////////////////////////
+  ///////////////////////////////////
   ///// Sports Controller /////
   //////////////////////////////////
 
-  getSports(isActive:any = '') {
+  getSports(isActive: any = '') {
     let query = this.convertObjectToQueryString({
-      isActive:isActive
-    })
+      isActive: isActive,
+    });
     return this.http.get<any>(`${this.baseUrl}sports${query}`, {
       headers: this.httpOptions.headers,
       observe: 'response',
     });
   }
 
-  toggleSportActive(id:string) {
-    return this.http.post(`${environment.apiUrl}sports/${id}/active/toggle`, {}, {
-      headers: this.httpOptions.headers,
-      observe: 'response',
-    });
+  toggleSportActive(id: string) {
+    return this.http.post(
+      `${environment.apiUrl}sports/${id}/active/toggle`,
+      {},
+      {
+        headers: this.httpOptions.headers,
+        observe: 'response',
+      }
+    );
   }
 
-///////////////////////////////////
+  ///////////////////////////////////
   ///// login history Controller /////
   //////////////////////////////////
 
-  getLoginHistory(userId:string , StartDate:string, EndDate:string, PageNo:number, PageSize:number) {
-    return this.http.get<any>(`${this.baseUrl}login-history?userId=${userId}&StartDate=${StartDate}&EndDate${EndDate}&PageNo=${PageNo}&PageSize=${PageSize}`, {
-      headers: this.httpOptions.headers,
-      observe: 'response',
-    });
+  getLoginHistory(
+    userId: string,
+    StartDate: string,
+    EndDate: string,
+    PageNo: number,
+    PageSize: number
+  ) {
+    return this.http.get<any>(
+      `${this.baseUrl}login-history?userId=${userId}&StartDate=${StartDate}&EndDate${EndDate}&PageNo=${PageNo}&PageSize=${PageSize}`,
+      {
+        headers: this.httpOptions.headers,
+        observe: 'response',
+      }
+    );
   }
 
   /////////////////////////////////////
@@ -188,12 +247,11 @@ export class DataService {
   ////////////////////////////////////
 
   // GET​/bettingrules
-  getBettingRules(PageNo:any, PageSize:any, SortBy:any=null,) {
-
+  getBettingRules(PageNo: any, PageSize: any, SortBy: any = null) {
     return this.http.get<any>(
-      `${this.baseUrl}bettingrules?PageNo=${
-        PageNo ? PageNo : ''
-      }&PageSize=${PageSize ? PageSize : ''}&SortingType=1`,
+      `${this.baseUrl}bettingrules?PageNo=${PageNo ? PageNo : ''}&PageSize=${
+        PageSize ? PageSize : ''
+      }&SortingType=1`,
       {
         headers: this.httpOptions.headers,
         observe: 'response',
@@ -233,7 +291,6 @@ export class DataService {
     });
   }
 
-  
   ////////////////////////////////
   ////// League Controller //////
   ////////////////////////////////
@@ -247,7 +304,9 @@ export class DataService {
         pars.SortBy ? pars.SortBy : ''
       }&SortingType=1&regionCode=${
         pars.regionCode ? pars.regionCode : ''
-      }&EventTypeId=${pars.SportId ? pars.SportId : ''}&HasInPlay=${pars.HasInPlay ? pars.HasInPlay : false}`,
+      }&EventTypeId=${pars.SportId ? pars.SportId : ''}&HasInPlay=${
+        pars.HasInPlay ? pars.HasInPlay : false
+      }`,
       {
         headers: this.httpOptions.headers,
         observe: 'response',
@@ -256,22 +315,23 @@ export class DataService {
   }
 
   // GET​/leagues
-  getAllLeagues(sportId:string,regionCode: string, HasInPlay:any =null, isActive:any = '') {
-
+  getAllLeagues(
+    sportId: string,
+    regionCode: string,
+    HasInPlay: any = null,
+    isActive: any = ''
+  ) {
     let query = this.convertObjectToQueryString({
-      EventTypeId:sportId,
-      regionCode:regionCode,
-      HasInPlay:HasInPlay,
-      isActive:isActive
-    })
+      EventTypeId: sportId,
+      regionCode: regionCode,
+      HasInPlay: HasInPlay,
+      isActive: isActive,
+    });
 
-    return this.http.get<any>(
-      `${this.baseUrl}leagues${query}`,
-      {
-        headers: this.httpOptions.headers,
-        observe: 'response',
-      }
-    );
+    return this.http.get<any>(`${this.baseUrl}leagues${query}`, {
+      headers: this.httpOptions.headers,
+      observe: 'response',
+    });
   }
 
   getLeagueById(id: any) {
@@ -287,12 +347,16 @@ export class DataService {
       observe: 'response',
     });
   }
-  
+
   toggleLeagueActivation(id: any) {
-    return this.http.post<any>(`${this.baseUrl}leagues/${id}/active/toggle`, {}, {
-      headers: this.httpOptions.headers,
-      observe: 'response',
-    });
+    return this.http.post<any>(
+      `${this.baseUrl}leagues/${id}/active/toggle`,
+      {},
+      {
+        headers: this.httpOptions.headers,
+        observe: 'response',
+      }
+    );
   }
 
   //////////////////////////////
@@ -356,11 +420,11 @@ export class DataService {
     );
   }
 
-  getAllRegions(sportId: any,HasInPlay:any=null) {
-    let query = this.convertObjectToQueryString(
-      {EventTypeId:sportId,
-      HasInPlay:HasInPlay}
-    )
+  getAllRegions(sportId: any, HasInPlay: any = null) {
+    let query = this.convertObjectToQueryString({
+      EventTypeId: sportId,
+      HasInPlay: HasInPlay,
+    });
     return this.http.get<any>(`${this.baseUrl}regions${query}`, {
       headers: this.httpOptions.headers,
       observe: 'response',
@@ -380,20 +444,27 @@ export class DataService {
       observe: 'response',
     });
   }
-  
+
   toggleRegionActivation(obj: any) {
-    return this.http.post<any>(`${this.baseUrl}regions/${obj.id}/active/toggle`, obj, {
-      headers: this.httpOptions.headers,
-      observe: 'response',
-    });
+    return this.http.post<any>(
+      `${this.baseUrl}regions/${obj.id}/active/toggle`,
+      obj,
+      {
+        headers: this.httpOptions.headers,
+        observe: 'response',
+      }
+    );
   }
-  
-  toggleRegionActivationForSport(sportId: any,regionId:any) {
-    
-    return this.http.post<any>(`${this.baseUrl}sports/${sportId}/regions/${regionId}/active/toggle`, {}, {
-      headers: this.httpOptions.headers,
-      observe: 'response',
-    });
+
+  toggleRegionActivationForSport(sportId: any, regionId: any) {
+    return this.http.post<any>(
+      `${this.baseUrl}sports/${sportId}/regions/${regionId}/active/toggle`,
+      {},
+      {
+        headers: this.httpOptions.headers,
+        observe: 'response',
+      }
+    );
   }
 
   //////////////////////////////////
@@ -401,13 +472,16 @@ export class DataService {
   ////////////////////////////////
 
   getUpcoming(pars: any) {
-
     return this.http.get<any>(
       `${this.baseUrl}upcoming/paged?RegionCode=${
         pars.RegionCode ? pars.RegionCode : ''
       }&CompetitionId=${pars.LeagueId ? pars.LeagueId : ''}&PageNo=${
         pars.PageNo ? pars.PageNo : ''
-      }&PageSize=${pars.PageSize ? pars.PageSize : ''}&SortBy=OpenDate&SortingType=1&EventTypeId=${pars.sportId ? pars.sportId : ''}`,
+      }&PageSize=${
+        pars.PageSize ? pars.PageSize : ''
+      }&SortBy=OpenDate&SortingType=1&EventTypeId=${
+        pars.sportId ? pars.sportId : ''
+      }`,
       {
         headers: this.httpOptions.headers,
         observe: 'response',
@@ -419,7 +493,9 @@ export class DataService {
     return this.http.get<any>(
       `${this.baseUrl}upcoming?RegionCode=${
         pars.RegionCode ? pars.RegionCode : ''
-      }&CompetitionId=${pars.LeagueId ? pars.LeagueId : ''}&EventTypeId=${pars.sportId ? pars.sportId : ''}&SortBy=OpenDate`,
+      }&CompetitionId=${pars.LeagueId ? pars.LeagueId : ''}&EventTypeId=${
+        pars.sportId ? pars.sportId : ''
+      }&SortBy=OpenDate`,
       {
         headers: this.httpOptions.headers,
         observe: 'response',
@@ -459,12 +535,20 @@ export class DataService {
         (resp) => {
           this.layoutService.displayLiveGames();
 
-            let sorted = resp.body/*.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null)*/.sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0)
-            let result = sorted.reduce(function (r:any, a:any) {
-              r[a.eventTypeId] = r[a.eventTypeId] || [];
-              r[a.eventTypeId].push(a);
-              return r;
-            }, Object.create(null))
+          let sorted =
+            resp.body /*.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null)*/
+              .sort((a: any, b: any) =>
+                a.eventTypeId < b.eventTypeId
+                  ? -1
+                  : a.eventTypeId > b.eventTypeId
+                  ? 1
+                  : 0
+              );
+          let result = sorted.reduce(function (r: any, a: any) {
+            r[a.eventTypeId] = r[a.eventTypeId] || [];
+            r[a.eventTypeId].push(a);
+            return r;
+          }, Object.create(null));
 
           // this.events.next(resp.body.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null).sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0));
           this.events.next(result);
@@ -483,14 +567,21 @@ export class DataService {
     }
     // this.events.next(games.filter((x:any)=>x.markets.length > 0));
     //x.sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0)
-    
-    let sorted = games/*.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null)*/.sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0)
-    let result = sorted.reduce(function (r:any, a:any) {
+
+    let sorted =
+      games /*.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null)*/
+        .sort((a: any, b: any) =>
+          a.eventTypeId < b.eventTypeId
+            ? -1
+            : a.eventTypeId > b.eventTypeId
+            ? 1
+            : 0
+        );
+    let result = sorted.reduce(function (r: any, a: any) {
       r[a.eventTypeId] = r[a.eventTypeId] || [];
       r[a.eventTypeId].push(a);
       return r;
-    }, Object.create(null))
-
+    }, Object.create(null));
 
     // this.events.next(games.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null).sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0));
     this.events.next(result);
@@ -517,19 +608,17 @@ export class DataService {
       // .pipe(finalize(() => this.layoutService.stopMainLoading()))
       .subscribe(
         (resp) => {
-
-          if(resp.body.markets.length > 0){
+          if (resp.body.markets.length > 0) {
             this.eventDetails.next({ ...resp.body, isLive: true });
             // this.layoutService.displayGameDetails();
             if (!ignoreListen) {
               this.liveFeed.listenToEvent(eventId);
             }
-          }
-          else{
+          } else {
             this.layoutService.displayLiveGames();
-            this.noti.info('Can\'t load the requested event at the moment');
+            this.noti.info("Can't load the requested event at the moment");
           }
-          this.layoutService.stopMainLoading()
+          this.layoutService.stopMainLoading();
         },
         (error) => {
           this.eventDetails.next([]);
@@ -546,7 +635,12 @@ export class DataService {
 
   ////// pre part
 
-  loadPreGames(leagueId: any, regionId: string,sportId:string, paged=false) {
+  loadPreGames(
+    leagueId: any,
+    regionId: string,
+    sportId: string,
+    paged = false
+  ) {
     if (this.layoutService.isMainLoading()) {
       return;
     }
@@ -557,14 +651,13 @@ export class DataService {
     this.events.next([]);
     this.layoutService.displayPreGames();
 
-    if(paged){
+    if (paged) {
       this.loadPreGamesFromHeader(sportId);
-    }
-    else{
+    } else {
       this.getAllUpcoming({
         LeagueId: leagueId,
         RegionCode: regionId,
-        sportId:sportId
+        sportId: sportId,
       })
         .pipe(
           finalize(() => {
@@ -574,20 +667,26 @@ export class DataService {
         )
         .subscribe(
           (resp) => {
-  
             this.layoutService.displayPreGames();
 
-            let sorted = resp.body/*.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null)*/.sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0)
-            let result = sorted.reduce(function (r:any, a:any) {
+            let sorted =
+              resp.body /*.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null)*/
+                .sort((a: any, b: any) =>
+                  a.eventTypeId < b.eventTypeId
+                    ? -1
+                    : a.eventTypeId > b.eventTypeId
+                    ? 1
+                    : 0
+                );
+            let result = sorted.reduce(function (r: any, a: any) {
               r[a.eventTypeId] = r[a.eventTypeId] || [];
               r[a.eventTypeId].push(a);
               return r;
-            }, Object.create(null))
-      
+            }, Object.create(null));
+
             // this.events.next(resp.body.filter((x:any)=>x.markets.length > 0));
             // this.events.next(resp.body.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null).sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0));
             this.events.next(result);
-            
           },
           (error) => {
             this.events.next([]);
@@ -595,13 +694,12 @@ export class DataService {
           }
         );
     }
-    
   }
 
-  loadPreGamesFromHeader(sportId?:any,  ignoreLoading=false) {
-// return //uncomment here
-this.layoutService.closeMenuChilds();
-    if (this.layoutService.isMainLoading()  && !ignoreLoading) {
+  loadPreGamesFromHeader(sportId?: any, ignoreLoading = false) {
+    // return //uncomment here
+    this.layoutService.closeMenuChilds();
+    if (this.layoutService.isMainLoading() && !ignoreLoading) {
       return;
     } else {
       this.layoutService.startMainLoading();
@@ -609,41 +707,45 @@ this.layoutService.closeMenuChilds();
 
     this.events.next([]);
     this.layoutService.displayPreGames();
-    if(!sportId || sportId == null || sportId =='')
-    {
-      sportId='1';
+    if (!sportId || sportId == null || sportId == '') {
+      sportId = '1';
     }
     this.getUpcoming({
       PageNo: 1,
       PageSize: 15,
       SortBy: 'OpenDate',
       SortingType: 1,
-      sportId:sportId
+      sportId: sportId,
     })
       .pipe(
-        finalize(
-          () => {
-            this.layoutService.stopMainLoading()
-            }
-          )
-        )
+        finalize(() => {
+          this.layoutService.stopMainLoading();
+        })
+      )
       .subscribe(
         (resp) => {
           this.layoutService.displayPreGames();
 
-          let sorted = resp.body.items/*.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null)*/.sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0)
-          let result = sorted.reduce(function (r:any, a:any) {
+          let sorted =
+            resp.body.items /*.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null)*/
+              .sort((a: any, b: any) =>
+                a.eventTypeId < b.eventTypeId
+                  ? -1
+                  : a.eventTypeId > b.eventTypeId
+                  ? 1
+                  : 0
+              );
+          let result = sorted.reduce(function (r: any, a: any) {
             r[a.eventTypeId] = r[a.eventTypeId] || [];
             r[a.eventTypeId].push(a);
             return r;
-          }, Object.create(null))
+          }, Object.create(null));
 
           // this.events.next(resp.body.items.filter((x:any)=>x.markets.length > 0));
-          // this.events.next(resp.body.items.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null).sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0));          
-          this.events.next(result);          
+          // this.events.next(resp.body.items.filter((x:any)=>x.markets.length > 0 && x.markets[0] !== null).sort((a:any, b:any) => a.eventTypeId < b.eventTypeId ? -1 : a.eventTypeId > b.eventTypeId ? 1 : 0));
+          this.events.next(result);
         },
         (error) => {
-
           this.events.next([]);
           // add error message here
         }
@@ -660,28 +762,26 @@ this.layoutService.closeMenuChilds();
     this.eventDetails.next([]);
     this.layoutService.displayGameDetails();
 
-    this.getUpcomingById(eventId)
-      .subscribe(
-        (resp) => {
-          if(resp.body.markets.length > 0){
-            this.layoutService.displayGameDetails();
-            this.eventDetails.next(resp.body);
-            // listen to game here
-            // this.liveFeed.listenToEvent(eventId);
-          }
-          else{
-            this.layoutService.displayPreGames();
-            this.noti.info('Can\'t load the requested event at the moment');
-          }
-          this.layoutService.stopMainLoading()
-        },
-        (error) => {
-          this.eventDetails.next([]);
-          this.loadPreGamesFromHeader('',true);
-          // this.layoutService.displayPreGames()
-          // add error message here
+    this.getUpcomingById(eventId).subscribe(
+      (resp) => {
+        if (resp.body.markets.length > 0) {
+          this.layoutService.displayGameDetails();
+          this.eventDetails.next(resp.body);
+          // listen to game here
+          // this.liveFeed.listenToEvent(eventId);
+        } else {
+          this.layoutService.displayPreGames();
+          this.noti.info("Can't load the requested event at the moment");
         }
-      );
+        this.layoutService.stopMainLoading();
+      },
+      (error) => {
+        this.eventDetails.next([]);
+        this.loadPreGamesFromHeader('', true);
+        // this.layoutService.displayPreGames()
+        // add error message here
+      }
+    );
   }
 
   ////////////////////////////////////////
@@ -711,211 +811,197 @@ this.layoutService.closeMenuChilds();
     });
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   /////////////////////// users ////////////////////////////
 
+  getAllUsers(pars: any) {
+    let query = this.convertObjectToQueryString({
+      PageNo: pars.PageNo,
+      PageSize: pars.PageSize,
+      ParentId: pars.ParentId,
+      Role: pars.Role,
+    });
 
+    return this.http.get<any>(`${this.baseUrl}users${query}`, {
+      headers: this.httpOptions.headers,
+    });
+  }
 
-   getAllUsers(pars:any) {
-let query = this.convertObjectToQueryString({
-  PageNo:pars.PageNo,
-  PageSize:pars.PageSize,
-  ParentId:pars.ParentId,
-  Role:pars.Role,
-})
+  getUserById(id: string) {
+    return this.http.get<any>(`${environment.apiUrl}users/${id}`, {
+      headers: this.httpOptions.headers,
+    });
+  }
 
-      return this.http.get<any>( `${this.baseUrl}users${query}`, {
-        headers: this.httpOptions.headers,
-      });
+  updateUser(obj: any) {
+    if (obj.commission) {
+      obj.commission /= 100;
+    }
+    if (obj.profitCommission) {
+      obj.profitCommission /= 100;
+    }
+    if (obj.risk) {
+      obj.risk /= 100;
     }
 
-    getUserById(id:string) {
-      return this.http.get<any>(`${environment.apiUrl}users/${id}`, {
-        headers: this.httpOptions.headers,
-      });
+    return this.http.put(`${environment.apiUrl}users/${obj.id}`, obj, {
+      headers: this.httpOptions.headers,
+      observe: 'response',
+    });
+  }
+
+  addNewUser(obj: any) {
+    if (obj.commission) {
+      obj.commission /= 100;
+    }
+    if (obj.profitCommission) {
+      obj.profitCommission /= 100;
+    }
+    if (obj.risk) {
+      obj.risk /= 100;
     }
 
-    updateUser(obj:any) {
+    return this.http.post(`${environment.apiUrl}users`, obj, {
+      headers: this.httpOptions.headers,
+      observe: 'response',
+    });
+  }
 
-      if(obj.commission){
-        obj.commission /= 100.
+  updateRisk(masterId: any, riskObj: any) {
+    return this.http.post(
+      `${environment.apiUrl}users/${masterId}/risk`,
+      riskObj,
+      {
+        headers: this.httpOptions.headers,
+        observe: 'response',
       }
-      if(obj.profitCommission){
-        obj.profitCommission /= 100.
+    );
+  }
+
+  getRisk(id: any) {
+    return this.http.get(`${environment.apiUrl}users/${id}/risk`, {
+      headers: this.httpOptions.headers,
+      observe: 'response',
+    });
+  }
+
+  getExposure(PageNo: number, PageSize: number, UserId = '') {
+    let query = this.convertObjectToQueryString({
+      PageNo: PageNo,
+      PageSize: PageSize,
+      UserId: UserId,
+    });
+    return this.http.get<any>(`${this.baseUrl}users/exposure${query}`, {
+      headers: this.httpOptions.headers,
+    });
+  }
+
+  updatePassword(id: string, password: string) {
+    return this.http.put(
+      `${environment.apiUrl}users/${id}/password`,
+      { newPassword: password },
+      { headers: this.httpOptions.headers, observe: 'response' }
+    );
+  }
+
+  updateMyPassword(obj: any) {
+    return this.http.put(`${environment.apiUrl}users/me/password`, obj, {
+      headers: this.httpOptions.headers,
+      observe: 'response',
+    });
+  }
+
+  toggleUserActive(id: string) {
+    return this.http.post(
+      `${environment.apiUrl}users/${id}/active/toggle`,
+      {},
+      {
+        headers: this.httpOptions.headers,
+        observe: 'response',
       }
-      if(obj.risk){
-        obj.risk /= 100.
+    );
+  }
+
+  toggleUserSuspend(id: string) {
+    return this.http.post(
+      `${environment.apiUrl}users/${id}/suspended/toggle`,
+      {},
+      {
+        headers: this.httpOptions.headers,
+        observe: 'response',
       }
-      
-      return this.http.put(
-        `${environment.apiUrl}users/${obj.id}`,
-        obj,
-        { headers: this.httpOptions.headers, observe: 'response' }
-      );
-    }
+    );
+  }
 
-    addNewUser(obj:any) {
-      if(obj.commission){
-        obj.commission /= 100.
+  changeUserRisk(id: string, newRisk: number) {
+    return this.http.post(
+      `${environment.apiUrl}users/${id}/risk`,
+      { newRisk: newRisk },
+      {
+        headers: this.httpOptions.headers,
+        observe: 'response',
       }
-      if(obj.profitCommission){
-        obj.profitCommission /= 100.
+    );
+  }
+
+  depositUser(obj: any) {
+    return this.http.post(
+      `${environment.apiUrl}users/${obj.toUserId}/deposit`,
+      obj,
+      {
+        headers: this.httpOptions.headers,
+        observe: 'response',
       }
-      if(obj.risk){
-        obj.risk /= 100.
+    );
+  }
+
+  withdrawUser(obj: any) {
+    return this.http.post(
+      `${environment.apiUrl}users/${obj.toUserId}/withdraw`,
+      obj,
+      {
+        headers: this.httpOptions.headers,
+        observe: 'response',
       }
+    );
+  }
 
-      return this.http.post(`${environment.apiUrl}users`, obj, {
+  settleCommission(id: any, amount: number) {
+    return this.http.post(
+      `${environment.apiUrl}users/${id}/settle`,
+      {
+        amount: amount,
+      },
+      {
         headers: this.httpOptions.headers,
         observe: 'response',
-      });
-    }
-
-    
-    updateRisk(masterId:any, riskObj:any) {
-      return this.http.post(`${environment.apiUrl}users/${masterId}/risk`, riskObj, {
-        headers: this.httpOptions.headers,
-        observe: 'response',
-      });
-    }
-
-    getRisk(id:any) {
-      return this.http.get(`${environment.apiUrl}users/${id}/risk`, {
-        headers: this.httpOptions.headers,
-        observe: 'response',
-      });
-    }
-
-    getExposure(PageNo:number, PageSize:number ,UserId = '') {
-      let query = this.convertObjectToQueryString({
-        PageNo:PageNo,
-        PageSize:PageSize,
-        UserId:UserId
-      })
-      return this.http.get<any>( `${this.baseUrl}users/exposure${query}`, {
-        headers: this.httpOptions.headers,
-      });
-    }
-  
-    updatePassword(id:string , password:string) {
-      
-      return this.http.put(
-        `${environment.apiUrl}users/${id}/password`,
-        {newPassword:password},
-        { headers: this.httpOptions.headers, observe: 'response' }
-      );
-    }
-    
-    updateMyPassword( obj:any) {
-      return this.http.put(
-        `${environment.apiUrl}users/me/password`,
-        obj,
-        { headers: this.httpOptions.headers, observe: 'response' }
-      );
-    }
-
-    toggleUserActive(id:string) {
-      return this.http.post(`${environment.apiUrl}users/${id}/active/toggle`, {}, {
-        headers: this.httpOptions.headers,
-        observe: 'response',
-      });
-    }
-    
-    toggleUserSuspend(id:string) {
-      return this.http.post(`${environment.apiUrl}users/${id}/suspended/toggle`, {}, {
-        headers: this.httpOptions.headers,
-        observe: 'response',
-      });
-    }
-
-    changeUserRisk(id:string, newRisk:number) {
-      return this.http.post(`${environment.apiUrl}users/${id}/risk`, {newRisk:newRisk}, {
-        headers: this.httpOptions.headers,
-        observe: 'response',
-      });
-    }
-    
-    depositUser( obj:any) {
-      return this.http.post(`${environment.apiUrl}users/${obj.toUserId}/deposit`, obj, {
-        headers: this.httpOptions.headers,
-        observe: 'response',
-      });
-    }
-
-    withdrawUser( obj:any) {
-      return this.http.post(`${environment.apiUrl}users/${obj.toUserId}/withdraw`, obj, {
-        headers: this.httpOptions.headers,
-        observe: 'response',
-      });
-    }
-    
-
-    settleCommission(id:any, amount:number) {
-      
-      return this.http.post(`${environment.apiUrl}users/${id}/settle`, {
-        amount:amount
-      }, {
-        headers: this.httpOptions.headers,
-        observe: 'response',
-      });
-    }
-
-    // exchangeUser( obj:any) {
-    //   return this.http.post(`${environment.apiUrl}users/exchange`, obj, {
-    //     headers: this.httpOptions.headers,
-    //     observe: 'response',
-    //   });
-    // }
-
-
-
-
-
-    /**
-     * Convert query object to query string representation
-     * @param obj Query object
-     * @returns Query string representation of obj
-     */
-    convertObjectToQueryString(obj: any){
-
-      let query = "?";
-      for (const [key, value] of Object.entries(obj)) {
-        
-        if(value === '' || value === null || value === undefined){
-          continue;
-        }
-        query += query[query.length - 1] === '?' ? `${key}=${value}` : `&${key}=${value}`;
       }
-      if (query === "?") return "";
-      return query;
+    );
+  }
+
+  // exchangeUser( obj:any) {
+  //   return this.http.post(`${environment.apiUrl}users/exchange`, obj, {
+  //     headers: this.httpOptions.headers,
+  //     observe: 'response',
+  //   });
+  // }
+
+  /**
+   * Convert query object to query string representation
+   * @param obj Query object
+   * @returns Query string representation of obj
+   */
+  convertObjectToQueryString(obj: any) {
+    let query = '?';
+    for (const [key, value] of Object.entries(obj)) {
+      if (value === '' || value === null || value === undefined) {
+        continue;
+      }
+      query +=
+        query[query.length - 1] === '?'
+          ? `${key}=${value}`
+          : `&${key}=${value}`;
     }
+    if (query === '?') return '';
+    return query;
+  }
 }

@@ -128,7 +128,6 @@ export class AccountDetailsComponent implements OnInit {
   transactionsData = new MatTableDataSource<any>();
   transactionsSubData = new MatTableDataSource<any>();
 
-  
   // bettingRule Section
   displayedColumnsBettingRules: string[] = [
     // 'id',
@@ -173,7 +172,6 @@ export class AccountDetailsComponent implements OnInit {
     // 'avgOddsMatched',
   ];
 
-  
   displayedColumnsExpo: string[] = [
     'eventName',
     'betsPlayed',
@@ -183,9 +181,8 @@ export class AccountDetailsComponent implements OnInit {
     'risk',
     'possibleWin',
     'possibleLoss',
-    'actions'
+    'actions',
   ];
-
 
   sportsData = new MatTableDataSource<any>();
   displayedColumnsSports: string[] = [
@@ -194,7 +191,7 @@ export class AccountDetailsComponent implements OnInit {
     'isActive',
     // 'actions',
   ];
-  
+
   regionsData = new MatTableDataSource<any>();
   displayedColumnsRegions: string[] = [
     'countryCode',
@@ -203,7 +200,6 @@ export class AccountDetailsComponent implements OnInit {
     // 'actions',
   ];
 
-  
   leaguesData = new MatTableDataSource<any>();
   displayedColumnsLeagues: string[] = [
     'id',
@@ -213,8 +209,8 @@ export class AccountDetailsComponent implements OnInit {
     // 'actions',
   ];
 
-  myUser:any = {
-    role:'Client'
+  myUser: any = {
+    role: 'Client',
   };
   rangeBets = new FormGroup({
     start: new FormControl(new Date()),
@@ -233,500 +229,599 @@ export class AccountDetailsComponent implements OnInit {
   pageSize = this.sharedService.defaultPageSize;
   bettingHistoryData = new MatTableDataSource<any>();
   bettingExpoData = new MatTableDataSource<any>();
-  
 
-  sportsList:any =[]
-  regionsList:any =[]
-  leaguesList:any =[]
-  currentSportIdForRegions = ''
-  currentSportIdForLeagues = ''
-  currentRegionIdForLeagues = ''
-  
-  transactionType1=''
-  transactionType2=''
-  directParentTrans=false
+  sportsList: any = [];
+  regionsList: any = [];
+  leaguesList: any = [];
+  currentSportIdForRegions = '';
+  currentSportIdForLeagues = '';
+  currentRegionIdForLeagues = '';
+
+  transactionType1 = '';
+  transactionType2 = '';
+  directParentTrans = false;
 
   //bet filter parameters
-  sportIdForBets=''; //EventTypeId
-  betTypeForBets='';  // BACK / LAY
-  onActionDateForBets=false;
-  parentIdForBets='';
-  userIdForBets='';
-  usernameForIdForBets='';
-  statusForBets='';
-  usernameForBets='';
+  sportIdForBets = ''; //EventTypeId
+  betTypeForBets = ''; // BACK / LAY
+  onActionDateForBets = false;
+  parentIdForBets = '';
+  userIdForBets = '';
+  usernameForIdForBets = '';
+  statusForBets = '';
+  usernameForBets = '';
 
   userQuestionUpdate = new Subject<string>();
   screenObserver$?: Subscription;
-  screenSize='';
-  
-  betTotals:any = {
-    totalActualWin:0,
-    totalLiability:0,
-    totalNetWin:0,
-    totalStake:0
-  };
-  
-  transTotals:any = {
-    totalAmount:0
+  screenSize = '';
+
+  betTotals: any = {
+    totalActualWin: 0,
+    totalLiability: 0,
+    totalNetWin: 0,
+    totalStake: 0,
   };
 
-  transSubTotals:any = {
-    totalAmount:0
+  transTotals: any = {
+    totalAmount: 0,
   };
 
-  expoTotals:any = {
-    totalNetLoss:0,
-    totalNetWin:0,
-    totalPossibleLoss:0,
-    totalPossibleWin:0
+  transSubTotals: any = {
+    totalAmount: 0,
   };
 
-  constructor(private fb: FormBuilder,  private router: Router, private dataService:DataService
-    , public sharedService:SharedFunctionsService, public authService:AuthService, 
-    public dialog: MatDialog, private notify:NotificationService, private layoutService:LayoutService, private screenSizeService:ScreenSizeService) {
-      this.userQuestionUpdate.pipe(
-        debounceTime(800),
-        distinctUntilChanged())
-        .subscribe(value => {
-          this.loadBets();
-        });
+  expoTotals: any = {
+    totalNetLoss: 0,
+    totalNetWin: 0,
+    totalPossibleLoss: 0,
+    totalPossibleWin: 0,
+  };
 
-        this.screenObserver$ = this.screenSizeService.currentScreenSize.subscribe( resp =>
-            {
-              this.screenSize = resp
-            }
-        )
-    }
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private dataService: DataService,
+    public sharedService: SharedFunctionsService,
+    public authService: AuthService,
+    public dialog: MatDialog,
+    private notify: NotificationService,
+    private layoutService: LayoutService,
+    private screenSizeService: ScreenSizeService
+  ) {
+    this.userQuestionUpdate
+      .pipe(debounceTime(800), distinctUntilChanged())
+      .subscribe((value) => {
+        this.loadBets();
+      });
+
+    this.screenObserver$ = this.screenSizeService.currentScreenSize.subscribe(
+      (resp) => {
+        this.screenSize = resp;
+      }
+    );
+  }
   ngOnInit(): void {
-    this.loadUser()
-    this.loadBets()
+    this.loadUser();
+    this.loadBets();
     this.loadSports(true);
     this.loadUsersTransactions();
-    
-    if(this.authService.decodedToken.role == 'SoftwareHolder' || this.authService.decodedToken.role == 'SuperAdmin'){
+
+    if (
+      this.authService.decodedToken.role == 'SoftwareHolder' ||
+      this.authService.decodedToken.role == 'SuperAdmin'
+    ) {
       this.loadBettingRules();
     }
-    
-    if(this.authService.decodedToken.role !== 'SoftwareHolder' || this.authService.decodedToken.role !== 'Client'){
+
+    if (
+      this.authService.decodedToken.role !== 'SoftwareHolder' ||
+      this.authService.decodedToken.role !== 'Client'
+    ) {
       this.loadExpo();
     }
-    
-    
 
-    
     this.layoutService.mainContentDisplayType.next('other');
 
-    this.changePasswordForm = this.fb.group({
-      oldPassword: new FormControl(null, Validators.required),
-      newPassword: new FormControl(null, [Validators.required, Validators.minLength(4)]),
-      confirmNewPassword: new FormControl(null, Validators.required),
-    }, {validator: this.passwordMatchValidator});
-
+    this.changePasswordForm = this.fb.group(
+      {
+        oldPassword: new FormControl(null, Validators.required),
+        newPassword: new FormControl(null, [
+          Validators.required,
+          Validators.minLength(4),
+        ]),
+        confirmNewPassword: new FormControl(null, Validators.required),
+      },
+      { validator: this.passwordMatchValidator }
+    );
   }
 
-  secondStageLoads(){
+  secondStageLoads() {
     this.loadSubAccounts();
     this.setRoleOptions();
-    if(this.authService.decodedToken.role !== 'Client'){
+    if (this.authService.decodedToken.role !== 'Client') {
       this.loadUsersTransactionsSub();
     }
   }
 
-  passwordMatchValidator(g: any){
-    return g.get('newPassword').value === g.get('confirmNewPassword').value ? null : {'mismatch': true};
+  passwordMatchValidator(g: any) {
+    return g.get('newPassword').value === g.get('confirmNewPassword').value
+      ? null
+      : { mismatch: true };
   }
 
-  updatePassword(){
-    this.dataService.updateMyPassword(this.changePasswordForm.value).subscribe(resp =>{
-      this.notify.success('Password Changed Successfully');
-      this.changePasswordForm.reset();
-    }, error => {
-      this.sharedService.showErrorMsg(error, 'Error updating user')
-    })
-  }
-  
-  loadUser(){
-
-    this.dataService.getUserById(this.authService.decodedToken.id).subscribe(resp =>{
-      this.myUser = resp;
-      this.secondStageLoads();
-    },error =>{
-
-      //redirect to error page
-    })
+  updatePassword() {
+    this.dataService.updateMyPassword(this.changePasswordForm.value).subscribe(
+      (resp) => {
+        this.notify.success('Password Changed Successfully');
+        this.changePasswordForm.reset();
+      },
+      (error) => {
+        this.sharedService.showErrorMsg(error, 'Error updating user');
+      }
+    );
   }
 
-  loadBets(){
+  loadUser() {
+    this.dataService.getUserById(this.authService.decodedToken.id).subscribe(
+      (resp) => {
+        this.myUser = resp;
+        this.secondStageLoads();
+      },
+      (error) => {
+        //redirect to error page
+      }
+    );
+  }
+
+  loadBets() {
     let endD = new Date(this.rangeBets.controls.end.value);
     endD.setDate(endD.getDate() + 1);
-    
-    let start = this.sharedService.formatDate(this.rangeBets.controls.start.value.getDate(),this.rangeBets.controls.start.value.getMonth()+1,this.rangeBets.controls.start.value.getFullYear()) 
-    let end = this.sharedService.formatDate(endD.getDate(),endD.getMonth()+1,endD.getFullYear(), true) 
-    this.dataService.getBets(this.pageIndexBets, this.pageSize, this.userIdForBets, this.parentIdForBets, this.betTypeForBets,'','',this.sportIdForBets,'',start,end, this.onActionDateForBets, this.usernameForBets, this.statusForBets).subscribe(resp =>{
-      if(resp.body.stats === null){
-        this.betTotals = {
-          totalActualWin:0,
-          totalLiability:0,
-          totalNetWin:0,
-          totalStake:0
-        };
-      }else{
-        this.betTotals = resp.body.stats;
-      }
-      
-     this.lengthBets = resp.body.pagingInfo.totalCount
-     this.bettingHistoryData.data = resp.body.items;
-   }, error =>{
-     // redirect somewhere
-   })
+
+    let start = this.sharedService.formatDate(
+      this.rangeBets.controls.start.value.getDate(),
+      this.rangeBets.controls.start.value.getMonth() + 1,
+      this.rangeBets.controls.start.value.getFullYear()
+    );
+    let end = this.sharedService.formatDate(
+      endD.getDate(),
+      endD.getMonth() + 1,
+      endD.getFullYear(),
+      true
+    );
+    this.dataService
+      .getBets(
+        this.pageIndexBets,
+        this.pageSize,
+        this.userIdForBets,
+        this.parentIdForBets,
+        this.betTypeForBets,
+        '',
+        '',
+        this.sportIdForBets,
+        '',
+        start,
+        end,
+        this.onActionDateForBets,
+        this.usernameForBets,
+        this.statusForBets
+      )
+      .subscribe(
+        (resp) => {
+          if (resp.body.stats === null) {
+            this.betTotals = {
+              totalActualWin: 0,
+              totalLiability: 0,
+              totalNetWin: 0,
+              totalStake: 0,
+            };
+          } else {
+            this.betTotals = resp.body.stats;
+          }
+
+          this.lengthBets = resp.body.pagingInfo.totalCount;
+          this.bettingHistoryData.data = resp.body.items;
+        },
+        (error) => {
+          // redirect somewhere
+        }
+      );
   }
 
-  loadExpo(){
-   
-    this.dataService.getExposure(this.pageIndexExpo,this.pageSize,'').subscribe(resp =>{
-      if(resp.stats == null){
-        this.expoTotals = {
-          totalNetLoss:0,
-          totalNetWin:0,
-          totalPossibleLoss:0,
-          totalPossibleWin:0
-        };
-      }
-      else{
-        this.expoTotals = resp.stats
-      }
-     this.lengthExpo = resp.pagingInfo.totalCount
-     this.bettingExpoData.data = resp.items;
-   }, error =>{
-     // redirect somewhere
-   })
+  loadExpo() {
+    this.dataService
+      .getExposure(this.pageIndexExpo, this.pageSize, '')
+      .subscribe(
+        (resp) => {
+          if (resp.stats == null) {
+            this.expoTotals = {
+              totalNetLoss: 0,
+              totalNetWin: 0,
+              totalPossibleLoss: 0,
+              totalPossibleWin: 0,
+            };
+          } else {
+            this.expoTotals = resp.stats;
+          }
+          this.lengthExpo = resp.pagingInfo.totalCount;
+          this.bettingExpoData.data = resp.items;
+        },
+        (error) => {
+          // redirect somewhere
+        }
+      );
   }
 
-  loadUsersTransactions(){
+  loadUsersTransactions() {
     let endD = new Date(this.rangeTrans.controls.end.value);
     endD.setDate(endD.getDate() + 1);
-    
-    let start = this.sharedService.formatDate(this.rangeTrans.controls.start.value.getDate(),this.rangeTrans.controls.start.value.getMonth()+1,this.rangeTrans.controls.start.value.getFullYear()) 
-    let end = this.sharedService.formatDate(endD.getDate(),endD.getMonth()+1,endD.getFullYear(), true) 
+
+    let start = this.sharedService.formatDate(
+      this.rangeTrans.controls.start.value.getDate(),
+      this.rangeTrans.controls.start.value.getMonth() + 1,
+      this.rangeTrans.controls.start.value.getFullYear()
+    );
+    let end = this.sharedService.formatDate(
+      endD.getDate(),
+      endD.getMonth() + 1,
+      endD.getFullYear(),
+      true
+    );
     let id = this.authService.decodedToken.id;
     let directParent = false;
     let parentId = '';
-    if(this.authService.decodedToken.role == 'SoftwareHolder'){
+    if (this.authService.decodedToken.role == 'SoftwareHolder') {
       // parentId = id;
       directParent = true;
       id = '';
     }
-    this.dataService.getTransactions(this.pageIndexTrans, this.pageSize, id, '', '',parentId, start,end,directParent,this.transactionType1 ).subscribe(resp =>{
-      if(resp.body.stats == null){
-        this.transTotals.totalAmount = 0;
-      }
-      else{
-        this.transTotals = resp.body.stats
-      }
-      this.lengthTrans= resp.body.pagingInfo.totalCount;
-      this.transactionsData.data = resp.body.items;
-    }, error =>{
+    this.dataService
+      .getTransactions(
+        this.pageIndexTrans,
+        this.pageSize,
+        id,
+        '',
+        '',
+        parentId,
+        start,
+        end,
+        directParent,
+        this.transactionType1
+      )
+      .subscribe(
+        (resp) => {
+          if (resp.body.stats == null) {
+            this.transTotals.totalAmount = 0;
+          } else {
+            this.transTotals = resp.body.stats;
+          }
+          this.lengthTrans = resp.body.pagingInfo.totalCount;
+          this.transactionsData.data = resp.body.items;
+        },
+        (error) => {
+          // redirect somewhere
+        }
+      );
+  }
 
-      // redirect somewhere
-    })
-   }
-
-   
-  loadUsersTransactionsSub(){
-
+  loadUsersTransactionsSub() {
     let endD = new Date(this.rangeTransSub.controls.end.value);
     endD.setDate(endD.getDate() + 1);
-    
-    let start = this.sharedService.formatDate(this.rangeTransSub.controls.start.value.getDate(),this.rangeTransSub.controls.start.value.getMonth()+1,this.rangeTransSub.controls.start.value.getFullYear()) 
-    let end = this.sharedService.formatDate(endD.getDate(),endD.getMonth()+1,endD.getFullYear(), true) 
+
+    let start = this.sharedService.formatDate(
+      this.rangeTransSub.controls.start.value.getDate(),
+      this.rangeTransSub.controls.start.value.getMonth() + 1,
+      this.rangeTransSub.controls.start.value.getFullYear()
+    );
+    let end = this.sharedService.formatDate(
+      endD.getDate(),
+      endD.getMonth() + 1,
+      endD.getFullYear(),
+      true
+    );
 
     let id = '';
     // let id = this.authService.decodedToken.id;
-    
-    if(this.authService.decodedToken.role == 'SoftwareHolder'){
+
+    if (this.authService.decodedToken.role == 'SoftwareHolder') {
       id = '';
     }
 
-    this.dataService.getTransactions(this.pageIndexTransSub , this.pageSize, '', '', '',id, start,end,this.directParentTrans, this.transactionType2 ).subscribe(resp =>{
-     
-     
-      if(resp.body.stats == null){
-        this.transSubTotals.totalAmount = 0;
-      }
-      else{
-        this.transSubTotals = resp.body.stats
-      }
-      
-      this.lengthTransSub= resp.body.pagingInfo.totalCount;
-      this.transactionsSubData.data = resp.body.items;
-    }, error =>{
+    this.dataService
+      .getTransactions(
+        this.pageIndexTransSub,
+        this.pageSize,
+        '',
+        '',
+        '',
+        id,
+        start,
+        end,
+        this.directParentTrans,
+        this.transactionType2
+      )
+      .subscribe(
+        (resp) => {
+          if (resp.body.stats == null) {
+            this.transSubTotals.totalAmount = 0;
+          } else {
+            this.transSubTotals = resp.body.stats;
+          }
 
-      // redirect somewhere
-    })
-   }
+          this.lengthTransSub = resp.body.pagingInfo.totalCount;
+          this.transactionsSubData.data = resp.body.items;
+        },
+        (error) => {
+          // redirect somewhere
+        }
+      );
+  }
 
-   updatePageTransSub(page:any) {
+  updatePageTransSub(page: any) {
     this.pageSize = page.pageSize;
     this.pageIndexTransSub = page.pageIndex + 1;
- 
+
     this.loadUsersTransactionsSub();
   }
 
-   loadBettingRules(){
+  loadBettingRules() {
+    this.dataService
+      .getBettingRules(this.pageIndexBettingRules, this.pageSize)
+      .subscribe(
+        (resp) => {
+          this.lengthBettingRules = resp.body.pagingInfo.totalCount;
+          this.bettingRulesData.data = resp.body.items;
+        },
+        (error) => {
+          // redirect somewhere
+        }
+      );
+  }
 
-    this.dataService.getBettingRules(this.pageIndexBettingRules, this.pageSize ).subscribe(resp =>{
-
-      this.lengthBettingRules= resp.body.pagingInfo.totalCount;
-      this.bettingRulesData.data = resp.body.items;
-    }, error =>{
-
-      // redirect somewhere
-    })
-   }
-
-   loadSports(loadAfter = false){
-     this.dataService.getSports().subscribe(resp => {
-      
-      if(this.authService.decodedToken.role === 'SoftwareHolder'){
-        this.sportsList = resp.body.sort((a:any, b:any) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
-        this.sportsData.data = resp.body.sort((a:any, b:any) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
-      }else{
-        this.sportsList = resp.body/*.filter((x:any)=>!this.sharedService.strictedSports.some(y=>y==x.name))*/.sort((a:any, b:any) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
-        this.sportsData.data = resp.body/*.filter((x:any)=>!this.sharedService.strictedSports.some(y=>y==x.name))*/.sort((a:any, b:any) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+  loadSports(loadAfter = false) {
+    this.dataService.getSports().subscribe((resp) => {
+      if (this.authService.decodedToken.role === 'SoftwareHolder') {
+        this.sportsList = resp.body.sort((a: any, b: any) =>
+          a.id < b.id ? -1 : a.id > b.id ? 1 : 0
+        );
+        this.sportsData.data = resp.body.sort((a: any, b: any) =>
+          a.id < b.id ? -1 : a.id > b.id ? 1 : 0
+        );
+      } else {
+        this.sportsList =
+          resp.body /*.filter((x:any)=>!this.sharedService.strictedSports.some(y=>y==x.name))*/
+            .sort((a: any, b: any) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+        this.sportsData.data =
+          resp.body /*.filter((x:any)=>!this.sharedService.strictedSports.some(y=>y==x.name))*/
+            .sort((a: any, b: any) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
       }
-       
-       if(this.currentSportIdForRegions === ''){
-         this.currentSportIdForRegions = resp.body[0].id;
-       }
-       if(this.currentSportIdForLeagues === ''){
-         this.currentSportIdForLeagues = resp.body[0].id;
-       }
-       this.sportForRegionChange()
-       if(loadAfter){
-         this.loadRegions(true);
-       }
-     })
-   }
 
-   loadRegions(loadAfter = false){
-    this.dataService.getAllRegions('',null).subscribe(resp =>{
+      if (this.currentSportIdForRegions === '') {
+        this.currentSportIdForRegions = resp.body[0].id;
+      }
+      if (this.currentSportIdForLeagues === '') {
+        this.currentSportIdForLeagues = resp.body[0].id;
+      }
+      this.sportForRegionChange();
+      if (loadAfter) {
+        this.loadRegions(true);
+      }
+    });
+  }
+
+  loadRegions(loadAfter = false) {
+    this.dataService.getAllRegions('', null).subscribe((resp) => {
       this.regionsList = resp.body;
       this.regionsData.data = resp.body;
-      this.sportForRegionChange()
+      this.sportForRegionChange();
       this.currentRegionIdForLeagues = resp.body[0].countryCode;
-      if(loadAfter){
+      if (loadAfter) {
         this.loadLeagues();
       }
-    })
-   }
+    });
+  }
 
-   loadLeagues(){
-     this.dataService.getAllLeagues(this.currentSportIdForLeagues,this.currentRegionIdForLeagues).subscribe(resp =>{
-       this.leaguesList = resp.body;
-       this.leaguesData.data = resp.body;
-     })
-   
-    }
-
-    openEventDetail(id:any, Live=true){
-      let urlString = ''
-      if(Live){
-        urlString= 'live/'+id
-      }
-      else{
-        urlString= 'pre/'+id
-      }
-
-      const url = this.router.serializeUrl(
-        this.router.createUrlTree([`/home/${urlString}`])
-      );
-      window.open(url, '_blank');
-
-      return;
-      this.router.navigateByUrl('home').then( x=>
-        {
-          if(Live){
-            this.dataService.loadMarketsForGameLive(id);
-          }
-          else{
-            this.dataService.loadMarketsForGamePre(id);
-          }
-        }
+  loadLeagues() {
+    this.dataService
+      .getAllLeagues(
+        this.currentSportIdForLeagues,
+        this.currentRegionIdForLeagues
       )
+      .subscribe((resp) => {
+        this.leaguesList = resp.body;
+        this.leaguesData.data = resp.body;
+      });
+  }
+
+  openEventDetail(id: any, Live = true) {
+    let urlString = '';
+    if (Live) {
+      urlString = 'live/' + id;
+    } else {
+      urlString = 'pre/' + id;
     }
 
-    openMarketsForEvent(obj:any){
-      if(this.authService.decodedToken.role !== 'Client'){
-        return
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([`/home/${urlString}`])
+    );
+    window.open(url, '_blank');
+
+    return;
+    this.router.navigateByUrl('home').then((x) => {
+      if (Live) {
+        this.dataService.loadMarketsForGameLive(id);
+      } else {
+        this.dataService.loadMarketsForGamePre(id);
       }
-        if(obj.selectionType === 'UPCOMING'){
-          this.dataService.getUpcomingById(obj.selection.eventId).subscribe(resp => {
-        this.openEventDetail(obj.selection.eventId, false)
+    });
+  }
 
-          }, error => {
-            this.dataService.getLIveById(obj.selection.eventId).subscribe(resp =>{
-              this.openEventDetail(obj.selection.eventId)
-            },
-            error => {
-              this.notify.error('Can\'t open event details at the moment')
-            })
-          })
-        }
-        else if(obj.selectionType === 'LIVE'){
-          this.dataService.getLIveById(obj.selection.eventId).subscribe(resp =>{
-            this.openEventDetail(obj.selection.eventId)
-      
-            },
-            error => {
-              this.notify.error('Can\'t open event details at the moment')
-            })
-        }
+  openMarketsForEvent(obj: any) {
+    if (this.authService.decodedToken.role !== 'Client') {
+      return;
     }
-
-    openBetDetail(obj:any) {
-
-      const dialogRef = this.dialog.open(BetDetailsComponent,{
-        data:obj
-      });
-      dialogRef.afterClosed().subscribe((result) => {
-        console.log(`Dialog result: ${result}`);
-      });
+    if (obj.selectionType === 'UPCOMING') {
+      this.dataService.getUpcomingById(obj.selection.eventId).subscribe(
+        (resp) => {
+          this.openEventDetail(obj.selection.eventId, false);
+        },
+        (error) => {
+          this.dataService.getLIveById(obj.selection.eventId).subscribe(
+            (resp) => {
+              this.openEventDetail(obj.selection.eventId);
+            },
+            (error) => {
+              this.notify.error("Can't open event details at the moment");
+            }
+          );
+        }
+      );
+    } else if (obj.selectionType === 'LIVE') {
+      this.dataService.getLIveById(obj.selection.eventId).subscribe(
+        (resp) => {
+          this.openEventDetail(obj.selection.eventId);
+        },
+        (error) => {
+          this.notify.error("Can't open event details at the moment");
+        }
+      );
     }
+  }
 
-    openExpoDetail(obj:any) {
-      const dialogRef = this.dialog.open(ExpoDetailsComponent,{
-       data:obj,
-       maxHeight: '90vh'
-     });
-     dialogRef.afterClosed().subscribe((result) => {
-       console.log(`Dialog result: ${result}`);
-     });
-   }
-  
-  disableReloadBtn(form:any){
-    if(form.start.value == null || form.end.value == null){
+  openBetDetail(obj: any) {
+    const dialogRef = this.dialog.open(BetDetailsComponent, {
+      data: obj,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  openExpoDetail(obj: any) {
+    const dialogRef = this.dialog.open(ExpoDetailsComponent, {
+      data: obj,
+      maxHeight: '90vh',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  disableReloadBtn(form: any) {
+    if (form.start.value == null || form.end.value == null) {
       return true;
     }
     return false;
-   }
+  }
 
-   updatePageBets(page:any) {
+  updatePageBets(page: any) {
     this.pageSize = page.pageSize;
     this.pageIndexBets = page.pageIndex + 1;
 
     this.loadBets();
   }
-  
-  updatePageExpo(page:any) {
+
+  updatePageExpo(page: any) {
     this.pageSize = page.pageSize;
     this.pageIndexExpo = page.pageIndex + 1;
 
     this.loadExpo();
   }
 
-  updatePageTrans(page:any) {
-   this.pageSize = page.pageSize;
-   this.pageIndexTrans = page.pageIndex + 1;
+  updatePageTrans(page: any) {
+    this.pageSize = page.pageSize;
+    this.pageIndexTrans = page.pageIndex + 1;
 
-   this.loadUsersTransactions();
- }
-
- updatePageBettingRules(page:any){
-  this.pageSize = page.pageSize;
-  this.pageIndexBettingRules = page.pageIndex + 1;
-
-  this.loadBettingRules();
- }
- 
- openBetSettleDialog(obj:any, type:string){
-  let dataToSend = {
-    ...obj,
-    settleType:type
-  }
-  const dialogRef = this.dialog.open(BetSettleModalComponent,{
-    data:dataToSend
-  });
-
-  dialogRef.afterClosed().subscribe( async (result) => {
-    await this.delay(1000);
-    this.loadBets();
-  });
+    this.loadUsersTransactions();
   }
 
-  
- openConfirmDialog(obj:any,functionToCall:number){
+  updatePageBettingRules(page: any) {
+    this.pageSize = page.pageSize;
+    this.pageIndexBettingRules = page.pageIndex + 1;
 
-  let confirmMsg= '';
-  let successMsg= '';
-  let errorMsg= '';
-  if(functionToCall == 1){
-     confirmMsg= 'Are You Sure You want to toggle activation ?';
-     successMsg= 'Sport updated';
-     errorMsg= 'Error on sport update';
+    this.loadBettingRules();
   }
-  else if(functionToCall == 2){
-    confirmMsg= 'Are You Sure You want to toggle activation ?';
-     successMsg= 'Region updated';
-     errorMsg= 'Error on region update';
-  }
-  else if(functionToCall == 3){
-    confirmMsg= 'Are You Sure You want to toggle activation ?';
-     successMsg= 'League updated';
-     errorMsg= 'Error on league update';
-  }
-  else if(functionToCall == 4){
 
-    confirmMsg= obj.isSuspended? 'Are You Sure You want to unsuspend user ?': 'Are You Sure You want to suspend user ?';
-    successMsg= 'User Updated';
-    errorMsg= 'Error on user update';
- }
+  openBetSettleDialog(obj: any, type: string) {
+    let dataToSend = {
+      ...obj,
+      settleType: type,
+    };
+    const dialogRef = this.dialog.open(BetSettleModalComponent, {
+      data: dataToSend,
+    });
 
-  const dialogRef = this.dialog.open(ConfirmationMessageComponent,{
-    data:{
-      obj:obj,
-      functionToCall:functionToCall,
-      confirmMsg:confirmMsg,
-      successMsg:successMsg,
-      errorMsg:errorMsg,
-      sportId:this.currentSportIdForRegions
+    dialogRef.afterClosed().subscribe(async (result) => {
+      await this.delay(1000);
+      this.loadBets();
+    });
+  }
+
+  openConfirmDialog(obj: any, functionToCall: number) {
+    let confirmMsg = '';
+    let successMsg = '';
+    let errorMsg = '';
+    if (functionToCall == 1) {
+      confirmMsg = 'Are You Sure You want to toggle activation ?';
+      successMsg = 'Sport updated';
+      errorMsg = 'Error on sport update';
+    } else if (functionToCall == 2) {
+      confirmMsg = 'Are You Sure You want to toggle activation ?';
+      successMsg = 'Region updated';
+      errorMsg = 'Error on region update';
+    } else if (functionToCall == 3) {
+      confirmMsg = 'Are You Sure You want to toggle activation ?';
+      successMsg = 'League updated';
+      errorMsg = 'Error on league update';
+    } else if (functionToCall == 4) {
+      confirmMsg = obj.isSuspended
+        ? 'Are You Sure You want to unsuspend user ?'
+        : 'Are You Sure You want to suspend user ?';
+      successMsg = 'User Updated';
+      errorMsg = 'Error on user update';
     }
-  });
 
-  dialogRef.afterClosed().subscribe( async (result) => {
-    await this.delay(1000);
-    if(functionToCall == 1){
-      this.loadSports();
-    }
-    else if(functionToCall == 2){
-      this.loadSports();
-      this.loadRegions();
-    } 
-    else if(functionToCall == 3){
-      this.loadLeagues();
-    } else if(functionToCall == 4){
-      this.loadSubAccounts();
-    }
-  });
+    const dialogRef = this.dialog.open(ConfirmationMessageComponent, {
+      data: {
+        obj: obj,
+        functionToCall: functionToCall,
+        confirmMsg: confirmMsg,
+        successMsg: successMsg,
+        errorMsg: errorMsg,
+        sportId: this.currentSportIdForRegions,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(async (result) => {
+      await this.delay(1000);
+      if (functionToCall == 1) {
+        this.loadSports();
+      } else if (functionToCall == 2) {
+        this.loadSports();
+        this.loadRegions();
+      } else if (functionToCall == 3) {
+        this.loadLeagues();
+      } else if (functionToCall == 4) {
+        this.loadSubAccounts();
+      }
+    });
   }
 
   delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  addBettingRule(obj?:any){
-
-    let dataToSend:any = {update:false}
-    if(obj){
+  addBettingRule(obj?: any) {
+    let dataToSend: any = { update: false };
+    if (obj) {
       dataToSend = {
-        update:true,
-        obj:obj
+        update: true,
+        obj: obj,
       };
     }
 
     const dialogRef = this.dialog.open(AddBettingRuleComponent, {
-      data:dataToSend,
-      width: '290vh'
+      data: dataToSend,
+      width: '290vh',
     });
     dialogRef.afterClosed().subscribe(async (result) => {
       console.log(`Dialog result: ${result}`);
@@ -735,9 +830,9 @@ export class AccountDetailsComponent implements OnInit {
     });
   }
 
-  deleteBettingRule(obj?:any){
+  deleteBettingRule(obj?: any) {
     const dialogRef = this.dialog.open(DeleteBettingRuleComponent, {
-      data:obj,
+      data: obj,
     });
     dialogRef.afterClosed().subscribe(async (result) => {
       console.log(`Dialog result: ${result}`);
@@ -746,35 +841,38 @@ export class AccountDetailsComponent implements OnInit {
     });
   }
 
-  notActiveRegions:any =[]
-  sportForRegionChange2(){
-    let index = this.sportsList.findIndex((x:any)=> x.id == this.currentSportIdForRegions)
+  notActiveRegions: any = [];
+  sportForRegionChange2() {
+    let index = this.sportsList.findIndex(
+      (x: any) => x.id == this.currentSportIdForRegions
+    );
     this.notActiveRegions = this.sportsList[index].deactivatedRegions;
   }
 
-  isRegionActive(code:any){
-    return !this.notActiveRegions.some((x:any)=> x.countryCode == code);
+  isRegionActive(code: any) {
+    return !this.notActiveRegions.some((x: any) => x.countryCode == code);
   }
 
-  sportForRegionChange(){
-
-    let index = this.sportsList.findIndex((x:any)=> x.id == this.currentSportIdForRegions)
+  sportForRegionChange() {
+    let index = this.sportsList.findIndex(
+      (x: any) => x.id == this.currentSportIdForRegions
+    );
     this.notActiveRegions = this.sportsList[index].deactivatedRegions;
 
-    let newRegions:any = []
-    this.regionsData.data.forEach(element => {
-      newRegions.push(
-        {
-          ...element,
-          isActiveForSport: !this.notActiveRegions.some((x:any)=> x.countryCode == element.countryCode)
-        }
-      )
+    let newRegions: any = [];
+    this.regionsData.data.forEach((element) => {
+      newRegions.push({
+        ...element,
+        isActiveForSport: !this.notActiveRegions.some(
+          (x: any) => x.countryCode == element.countryCode
+        ),
+      });
     });
 
     this.regionsData.data = newRegions;
   }
 
-  setUserIdForBet(username='', userId=''){
+  setUserIdForBet(username = '', userId = '') {
     this.usernameForBets = '';
     this.userIdForBets = userId;
     this.usernameForIdForBets = 'User: ' + username;
@@ -782,174 +880,192 @@ export class AccountDetailsComponent implements OnInit {
     this.loadBets();
   }
 
-  updateLeague(league:any, evt?:any){
-
+  updateLeague(league: any, evt?: any) {
     // for radio btns check
-    if(evt){
+    if (evt) {
       let target = evt.target;
       if (target.checked) {
-        league.category = target.defaultValue
+        league.category = target.defaultValue;
       } else {
-      return
+        return;
       }
     }
 
-    this.dataService.updateLeague(league).subscribe(resp => {
-      this.notify.success('League updated')
-    }, error =>{
-      this.notify.error('Error updating league')
-      this.loadLeagues();
-    })
+    this.dataService.updateLeague(league).subscribe(
+      (resp) => {
+        this.notify.success('League updated');
+      },
+      (error) => {
+        this.notify.error('Error updating league');
+        this.loadLeagues();
+      }
+    );
   }
 
-  showCancelBet(bet:any){
-    if(this.authService.decodedToken.role === 'SoftwareHolder'){
+  showCancelBet(bet: any) {
+    if (this.authService.decodedToken.role === 'SoftwareHolder') {
       return true;
-    }
-    else if(this.authService.decodedToken.role === 'SuperAdmin' || this.authService.decodedToken.role === 'Client'){
-      if(bet.status == 'UNMATCHED'){
+    } else if (
+      this.authService.decodedToken.role === 'SuperAdmin' ||
+      this.authService.decodedToken.role === 'Client'
+    ) {
+      if (bet.status == 'UNMATCHED') {
         return true;
-      }
-      else{
+      } else {
         return false;
       }
-    }
-    else{
+    } else {
       return false;
     }
   }
 
-  openRiskUpdateDialog(obj:any){
-    this.dataService.getRisk(obj.id).subscribe((resp:any) => {
+  openRiskUpdateDialog(obj: any) {
+    this.dataService.getRisk(obj.id).subscribe(
+      (resp: any) => {
+        let masterRisk =
+          resp.body[0].risks[
+            resp.body[0].risks.findIndex((x: any) => x.userId == obj.id)
+          ].risk;
+        let parent = this.sharedService.getUserParent(obj);
+        let adminRisk =
+          resp.body[0].risks[
+            resp.body[0].risks.findIndex((x: any) => x.userId == parent.id)
+          ].risk;
+        let minRisk = parent.minRisk;
+        let maxRisk = parent.maxRisk;
 
-      let masterRisk = resp.body[0].risks[resp.body[0].risks.findIndex((x:any)=>x.userId == obj.id)].risk
-      let parent = this.sharedService.getUserParent(obj);
-      let adminRisk = resp.body[0].risks[resp.body[0].risks.findIndex((x:any)=>x.userId == parent.id)].risk
-      let minRisk = parent.minRisk;
-      let maxRisk = parent.maxRisk;
-
-      let objToSend = {
-        masterId : obj.id,
-        adminRisk:adminRisk,
-        masterRisk:masterRisk,
-        minRisk:minRisk,
-        maxRisk:maxRisk,
+        let objToSend = {
+          masterId: obj.id,
+          adminRisk: adminRisk,
+          masterRisk: masterRisk,
+          minRisk: minRisk,
+          maxRisk: maxRisk,
+        };
+        const dialogRef = this.dialog.open(UpdateRiskComponent, {
+          data: objToSend,
+        });
+        dialogRef.afterClosed().subscribe(async (result) => {
+          await this.sharedService.delay(500);
+          console.log(`Dialog result: ${result}`);
+          this.loadUser();
+        });
+      },
+      (error) => {
+        this.notify.error('Error getting Risk');
       }
-    const dialogRef = this.dialog.open(UpdateRiskComponent, {
-      data: objToSend,
-    });
-    dialogRef.afterClosed().subscribe(async (result) => {
-      await this.sharedService.delay(500);
-      console.log(`Dialog result: ${result}`);
-      this.loadUser();
-    });
-
-    }, error =>{
-      this.notify.error("Error getting Risk")
-    })
-
-    
+    );
   }
 
-  
-  openCommissionUpdateDialog(obj:any){
-
+  openCommissionUpdateDialog(obj: any) {
     let width = '50%';
-    if(this.screenSize == 'xs' || this.screenSize == 'sm'){
-      width = '80%'
-    } else if(this.screenSize == 'md' ){
-      width = '75%'
+    if (this.screenSize == 'xs' || this.screenSize == 'sm') {
+      width = '80%';
+    } else if (this.screenSize == 'md') {
+      width = '75%';
     }
     // else if(this.screenSize == 'md' || this.screenSize == 'sm'){
     //   width = '80%'
     // }
-    this.dataService.getUserById(obj.id).subscribe((resp:any) => {
-
-      let objToSend = {
-        user:resp
-      }
-    const dialogRef = this.dialog.open(SetMyCommissionComponent, {
-      data: objToSend,
-      width: '30%',
-    });
-    dialogRef.afterClosed().subscribe(async (result) => {
-      await this.sharedService.delay(500);
-      console.log(`Dialog result: ${result}`);
-      this.loadUser();
-    });
-
-    }, error =>{
-      this.notify.error("Error getting User info")
-    })
-
-    
-  }
-
-  openRiskTableDialog(obj:any){
-    this.dataService.getRisk(obj.id).subscribe((resp:any) => {
-
-    const dialogRef = this.dialog.open(RisksTableComponent, {
-      data: resp.body,
-      width: '80%',
-    });
-    // dialogRef.afterClosed().subscribe(async (result) => {
-    //   await this.sharedService.delay(500);
-    //   console.log(`Dialog result: ${result}`);
-    // });
-
-    }, error =>{
-      this.notify.error("Error getting Risk")
-    })
-    
-  }
-
-  updateSport(sport:any){
-
-    this.dataService.toggleSportActive(sport.id).subscribe(resp => {
-
-      this.notify.success(`Sport ${sport.name} updated`);
-    }
-    , error => {
-      sport.isActive = !sport.isActive;
-      this.notify.error(`Error updating sport ${sport.name}`)
-    })
-  }
-
-  updateRegion(region:any){
-
-    this.dataService.toggleRegionActivationForSport(this.currentSportIdForRegions, region.countryCode).subscribe(resp => {
-
-      let index = this.sportsList.findIndex((x:any)=> x.id == this.currentSportIdForRegions)
-
-      if(region.isActiveForSport){
-        let i = this.sportsList[index].deactivatedRegions.findIndex((x:any)=>x.countryCode == region.countryCode)
-        if(i>-1){
-          this.sportsList[index].deactivatedRegions.splice(i, 1);
-        }
-      }
-      else{
-        this.sportsList[index].deactivatedRegions.push({
-          countryCode: region.countryCode,
-          name: region.name
+    this.dataService.getUserById(obj.id).subscribe(
+      (resp: any) => {
+        let objToSend = {
+          user: resp,
+        };
+        const dialogRef = this.dialog.open(SetMyCommissionComponent, {
+          data: objToSend,
+          width: '30%',
         });
+        dialogRef.afterClosed().subscribe(async (result) => {
+          await this.sharedService.delay(500);
+          console.log(`Dialog result: ${result}`);
+          this.loadUser();
+        });
+      },
+      (error) => {
+        this.notify.error('Error getting User info');
       }
-      
-      this.notActiveRegions = this.sportsList[index].deactivatedRegions;
+    );
+  }
 
-      this.notify.success(`Region ${region.name} updated for sport ${ this.sportsList[index].name}`);
-    }
-    , error => {
-      region.isActiveForSport = !region.isActiveForSport;
-      let index = this.sportsList.findIndex((x:any)=> x.id == this.currentSportIdForRegions)
-      this.notify.error(`Error updating region ${region.name} for sport ${ this.sportsList[index].name}`)
-    })
+  openRiskTableDialog(obj: any) {
+    this.dataService.getRisk(obj.id).subscribe(
+      (resp: any) => {
+        const dialogRef = this.dialog.open(RisksTableComponent, {
+          data: resp.body,
+          width: '80%',
+        });
+        // dialogRef.afterClosed().subscribe(async (result) => {
+        //   await this.sharedService.delay(500);
+        //   console.log(`Dialog result: ${result}`);
+        // });
+      },
+      (error) => {
+        this.notify.error('Error getting Risk');
+      }
+    );
+  }
+
+  updateSport(sport: any) {
+    this.dataService.toggleSportActive(sport.id).subscribe(
+      (resp) => {
+        this.notify.success(`Sport ${sport.name} updated`);
+      },
+      (error) => {
+        sport.isActive = !sport.isActive;
+        this.notify.error(`Error updating sport ${sport.name}`);
+      }
+    );
+  }
+
+  updateRegion(region: any) {
+    this.dataService
+      .toggleRegionActivationForSport(
+        this.currentSportIdForRegions,
+        region.countryCode
+      )
+      .subscribe(
+        (resp) => {
+          let index = this.sportsList.findIndex(
+            (x: any) => x.id == this.currentSportIdForRegions
+          );
+
+          if (region.isActiveForSport) {
+            let i = this.sportsList[index].deactivatedRegions.findIndex(
+              (x: any) => x.countryCode == region.countryCode
+            );
+            if (i > -1) {
+              this.sportsList[index].deactivatedRegions.splice(i, 1);
+            }
+          } else {
+            this.sportsList[index].deactivatedRegions.push({
+              countryCode: region.countryCode,
+              name: region.name,
+            });
+          }
+
+          this.notActiveRegions = this.sportsList[index].deactivatedRegions;
+
+          this.notify.success(
+            `Region ${region.name} updated for sport ${this.sportsList[index].name}`
+          );
+        },
+        (error) => {
+          region.isActiveForSport = !region.isActiveForSport;
+          let index = this.sportsList.findIndex(
+            (x: any) => x.id == this.currentSportIdForRegions
+          );
+          this.notify.error(
+            `Error updating region ${region.name} for sport ${this.sportsList[index].name}`
+          );
+        }
+      );
   }
 
   //////////////////////// sub accounts work
 
   lengthSubs = 0;
   pageIndexSubs = 1;
-  subsData = new MatTableDataSource<any>()
+  subsData = new MatTableDataSource<any>();
   roleSearch = '';
   resetAccounts = true;
 
@@ -971,121 +1087,141 @@ export class AccountDetailsComponent implements OnInit {
   ];
 
   roles = [
-    {i:0,name:'SoftwareHolder'},
-    {i:1,name:'SuperAdmin'},
-    {i:2,name:'Admin'},
-    {i:3,name:'Master'},
-    {i:4,name:'Client'}
-  ]
-  rolesOptions:any = [];
-  currentSubId='';
-  allUsersSearch:any = [];
-  subAccountsObj:any = {
-    SuperAdmin: {role:'SuperAdmin', data:[]},
-    Admin: {role:'Admin', data:[]},
-    Master: {role:'Master', data:[]},
-    Client: {role:'Client', data:[]},
-  }
+    { i: 0, name: 'SoftwareHolder' },
+    { i: 1, name: 'SuperAdmin' },
+    { i: 2, name: 'Admin' },
+    { i: 3, name: 'Master' },
+    { i: 4, name: 'Client' },
+  ];
+  rolesOptions: any = [];
+  currentSubId = '';
+  allUsersSearch: any = [];
+  subAccountsObj: any = {
+    SuperAdmin: { role: 'SuperAdmin', data: [] },
+    Admin: { role: 'Admin', data: [] },
+    Master: { role: 'Master', data: [] },
+    Client: { role: 'Client', data: [] },
+  };
   superAdminIdSearch = '';
   adminIdSearch = '';
   masterIdSearch = '';
   clientIdSearch = '';
 
-  loadSubAccounts(){
-    if(this.currentSubId == ''){
+  loadSubAccounts() {
+    if (this.currentSubId == '') {
       this.currentSubId = this.myUser.id;
     }
-    this.dataService.getAllUsers({
-      PageNo:this.pageIndexSubs,
-      PageSize:this.pageSize,
-      ParentId:this.currentSubId,
-      Role:this.roleSearch
-    }).subscribe(resp =>{
-
-      this.subsData.data = resp.items;
-      if(this.resetAccounts){
-        this.setAvailableUser();
-      }
-     this.lengthSubs = resp.pagingInfo.totalCount
-   }, error =>{
-     // redirect somewhere
-   })
+    this.dataService
+      .getAllUsers({
+        PageNo: this.pageIndexSubs,
+        PageSize: this.pageSize,
+        ParentId: this.currentSubId,
+        Role: this.roleSearch,
+      })
+      .subscribe(
+        (resp) => {
+          this.subsData.data = resp.items;
+          if (this.resetAccounts) {
+            this.setAvailableUser();
+          }
+          this.lengthSubs = resp.pagingInfo.totalCount;
+        },
+        (error) => {
+          // redirect somewhere
+        }
+      );
   }
 
-  setRoleOptions(){
-    this.rolesOptions=[];
-    let currentI = this.roles[this.roles.findIndex(x=>x.name == this.myUser.role)].i
-    this.roles.forEach((element:any) => {
-      if(element.i > currentI) {
+  setRoleOptions() {
+    this.rolesOptions = [];
+    let currentI =
+      this.roles[this.roles.findIndex((x) => x.name == this.myUser.role)].i;
+    this.roles.forEach((element: any) => {
+      if (element.i > currentI) {
         this.rolesOptions.push(element);
       }
     });
   }
 
-  updatePageSubs(page:any) {
+  updatePageSubs(page: any) {
     this.pageSize = page.pageSize;
     this.pageIndexSubs = page.pageIndex + 1;
 
     this.loadSubAccounts();
   }
 
-  setAvailableUser(){
+  setAvailableUser() {
     this.resetAccounts = false;
 
     this.allUsersSearch = this.subsData.data;
-    this.subAccountsObj.SuperAdmin.data = this.allUsersSearch.filter((x:any)=>x.role =='SuperAdmin')
-    this.subAccountsObj.Admin.data = this.allUsersSearch.filter((x:any)=>x.role =='Admin')
-    this.subAccountsObj.Master.data = this.allUsersSearch.filter((x:any)=>x.role =='Master')
-    this.subAccountsObj.Client.data = this.allUsersSearch.filter((x:any)=>x.role =='Client')
+    this.subAccountsObj.SuperAdmin.data = this.allUsersSearch.filter(
+      (x: any) => x.role == 'SuperAdmin'
+    );
+    this.subAccountsObj.Admin.data = this.allUsersSearch.filter(
+      (x: any) => x.role == 'Admin'
+    );
+    this.subAccountsObj.Master.data = this.allUsersSearch.filter(
+      (x: any) => x.role == 'Master'
+    );
+    this.subAccountsObj.Client.data = this.allUsersSearch.filter(
+      (x: any) => x.role == 'Client'
+    );
   }
 
-  userDropdownChange(roleId:any, parentRoleId:any, role:any, roleLower:any){
-    if(roleId == ''){
-      if(parentRoleId !='-1'){
+  userDropdownChange(
+    roleId: any,
+    parentRoleId: any,
+    role: any,
+    roleLower: any
+  ) {
+    if (roleId == '') {
+      if (parentRoleId != '-1') {
         this.currentSubId = parentRoleId;
-      }else{
+      } else {
         this.currentSubId = this.myUser.id;
       }
-    }
-    else{
+    } else {
       this.currentSubId = roleId;
-      this.setSubArray(roleLower,roleId)
+      this.setSubArray(roleLower, roleId);
     }
-    
-  }
-  
-  setSubArray(role:any, id:any){
-    this.subAccountsObj[role].data = this.allUsersSearch.filter((x:any)=> x.role == role && x.parentHeirarchy[x.parentHeirarchy.findIndex((y:any)=> y.depth ==0)].id == id)
   }
 
-  disableAdminSearch(){
-    if(this.roleSearch !== ''){
+  setSubArray(role: any, id: any) {
+    this.subAccountsObj[role].data = this.allUsersSearch.filter(
+      (x: any) =>
+        x.role == role &&
+        x.parentHeirarchy[x.parentHeirarchy.findIndex((y: any) => y.depth == 0)]
+          .id == id
+    );
+  }
+
+  disableAdminSearch() {
+    if (this.roleSearch !== '') {
       return true;
     }
-    if(this.myUser.role == 'SuperAdmin'){
-      return false
+    if (this.myUser.role == 'SuperAdmin') {
+      return false;
     }
-    return this.superAdminIdSearch===''
+    return this.superAdminIdSearch === '';
   }
-  
-  disableMasterSearch(){
-    if(this.roleSearch !== ''){
+
+  disableMasterSearch() {
+    if (this.roleSearch !== '') {
       return true;
     }
-    if(this.myUser.role == 'Admin'){
-      return false
+    if (this.myUser.role == 'Admin') {
+      return false;
     }
-    return this.adminIdSearch===''
+    return this.adminIdSearch === '';
   }
 
-  getPlayerNumForSelection(obj:any){
-        let users = obj.map(function(i:any) {
-          return i.userName;
-        });
-    
-        let uniq = [...new Set(users)];
-    
-        return uniq.length;
-      }
+  getPlayerNumForSelection(obj: any) {
+    let users = obj.map(function (i: any) {
+      return i.userName;
+    });
 
+    let uniq = [...new Set(users)];
+
+    return uniq.length;
+  }
 }
