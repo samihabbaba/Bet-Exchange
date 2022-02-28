@@ -1079,7 +1079,7 @@ body {
 .bet-item-market-title {
   padding-left: 6px;
   flex: 1;
-  width: 45%;
+  width: 35%;
   h1 {
     font-size: 15px;
     line-height: 18px;
@@ -1136,8 +1136,9 @@ body {
 
 .bet-item-inputs-container {
   display: flex;
+  flex: 2;
   justify-content: space-around;
-  padding-left: 8px;
+  padding-left: 4px;
 
   .bet-item-match-odd {
     align-self: center;
@@ -1159,6 +1160,7 @@ body {
 
   .bet-item-match-stake {
     align-self: center;
+    margin-left: 4px;
     width: 38%;
     input {
       width: 105%;
@@ -1184,6 +1186,7 @@ body {
   }
 
   .bet-item-profit {
+    margin-left: 4px;
     align-self: center;
   }
 }

@@ -13,7 +13,7 @@ export class SharedFunctionsService {
     name:'EU',
     rate:1
   }
-  
+
   pageSizeOptions = [5, 10, 25, 100, 500, 1000];
   defaultPageSize = 50;
 
@@ -98,7 +98,7 @@ export class SharedFunctionsService {
   }
 
   returnEventScore(event:any){
-    
+
 
     if(!event  || !event.timeline || !event.timeline.score){
       return " vs ";
@@ -114,7 +114,7 @@ export class SharedFunctionsService {
   }
 
   returnHighestBet(bets:any, isBack = true){
-    
+
     if(bets == null){
         return null;
       }
@@ -139,11 +139,11 @@ export class SharedFunctionsService {
           return null
           }
       }
-    
+
   }
 
   getBackObj(obj:any,index:number){
-    
+
   try{
       return obj.markets[0].runners[index].exchangePrices.availableToBack;
     }
@@ -189,18 +189,18 @@ export class SharedFunctionsService {
       if(isMoney){
         num = num.toFixed(2);
       }
-  
+
       else if(num.toString().includes(".")){
         num = num.toFixed(2);
       }
-  
+
         let numTr = num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
         return numTr;
     }
     catch(ex){
       return -1;
     }
-    
+
   }
 
   returnRunWithIndex(item:any, index:number,ToLay = false){
@@ -321,7 +321,7 @@ export class SharedFunctionsService {
     }
   }
 
-  
+
   isMarketGoals(name:string){
     if(name.toLowerCase().includes('score')  || name.toLowerCase().includes('goal')
     // && (name.toLowerCase().includes('over') || name.toLowerCase().includes('under'))
@@ -333,7 +333,7 @@ export class SharedFunctionsService {
   }
 
   isMarketHandicap(name:string, runs:any){
-    
+
     if(name.toLowerCase().includes('handicap')
     ||(name.includes('+') && this.charIsNumber(name[name.indexOf("+")+1]))
     ||(name.includes('-') && this.charIsNumber(name[name.indexOf("-")+1]))
@@ -396,9 +396,9 @@ export class SharedFunctionsService {
       }
   }
 
-  
+
   oddAvailableEventContent(obj:any , index:number,back = true){
-    
+
     try{
       let runOdds = null;
       if (back){
@@ -409,7 +409,7 @@ export class SharedFunctionsService {
         runOdds = obj.exchangePrices.availableToLay;
         runOdds.sort( this.sortRunByPriceDEC );
       }
-  
+
       if(runOdds.length-1 < index){
         return false;
       }
@@ -446,7 +446,7 @@ export class SharedFunctionsService {
 
 
   getSportNameById(id:string){
-    
+
     let index = this.sports.findIndex((x:any)=> x.id == id);
     if(index == -1){
       return 'Unkown'
@@ -464,7 +464,7 @@ export class SharedFunctionsService {
     }
   }
 
-  
+
 
   delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
@@ -486,7 +486,7 @@ export class SharedFunctionsService {
       return eventName;
     }
   }
-  
+
   showErrorMsg(error:any, defaultMsg:any){
 
     try{
@@ -505,7 +505,7 @@ export class SharedFunctionsService {
     }
 
     try{
-      let msg = error.error.fields[Object.keys(error.error.fields)[0]]; 
+      let msg = error.error.fields[Object.keys(error.error.fields)[0]];
       if( msg !== undefined){
         this.notify.error(msg);
       }else{
@@ -529,7 +529,7 @@ export class SharedFunctionsService {
   }
 
   displayOdds(event:any){
-    
+
    let eventType = ''
    let marketName = ''
     try{

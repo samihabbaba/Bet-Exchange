@@ -64,7 +64,10 @@
             </div>
 
             <div class="bet-item-inputs-container">
-              <div class="bet-item-match-odd">
+              <div
+                class="bet-item-match-odd"
+                [matTooltip]="bet.market.run.price.toString()"
+              >
                 <input
                   [(ngModel)]="bet.market.run.price"
                   type="number"
@@ -72,10 +75,10 @@
                   (input)="setLiabilityForBet(bet)"
                 />
               </div>
-              <div class="bet-item-match-stake">
+              <div class="bet-item-match-stake" [matTooltip]="stakeInp.value">
                 <input
+                  #stakeInp
                   type="number"
-                  min="0.1"
                   step="5"
                   [(ngModel)]="bet.stake"
                   (input)="setLiabilityForBet(bet)"
